@@ -1,0 +1,4 @@
+%{"fs": {:hex, :fs, "0.9.2"},
+  "mix_test_watch": {:hex, :mix_test_watch, "0.1.1"},
+  "porcelain": {:hex, :porcelain, "2.0.0"},
+  "shouldi": {:hex, :shouldi, "0.2.3"}}
