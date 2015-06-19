@@ -21,6 +21,14 @@ defmodule Dogma.Script do
     }
   end
 
+  def run_tests(script) do
+    Enum.reduce(
+      Rules.list,
+      script,
+      fn(rule, x) -> rule.test x end
+    )
+  end
+
   defp lines(source) do
     source
     |> String.split("\n", trim: true)

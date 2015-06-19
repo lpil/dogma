@@ -16,8 +16,18 @@ defmodule Dogma.Rules.LineLengthTest do
 
     should "report long lines", context do
       errors = [
-        %Error{rule: LineLength, message: "Line too long [101]", position: 3},
-        %Error{rule: LineLength, message: "Line too long [90]",  position: 1},
+        %Error{
+          rule: LineLength,
+          message: "Line too long [101]",
+          position: 3,
+          script: ""
+        },
+        %Error{
+          rule: LineLength,
+          message: "Line too long [90]",
+          position: 1,
+          script: ""
+        },
       ]
       assert errors === context.script.errors
     end

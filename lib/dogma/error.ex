@@ -1,5 +1,6 @@
 defmodule Dogma.Error do
-  defstruct rule:     nil,
+  defstruct script:   nil,
+            rule:     nil,
             message:  nil,
             position: nil
 end
