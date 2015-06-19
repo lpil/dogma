@@ -1,4 +1,6 @@
 defmodule Dogma.Script do
+  alias Dogma.Rules
+
   defstruct path:   nil,
             source: nil,
             lines:  nil,
@@ -22,11 +24,8 @@ defmodule Dogma.Script do
   end
 
   def run_tests(script) do
-    Enum.reduce(
-      Rules.list,
-      script,
-      fn(rule, x) -> rule.test x end
-    )
+    Rules.list
+    |> Enum.reduce( script, fn(rule, x) -> rule.test x end )
   end
 
   defp lines(source) do

@@ -6,21 +6,24 @@ defmodule Dogma.Formatter do
   @doc """
   Runs at the start of the test suite.
   """
-  def start(formatter, files) do
-    IO.puts formatter.start( files )
+  def start(files, formatter) do
+    IO.write formatter.start( files )
+    files
   end
 
   @doc """
   Runs after each script is tested.
   """
-  def script(formatter, script) do
-    IO.puts formatter.script( script )
+  def script(script, formatter) do
+    IO.write formatter.script( script )
+    script
   end
 
   @doc """
   Runs at the end of the test suite.
   """
-  def finish(formatter, files) do
-    IO.puts formatter.finish( files )
+  def finish(files, formatter) do
+    IO.write formatter.finish( files )
+    files
   end
 end

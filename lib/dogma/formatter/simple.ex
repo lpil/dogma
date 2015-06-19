@@ -31,6 +31,8 @@ defmodule Dogma.Formatter.Simple do
   def finish(files) do
     {error_count, formatted_errors} = format_errors(files)
     """
+
+
     #{ length files } files, #{ error_count } errors.
     """ <> Enum.join( formatted_errors )
   end

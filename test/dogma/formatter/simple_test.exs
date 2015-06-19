@@ -48,7 +48,7 @@ defmodule Dogma.Formatter.SimpleTest do
     with "no errors" do
       should "print a success message" do
         scripts = [ %Script{}, %Script{} ]
-        assert "2 files, 0 errors.\n" == Simple.finish( scripts )
+        assert "\n\n2 files, 0 errors.\n" == Simple.finish( scripts )
       end
     end
   end
@@ -63,7 +63,7 @@ defmodule Dogma.Formatter.SimpleTest do
 
     should "print count, followed by detail", context do
       output  = """
-      2 files, 1 errors.
+      \n\n2 files, 1 errors.
 
       == foo.ex ==
       44: BadCode: Awful.
@@ -89,7 +89,7 @@ defmodule Dogma.Formatter.SimpleTest do
 
     should "print count, followed by details", context do
       output  = """
-      4 files, 3 errors.
+      \n\n4 files, 3 errors.
 
       == foo.ex ==
       44: BadCode: Awful.
