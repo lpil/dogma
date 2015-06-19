@@ -32,7 +32,7 @@ defmodule Dogma.ScriptTest do
       assert [] == context.script.errors
     end
 
-    should "calculate lines", context do
+    should "assigns lines", context do
       lines = [
         {1,  "defmodule Foo do"},
         {2,  "  def greet do"},
@@ -43,7 +43,7 @@ defmodule Dogma.ScriptTest do
       assert lines == context.script.lines
     end
 
-    should "calculate the quotes abstract syntax tree", context do
+    should "assigns the quoted abstract syntax tree", context do
       quoted = Code.string_to_quoted( context.source )
       assert quoted == context.script.quoted
     end
