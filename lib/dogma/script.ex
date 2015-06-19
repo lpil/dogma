@@ -3,16 +3,21 @@ defmodule Dogma.Script do
             source: nil,
             lines:  nil,
             ast:    nil,
+            valid?: nil,
             errors: []
 
 
   def parse(source, path) do
-    {:ok, ast} = Code.string_to_quoted( source, line: 1 )
+    {valid?, ast} = case Code.string_to_quoted( source, line: 1 ) do
+      {:ok, ast} -> {true,  ast}
+      error      -> {false, error}
+    end
     %Dogma.Script{
       path:   path,
       source: source,
       lines:  lines( source ),
-      ast: ast,
+      ast:    ast,
+      valid?: valid?,
     }
   end
 
