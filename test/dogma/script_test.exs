@@ -14,14 +14,13 @@ defmodule Dogma.ScriptTest do
       end
       """
       %{
-        path:   path,
         source: source,
         script: Script.parse( source, path ),
       }
     end
 
     should "register path", context do
-      assert context.path === context.script.path
+      assert "lib/foo.ex" == context.script.path
     end
 
     should "register source", context do
@@ -43,9 +42,14 @@ defmodule Dogma.ScriptTest do
       assert lines == context.script.lines
     end
 
-    should "assigns the quoted abstract syntax tree", context do
-      quoted = Code.string_to_quoted( context.source )
-      assert quoted == context.script.quoted
+    should "assigns the quotes abstract syntax tree", context do
+      {:ok, ast} = Code.string_to_quoted( context.source )
+      assert ast == context.script.ast
+    end
+
+    should "include line numbers in the quoted ast" do
+      script = Script.parse( "1 + 1", "" )
+      assert {:+, [line: 1], [1, 1]} == script.ast
     end
   end
 end

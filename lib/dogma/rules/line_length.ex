@@ -22,7 +22,9 @@ defmodule Dogma.Rules.LineLength do
 
   defp error(length, pos) do
     %Error{
-      rule: __MODULE__, message: "Line too long [#{length}]", position: pos
+      rule: __MODULE__,
+      message: "Line too long [#{length}]",
+      position: pos
     }
   end
 end

@@ -2,16 +2,17 @@ defmodule Dogma.Script do
   defstruct path:   nil,
             source: nil,
             lines:  nil,
-            quoted: nil,
+            ast:    nil,
             errors: []
 
 
   def parse(source, path) do
+    {:ok, ast} = Code.string_to_quoted( source, line: 1 )
     %Dogma.Script{
       path:   path,
       source: source,
       lines:  lines( source ),
-      quoted: Code.string_to_quoted( source ),
+      ast: ast,
     }
   end
 
