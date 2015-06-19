@@ -5,7 +5,7 @@ defmodule Dogma do
   def run do
     get_scripts
     |> Formatter.start( Formatter.Simple )
-    |> test_scripts
+    |> test_scripts( Formatter.Simple )
     |> Formatter.finish( Formatter.Simple )
   end
 
@@ -24,11 +24,11 @@ defmodule Dogma do
     end
   end
 
-  defp test_scripts(scripts) do
+  defp test_scripts(scripts, formatter) do
     for script <- scripts do
       script
       |> Script.run_tests
-      |> Formatter.script( Formatter.Simple )
+      |> Formatter.script( formatter )
     end
   end
 end

@@ -4,7 +4,6 @@ defmodule Dogma.FormatterTest do
   import ExUnit.CaptureIO
 
   alias Dogma.Formatter
-  alias Dogma.Script
 
   defmodule TestFormatter do
     def start(_)  do "start"  end
