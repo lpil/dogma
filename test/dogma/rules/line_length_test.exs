@@ -7,8 +7,10 @@ defmodule Dogma.Rules.LineLengthTest do
 
   with "long lines" do
     setup context do
-      script = "#{ line( 90 ) }\n#{ line( 30 ) }\n#{ line( 101 ) }"
-                |> Script.parse( "" )
+      x = String.duplicate( "x",  90 )
+      y = String.duplicate( "y",  30 )
+      z = String.duplicate( "z", 101 )
+      script = "#{ x }\n#{ y }\n#{ z }" |> Script.parse( "foo.ex" )
       %{
         script: LineLength.test( script )
       }
@@ -20,22 +22,16 @@ defmodule Dogma.Rules.LineLengthTest do
           rule: LineLength,
           message: "Line too long [101]",
           position: 3,
-          script: ""
+          script: "foo.ex"
         },
         %Error{
           rule: LineLength,
           message: "Line too long [90]",
           position: 1,
-          script: ""
+          script: "foo.ex"
         },
       ]
       assert errors === context.script.errors
     end
-  end
-
-
-  def line(length) do
-    1..length
-    |> Enum.reduce("", fn(_, acc) -> acc <> "1" end )
   end
 end
