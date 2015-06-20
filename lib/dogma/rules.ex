@@ -13,6 +13,7 @@ defmodule Dogma.Rules do
   defp rule_list do
     [
       LineLength,
+      TrailingWhitespace,
     ]
   end
 end
