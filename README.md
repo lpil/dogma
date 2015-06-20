@@ -8,7 +8,7 @@ Dogma
 Dogma is a principle or set of principles laid down by an authority as
 **incontrovertibly true**.
 
-It's also a code style linter for Elixir, powered by good old fashioned shame.
+It's also a code style linter for Elixir, powered by shame.
 
 <br/>
 <br/>

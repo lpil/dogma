@@ -1,5 +1,6 @@
 defmodule Dogma.Script do
   alias Dogma.Rules
+  alias Dogma.Script
 
   defstruct path:   nil,
             source: nil,
@@ -27,6 +28,16 @@ defmodule Dogma.Script do
     Rules.list
     |> Enum.reduce( script, fn(rule, x) -> rule.test x end )
   end
+
+  @doc """
+  Takes a script and an error, and returns the script with the error prepended
+  to the error list of the script.
+  """
+  def register_error(script, error) do
+    errors = [ error | script.errors ]
+    %Script{ script | errors: errors }
+  end
+
 
   defp lines(source) do
     source

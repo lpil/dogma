@@ -22,13 +22,11 @@ defmodule Dogma.Rules.LineLengthTest do
           rule: LineLength,
           message: "Line too long [101]",
           position: 3,
-          script: "foo.ex"
         },
         %Error{
           rule: LineLength,
           message: "Line too long [90]",
           position: 1,
-          script: "foo.ex"
         },
       ]
       assert errors === context.script.errors

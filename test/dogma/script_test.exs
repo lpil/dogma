@@ -2,6 +2,7 @@ defmodule Dogma.ScriptTest do
   use ShouldI
 
   alias Dogma.Script
+  alias Dogma.Error
 
   with "Script.parse" do
 
@@ -80,6 +81,15 @@ defmodule Dogma.ScriptTest do
         }
         assert error == context.script.ast
       end
+    end
+  end
+
+
+  with ".add_error" do
+    should "add the error. gosh." do
+      error  = %Error{ rule: MustBeGood, message: "Not good!", position: 5 }
+      script = %Script{} |> Script.register_error( error )
+      assert [error] == script.errors
     end
   end
 end

@@ -11,21 +11,20 @@ defmodule Dogma.Rules.LineLength do
   end
 
   defp check_line({i, line}, script) do
-    length = String.length( line )
-    if too_long?( length ) do
-      errors = [ error(script.path, length, i) | script.errors ]
-      %Script{ script | errors: errors }
+    len = String.length( line )
+    if too_long?( len ) do
+      err = error(len, i)
+      Script.register_error( script, err )
     else
       script
     end
   end
 
-  defp error(path, length, pos) do
+  defp error(length, pos) do
     %Error{
       rule:     __MODULE__,
       message:  "Line too long [#{length}]",
       position: pos,
-      script:   path,
     }
   end
 end
