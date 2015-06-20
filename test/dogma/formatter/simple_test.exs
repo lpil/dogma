@@ -48,7 +48,7 @@ defmodule Dogma.Formatter.SimpleTest do
     with "no errors" do
       should "print a success message" do
         formatted = [ %Script{}, %Script{} ] |> Simple.finish
-        assert "\n\n2 files, \e[32mno errors!\e[0m\n\n" == formatted   
+        assert "\n\n2 files, \e[32mno errors!\e[0m\n\n" == formatted
       end
     end
   end

@@ -12,3 +12,7 @@ sudo: false # faster builds
 
 notifications:
   email: false
+
+script:
+  - mix test
+  - mix dogma
