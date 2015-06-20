@@ -25,7 +25,7 @@ mix dogma
 
 
 ```
-Dogma - A code style linter for Elixir, powered by good old fashioned shame.
+Dogma - A code style linter for Elixir, powered by shame.
 Copyright © 2015 Louis Pilfold - MIT Licence
 
 Permission is hereby granted, free of charge, to any person obtaining
