@@ -30,16 +30,16 @@ defmodule Dogma.Formatter.SimpleTest do
 
   with ".script" do
     with "no errors" do
-      should "print a dot" do
+      should "print a green ." do
         script = %Script{ errors: [] }
-        assert "." == Simple.script( script )
+        assert "\e[32m.\e[0m" == Simple.script( script )
       end
     end
 
     with "some errors" do
-      should "print a X" do
+      should "print a red X" do
         script = %Script{ errors: [%Error{}] }
-        assert "X" == Simple.script( script )
+        assert "\e[31mX\e[0m" == Simple.script( script )
       end
     end
   end
@@ -47,8 +47,8 @@ defmodule Dogma.Formatter.SimpleTest do
   with ".finish" do
     with "no errors" do
       should "print a success message" do
-        scripts = [ %Script{}, %Script{} ]
-        assert "\n\n2 files, 0 errors.\n" == Simple.finish( scripts )
+        formatted = [ %Script{}, %Script{} ] |> Simple.finish
+        assert "\n\n2 files, \e[32mno errors!\e[0m\n\n" == formatted   
       end
     end
   end
@@ -63,10 +63,11 @@ defmodule Dogma.Formatter.SimpleTest do
 
     should "print count, followed by detail", context do
       output  = """
-      \n\n2 files, 1 errors.
+      \n\n2 files, \e[31m1 error!\e[0m
 
       == foo.ex ==
       44: BadCode: Awful.
+
       """
       assert output == Simple.finish( context.scripts )
     end
@@ -89,7 +90,7 @@ defmodule Dogma.Formatter.SimpleTest do
 
     should "print count, followed by details", context do
       output  = """
-      \n\n4 files, 3 errors.
+      \n\n4 files, \e[31m3 errors!\e[0m
 
       == foo.ex ==
       44: BadCode: Awful.
@@ -97,6 +98,7 @@ defmodule Dogma.Formatter.SimpleTest do
       == bar.ex ==
       2: Confusing: Wtf?
       63: UglyAsHell: Not ok.
+
       """
       assert output == Simple.finish( context.scripts )
     end

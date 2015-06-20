@@ -6,8 +6,8 @@ defmodule Dogma.Formatter.Simple do
   @doc """
   Runs at the start of the test suite, displaying a file count
   """
-  def start(files) do
-    len = length( files )
+  def start(scripts) do
+    len = length( scripts )
     case len do
       0 -> "No tests to run!"
       1 -> "Inspecting #{len} file."
@@ -20,23 +20,34 @@ defmodule Dogma.Formatter.Simple do
   """
   def script(script) do
     case length( script.errors ) do
-      0 -> "."
-      _ -> "X"
-    end
+      0 -> IO.ANSI.green <> "."
+      _ -> IO.ANSI.red   <> "X"
+    end <> IO.ANSI.reset
   end
 
   @doc """
   Runs at the end of the test suite, displaying errors.
   """
-  def finish(files) do
-    {error_count, formatted_errors} = format_errors(files)
-    """
-
-
-    #{ length files } files, #{ error_count } errors.
-    """ <> Enum.join( formatted_errors )
+  def finish(scripts) do
+    {error_count, errors} = format_errors( scripts )
+    len = length(scripts)
+    "\n\n" <> summary( len, error_count ) <> Enum.join( errors ) <> "\n"
   end
 
+
+  defp reset do
+    IO.ANSI.reset <> "\n"
+  end
+
+  defp summary(num, 0) do
+    "#{ num } files, #{ IO.ANSI.green }no errors!" <> reset
+  end
+  defp summary(num, 1) do
+    "#{ num } files, #{ IO.ANSI.red }1 error!" <> reset
+  end
+  defp summary(num, err_count) do
+    "#{ num } files, #{ IO.ANSI.red }#{ err_count } errors!" <> reset
+  end
 
   defp format_errors(scripts) do
     scripts
