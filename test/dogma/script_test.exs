@@ -92,4 +92,10 @@ defmodule Dogma.ScriptTest do
       assert [error] == script.errors
     end
   end
+
+  with ".walk" do
+    should "have tests" do
+      DogmaTest.pending
+    end
+  end
 end

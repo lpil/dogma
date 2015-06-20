@@ -24,6 +24,20 @@ defmodule Dogma.Script do
     }
   end
 
+
+  @doc """
+  Postwalks the AST, calling the given `fun/2` on each.
+
+  script.errors is used as an accumulator for `fun/2`.
+
+  `fun/2` should take a node and the errors accumulator as arguments, and
+  return {node, errors}
+  """
+  def walk(script, fun) do
+    Macro.postwalk( script.ast, script.errors, fun )
+  end
+
+
   def run_tests(script) do
     Rules.list
     |> Enum.reduce( script, fn(rule, x) -> rule.test x end )

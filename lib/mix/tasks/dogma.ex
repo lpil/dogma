@@ -1,7 +1,7 @@
 defmodule Mix.Tasks.Dogma do
   use Mix.Task
 
-  @shortdoc "Check Elixir source files for style offences"
+  @shortdoc "Check Elixir source files for style violations"
 
   def run(_) do
     Dogma.run
