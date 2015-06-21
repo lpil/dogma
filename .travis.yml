@@ -4,7 +4,7 @@ elixir:
   - 1.0.4
 
 otp_release:
-  - 17.3
+  - 17.4
 
 env: MIX_ENV=test
 
@@ -16,3 +16,6 @@ notifications:
 script:
   - mix test
   - mix dogma
+
+after_success:
+  - mix coveralls.travis
