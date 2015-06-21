@@ -29,7 +29,7 @@ defmodule Dogma.Rules.LineLengthTest do
           position: 1,
         },
       ]
-      assert errors === context.script.errors
+      assert errors == context.script.errors
     end
   end
 end

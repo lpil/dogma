@@ -12,6 +12,7 @@ defmodule Dogma.Rules do
 
   defp rule_list do
     [
+      FinalNewline,
       LineLength,
       TrailingWhitespace,
       UnlessElse,
