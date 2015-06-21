@@ -60,8 +60,8 @@ defmodule Dogma.Script do
 
 
   defp lines(source) do
-    source
-    |> String.split("\n", trim: true)
+    Regex.replace( ~r/\n\z/, source, "" )
+    |> String.split("\n")
     |> Enum.with_index
     |> Enum.map(fn {line, i} -> {i + 1, line} end)
   end
