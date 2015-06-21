@@ -107,4 +107,29 @@ defmodule Dogma.ScriptTest do
       assert %Script{ context.script | errors: errors } == walked
     end
   end
+
+
+  with ".run_tests" do
+    defmodule TestOne do
+      def test(script) do
+        %Script{ script | errors: [1 | script.errors] }
+      end
+    end
+    defmodule TestTwo do
+      def test(script) do
+        %Script{ script | errors: [2 | script.errors] }
+      end
+    end
+
+    setup context do
+      %{
+        script: Script.parse( "1 + 1", "foo.ex" )
+      }
+    end
+
+    should "run the tests", context do
+      script = context.script |> Script.run_tests([TestOne, TestTwo])
+      assert [2, 1] == script.errors
+    end
+  end
 end

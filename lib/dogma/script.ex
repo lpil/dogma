@@ -28,10 +28,10 @@ defmodule Dogma.Script do
   end
 
   @doc """
-  Runs each of the rules in Rules.list on the given script
+  Runs each of the rules Rules.list on the given script
   """
-  def run_tests(script) do
-    Rules.list
+  def run_tests(script, rules \\ nil) do
+    (rules || Rules.list)
     |> Enum.reduce( script, fn(rule, x) -> rule.test x end )
   end
 
