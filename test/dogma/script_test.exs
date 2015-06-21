@@ -8,7 +8,7 @@ defmodule Dogma.ScriptTest do
 
     with "a valid script" do
       setup context do
-        source = ~s"""
+        source = """
         defmodule Foo do
           def greet do
             "Hello world!"
@@ -80,6 +80,30 @@ defmodule Dogma.ScriptTest do
           {2, "missing terminator: >> (for \"<<\" starting at line 1)", ""}
         }
         assert error == context.script.ast
+      end
+    end
+
+
+    with "a script with trailing blank lines" do
+      setup context do
+        source = """
+        1 + 2
+
+
+        """
+        %{
+          source: source,
+          script: Script.parse( source, "lib/foo.ex" ),
+        }
+      end
+
+      should "preserve the extra blank lines", context do
+        lines = [
+          {1, "1 + 2"},
+          {2, ""},
+          {3, ""},
+        ]
+        assert lines == context.script.lines
       end
     end
   end
