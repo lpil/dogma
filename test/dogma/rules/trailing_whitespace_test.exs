@@ -36,9 +36,9 @@ defmodule Dogma.Rules.TrailingWhitespaceTest do
 
   with "long lines in triple quote strings" do
     setup context do
-      source = "\"\"\"\n"
-            <> "1 + 1       \n"
-            <> "\"\"\"\n"
+      source = ~s("""\n)
+            <> ~s(1 + 1       \n)
+            <> ~s("""\n)
       script = source |> Script.parse( "foo.ex" )
       %{
         script: TrailingWhitespace.test( script )
