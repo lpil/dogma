@@ -94,8 +94,17 @@ defmodule Dogma.ScriptTest do
   end
 
   with ".walk" do
-    should "have tests" do
-      DogmaTest.pending
+    setup context do
+      %{
+        script: Script.parse( "2 * 3", "foo.ex" )
+      }
+    end
+
+    should "run the fn on each node, with errors as an accumulator", context do
+      fun    = fn(node, errors) -> {node, [node | errors]} end
+      walked = Script.walk( context.script, fun )
+      errors = [ {:*, [line: 1], [2, 3]}, 3, 2, ]
+      assert %Script{ context.script | errors: errors } == walked
     end
   end
 end

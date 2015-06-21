@@ -7,8 +7,7 @@ defmodule Dogma.Rules.UnlessElse do
   alias Dogma.Error
 
   def test(script) do
-    {_, errors} = script |> Script.walk( &check_node(&1, &2) )
-    %Script{ script | errors: errors }
+    script |> Script.walk( &check_node(&1, &2) )
   end
 
   defp check_node({:unless, [line: i], [_, [do: _, else: _]]} = node, errs) do
