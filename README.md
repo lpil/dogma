@@ -22,6 +22,24 @@ We've got a mix task!
 mix dogma
 ```
 
+Run it, and you'll get something like this:
+
+```
+Inspecting 27 files.
+
+.....X..........X..........
+
+27 files, 2 errors!
+
+== lib/dogma/rules.ex ==
+23: TrailingBlankLines: Blank lines detected at end of file
+
+== test/dogma/formatter_test.exs ==
+9: TrailingWhitespace: Trailing whitespace detected [33]
+```
+
+How handy!
+
 ## LICENCE
 
 
