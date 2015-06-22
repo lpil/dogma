@@ -1,5 +1,5 @@
 defmodule Dogma.Rules.UnlessElseTest do
-  use ShouldI
+  use DogmaTest.Helper
 
   alias Dogma.Rules.UnlessElse
   alias Dogma.Script
@@ -19,14 +19,13 @@ defmodule Dogma.Rules.UnlessElseTest do
       }
     end
 
-    should "assign an error", context do
-      error = %Error{
+    should_register_errors [
+      %Error{
         message: "Favour if over unless with else",
         position: 1,
         rule: UnlessElse,
       }
-      assert [error] == context.script.errors
-    end
+    ]
   end
 
 
@@ -42,9 +41,7 @@ defmodule Dogma.Rules.UnlessElseTest do
       }
     end
 
-    should "not assign an error", context do
-      assert [] == context.script.errors
-    end
+    should_register_no_errors
   end
 
 
@@ -62,8 +59,6 @@ defmodule Dogma.Rules.UnlessElseTest do
       }
     end
 
-    should "not assign an error", context do
-      assert [] == context.script.errors
-    end
+    should_register_no_errors
   end
 end

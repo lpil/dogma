@@ -1,5 +1,5 @@
 defmodule Dogma.Rules.FinalNewlineTest do
-  use ShouldI
+  use DogmaTest.Helper
 
   alias Dogma.Rules.FinalNewline
   alias Dogma.Script
@@ -7,33 +7,28 @@ defmodule Dogma.Rules.FinalNewlineTest do
 
   with "a final newline" do
     setup context do
-      script = "IO.puts 1\nIO.puts 2\nIO.puts 3\n" |> Script.parse( "foo.ex" )
-      %{
-        script: FinalNewline.test( script )
-      }
+      script = "IO.puts 1\n" |> Script.parse( "foo.ex" ) |> FinalNewline.test
+      %{ script: script }
     end
 
-    should "register no errors", context do
-      assert [] == context.script.errors
-    end
+    should_register_no_errors
   end
 
 
   with "no final newline" do
     setup context do
-      script = "IO.puts 1\nIO.puts 2\nIO.puts 3" |> Script.parse( "foo.ex" )
-      %{
-        script: FinalNewline.test( script )
-      }
+      script = "IO.puts 1\nIO.puts 2\nIO.puts 3"
+                |> Script.parse( "foo.ex" )
+                |> FinalNewline.test
+      %{ script: script }
     end
 
-    should "register an error", context do
-      error = %Error{
+    should_register_errors [
+      %Error{
         rule: FinalNewline,
         message: "End of file newline missing",
         position: 3,
       }
-      assert [error] == context.script.errors
-    end
+    ]
   end
 end
