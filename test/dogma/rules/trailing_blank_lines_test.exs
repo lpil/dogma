@@ -1,5 +1,5 @@
 defmodule Dogma.Rules.TrailingBlankLinesTest do
-  use ShouldI
+  use DogmaTest.Helper
 
   alias Dogma.Rules.TrailingBlankLines
   alias Dogma.Script
@@ -15,9 +15,7 @@ defmodule Dogma.Rules.TrailingBlankLinesTest do
       }
     end
 
-    should "register no errors", context do
-      assert [] == context.script.errors
-    end
+    should_register_no_errors
   end
 
 
@@ -27,19 +25,16 @@ defmodule Dogma.Rules.TrailingBlankLinesTest do
       IO.puts 1
 
 
-      """ |> Script.parse( "foo.ex" )
-      %{
-        script: TrailingBlankLines.test( script )
-      }
+      """ |> Script.parse( "foo.ex" ) |> TrailingBlankLines.test
+      %{ script: script }
     end
 
-    should "register an error", context do
-      error = %Error{
+    should_register_errors [
+      %Error{
         rule: TrailingBlankLines,
         message: "Blank lines detected at end of file",
         position: 2,
       }
-      assert [error] == context.script.errors
-    end
+    ]
   end
 end
