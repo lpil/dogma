@@ -68,29 +68,83 @@ defmodule Dogma.Rules.LiteralInConditionTest do
       ]
     end
 
-    # with "unless" do
-    #   setup context do
-    #     script = """
-    #     unless [] do
-    #       useless_unless
-    #     end
-    #     """ |> test
-    #     %{ script: script }
-    #   end
+    with "unless" do
+      setup context do
+        script = """
+        unless [] do
+          useless_unless
+        end
+        """ |> test
+        %{ script: script }
+      end
+      should_register_errors [
+        %Error{
+          rule:     LiteralInCondition,
+          message:  "Literal value found in conditional",
+          position: 1,
+        }
+      ]
+    end
 
-    # end
+    with "case" do
+      setup context do
+        script = """
+        case 0 do
+          1 -> the_loneliest_number
+          _ -> go_to_guy
+        end
+        """ |> test
+        %{ script: script }
+      end
+      should_register_errors [
+        %Error{
+          rule:     LiteralInCondition,
+          message:  "Literal value found in conditional",
+          position: 1,
+        }
+      ]
+    end
+  end
 
-    # with "case" do
-    #   setup context do
-    #     script = """
-    #     case 0 do
-    #       1 -> the_loneliest_number
-    #       _ -> go_to_guy
-    #     end
-    #     """ |> test
-    #     %{ script: script }
-    #   end
+  with "a piped in argument" do
+    with "if" do
+      setup context do
+        script = """
+        something
+        |> if do
+          i_will_never_run
+        end
+        """ |> test
+        %{ script: script }
+      end
+      should_register_no_errors
+    end
 
-    # end
+    with "unless" do
+      setup context do
+        script = """
+        something
+        |> unless do
+          useless_unless
+        end
+        """ |> test
+        %{ script: script }
+      end
+      should_register_no_errors
+    end
+
+    with "case" do
+      setup context do
+        script = """
+        something
+        |> case do
+          1 -> the_loneliest_number
+          _ -> go_to_guy
+        end
+        """ |> test
+        %{ script: script }
+      end
+      should_register_no_errors
+    end
   end
 end

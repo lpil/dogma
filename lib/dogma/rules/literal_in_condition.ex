@@ -12,11 +12,13 @@ defmodule Dogma.Rules.LiteralInCondition do
   end
 
 
-  defp check_node({:if, meta, [predicate|_]} = node, errors) do
-    if predicate |> literal? do
-      errors = [error(meta[:line]) | errors]
+  for fun <- [:if, :unless, :case] do
+    defp check_node({unquote(fun), meta, [pred, [do: _]]} = node, errors) do
+      if pred |> literal? do
+        errors = [error(meta[:line]) | errors]
+      end
+      {node, errors}
     end
-    {node, errors}
   end
   defp check_node(node, errors) do
     {node, errors}
