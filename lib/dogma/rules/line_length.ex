@@ -1,4 +1,8 @@
 defmodule Dogma.Rules.LineLength do
+  @moduledoc """
+  A rule that disallows lines longer than 80 columns in length.
+  """
+
   alias Dogma.Script
   alias Dogma.Error
 
@@ -7,7 +11,7 @@ defmodule Dogma.Rules.LineLength do
   end
 
   def too_long?(num) do
-    num > 79
+    num > 80
   end
 
   defp check_line({i, line}, script) do
