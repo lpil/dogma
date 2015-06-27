@@ -1,12 +1,11 @@
 defmodule Dogma.Rules.DebuggerStatement do
-
-  alias Dogma.Script
-  alias Dogma.Error
-
   @moduledoc """
   A rule that disallows calls to IEx.pry, as while useful, we probably don't
   want them committed.
   """
+
+  alias Dogma.Script
+  alias Dogma.Error
 
   def test(script) do
     script |> Script.walk( &check_node(&1, &2) )

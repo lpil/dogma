@@ -1,4 +1,8 @@
 defmodule Dogma.Rules.TrailingBlankLines do
+  @moduledoc """
+  A rule that disallows trailing blank lines as the end of a source file.
+  """
+
   alias Dogma.Script
   alias Dogma.Error
 
