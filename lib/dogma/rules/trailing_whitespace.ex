@@ -13,7 +13,8 @@ defmodule Dogma.Rules.TrailingWhitespace do
   end
 
   defp check_line({i, line}, script) do
-    case Regex.run( @regex, line, return: :index ) do
+    trimmed_line = String.replace(line, ~r/\r\z/, "")
+    case Regex.run( @regex, trimmed_line, return: :index ) do
       [{x, _}] -> Script.register_error( script, error(x, i) )
       nil      -> script
     end
