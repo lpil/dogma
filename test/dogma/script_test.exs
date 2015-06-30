@@ -120,15 +120,30 @@ defmodule Dogma.ScriptTest do
   with ".walk" do
     setup context do
       %{
-        script: Script.parse( "2 * 3", "foo.ex" )
+        script: Script.parse( "2 * 3 + 1", "foo.ex" )
       }
     end
 
     should "run the fn on each node, with errors as an accumulator", context do
       fun    = fn(node, errors) -> {node, [node | errors]} end
       walked = Script.walk( context.script, fun )
-      errors = [3, 2, {:*, [line: 1], [2, 3]}]
-      assert %Script{ context.script | errors: errors } == walked
+      nodes_walked = [
+        1,
+        3,
+        2,
+        {:*, [line: 1], [2, 3]},
+        {:+, [line: 1], [{:*, [line: 1], [2, 3]}, 1]}
+      ]
+      assert %Script{ context.script | errors: nodes_walked } == walked
+    end
+
+    should "allow you to skip nodes", context do
+      fun    = fn(node, errors) -> {[], [node | errors]} end
+      walked = Script.walk( context.script, fun )
+      nodes_walked = [
+        {:+, [line: 1], [{:*, [line: 1], [2, 3]}, 1]}
+      ]
+      assert %Script{ context.script | errors: nodes_walked } == walked
     end
   end
 
