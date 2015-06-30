@@ -3,10 +3,23 @@ defmodule Dogma.RulesTest do
 
   alias Dogma.Rules
 
-  should "Return modules under Dogma.Rules" do
-    for rule_name <- Rules.list do
-      rule_name = to_string rule_name
-      assert Regex.match?( ~r/\AElixir.Dogma.Rules./, rule_name )
+  with ".list" do
+
+    should "return modules under Dogma.Rules" do
+      for rule_name <- Rules.list do
+        rule_name = to_string rule_name
+        assert Regex.match?( ~r/\AElixir.Dogma.Rules./, rule_name )
+      end
     end
+
+    should "return a module for each file in lib/dogma/rules/" do
+      rules_files = Path.wildcard("lib/dogma/rules/*.ex")
+      assert Rules.list |> length == rules_files |> length
+    end
+
+    should "contain Dogma.Rules.LiteralInCondition" do
+      assert Enum.member?(Rules.list, Dogma.Rules.LiteralInCondition)
+    end
+
   end
 end

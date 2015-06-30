@@ -1,25 +1,22 @@
 defmodule Dogma.Rules do
 
-  @doc """
-  Returns a list of all modules that define a Dogma rule.
-
-  In order to add a new rule, you must namespace it under Dogma.Rules, and add
-  it to the list in the Dogma.Rules.rule_list private function.
-  """
-  def list do
-    Enum.map rule_list, &Module.concat( Dogma.Rules, &1 )
+  to_rule_name = fn path ->
+    name = path
+            |> Path.basename(".ex")
+            |> Mix.Utils.camelize
+            |> String.to_atom
+    Module.concat( Dogma.Rules, name )
   end
 
-  defp rule_list do
-    [
-      DebuggerStatement,
-      FinalNewline,
-      LineLength,
-      LiteralInCondition,
-      NegatedIfUnless,
-      TrailingBlankLines,
-      TrailingWhitespace,
-      UnlessElse,
-    ]
+  rules = "lib/dogma/rules/*.ex"
+          |> Path.wildcard
+          |> Enum.map(to_rule_name)
+
+
+  @doc """
+  Returns a list of all modules that define a Dogma rule.
+  """
+  def list do
+    unquote(rules)
   end
 end
