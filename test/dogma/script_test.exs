@@ -127,7 +127,7 @@ defmodule Dogma.ScriptTest do
     should "run the fn on each node, with errors as an accumulator", context do
       fun    = fn(node, errors) -> {node, [node | errors]} end
       walked = Script.walk( context.script, fun )
-      errors = [ {:*, [line: 1], [2, 3]}, 3, 2, ]
+      errors = [3, 2, {:*, [line: 1], [2, 3]}]
       assert %Script{ context.script | errors: errors } == walked
     end
   end

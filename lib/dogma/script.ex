@@ -45,7 +45,7 @@ defmodule Dogma.Script do
   return {node, errors}
   """
   def walk(script, fun) do
-    {_, errors} = Macro.postwalk( script.ast, script.errors, fun )
+    {_, errors} = Macro.prewalk( script.ast, script.errors, fun )
     %Script{ script | errors: errors }
   end
 
