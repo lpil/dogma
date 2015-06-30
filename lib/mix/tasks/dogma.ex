@@ -3,8 +3,16 @@ defmodule Mix.Tasks.Dogma do
 
   @shortdoc "Check Elixir source files for style violations"
 
-  def run(_) do
-    Dogma.run
+  def run(argv) do
+    {_options, arguments, _} = OptionParser.parse(argv)
+    case arguments do
+      [path | _ ]  -> run_dogma(path)
+      []           -> run_dogma("")
+    end
+  end
+
+  defp run_dogma(path) do
+    Dogma.run(path)
     |> any_errors?
     |> if do
       System.halt(666)

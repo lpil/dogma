@@ -2,16 +2,16 @@ defmodule Dogma do
   alias Dogma.Script
   alias Dogma.Formatter
 
-  def run do
-    get_scripts
+  def run(dir_path \\ "") do
+    get_scripts(dir_path)
     |> Formatter.start( Formatter.Simple )
     |> test_scripts( Formatter.Simple )
     |> Formatter.finish( Formatter.Simple )
   end
 
 
-  defp get_scripts do
-    Path.wildcard( "**/*.{ex,exs}" )
+  defp get_scripts(dir_path) do
+    Path.wildcard( dir_path <> "**/*.{ex,exs}" )
     |> Enum.reject( &String.starts_with?(&1, "deps/") )
     |> read_paths
   end
