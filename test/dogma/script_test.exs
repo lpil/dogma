@@ -35,11 +35,11 @@ defmodule Dogma.ScriptTest do
 
       should "assigns lines", context do
         lines = [
-          {1,  "defmodule Foo do"},
-          {2,  "  def greet do"},
-          {3,  "    \"Hello world!\""},
-          {4,  "  end"},
-          {5,  "end"},
+          {1,  ~s(defmodule Foo do)},
+          {2,  ~s(  def greet do)},
+          {3,  ~s(    "Hello world!")},
+          {4,  ~s(  end)},
+          {5,  ~s(end)},
         ]
         assert lines == context.script.lines
       end
@@ -77,7 +77,7 @@ defmodule Dogma.ScriptTest do
       should "assign parse error in place of ast", context do
         error = {
           :error,
-          {2, "missing terminator: >> (for \"<<\" starting at line 1)", ""}
+          {2, ~s{missing terminator: >> (for \"<<\" starting at line 1)}, ""}
         }
         assert error == context.script.ast
       end
