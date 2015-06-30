@@ -29,6 +29,26 @@ defmodule Dogma.Rules.TrailingWhitespaceTest do
     ]
   end
 
+  with "windows line endings are okay" do
+    setup context do
+      source = "   'hello'\r\n"
+      <> "'how'\r\n"
+      <> "  'are'\r\n"
+      <> "      'you?'\r\n"
+      <> "'WINDOWS!' \r\n"
+      script = source |> Script.parse( "foo.ex" ) |> TrailingWhitespace.test
+      %{ script: script }
+    end
+
+    should_register_errors [
+      %Error{
+        rule: Dogma.Rules.TrailingWhitespace,
+        message: "Trailing whitespace detected [10]",
+        position: 5
+      }
+    ]
+  end
+
   with "long lines in triple quote strings" do
     setup context do
       source = ~s("""\n)
