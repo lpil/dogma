@@ -16,6 +16,7 @@ defmodule Dogma.Rules do
       FinalNewline,
       LineLength,
       LiteralInCondition,
+      NegatedIfUnless,
       TrailingBlankLines,
       TrailingWhitespace,
       UnlessElse,
