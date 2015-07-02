@@ -28,4 +28,21 @@ defmodule Dogma.Rules.LineLengthTest do
       },
     ]
   end
+
+  with "long lines but with a custom rule config" do
+    setup context do
+      script = [
+        String.duplicate( "x",  90 ),
+        String.duplicate( "y",  30 ),
+        String.duplicate( "z", 101 ),
+      ]
+      |> Enum.join( "\n" )
+      |> Script.parse( "foo.ex" )
+      |> LineLength.test(max_length: 120)
+
+      %{ script: script }
+    end
+
+    should_register_no_errors
+  end
 end

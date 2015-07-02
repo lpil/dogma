@@ -7,21 +7,18 @@ defmodule Dogma.Rules.LineLength do
   alias Dogma.Error
 
   def test(script) do
-    Enum.reduce( script.lines, script, &check_line(&1, &2) )
+    test(script, max_length: 80)
   end
 
-  def too_long?(num) do
-    num > 80
+  def test(script, max_length: max) do
+    script.lines
+    |> Enum.filter(fn ({i, line}) -> String.length(line) > max end)
+    |> Enum.reduce(script, &add_line_error/2)
   end
 
-  defp check_line({i, line}, script) do
-    len = String.length( line )
-    if too_long?( len ) do
-      err = error(len, i)
-      Script.register_error( script, err )
-    else
-      script
-    end
+  defp add_line_error({i, line}, script) do
+    err = error(String.length(line), i)
+    Script.register_error(script, err)
   end
 
   defp error(length, pos) do

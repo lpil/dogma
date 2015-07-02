@@ -41,8 +41,8 @@ defmodule Dogma.Script do
     |> Enum.reduce( script, &run_test/2 )
   end
 
-  defp run_test({rule, _custom_config}, script) do
-    rule.test(script)
+  defp run_test({rule, custom_config}, script) do
+    rule.test(script, custom_config)
   end
   defp run_test({rule}, script) do
     rule.test(script)
