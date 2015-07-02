@@ -29,6 +29,19 @@ defmodule Dogma.Rules.TrailingWhitespaceTest do
     ]
   end
 
+  with "lines terminated windows style, \r\n" do
+    setup context do
+      source = "   'hello'\r\n"
+      <> "'how'\r\n"
+      <> "  'are'\r\n"
+      <> "      'you?'\r\n"
+      script = source |> Script.parse( "foo.ex" ) |> TrailingWhitespace.test
+      %{ script: script }
+    end
+
+    should_register_no_errors
+  end
+
   with "long lines in triple quote strings" do
     setup context do
       source = ~s("""\n)
