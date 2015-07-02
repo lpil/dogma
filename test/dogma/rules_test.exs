@@ -5,9 +5,12 @@ defmodule Dogma.RulesTest do
 
   with ".list" do
 
-    should "return modules under Dogma.Rules" do
-      for rule_name <- Rules.list do
-        rule_name = to_string rule_name
+    should "return tuples with the first element being a Dogma.Rule" do
+      for rule <- Rules.list do
+         rule_name = case rule do
+           {module, _} -> module |> to_string
+           {module}    -> module |> to_string
+         end
         assert Regex.match?( ~r/\AElixir.Dogma.Rules./, rule_name )
       end
     end
@@ -18,7 +21,7 @@ defmodule Dogma.RulesTest do
     end
 
     should "contain Dogma.Rules.LiteralInCondition" do
-      assert Enum.member?(Rules.list, Dogma.Rules.LiteralInCondition)
+      assert Enum.member?(Rules.list, {Dogma.Rules.LiteralInCondition})
     end
 
   end

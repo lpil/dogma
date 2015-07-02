@@ -1,30 +1,25 @@
 defmodule Dogma.Rules do
+  alias Dogma.Rules
+  
   @moduledoc """
-  The module under which we namespace individual rules.
-
+  The module which defines all the rules to run in Dogma.
+  
   Rules to be run are returned by `list/0`
   """
-
-  to_rule_name = fn path ->
-    name = path
-            |> Path.basename(".ex")
-            |> Mix.Utils.camelize
-            |> String.to_atom
-    Module.concat( Dogma.Rules, name )
-  end
-
-  files = Path.wildcard( "lib/dogma/rules/*.ex" )
-  rules = Enum.map( files, to_rule_name )
-
-  # FIXME: This doesn't work. Removing a file doesn't trigger recompile.
-  for file <- files do
-    @external_resource file
-  end
-
-  @doc """
-  Returns a list of all modules that define a Dogma rule.
-  """
+  
   def list do
-    unquote(rules)
+    [
+      {Rules.DebuggerStatement},
+      {Rules.FinalNewline},
+      {Rules.LineLength, max_length: 80},
+      {Rules.LiteralInCondition},
+      {Rules.ModuleName},
+      {Rules.NegatedIfUnless},
+      {Rules.QuotesInString},
+      {Rules.TrailingBlankLines},
+      {Rules.TrailingWhitespace},
+      {Rules.UnlessElse},
+      {Rules.WindowsLineEndings}
+    ]
   end
 end
