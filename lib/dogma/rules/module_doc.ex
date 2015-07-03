@@ -1,13 +1,21 @@
 defmodule Dogma.Rules.ModuleDoc do
   @moduledoc """
   A rule that disallows the use of an if or unless with a negated predicate
+
+  Skips .exs files.
   """
 
   alias Dogma.Script
   alias Dogma.Error
 
+  @file_to_be_skipped ~r/\.exs\z/
+
   def test(script) do
-    script |> Script.walk( &check_node(&1, &2) )
+    if Regex.match?( @file_to_be_skipped, script.path ) do
+      script
+    else
+      script |> Script.walk( &check_node(&1, &2) )
+    end
   end
 
   defp check_node({:defmodule, m, [_, [do: module_body]]} = node, errors) do

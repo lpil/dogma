@@ -1,7 +1,8 @@
 defmodule Mix.Tasks.Dogma do
   use Mix.Task
 
-  @shortdoc "Check Elixir source files for style violations"
+  @shortdoc  "Check Elixir source files for style violations"
+  @moduledoc "Check Elixir source files for style violations"
 
   def run(argv) do
     {_options, arguments, _} = OptionParser.parse(argv)

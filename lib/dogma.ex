@@ -1,4 +1,12 @@
 defmodule Dogma do
+  @moduledoc """
+  Welcome to Dogma.
+
+  This module is our entry point, and provides the `run/1` function through
+  which you can run the tests on your current working directory.
+  """
+
+
   alias Dogma.Script
   alias Dogma.Formatter
 

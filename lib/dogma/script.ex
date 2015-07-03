@@ -1,4 +1,10 @@
 defmodule Dogma.Script do
+  @moduledoc """
+  This module provides the struct that we use to reprisent source files, their
+  abstract syntax tree, etc, as well as a few convenient functions for working
+  with them.
+  """
+
   alias Dogma.Rules
   alias Dogma.Script
 

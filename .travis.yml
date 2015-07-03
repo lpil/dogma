@@ -15,7 +15,7 @@ notifications:
 
 script:
   - mix test
-  # - mix dogma
+  - mix dogma
 
 after_success:
   - mix coveralls.travis

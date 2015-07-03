@@ -1,4 +1,9 @@
 defmodule Dogma.Rules do
+  @moduledoc """
+  The module under which we namespace individual rules.
+
+  Rules to be run are returned by `list/0`
+  """
 
   to_rule_name = fn path ->
     name = path
