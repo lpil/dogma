@@ -42,4 +42,17 @@ defmodule Dogma.Rules.VariableNameTest do
       },
     ]
   end
+
+  with "" do
+    setup context do
+      script = """
+      [foo, bar] = foo_bar
+      {fooBar}   = foo_bar
+      """ |> test
+      %{ script: script }
+    end
+    # For now we just want to show that we can not explode when the thing on
+    # the left hand side of the match operator isn't just a variable name.
+    should_register_no_errors
+  end
 end
