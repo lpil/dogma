@@ -37,8 +37,16 @@ defmodule Dogma.Script do
   Runs each of the rules Rules.list on the given script
   """
   def run_tests(script, rule_module \\ nil) do
-    (rule_module || Rules).list()
+    (rule_module || Rules.Sets.All).list()
+    |> Enum.map(&namespace_rule/1)
     |> Enum.reduce( script, &run_test/2 )
+  end
+
+  defp namespace_rule({rule, custom_config}) do
+    {Module.concat(Dogma.Rules, rule), custom_config}
+  end
+  defp namespace_rule({rule}) do
+    {Module.concat(Dogma.Rules, rule)}
   end
 
   defp run_test({rule, custom_config}, script) do

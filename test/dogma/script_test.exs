@@ -149,22 +149,12 @@ defmodule Dogma.ScriptTest do
 
 
   with ".run_tests" do
-    defmodule TestOne do
-      def test(script) do
-        %Script{ script | errors: [1 | script.errors] }
-      end
-    end
-    defmodule TestTwo do
-      def test(script, output: custom_out) do
-        %Script{ script | errors: [custom_out | script.errors] }
-      end
-    end
 
     defmodule CustomRules do
       def list do
         [
-          {TestOne},
-          {TestTwo, output: "hello world"}
+          {TestRules.TestOne},
+          {TestRules.TestTwo, output: "hello world"}
         ]
       end
     end
@@ -180,4 +170,21 @@ defmodule Dogma.ScriptTest do
       assert ["hello world", 1] == script.errors
     end
   end
+end
+
+defmodule Dogma.Rules.TestRules do
+  alias Dogma.Script
+
+  defmodule TestOne do
+    def test(script) do
+      %Script{ script | errors: [1 | script.errors] }
+    end
+  end
+
+  defmodule TestTwo do
+    def test(script, output: custom_out) do
+      %Script{ script | errors: [custom_out | script.errors] }
+    end
+  end
+
 end

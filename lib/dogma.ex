@@ -10,10 +10,10 @@ defmodule Dogma do
   alias Dogma.Script
   alias Dogma.Formatter
 
-  def run(dir_path \\ "") do
+  def run(dir_path \\ "", rule_set \\ nil) do
     get_scripts(dir_path)
     |> Formatter.start( Formatter.Simple )
-    |> test_scripts( Formatter.Simple )
+    |> test_scripts( Formatter.Simple, rule_set)
     |> Formatter.finish( Formatter.Simple )
   end
 
@@ -32,10 +32,10 @@ defmodule Dogma do
     end
   end
 
-  defp test_scripts(scripts, formatter) do
+  defp test_scripts(scripts, formatter, rule_set) do
     for script <- scripts do
       script
-      |> Script.run_tests
+      |> Script.run_tests(rule_set)
       |> Formatter.script( formatter )
     end
   end
