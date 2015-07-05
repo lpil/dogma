@@ -5,6 +5,7 @@ defmodule Dogma.Rules.VariableName do
 
   alias Dogma.Script
   alias Dogma.Error
+  alias Dogma.Util.Name
 
   def test(script) do
     script |> Script.walk( &check_node(&1, &2) )
@@ -12,7 +13,7 @@ defmodule Dogma.Rules.VariableName do
 
 
   defp check_node({:=, _, [{name, meta, _}|_]} = node, errors) do
-    if name |> to_string |> probably_snake_case? do
+    if name |> to_string |> Name.probably_snake_case? do
       {node, errors}
     else
       {node, [error( meta[:line] ) | errors]}
@@ -20,11 +21,6 @@ defmodule Dogma.Rules.VariableName do
   end
   defp check_node(node, errors) do
     {node, errors}
-  end
-
-
-  defp probably_snake_case?(name) do
-    not String.match?( name, ~r/[A-Z]/ )
   end
 
   defp error(pos) do
