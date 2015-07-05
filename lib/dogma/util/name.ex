@@ -31,34 +31,34 @@ defmodule Dogma.Util.Name do
 
 
   @doc """
-  Returns true if the name is (probably) `CamelCase`
+  Returns true if the name is (probably) `PascalCase`
 
-      iex> Dogma.Util.Name.probably_camel_case?( "FooBar" )
+      iex> Dogma.Util.Name.probably_pascal_case?( "FooBar" )
       true
 
-      iex> Dogma.Util.Name.probably_camel_case?( "fooBar" )
+      iex> Dogma.Util.Name.probably_pascal_case?( "fooBar" )
       false
 
-      iex> Dogma.Util.Name.probably_camel_case?( "foo_bar" )
+      iex> Dogma.Util.Name.probably_pascal_case?( "foo_bar" )
       false
   """
-  def probably_camel_case?(name) do
-    not probably_not_camel_case?( name )
+  def probably_pascal_case?(name) do
+    not probably_not_pascal_case?( name )
   end
 
   @doc """
-  Returns true if the name is (probably) not `CamelCase`
+  Returns true if the name is (probably) not `PascalCase`
 
-      iex> Dogma.Util.Name.probably_not_camel_case?( "FooBar" )
+      iex> Dogma.Util.Name.probably_not_pascal_case?( "FooBar" )
       false
 
-      iex> Dogma.Util.Name.probably_not_camel_case?( "fooBar" )
+      iex> Dogma.Util.Name.probably_not_pascal_case?( "fooBar" )
       true
 
-      iex> Dogma.Util.Name.probably_not_camel_case?( "foo_bar" )
+      iex> Dogma.Util.Name.probably_not_pascal_case?( "foo_bar" )
       true
   """
-  def probably_not_camel_case?(name) do
+  def probably_not_pascal_case?(name) do
     String.contains?( name, "_" ) or String.match?( name, ~r/\A[^A-Z]/ )
   end
 end

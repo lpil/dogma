@@ -1,6 +1,6 @@
 defmodule Dogma.Rules.ModuleName do
   @moduledoc """
-  A rule that disallows module names not in CamelCase
+  A rule that disallows module names not in PascalCase
   """
 
   alias Dogma.Script
@@ -28,7 +28,7 @@ defmodule Dogma.Rules.ModuleName do
   defp check_names(names, errors, line) do
     names
     |> Enum.flat_map( &prepare_names(&1) )
-    |> Enum.filter( &Name.probably_not_camel_case?(&1) )
+    |> Enum.filter( &Name.probably_not_pascal_case?(&1) )
     |> case do
        [] ->
          errors
@@ -46,7 +46,7 @@ defmodule Dogma.Rules.ModuleName do
   defp error(pos) do
     %Error{
       rule:     __MODULE__,
-      message:  "Module names should be in CamelCase",
+      message:  "Module names should be in PascalCase",
       position: pos,
     }
   end

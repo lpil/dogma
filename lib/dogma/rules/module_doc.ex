@@ -37,7 +37,7 @@ defmodule Dogma.Rules.ModuleDoc do
 
 
   # moduledocs inside child modules don't count
-  defp has_moduledoc?({:defmodule, _, _} = node, found_or_not) do
+  defp has_moduledoc?({:defmodule, _, _}, found_or_not) do
     {[], found_or_not}
   end
 

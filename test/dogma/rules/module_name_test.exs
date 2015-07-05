@@ -69,7 +69,7 @@ defmodule Dogma.Rules.ModuleNameTest do
     should_register_errors [
       %Error{
         rule:     ModuleName,
-        message:  "Module names should be in CamelCase",
+        message:  "Module names should be in PascalCase",
         position: 1,
       }
     ]
@@ -86,7 +86,7 @@ defmodule Dogma.Rules.ModuleNameTest do
     should_register_errors [
       %Error{
         rule:     ModuleName,
-        message:  "Module names should be in CamelCase",
+        message:  "Module names should be in PascalCase",
         position: 1,
       }
     ]
@@ -103,7 +103,7 @@ defmodule Dogma.Rules.ModuleNameTest do
     should_register_errors [
       %Error{
         rule:     ModuleName,
-        message:  "Module names should be in CamelCase",
+        message:  "Module names should be in PascalCase",
         position: 1,
       }
     ]
@@ -124,7 +124,7 @@ defmodule Dogma.Rules.ModuleNameTest do
     should_register_errors [
       %Error{
         rule:     ModuleName,
-        message:  "Module names should be in CamelCase",
+        message:  "Module names should be in PascalCase",
         position: 2,
       }
     ]
@@ -142,7 +142,7 @@ defmodule Dogma.Rules.ModuleNameTest do
     should_register_errors [
       %Error{
         rule:     ModuleName,
-        message:  "Module names should be in CamelCase",
+        message:  "Module names should be in PascalCase",
         position: 1,
       }
     ]
