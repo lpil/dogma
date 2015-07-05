@@ -20,6 +20,7 @@ defmodule Dogma.Rules.Sets.All do
       {TrailingBlankLines},
       {TrailingWhitespace},
       {UnlessElse},
+      {VariableName},
       {WindowsLineEndings}
     ]
   end
