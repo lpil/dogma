@@ -13,6 +13,7 @@ defmodule Dogma.Rules.Sets.All do
       {FinalNewline},
       {LineLength, max_length: 80},
       {LiteralInCondition},
+      {ModuleAttributeName},
       {ModuleDoc},
       {ModuleName},
       {NegatedIfUnless},
