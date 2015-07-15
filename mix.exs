@@ -31,7 +31,7 @@ defmodule Dogma.Mixfile do
     [
       {:shouldi, only: :test},
       {:excoveralls, only: [:dev,:test]},
-      {:mix_test_watch, "~> 0.1.1", only: :dev},
+      {:mix_test_watch, "~> 0.1.2", only: :dev},
     ]
   end
 end

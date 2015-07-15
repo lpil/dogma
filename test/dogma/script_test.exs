@@ -74,12 +74,17 @@ defmodule Dogma.ScriptTest do
         assert false == context.script.valid?
       end
 
-      should "assign parse error in place of ast", context do
-        error = {
-          :error,
-          {2, ~s{missing terminator: >> (for \"<<\" starting at line 1)}, ""}
+      should "assign [] in place of AST", context do
+        assert [] == context.script.ast
+      end
+
+      should "assign a syntax error", context do
+        error = %Error{
+          rule: SyntaxError,
+          message: ~s[missing terminator: >> (for "<<" starting at line 1)],
+          position: 1,
         }
-        assert error == context.script.ast
+        assert [error] == context.script.errors
       end
     end
 

@@ -7,6 +7,7 @@ defmodule Dogma.Script do
 
   alias Dogma.Rules
   alias Dogma.Script
+  alias Dogma.Error
 
   defstruct path:   nil,
             source: nil,
@@ -20,18 +21,19 @@ defmodule Dogma.Script do
   Builds a Script struct from the given source code and path
   """
   def parse(source, path) do
-    {valid?, ast} = case Code.string_to_quoted( source, line: 1 ) do
-      {:ok, ast} -> {true,  ast}
-      error      -> {false, error}
-    end
-    %Dogma.Script{
+    script = %Script{
       path:   path,
       source: source,
       lines:  lines( source ),
-      ast:    ast,
-      valid?: valid?,
     }
+    case Code.string_to_quoted( source, line: 1 ) do
+      {:ok, ast} ->
+        %Script{ script | valid?: true, ast: ast }
+      err ->
+        %Script{ script | valid?: false, ast: [], errors: [error( err )] }
+    end
   end
+
 
   @doc """
   Runs each of the rules Rules.list on the given script
@@ -40,6 +42,7 @@ defmodule Dogma.Script do
     (rules || Rules.list)
     |> Enum.reduce( script, fn(rule, x) -> rule.test x end )
   end
+
 
   @doc """
   Postwalks the AST, calling the given `fun/2` on each.
@@ -55,6 +58,7 @@ defmodule Dogma.Script do
     %Script{ script | errors: errors }
   end
 
+
   @doc """
   Takes a script and an error, and returns the script with the error prepended
   to the error list of the script.
@@ -64,6 +68,15 @@ defmodule Dogma.Script do
     %Script{ script | errors: errors }
   end
 
+
+
+  defp error({:error, {line, err, _}}) do
+    %Error{
+      rule:     SyntaxError,
+      message:  err,
+      position: line - 1,
+    }
+  end
 
   defp lines(source) do
     Regex.replace( ~r/\n\z/, source, "" )

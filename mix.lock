@@ -4,7 +4,7 @@
   "hackney": {:hex, :hackney, "1.1.0"},
   "idna": {:hex, :idna, "1.0.2"},
   "jsx": {:hex, :jsx, "2.4.0"},
-  "mix_test_watch": {:hex, :mix_test_watch, "0.1.1"},
+  "mix_test_watch": {:hex, :mix_test_watch, "0.1.2"},
   "porcelain": {:hex, :porcelain, "2.0.0"},
   "shouldi": {:hex, :shouldi, "0.2.3"},
   "ssl_verify_hostname": {:hex, :ssl_verify_hostname, "1.0.5"}}

@@ -7,9 +7,9 @@ defmodule Dogma.Rules.WindowsLineEndingsTest do
 
   with "windows line endings" do
     setup context do
-      source = "This line is good\n"
-            <> "This line is bad\r\n"
-            <> "back to good again"
+      source = "# This line is good\n"
+            <> "# This line is bad\r\n"
+            <> "# back to good again"
       script = source |> Script.parse( "foo.ex" ) |> WindowsLineEndings.test
       %{ script: script }
     end
