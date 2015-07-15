@@ -154,14 +154,13 @@ defmodule Dogma.ScriptTest do
 
 
   with ".run_tests" do
-    defmodule TestOne do
-      def test(script) do
-        %Script{ script | errors: [1 | script.errors] }
-      end
-    end
-    defmodule TestTwo do
-      def test(script) do
-        %Script{ script | errors: [2 | script.errors] }
+
+    defmodule CustomRules do
+      def list do
+        [
+          {TestRules.TestOne},
+          {TestRules.TestTwo, output: "hello world"}
+        ]
       end
     end
 
@@ -171,9 +170,26 @@ defmodule Dogma.ScriptTest do
       }
     end
 
-    should "run the tests", context do
-      script = context.script |> Script.run_tests([TestOne, TestTwo])
-      assert [2, 1] == script.errors
+    should "run each test in the provided configuration", context do
+      script = context.script |> Script.run_tests(CustomRules)
+      assert ["hello world", 1] == script.errors
     end
   end
+end
+
+defmodule Dogma.Rules.TestRules do
+  alias Dogma.Script
+
+  defmodule TestOne do
+    def test(script) do
+      %Script{ script | errors: [1 | script.errors] }
+    end
+  end
+
+  defmodule TestTwo do
+    def test(script, output: custom_out) do
+      %Script{ script | errors: [custom_out | script.errors] }
+    end
+  end
+
 end
