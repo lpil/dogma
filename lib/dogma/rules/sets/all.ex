@@ -11,6 +11,7 @@ defmodule Dogma.Rules.Sets.All do
     [
       {DebuggerStatement},
       {FinalNewline},
+      {FunctionArity, max: 4},
       {FunctionName},
       {LineLength, max_length: 80},
       {LiteralInCondition},
