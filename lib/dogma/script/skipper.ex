@@ -5,12 +5,9 @@ defmodule Dogma.Script.Skipper do
 
   @exs_file ~r/\.exs\z/
 
-  def skip?(script, skip_exs_files: true) do
-    Regex.match?( @exs_file, script.path )
-  end
-
-  def skip?(script, _) do
-    false
+  def skip?(script, options \\ []) do
+    skip_exs? = options |> Keyword.get(:skip_exs_files, false)
+    skip_exs? && Regex.match?( @exs_file, script.path )
   end
 
 end
