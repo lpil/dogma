@@ -8,6 +8,7 @@ defmodule Dogma.Script do
   alias Dogma.Rules
   alias Dogma.Script
   alias Dogma.Error
+  alias Dogma.Script.Skipper
 
   defstruct path:   nil,
             source: nil,
@@ -40,8 +41,16 @@ defmodule Dogma.Script do
   """
   def run_tests(script, rule_module \\ nil) do
     (rule_module || Rules.Sets.All).list()
+    |> Enum.reject(fn(rule) -> skip_test?(rule, script) end)
     |> Enum.map(&namespace_rule/1)
     |> Enum.reduce( script, &run_test/2 )
+  end
+
+  defp skip_test?({_, config}, script) do
+    script |> Skipper.skip?(config)
+  end
+  defp skip_test?(_, _) do
+    false
   end
 
   defp namespace_rule({rule, custom_config}) do
