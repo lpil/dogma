@@ -12,7 +12,7 @@ defmodule Dogma.Rules.LineLength do
 
   def test(script, max_length: max) do
     script.lines
-    |> Enum.filter(fn ({i, line}) -> String.length(line) > max end)
+    |> Enum.filter(fn ({_, line}) -> String.length(line) > max end)
     |> Enum.reduce(script, &add_line_error/2)
   end
 
