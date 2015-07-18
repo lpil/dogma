@@ -6,11 +6,8 @@ defmodule Dogma.Rules.LineLength do
   alias Dogma.Script
   alias Dogma.Error
 
-  def test(script) do
-    test(script, max_length: 80)
-  end
-
-  def test(script, max_length: max) do
+  def test(script, options \\ []) do
+    max = options |> Keyword.get(:max_length, 80)
     script.lines
     |> Enum.filter(fn ({_, line}) -> String.length(line) > max end)
     |> Enum.reduce(script, &add_line_error/2)
