@@ -30,6 +30,18 @@ defmodule Dogma.Rules.FunctionNameTest do
     should_register_no_errors
   end
 
+  with "valid but weird names" do
+    setup context do
+      script = """
+      def unquote(function_name)(_state) do
+        {:ok, "something"}
+      end
+      """ |> test
+      %{ script: script }
+    end
+    should_register_no_errors
+  end
+
   with "invalid names using def" do
     setup context do
       script = """
