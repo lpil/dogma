@@ -22,7 +22,22 @@ defmodule Dogma.Rules.FunctionArityTest do
       def point(a,b,c,d) do
       end
 
+      def has_defaults(a,b,c,d \\\\[]) do
+      end
+
       def point(a,b,c,{d, e, f}) do
+      end
+      """ |> test
+      %{ script: script }
+    end
+    should_register_no_errors
+  end
+
+  with "valid arity in a protocol definition" do
+    setup context do
+      script = """
+      defprotocol Some.Protocol do
+        def run(thing, context)
       end
       """ |> test
       %{ script: script }
