@@ -22,6 +22,11 @@ defmodule Dogma.Rules.FunctionName do
     {node, errors}
   end
 
+  # If the function is named by unquoting something then we can't check it
+  defp check_function({:unquote,_,_} , _meta, node, errors) do
+    {node, errors}
+  end
+
   defp check_function(name, meta, node, errors) do
     if name |> to_string |> Name.probably_snake_case? do
       {node, errors}
