@@ -6,11 +6,8 @@ defmodule Dogma.Rules.FunctionArity do
   alias Dogma.Script
   alias Dogma.Error
 
-  def test(script) do
-    test(script, max: 4)
-  end
-
-  def test(script, max: max) do
+  def test(script, options \\ []) do
+    max = options |> Keyword.get(:max, 4)
     script
       |> Script.walk( fn(node, errs) -> check_node(node, errs, max) end)
   end

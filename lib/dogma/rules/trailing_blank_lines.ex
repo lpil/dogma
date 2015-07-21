@@ -8,7 +8,7 @@ defmodule Dogma.Rules.TrailingBlankLines do
 
   @violation_regex ~r/\n\n+\z/
 
-  def test(script) do
+  def test(script, _config \\ []) do
     case script |> violation? do
       false -> script
       pos   -> script |> add_error( pos )

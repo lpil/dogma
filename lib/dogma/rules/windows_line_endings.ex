@@ -8,7 +8,7 @@ defmodule Dogma.Rules.WindowsLineEndings do
 
   @violation_regex ~r/\r\z/
 
-  def test(script) do
+  def test(script, _config \\ []) do
     Enum.reduce( script.lines, script, &check_line(&1, &2) )
   end
 

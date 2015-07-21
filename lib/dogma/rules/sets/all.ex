@@ -14,7 +14,7 @@ defmodule Dogma.Rules.Sets.All do
       {LineLength, max_length: 80},
       {LiteralInCondition},
       {ModuleAttributeName},
-      {ModuleDoc},
+      {ModuleDoc, skip_exs_files: true},
       {ModuleName},
       {NegatedIfUnless},
       {QuotesInString},

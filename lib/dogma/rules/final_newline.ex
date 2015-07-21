@@ -6,7 +6,7 @@ defmodule Dogma.Rules.FinalNewline do
   alias Dogma.Script
   alias Dogma.Error
 
-  def test(script) do
+  def test(script, _config \\ []) do
     if script.source |> String.ends_with?("\n") do
       script
     else

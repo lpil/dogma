@@ -8,14 +8,8 @@ defmodule Dogma.Rules.ModuleDoc do
   alias Dogma.Script
   alias Dogma.Error
 
-  @file_to_be_skipped ~r/\.exs\z/
-
-  def test(script) do
-    if Regex.match?( @file_to_be_skipped, script.path ) do
-      script
-    else
-      script |> Script.walk( &check_node(&1, &2) )
-    end
+  def test(script, _config \\ []) do
+    script |> Script.walk( &check_node(&1, &2) )
   end
 
   defp check_node({:defmodule, m, [_, [do: module_body]]} = node, errors) do
