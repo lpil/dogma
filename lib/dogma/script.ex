@@ -60,7 +60,7 @@ defmodule Dogma.Script do
 
 
   @doc """
-  Postwalks the AST, calling the given `fun/2` on each.
+  Prewalks the AST, calling the given `fun/2` on each.
 
   script.errors is used as an accumulator for `fun/2`, the script with the new
   errors is returned.
