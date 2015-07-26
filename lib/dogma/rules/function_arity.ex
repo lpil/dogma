@@ -16,17 +16,25 @@ defmodule Dogma.Rules.FunctionArity do
   end
 
   defp check_node({:def, _, _} = node, errors, max_arity) do
-    check_function(node, errors, max_arity)
+    check_def(node, errors, max_arity)
   end
   defp check_node({:defp, _, _} = node, errors, max_arity) do
-    check_function(node, errors, max_arity)
+    check_def(node, errors, max_arity)
   end
   defp check_node(node, errors, _max_arity) do
     {node, errors}
   end
 
-  defp check_function(node, errors, max_arity) do
-    {_, [line: line_number], [{_, _, function_args}, _]} = node
+  defp check_def(node, errors, max_arity) do
+    case node do
+      {_, [line: line_number], [{_, _, args}, _function_body]}
+        -> check_args(args, line_number, errors, max_arity)
+      {_, [line: line_number], [{_, _, args}]}
+        -> check_args(args, line_number, errors, max_arity)
+    end
+  end
+
+  defp check_args(function_args, line_number, errors, max_arity) do
     function_arity = Enum.count(function_args || [])
     if (function_arity > max_arity) do
       {node, [error(line_number, max_arity) | errors]}
