@@ -29,8 +29,13 @@ defmodule Dogma.Mixfile do
 
   defp deps do
     [
+      # Test framework
       {:shouldi, only: :test},
-      {:excoveralls, only: [:dev,:test]},
+      # Test coverage checker
+      {:excoveralls, only: ~w(dev test)a},
+      # Documentation checker
+      {:inch_ex, only: ~w(dev test docs)a},
+      # Automatic test runner
       {:mix_test_watch, "~> 0.1.2", only: :dev},
     ]
   end

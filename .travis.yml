@@ -19,3 +19,4 @@ script:
 
 after_success:
   - mix coveralls.travis
+  - mix inch.report
