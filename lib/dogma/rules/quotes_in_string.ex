@@ -4,6 +4,8 @@ defmodule Dogma.Rules.QuotesInString do
   Use s_sigil or S_sigil instead.
   """
 
+  @behaviour Dogma.Rule
+
   alias Dogma.Script
   alias Dogma.Error
 

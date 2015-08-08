@@ -3,6 +3,8 @@ defmodule Dogma.Rules.WindowsLineEndings do
   A rule that disallows any lines terminated with \r\n
   """
 
+  @behaviour Dogma.Rule
+
   alias Dogma.Script
   alias Dogma.Error
 

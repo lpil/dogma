@@ -3,6 +3,8 @@ defmodule Dogma.Rules.FunctionName do
   A rule that disallows function names not in snake_case
   """
 
+  @behaviour Dogma.Rule
+
   alias Dogma.Script
   alias Dogma.Error
   alias Dogma.Util.Name

@@ -3,6 +3,8 @@ defmodule Dogma.Rules.UnlessElse do
   A rule that disallows the use of an `else` block with the `unless` macro.
   """
 
+  @behaviour Dogma.Rule
+
   alias Dogma.Script
   alias Dogma.Error
 

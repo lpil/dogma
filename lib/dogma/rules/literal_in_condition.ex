@@ -4,6 +4,8 @@ defmodule Dogma.Rules.LiteralInCondition do
   in place of a variable or predicate function.
   """
 
+  @behaviour Dogma.Rule
+
   alias Dogma.Script
   alias Dogma.Error
 

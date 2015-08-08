@@ -3,6 +3,8 @@ defmodule Dogma.Rules.LineLength do
   A rule that disallows lines longer than 80 columns in length.
   """
 
+  @behaviour Dogma.Rule
+
   alias Dogma.Script
   alias Dogma.Error
 

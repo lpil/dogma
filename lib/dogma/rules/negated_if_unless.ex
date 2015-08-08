@@ -3,6 +3,8 @@ defmodule Dogma.Rules.NegatedIfUnless do
   A rule that disallows the use of an if or unless with a negated predicate
   """
 
+  @behaviour Dogma.Rule
+
   alias Dogma.Script
   alias Dogma.Error
 

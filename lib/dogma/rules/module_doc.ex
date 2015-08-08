@@ -5,6 +5,8 @@ defmodule Dogma.Rules.ModuleDoc do
   Skips .exs files.
   """
 
+  @behaviour Dogma.Rule
+
   alias Dogma.Script
   alias Dogma.Error
 

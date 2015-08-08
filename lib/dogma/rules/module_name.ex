@@ -3,6 +3,8 @@ defmodule Dogma.Rules.ModuleName do
   A rule that disallows module names not in PascalCase
   """
 
+  @behaviour Dogma.Rule
+
   alias Dogma.Script
   alias Dogma.Error
   alias Dogma.Util.Name

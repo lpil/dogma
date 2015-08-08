@@ -4,6 +4,8 @@ defmodule Dogma.Rules.DebuggerStatement do
   want them committed.
   """
 
+  @behaviour Dogma.Rule
+
   alias Dogma.Script
   alias Dogma.Error
 

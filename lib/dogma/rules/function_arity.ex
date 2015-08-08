@@ -3,6 +3,8 @@ defmodule Dogma.Rules.FunctionArity do
   A rule that disallows functions with arity greater than 4 (configurable)
   """
 
+  @behaviour Dogma.Rule
+
   alias Dogma.Script
   alias Dogma.Error
 
