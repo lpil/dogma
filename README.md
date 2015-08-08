@@ -40,8 +40,25 @@ Inspecting 27 files.
 
 How handy!
 
-## LICENCE
 
+## Contributor Information
+
+### Test it
+
+```sh
+mix test       # Run tests once
+mix test.watch # Run tests on file changes
+mix dogma      # Dogfooding- run the linter!
+```
+
+### Read the docs
+
+```sh
+mix docs
+```
+
+
+# LICENCE
 
 ```
 Dogma - A code style linter for Elixir, powered by shame.

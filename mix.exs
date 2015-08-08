@@ -33,10 +33,15 @@ defmodule Dogma.Mixfile do
       {:shouldi, only: :test},
       # Test coverage checker
       {:excoveralls, only: ~w(dev test)a},
-      # Documentation checker
-      {:inch_ex, only: ~w(dev test docs)a},
       # Automatic test runner
       {:mix_test_watch, "~> 0.1.2", only: :dev},
+
+      # Documentation checker
+      {:inch_ex, only: ~w(dev test docs)a},
+      # Markdown processor
+      {:earmark, "~> 0.1", only: :dev},
+      # Documentation generator
+      {:ex_doc, "~> 0.7", only: :dev},
     ]
   end
 end
