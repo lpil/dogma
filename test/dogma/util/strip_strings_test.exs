@@ -1,0 +1,92 @@
+defmodule Dogma.Util.ScriptStringsTest do
+  use ShouldI
+
+  alias Dogma.Util.ScriptStrings
+
+  with "blank/1" do
+    should "no-op with empty scripts" do
+      processed = "" |> ScriptStrings.blank
+      assert processed == ""
+    end
+
+    should "no-op with stringless scripts" do
+      script = """
+      defmodule Hello do
+        def World do
+          :dennis_rocks
+        end
+      end
+      """
+      processed = script |> ScriptStrings.blank
+      assert processed == script
+    end
+
+    should "no-op with with s sigil" do
+      script = """
+      defmodule Sneaky do
+        def String do
+          ~s(Hey, look, this is a string!)
+        end
+      end
+      """
+      processed = script |> ScriptStrings.blank
+      assert processed == script
+    end
+
+    should "no-op with with S sigil" do
+      script = """
+      defmodule Sneaky do
+        def String do
+          ~S(Hey, look, this is ALSO a string!)
+        end
+      end
+      """
+      processed = script |> ScriptStrings.blank
+      assert processed == script
+    end
+
+    should "strip contents from strings, preserving newlines" do
+      processed = """
+      defmodule Sneaky do
+        def String(x) do
+          x <> "Hello,
+world!"
+        end
+      end
+      """ |> ScriptStrings.blank
+      desired = """
+      defmodule Sneaky do
+        def String(x) do
+          x <> "
+"
+        end
+      end
+      """
+      assert processed == desired
+    end
+
+    should "strip contents from docstrings, preserving newlines" do
+      processed = [
+        ~s(defmodule Docky do),
+        ~s[  def String(x) do],
+        ~s(    """),
+        ~s(    Hello,),
+        ~s(    world!),
+        ~s(    """),
+        ~s(  end),
+        ~s(end),
+      ] |> Enum.join |> ScriptStrings.blank
+      desired = [
+        ~s(defmodule Docky do),
+        ~s[  def String(x) do],
+        ~s(    """),
+        ~s(),
+        ~s(),
+        ~s("""),
+        ~s(  end),
+        ~s(end),
+      ] |> Enum.join
+      assert processed == desired
+    end
+  end
+end
