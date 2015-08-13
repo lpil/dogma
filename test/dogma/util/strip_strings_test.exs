@@ -106,5 +106,23 @@ world!"
       """
       assert processed == desired
     end
+
+    should "handle quotes preceeded by escaped slashes in strings" do
+      processed = ~S"""
+      defmodule Identifier do
+        def say(x) do
+          "This here is a slash -> \\"
+        end
+      end
+      """ |> ScriptStrings.blank
+      desired = """
+      defmodule Identifier do
+        def say(x) do
+          ""
+        end
+      end
+      """
+      assert processed == desired
+    end
   end
 end

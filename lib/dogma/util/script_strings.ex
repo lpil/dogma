@@ -40,6 +40,11 @@ defmodule Dogma.Util.ScriptStrings do
     acc
   end
 
+  # \\ is not going to escape the next char, so continue
+  def in_string(<< "\\\\"::utf8, cs::binary >>, acc) do
+    in_string(cs, acc)
+  end
+
   # \" is escaped, so continue
   def in_string(<< "\\\""::utf8, cs::binary >>, acc) do
     in_string(cs, acc)
