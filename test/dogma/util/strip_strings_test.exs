@@ -124,5 +124,27 @@ world!"
       """
       assert processed == desired
     end
+
+    should "handle quotes in doc strings" do
+      processed = [
+        ~s(defmodule Doc do),
+        ~s[  def string(x) do],
+        ~s(    """),
+        ~s(    Check out this quote -> "),
+        ~s(    """),
+        ~s(  end),
+        ~s(end),
+      ] |> Enum.join |> ScriptStrings.blank
+      desired = [
+        ~s(defmodule Doc do),
+        ~s[  def string(x) do],
+        ~s(    """),
+        ~s(),
+        ~s("""),
+        ~s(  end),
+        ~s(end),
+      ] |> Enum.join
+      assert processed == desired
+    end
   end
 end

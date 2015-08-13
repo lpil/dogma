@@ -16,52 +16,89 @@ defmodule Dogma.Util.ScriptStrings do
   end
 
 
-  def not_in_string("", acc) do
+  defp not_in_string("", acc) do
     acc
   end
 
   # \" is escaped, so continue
-  def not_in_string(<< "\\\""::utf8, cs::binary >>, acc) do
+  defp not_in_string(<< "\\\""::utf8, cs::binary >>, acc) do
     not_in_string(cs, acc <> "\\\"")
   end
 
+  # If we meet a """ we're inside a docstring, so switch
+  defp not_in_string(<< "\"\"\""::utf8, cs::binary >>, acc) do
+    in_docstring(cs, acc <> "\"\"\"")
+  end
+
   # If we meet a " we're inside a string, so switch
-  def not_in_string(<< "\""::utf8, cs::binary >>, acc) do
+  defp not_in_string(<< "\""::utf8, cs::binary >>, acc) do
     in_string(cs, acc <> "\"")
   end
 
-  # Another other char we're still outside, so append to acc
-  def not_in_string(<< c::utf8, cs::binary >>, acc) do
+  # Any other char we're still outside, so append to acc
+  defp not_in_string(<< c::utf8, cs::binary >>, acc) do
     not_in_string(cs, acc <> <<c>>)
   end
 
 
-  def in_string("", acc) do
+
+  defp in_docstring("", acc) do
+    acc
+  end
+
+  # We want to preserve line numbers, so add newlines to acc
+  defp in_docstring(<< "\n"::utf8, cs::binary >>, acc) do
+    in_docstring(cs, acc <> "\n")
+  end
+
+  # \\ is not going to escape the next char, so continue
+  defp in_docstring(<< "\\\\"::utf8, cs::binary >>, acc) do
+    in_docstring(cs, acc)
+  end
+
+  # \" is escaped, so continue
+  defp in_docstring(<< "\\\""::utf8, cs::binary >>, acc) do
+    in_docstring(cs, acc)
+  end
+
+  # If we meet """ we're outside a string, so switch
+  defp in_docstring(<< "\"\"\""::utf8, cs::binary >>, acc) do
+    not_in_string(cs, acc <> "\"\"\"")
+  end
+
+  # Any other char we're still inside, so don't add it to acc
+  defp in_docstring(<< _::utf8, cs::binary >>, acc) do
+    in_docstring(cs, acc)
+  end
+
+
+
+  defp in_string("", acc) do
     acc
   end
 
   # \\ is not going to escape the next char, so continue
-  def in_string(<< "\\\\"::utf8, cs::binary >>, acc) do
+  defp in_string(<< "\\\\"::utf8, cs::binary >>, acc) do
     in_string(cs, acc)
   end
 
   # \" is escaped, so continue
-  def in_string(<< "\\\""::utf8, cs::binary >>, acc) do
+  defp in_string(<< "\\\""::utf8, cs::binary >>, acc) do
     in_string(cs, acc)
   end
 
   # If we meet a " we're outside a string, so switch
-  def in_string(<< "\""::utf8, cs::binary >>, acc) do
+  defp in_string(<< "\""::utf8, cs::binary >>, acc) do
     not_in_string(cs, acc <> "\"")
   end
 
   # We want to preserve line numbers, so add newlines to acc
-  def in_string(<< "\n"::utf8, cs::binary >>, acc) do
+  defp in_string(<< "\n"::utf8, cs::binary >>, acc) do
     in_string(cs, acc <> "\n")
   end
 
-  # Another other char we're still inside, so don't add it to acc
-  def in_string(<< _::utf8, cs::binary >>, acc) do
+  # Any other char we're still inside, so don't add it to acc
+  defp in_string(<< _::utf8, cs::binary >>, acc) do
     in_string(cs, acc)
   end
 end
