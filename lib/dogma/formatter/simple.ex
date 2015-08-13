@@ -3,6 +3,8 @@ defmodule Dogma.Formatter.Simple do
   A formatter that prints a dot per file, followed by details at the end.
   """
 
+  @behaviour Dogma.Formatter
+
   @doc """
   Runs at the start of the test suite, displaying a file count
   """

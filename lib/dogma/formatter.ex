@@ -1,7 +1,29 @@
 defmodule Dogma.Formatter do
   @moduledoc """
-  Handles formatters. In short, decides whether we should print to STDIO.
+  Handles formatters. In short, decides what we should print to STDOUT.
+
+  Also provides the formatter behaviour.
   """
+
+  use Behaviour
+  alias Dogma.Script
+
+  @doc """
+  Formats the message to be printed at the start of the test suite.
+  """
+  defcallback start( [%Script{}] ) :: String.t
+
+  @doc """
+  Formats the message to be printed after each script has been tested.
+  """
+  defcallback script( [%Script{}] ) :: String.t
+
+  @doc """
+  Formats the message to be printed at the end of the test suite.
+  """
+  defcallback finish( [%Script{}] ) :: String.t
+
+
 
   @doc """
   Runs at the start of the test suite.
