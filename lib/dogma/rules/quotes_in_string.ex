@@ -18,17 +18,25 @@ defmodule Dogma.Rules.QuotesInString do
             |> Enum.map(fn(char) -> String.to_atom( "sigil_" <> char ) end)
   @sigils sigals
 
+  # Don't check inside sigils
   for sigil <- @sigils do
     defp check_node({unquote(sigil), _, _}, errors) do
       {[], errors}
     end
   end
+
+  # Don't check inside binary patterns
+  defp check_node({:<<>>, _, _}, errors) do
+    {[], errors}
+  end
+
   defp check_node(bin, errors) when is_binary bin do
     if bin |> String.valid? do
       errors = check_string( bin, errors )
     end
     {node, errors}
   end
+
   defp check_node(node, errors) do
     {node, errors}
   end

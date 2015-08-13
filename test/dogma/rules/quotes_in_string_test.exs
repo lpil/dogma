@@ -83,4 +83,12 @@ defmodule Dogma.Rules.QuotesInStringTest do
       }
     ]
   end
+
+  with "a quote in a binary pattern, where sigils are not valid" do
+    setup context do
+      script = ~S(<< "\""::utf8, cs::binary >> = string) |> test
+      %{ script: script }
+    end
+    should_register_no_errors
+  end
 end

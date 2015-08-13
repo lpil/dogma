@@ -22,17 +22,17 @@ defmodule Dogma.Util.ScriptStrings do
 
   # \" is escaped, so continue
   defp not_in_string(<< "\\\""::utf8, cs::binary >>, acc) do
-    not_in_string(cs, acc <> "\\\"")
+    not_in_string(cs, acc <> ~S(\"))
   end
 
   # If we meet a """ we're inside a docstring, so switch
   defp not_in_string(<< "\"\"\""::utf8, cs::binary >>, acc) do
-    in_docstring(cs, acc <> "\"\"\"")
+    in_docstring(cs, acc <> ~s("""))
   end
 
   # If we meet a " we're inside a string, so switch
   defp not_in_string(<< "\""::utf8, cs::binary >>, acc) do
-    in_string(cs, acc <> "\"")
+    in_string(cs, acc <> ~s("))
   end
 
   # Any other char we're still outside, so append to acc
@@ -63,7 +63,7 @@ defmodule Dogma.Util.ScriptStrings do
 
   # If we meet """ we're outside a string, so switch
   defp in_docstring(<< "\"\"\""::utf8, cs::binary >>, acc) do
-    not_in_string(cs, acc <> "\"\"\"")
+    not_in_string(cs, acc <> ~s("""))
   end
 
   # Any other char we're still inside, so don't add it to acc
@@ -89,7 +89,7 @@ defmodule Dogma.Util.ScriptStrings do
 
   # If we meet a " we're outside a string, so switch
   defp in_string(<< "\""::utf8, cs::binary >>, acc) do
-    not_in_string(cs, acc <> "\"")
+    not_in_string(cs, acc <> ~s("))
   end
 
   # We want to preserve line numbers, so add newlines to acc
