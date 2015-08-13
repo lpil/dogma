@@ -47,16 +47,16 @@ defmodule Dogma.Util.ScriptStringsTest do
 
     should "strip contents from strings, preserving newlines" do
       processed = """
-      defmodule Sneaky do
-        def String(x) do
+      defmodule Newliney do
+        def string(x) do
           x <> "Hello,
 world!"
         end
       end
       """ |> ScriptStrings.blank
       desired = """
-      defmodule Sneaky do
-        def String(x) do
+      defmodule Newliney do
+        def string(x) do
           x <> "
 "
         end
@@ -68,7 +68,7 @@ world!"
     should "strip contents from docstrings, preserving newlines" do
       processed = [
         ~s(defmodule Docky do),
-        ~s[  def String(x) do],
+        ~s[  def string(x) do],
         ~s(    """),
         ~s(    Hello,),
         ~s(    world!),
@@ -78,7 +78,7 @@ world!"
       ] |> Enum.join |> ScriptStrings.blank
       desired = [
         ~s(defmodule Docky do),
-        ~s[  def String(x) do],
+        ~s[  def string(x) do],
         ~s(    """),
         ~s(),
         ~s(),
@@ -86,6 +86,24 @@ world!"
         ~s(  end),
         ~s(end),
       ] |> Enum.join
+      assert processed == desired
+    end
+
+    should "handle quotes in strings" do
+      processed = ~S"""
+      defmodule Boardroom do
+        def say(x) do
+          "You just said \"merger\"! Shots!"
+        end
+      end
+      """ |> ScriptStrings.blank
+      desired = """
+      defmodule Boardroom do
+        def say(x) do
+          ""
+        end
+      end
+      """
       assert processed == desired
     end
   end
