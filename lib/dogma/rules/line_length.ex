@@ -4,6 +4,7 @@ defmodule Dogma.Rules.LineLength do
   """
 
   @behaviour Dogma.Rule
+  @behaviour Dogma.ConfigurableRule
 
   alias Dogma.Script
   alias Dogma.Error
