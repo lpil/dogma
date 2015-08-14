@@ -21,12 +21,23 @@ defmodule Dogma.ScriptTest do
         }
       end
 
-      should "register path", context do
+      should "assign path", context do
         assert "lib/foo.ex" == context.script.path
       end
 
-      should "register source", context do
+      should "assign source", context do
         assert context.source == context.script.source
+      end
+
+      should "assign processed source", context do
+        processed_source = """
+        defmodule Foo do
+          def greet do
+            ""
+          end
+        end
+        """
+        assert processed_source == context.script.processed_source
       end
 
       should "assign an empty list of errors", context do
@@ -44,11 +55,22 @@ defmodule Dogma.ScriptTest do
         assert lines == context.script.lines
       end
 
+      should "assigns processed lines", context do
+        lines = [
+          {1,  ~s(defmodule Foo do)},
+          {2,  ~s(  def greet do)},
+          {3,  ~s(    "")},
+          {4,  ~s(  end)},
+          {5,  ~s(end)},
+        ]
+        assert lines == context.script.processed_lines
+      end
+
       should "assign valid? as true", context do
         assert true == context.script.valid?
       end
 
-      should "assigns the quotes abstract syntax tree", context do
+      should "assigns the quoted abstract syntax tree", context do
         {:ok, ast} = Code.string_to_quoted( context.source )
         assert ast == context.script.ast
       end

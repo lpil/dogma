@@ -52,11 +52,6 @@ defmodule Dogma.Rules.TrailingWhitespaceTest do
         script: TrailingWhitespace.test( script )
       }
     end
-
-    test "not report any errors", _context do
-      # https://github.com/lpil/dogma/issues/12
-      DogmaTest.Helper.pending
-      # should_register_no_errors
-    end
+    should_register_no_errors
   end
 end

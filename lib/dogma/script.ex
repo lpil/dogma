@@ -8,25 +8,34 @@ defmodule Dogma.Script do
   alias Dogma.Rules
   alias Dogma.Script
   alias Dogma.Error
+  alias Dogma.Util.ScriptStrings
 
-  defstruct path:   nil,
-            source: nil,
-            lines:  nil,
-            ast:    nil,
-            valid?: nil,
-            errors: []
+  defstruct path:             nil,
+            source:           nil,
+            lines:            nil,
+            processed_source: nil,
+            processed_lines:  nil,
+            ast:              nil,
+            valid?:           nil,
+            errors:           []
 
 
   @doc """
   Builds a Script struct from the given source code and path
   """
   def parse(source, path) do
-    script = %Script{
-      path:   path,
-      source: source,
-      lines:  lines( source ),
-    }
-    case Code.string_to_quoted( source, line: 1 ) do
+    processed_source = ScriptStrings.blank( source )
+    %Script{
+      path:             path,
+      source:           source,
+      lines:            lines( source ),
+      processed_source: processed_source,
+      processed_lines:  lines( processed_source ),
+    } |> add_ast
+  end
+
+  defp add_ast(script) do
+    case Code.string_to_quoted( script.source, line: 1 ) do
       {:ok, ast} ->
         %Script{ script | valid?: true, ast: ast }
       err ->
@@ -60,7 +69,7 @@ defmodule Dogma.Script do
 
 
   @doc """
-  Prewalks the AST, calling the given `fun/2` on each.
+  Postwalks the AST, calling the given `fun/2` on each.
 
   script.errors is used as an accumulator for `fun/2`, the script with the new
   errors is returned.

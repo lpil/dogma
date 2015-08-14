@@ -11,7 +11,7 @@ defmodule Dogma.Rules.TrailingWhitespace do
   @regex ~r/\s+\z/
 
   def test(script) do
-    Enum.reduce( script.lines, script, &check_line(&1, &2) )
+    Enum.reduce( script.processed_lines, script, &check_line(&1, &2) )
   end
 
   defp check_line({i, line}, script) do
