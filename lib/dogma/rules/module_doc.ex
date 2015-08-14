@@ -35,7 +35,7 @@ defmodule Dogma.Rules.ModuleDoc do
 
   @file_to_be_skipped ~r/\.exs\z/
 
-  def test(script) do
+  def test(script, _config = [] \\ []) do
     if Regex.match?( @file_to_be_skipped, script.path ) do
       []
     else

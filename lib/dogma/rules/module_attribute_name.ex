@@ -9,10 +9,9 @@ defmodule Dogma.Rules.ModuleAttributeName do
   alias Dogma.Error
   alias Dogma.Util.Name
 
-  def test(script) do
+  def test(script, _config = [] \\ []) do
     script |> Script.walk( &check_node(&1, &2) )
   end
-
 
   defp check_node({:@, meta, [{name, _, _}]} = node, errors) do
     if name |> to_string |> Name.probably_not_snake_case? do
