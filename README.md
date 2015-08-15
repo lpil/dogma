@@ -5,7 +5,7 @@ Dogma
 
 [![Build Status](https://travis-ci.org/lpil/dogma.svg?branch=master)](https://travis-ci.org/lpil/dogma)
 [![Coverage](https://coveralls.io/repos/lpil/dogma/badge.svg)](https://coveralls.io/r/lpil/dogma)
-[![Inline docs](https://inch-ci.org/github/lpil/dogma?branch=master&style=flat)](http://inch-ci.org/github/lpil/dogma)
+[![Inline docs](https://inch-ci.org/github/lpil/dogma.svg?branch=master&style=flat)](http://inch-ci.org/github/lpil/dogma)
 
 
 Dogma is a principle or set of principles laid down by an authority as
