@@ -36,6 +36,9 @@ defmodule Dogma.Mixfile do
       # Automatic test runner
       {:mix_test_watch, "~> 0.1.2", only: :dev},
 
+      # Benchmark framework
+      {:benchfella, "~> 0.2", only: :dev},
+
       # Documentation checker
       {:inch_ex, only: ~w(dev test docs)a},
       # Markdown processor
