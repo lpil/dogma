@@ -11,69 +11,69 @@ defmodule Dogma.Rules.QuotesInStringTest do
 
   with "a quote free string" do
     setup context do
-      script = """
+      errors = """
       "Hello, world!"
       """ |> test
-      %{ script: script }
+      %{ errors: errors }
     end
     should_register_no_errors
   end
 
   with "a quote in a ~s string" do
     setup context do
-      script = """
+      errors = """
       ~s(hello, quote -> " <-)
       """ |> test
-      %{ script: script }
+      %{ errors: errors }
     end
     should_register_no_errors
   end
 
   with "a quote in a ~r regex" do
     setup context do
-      script = """
+      errors = """
       ~r/"/
       """ |> test
-      %{ script: script }
+      %{ errors: errors }
     end
     should_register_no_errors
   end
 
   with "a quote in a ~R regex" do
     setup context do
-      script = """
+      errors = """
       ~r/"/
       """ |> test
-      %{ script: script }
+      %{ errors: errors }
     end
     should_register_no_errors
   end
 
   with "a quote in a ~S string" do
     setup context do
-      script = """
+      errors = """
       ~S(hello, quote -> " <-)
       """ |> test
-      %{ script: script }
+      %{ errors: errors }
     end
     should_register_no_errors
   end
 
   with "a quote in a heredoc" do
     setup context do
-      script = ~s(
+      errors = ~s(
       """
       Hey look, a quote -> "
       """) |> test
-      %{ script: script }
+      %{ errors: errors }
     end
     should_register_no_errors
   end
 
   with ~s(a quote in a "" string) do
     setup context do
-      script = ~S("This here -> \" <- is a quote") |> test
-      %{ script: script }
+      errors = ~S("This here -> \" <- is a quote") |> test
+      %{ errors: errors }
     end
     should_register_errors [
       %Error{
@@ -86,8 +86,8 @@ defmodule Dogma.Rules.QuotesInStringTest do
 
   with "a quote in a binary pattern, where sigils are not valid" do
     setup context do
-      script = ~S(<< "\""::utf8, cs::binary >> = string) |> test
-      %{ script: script }
+      errors = ~S(<< "\""::utf8, cs::binary >> = string) |> test
+      %{ errors: errors }
     end
     should_register_no_errors
   end

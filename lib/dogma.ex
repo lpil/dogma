@@ -21,13 +21,16 @@ defmodule Dogma do
 
 
   def test_scripts(scripts, formatter, rule_set) do
-    for script <- scripts do
-      script
-      |> Script.run_tests( rule_set )
-      |> Formatter.script( formatter )
-    end
+    scripts
+    |> Enum.map(&test_script(&1, formatter, rule_set))
   end
 
+  defp test_script(script, formatter, rule_set) do
+    errors = script |> Script.run_tests( rule_set )
+    script = %Script{ script | errors: errors }
+    Formatter.script( script, formatter )
+    script
+  end
 
   defp find_source_paths(dir_path) do
     Path.wildcard( dir_path <> "**/*.{ex,exs}" )

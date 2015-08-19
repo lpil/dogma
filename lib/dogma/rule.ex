@@ -9,8 +9,7 @@ defmodule Dogma.Rule do
 
   @doc """
   A function that takes a Script struct, tests the script to see if it violates
-  the rule, and returns the script with any errors prepended to the struct's
-  errors field.
+  the rule, and returns a list of errors.
   """
-  defcallback test(%Script{}) :: %Script{}
+  defcallback test(%Script{}) :: []
 end

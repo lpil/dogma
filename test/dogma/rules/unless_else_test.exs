@@ -15,7 +15,7 @@ defmodule Dogma.Rules.UnlessElseTest do
       end
       """ |> Script.parse( "foo.ex" )
       %{
-        script: UnlessElse.test( script )
+        errors: UnlessElse.test( script )
       }
     end
 
@@ -37,7 +37,7 @@ defmodule Dogma.Rules.UnlessElseTest do
       end
       """ |> Script.parse( "foo.ex" )
       %{
-        script: UnlessElse.test( script )
+        errors: UnlessElse.test( script )
       }
     end
 
@@ -55,10 +55,9 @@ defmodule Dogma.Rules.UnlessElseTest do
       end
       """ |> Script.parse( "foo.ex" )
       %{
-        script: UnlessElse.test( script )
+        errors: UnlessElse.test( script )
       }
     end
-
     should_register_no_errors
   end
 end

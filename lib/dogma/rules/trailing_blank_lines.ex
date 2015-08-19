@@ -5,15 +5,14 @@ defmodule Dogma.Rules.TrailingBlankLines do
 
   @behaviour Dogma.Rule
 
-  alias Dogma.Script
   alias Dogma.Error
 
   @violation_regex ~r/\n\n+\z/
 
   def test(script) do
     case script |> violation? do
-      false -> script
-      pos   -> script |> add_error( pos )
+      false -> []
+      pos   -> [error( pos )]
     end
   end
 
@@ -27,12 +26,11 @@ defmodule Dogma.Rules.TrailingBlankLines do
     end
   end
 
-  defp add_error(script, pos) do
-    error = %Error{
+  defp error(pos) do
+    %Error{
       rule:     __MODULE__,
       message:  "Blank lines detected at end of file",
       position: pos,
     }
-    script |> Script.register_error( error )
   end
 end

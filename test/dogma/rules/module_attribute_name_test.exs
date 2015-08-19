@@ -11,25 +11,25 @@ defmodule Dogma.Rules.ModuleAttributeNameTest do
 
   with "valid module attribute names" do
     setup context do
-      script = """
+      errors = """
       defmodule HelloWorld do
         @hello_world 1
         @hello 2
       end
       """ |> test
-      %{ script: script }
+      %{ errors: errors }
     end
     should_register_no_errors
   end
 
   with "a camelCase module attribute name" do
     setup context do
-      script = """
+      errors = """
       defmodule :snake_case do
         @helloWorld 1
       end
       """ |> test
-      %{ script: script }
+      %{ errors: errors }
     end
     should_register_errors [
       %Error{

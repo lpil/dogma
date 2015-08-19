@@ -5,7 +5,6 @@ defmodule Dogma.Rules.LineLength do
 
   @behaviour Dogma.Rule
 
-  alias Dogma.Script
   alias Dogma.Error
 
   def test(script) do
@@ -14,20 +13,20 @@ defmodule Dogma.Rules.LineLength do
 
   def test(script, max_length: max) do
     script.lines
-    |> Enum.filter(fn ({_, line}) -> String.length(line) > max end)
-    |> Enum.reduce(script, &add_line_error/2)
+    |> Enum.filter(&longer_than(&1, max))
+    |> Enum.map(&error/1)
   end
 
-  defp add_line_error({i, line}, script) do
-    err = error(String.length(line), i)
-    Script.register_error(script, err)
+
+  defp longer_than({_, line}, max) do
+    String.length(line) > max
   end
 
-  defp error(length, pos) do
+  defp error({line_num, _}) do
     %Error{
       rule:     __MODULE__,
-      message:  "Line too long [#{length}]",
-      position: pos,
+      message:  "Line too long",
+      position: line_num,
     }
   end
 end

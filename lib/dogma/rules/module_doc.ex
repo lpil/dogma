@@ -14,7 +14,7 @@ defmodule Dogma.Rules.ModuleDoc do
 
   def test(script) do
     if Regex.match?( @file_to_be_skipped, script.path ) do
-      script
+      []
     else
       script |> Script.walk( &check_node(&1, &2) )
     end

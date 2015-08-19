@@ -11,23 +11,23 @@ defmodule Dogma.Rules.VariableNameTest do
 
   with "valid names" do
     setup context do
-      script = """
+      errors = """
       x       = :ok
       foo     = :ok
       foo_bar = :ok
       """ |> test
-      %{ script: script }
+      %{ errors: errors }
     end
     should_register_no_errors
   end
 
   with "invalid names" do
     setup context do
-      script = """
+      errors = """
       fooBar  = :error
       foo_Bar = :error
       """ |> test
-      %{ script: script }
+      %{ errors: errors }
     end
     should_register_errors [
       %Error{
@@ -45,11 +45,11 @@ defmodule Dogma.Rules.VariableNameTest do
 
   with "" do
     setup context do
-      script = """
+      errors = """
       [foo, bar] = foo_bar
       {fooBar}   = foo_bar
       """ |> test
-      %{ script: script }
+      %{ errors: errors }
     end
     # For now we just want to show that we can not explode when the thing on
     # the left hand side of the match operator isn't just a variable name.

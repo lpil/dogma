@@ -11,40 +11,40 @@ defmodule Dogma.Rules.ModuleNameTest do
 
   with "a valid module name" do
     setup context do
-      script = """
+      errors = """
       defmodule HelloWorld do
       end
       """ |> test
-      %{ script: script }
+      %{ errors: errors }
     end
     should_register_no_errors
   end
 
   with "a valid module name as a symbol" do
     setup context do
-      script = """
+      errors = """
       defmodule :HelloWorld do
       end
       """ |> test
-      %{ script: script }
+      %{ errors: errors }
     end
     should_register_no_errors
   end
 
   with "a valid nested module name" do
     setup context do
-      script = """
+      errors = """
       defmodule Hello.World do
       end
       """ |> test
-      %{ script: script }
+      %{ errors: errors }
     end
     should_register_no_errors
   end
 
   with "nested modules with valid names" do
     setup context do
-      script = """
+      errors = """
       defmodule Hello do
         defmodule There do
           defmodule World do
@@ -52,7 +52,7 @@ defmodule Dogma.Rules.ModuleNameTest do
         end
       end
       """ |> test
-      %{ script: script }
+      %{ errors: errors }
     end
     should_register_no_errors
   end
@@ -60,11 +60,11 @@ defmodule Dogma.Rules.ModuleNameTest do
 
   with "a snake_case module name" do
     setup context do
-      script = """
+      errors = """
       defmodule Snake_case do
       end
       """ |> test
-      %{ script: script }
+      %{ errors: errors }
     end
     should_register_errors [
       %Error{
@@ -77,11 +77,11 @@ defmodule Dogma.Rules.ModuleNameTest do
 
   with "a snake_case symbol module name" do
     setup context do
-      script = """
+      errors = """
       defmodule :snake_case do
       end
       """ |> test
-      %{ script: script }
+      %{ errors: errors }
     end
     should_register_errors [
       %Error{
@@ -94,11 +94,11 @@ defmodule Dogma.Rules.ModuleNameTest do
 
   with "a snake_case 2 part module name" do
     setup context do
-      script = """
+      errors = """
       defmodule Hello.There_world do
       end
       """ |> test
-      %{ script: script }
+      %{ errors: errors }
     end
     should_register_errors [
       %Error{
@@ -111,7 +111,7 @@ defmodule Dogma.Rules.ModuleNameTest do
 
   with "a nested snake_case name" do
     setup context do
-      script = """
+      errors = """
       defmodule Hello do
         defmodule I_am_interrupting do
           defmodule World do
@@ -119,7 +119,7 @@ defmodule Dogma.Rules.ModuleNameTest do
         end
       end
       """ |> test
-      %{ script: script }
+      %{ errors: errors }
     end
     should_register_errors [
       %Error{
@@ -133,11 +133,11 @@ defmodule Dogma.Rules.ModuleNameTest do
 
   with "a non-capitalised 2 part name" do
     setup context do
-      script = """
+      errors = """
       defmodule :"Hello.world" do
       end
       """ |> test
-      %{ script: script }
+      %{ errors: errors }
     end
     should_register_errors [
       %Error{

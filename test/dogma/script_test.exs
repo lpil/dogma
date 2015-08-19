@@ -136,14 +136,6 @@ defmodule Dogma.ScriptTest do
   end
 
 
-  with ".add_error" do
-    should "add the error. gosh." do
-      error  = %Error{ rule: MustBeGood, message: "Not good!", position: 5 }
-      script = %Script{} |> Script.register_error( error )
-      assert [error] == script.errors
-    end
-  end
-
   with ".walk" do
     setup context do
       %{
@@ -151,7 +143,7 @@ defmodule Dogma.ScriptTest do
       }
     end
 
-    should "run the fn on each node, with errors as an accumulator", context do
+    should "run the fn on each node, and return the accumulator", context do
       fun    = fn(node, errors) -> {node, [node | errors]} end
       walked = Script.walk( context.script, fun )
       nodes_walked = [
@@ -161,7 +153,7 @@ defmodule Dogma.ScriptTest do
         {:*, [line: 1], [2, 3]},
         {:+, [line: 1], [{:*, [line: 1], [2, 3]}, 1]}
       ]
-      assert %Script{ context.script | errors: nodes_walked } == walked
+      assert nodes_walked == walked
     end
 
     should "allow you to skip nodes", context do
@@ -170,12 +162,12 @@ defmodule Dogma.ScriptTest do
       nodes_walked = [
         {:+, [line: 1], [{:*, [line: 1], [2, 3]}, 1]}
       ]
-      assert %Script{ context.script | errors: nodes_walked } == walked
+      assert nodes_walked == walked
     end
   end
 
 
-  with ".run_tests" do
+  with "run_tests/1" do
 
     defmodule CustomRules do
       def list do
@@ -193,25 +185,22 @@ defmodule Dogma.ScriptTest do
     end
 
     should "run each test in the provided configuration", context do
-      script = context.script |> Script.run_tests(CustomRules)
-      assert ["hello world", 1] == script.errors
+      errors = context.script |> Script.run_tests(CustomRules)
+      assert [1, "hello world"] == errors
     end
   end
 end
 
 defmodule Dogma.Rules.TestRules do
-  alias Dogma.Script
-
   defmodule TestOne do
-    def test(script) do
-      %Script{ script | errors: [1 | script.errors] }
+    def test(_) do
+      [1]
     end
   end
 
   defmodule TestTwo do
-    def test(script, output: custom_out) do
-      %Script{ script | errors: [custom_out | script.errors] }
+    def test(_, output: custom_out) do
+      [custom_out]
     end
   end
-
 end

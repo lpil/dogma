@@ -11,19 +11,19 @@ defmodule Dogma.Rules.TrailingWhitespaceTest do
             <> "'how'       \n"
             <> "  'are'\n"
             <> "      'you?'  \n"
-      script = source |> Script.parse( "foo.ex" ) |> TrailingWhitespace.test
-      %{ script: script }
+      errors = source |> Script.parse( "foo.ex" ) |> TrailingWhitespace.test
+      %{ errors: errors }
     end
 
     should_register_errors [
       %Error{
         rule: TrailingWhitespace,
-        message: "Trailing whitespace detected [12]",
+        message: "Trailing whitespace detected",
         position: 4,
       },
       %Error{
         rule: TrailingWhitespace,
-        message: "Trailing whitespace detected [5]",
+        message: "Trailing whitespace detected",
         position: 2,
       },
     ]
@@ -35,8 +35,8 @@ defmodule Dogma.Rules.TrailingWhitespaceTest do
       <> "'how'\r\n"
       <> "  'are'\r\n"
       <> "      'you?'\r\n"
-      script = source |> Script.parse( "foo.ex" ) |> TrailingWhitespace.test
-      %{ script: script }
+      errors = source |> Script.parse( "foo.ex" ) |> TrailingWhitespace.test
+      %{ errors: errors }
     end
 
     should_register_no_errors
@@ -49,7 +49,7 @@ defmodule Dogma.Rules.TrailingWhitespaceTest do
             <> ~s("""\n)
       script = source |> Script.parse( "foo.ex" )
       %{
-        script: TrailingWhitespace.test( script )
+        errors: TrailingWhitespace.test( script )
       }
     end
     should_register_no_errors

@@ -49,8 +49,9 @@ defmodule Dogma.Script do
   """
   def run_tests(script, rule_module \\ nil) do
     (rule_module || Rules.Sets.All).list()
-    |> Enum.map(&namespace_rule/1)
-    |> Enum.reduce( script, &run_test/2 )
+    |> Enum.map( &namespace_rule/1 )
+    |> Enum.map( &run_test(&1, script) )
+    |> List.flatten
   end
 
   defp namespace_rule({rule, custom_config}) do
@@ -78,20 +79,9 @@ defmodule Dogma.Script do
   return {node, errors}
   """
   def walk(script, fun) do
-    {_, errors} = Macro.prewalk( script.ast, script.errors, fun )
-    %Script{ script | errors: errors }
+    {_, errors} = Macro.prewalk( script.ast, [], fun )
+    errors
   end
-
-
-  @doc """
-  Takes a script and an error, and returns the script with the error prepended
-  to the error list of the script.
-  """
-  def register_error(script, error) do
-    errors = [error | script.errors]
-    %Script{ script | errors: errors }
-  end
-
 
 
   defp error({:error, {line, err, _}}) do

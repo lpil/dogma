@@ -7,20 +7,19 @@ defmodule Dogma.Rules.FinalNewlineTest do
 
   with "a final newline" do
     setup context do
-      script = "IO.puts 1\n" |> Script.parse( "foo.ex" ) |> FinalNewline.test
-      %{ script: script }
+      errors = "IO.puts 1\n" |> Script.parse( "foo.ex" ) |> FinalNewline.test
+      %{ errors: errors }
     end
-
     should_register_no_errors
   end
 
 
   with "no final newline" do
     setup context do
-      script = "IO.puts 1\nIO.puts 2\nIO.puts 3"
+      errors = "IO.puts 1\nIO.puts 2\nIO.puts 3"
                 |> Script.parse( "foo.ex" )
                 |> FinalNewline.test
-      %{ script: script }
+      %{ errors: errors }
     end
 
     should_register_errors [

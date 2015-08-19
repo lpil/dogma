@@ -13,8 +13,8 @@ defmodule Dogma.Rules.DebuggerStatementTest do
         x
       end
       """
-      script = source |> Script.parse( "foo.ex" ) |> DebuggerStatement.test
-      %{ script: script }
+      errors = source |> Script.parse( "foo.ex" ) |> DebuggerStatement.test
+      %{ errors: errors }
     end
 
     should_register_errors [

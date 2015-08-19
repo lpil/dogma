@@ -12,37 +12,37 @@ defmodule Dogma.Rules.LiteralInConditionTest do
   with "a variable/function argument" do
     with "if" do
       setup context do
-        script = """
+        errors = """
         if feeling_tired do
           have_an_early_night
         end
         """ |> test
-        %{ script: script }
+        %{ errors: errors }
       end
       should_register_no_errors
     end
 
     with "unless" do
       setup context do
-        script = """
+        errors = """
         unless feeling_sleepy do
           a_little_dance
         end
         """ |> test
-        %{ script: script }
+        %{ errors: errors }
       end
       should_register_no_errors
     end
 
     with "case" do
       setup context do
-        script = """
+        errors = """
         case status do
           :hyped -> run_like_the_wind
           _      -> dawdle
         end
         """ |> test
-        %{ script: script }
+        %{ errors: errors }
       end
       should_register_no_errors
     end
@@ -52,12 +52,12 @@ defmodule Dogma.Rules.LiteralInConditionTest do
   with "a literal argument" do
     with "if" do
       setup context do
-        script = """
+        errors = """
         if false do
           i_will_never_run
         end
         """ |> test
-        %{ script: script }
+        %{ errors: errors }
       end
       should_register_errors [
         %Error{
@@ -70,12 +70,12 @@ defmodule Dogma.Rules.LiteralInConditionTest do
 
     with "unless" do
       setup context do
-        script = """
+        errors = """
         unless [] do
           useless_unless
         end
         """ |> test
-        %{ script: script }
+        %{ errors: errors }
       end
       should_register_errors [
         %Error{
@@ -88,13 +88,13 @@ defmodule Dogma.Rules.LiteralInConditionTest do
 
     with "case" do
       setup context do
-        script = """
+        errors = """
         case 0 do
           1 -> the_loneliest_number
           _ -> go_to_guy
         end
         """ |> test
-        %{ script: script }
+        %{ errors: errors }
       end
       should_register_errors [
         %Error{
@@ -109,40 +109,40 @@ defmodule Dogma.Rules.LiteralInConditionTest do
   with "a piped in argument" do
     with "if" do
       setup context do
-        script = """
+        errors = """
         something
         |> if do
           i_will_never_run
         end
         """ |> test
-        %{ script: script }
+        %{ errors: errors }
       end
       should_register_no_errors
     end
 
     with "unless" do
       setup context do
-        script = """
+        errors = """
         something
         |> unless do
           useless_unless
         end
         """ |> test
-        %{ script: script }
+        %{ errors: errors }
       end
       should_register_no_errors
     end
 
     with "case" do
       setup context do
-        script = """
+        errors = """
         something
         |> case do
           1 -> the_loneliest_number
           _ -> go_to_guy
         end
         """ |> test
-        %{ script: script }
+        %{ errors: errors }
       end
       should_register_no_errors
     end

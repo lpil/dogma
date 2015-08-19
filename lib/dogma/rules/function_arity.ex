@@ -14,7 +14,9 @@ defmodule Dogma.Rules.FunctionArity do
 
   def test(script, max: max) do
     script
-      |> Script.walk( fn(node, errs) -> check_node(node, errs, max) end)
+    |> Script.walk(fn node, errs ->
+      check_node(node, errs, max)
+    end)
   end
 
   defp check_node({:def, _, _} = node, errors, max_arity) do

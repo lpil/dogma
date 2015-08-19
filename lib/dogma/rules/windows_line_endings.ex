@@ -5,19 +5,18 @@ defmodule Dogma.Rules.WindowsLineEndings do
 
   @behaviour Dogma.Rule
 
-  alias Dogma.Script
   alias Dogma.Error
 
   @violation_regex ~r/\r\z/
 
   def test(script) do
-    Enum.reduce( script.lines, script, &check_line(&1, &2) )
+    Enum.reduce( script.lines, [], &check_line(&1, &2) )
   end
 
-  defp check_line({i, line}, script) do
+  defp check_line({i, line}, acc) do
     case @violation_regex |> Regex.match?(line) do
-      true -> script |> Script.register_error(error(i))
-      _    -> script
+      true -> [error(i) | acc]
+      _    -> acc
     end
   end
 

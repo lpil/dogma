@@ -21,14 +21,14 @@ defmodule DogmaTest.Matchers do
 
   defmatcher should_register_no_errors do
     quote do
-      assert [] == var!(context).script.errors
+      assert [] == var!(context).errors
     end
   end
 
 
   defmatcher should_register_errors(errors) do
     quote do
-      assert unquote(errors) == var!(context).script.errors
+      assert unquote(errors) == var!(context).errors
     end
   end
 end

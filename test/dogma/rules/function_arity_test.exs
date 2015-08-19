@@ -12,7 +12,7 @@ defmodule Dogma.Rules.FunctionArityTest do
 
   with "valid arity" do
     setup context do
-      script = """
+      errors = """
       def something() do
       end
 
@@ -28,30 +28,30 @@ defmodule Dogma.Rules.FunctionArityTest do
       def point(a,b,c,{d, e, f}) do
       end
       """ |> test
-      %{ script: script }
+      %{ errors: errors }
     end
     should_register_no_errors
   end
 
   with "valid arity in a protocol definition" do
     setup context do
-      script = """
+      errors = """
       defprotocol Some.Protocol do
         def run(thing, context)
       end
       """ |> test
-      %{ script: script }
+      %{ errors: errors }
     end
     should_register_no_errors
   end
 
   with "invalid arity" do
     setup context do
-      script = """
+      errors = """
       def point(a,b,c,d,e) do
       end
       """ |> test
-      %{ script: script }
+      %{ errors: errors }
     end
     should_register_errors [
       %Error{
@@ -64,14 +64,14 @@ defmodule Dogma.Rules.FunctionArityTest do
 
   with "invalid arity based on custom config" do
     setup context do
-      script = """
+      errors = """
       def point(a,b,c) do
       end
       """
         |> Script.parse( "foo.ex" )
         |> FunctionArity.test(max: 2)
 
-      %{ script: script }
+      %{ errors: errors }
     end
     should_register_errors [
       %Error{

@@ -12,18 +12,18 @@ defmodule Dogma.Rules.ModuleDocTest do
 
   with "module docs" do
     setup context do
-      script = """
+      errors = """
       defmodule VeryGood do
         @moduledoc "Lots of good info here"
       end
       """ |> test
-      %{ script: script }
+      %{ errors: errors }
     end
     should_register_no_errors
 
     with "nested modules" do
       setup context do
-        script = """
+        errors = """
         defmodule VeryGood do
           @moduledoc "Lots of good info here"
           defmodule AlsoGood do
@@ -31,7 +31,7 @@ defmodule Dogma.Rules.ModuleDocTest do
           end
         end
         """ |> test
-        %{ script: script }
+        %{ errors: errors }
       end
       should_register_no_errors
     end
@@ -39,11 +39,11 @@ defmodule Dogma.Rules.ModuleDocTest do
 
   with "a module missing a module doc" do
     setup context do
-      script = """
+      errors = """
       defmodule NotGood do
       end
       """ |> test
-      %{ script: script }
+      %{ errors: errors }
     end
     should_register_errors [
       %Error{
@@ -56,14 +56,14 @@ defmodule Dogma.Rules.ModuleDocTest do
 
   with "a nested module missing a module doc" do
     setup context do
-      script = """
+      errors = """
       defmodule VeryGood do
         @moduledoc "Lots of good info here"
         defmodule NotGood do
         end
       end
       """ |> test
-      %{ script: script }
+      %{ errors: errors }
     end
     should_register_errors [
       %Error{
@@ -76,14 +76,14 @@ defmodule Dogma.Rules.ModuleDocTest do
 
   with "a parent module missing a module doc" do
     setup context do
-      script = """
+      errors = """
       defmodule NotGood do
         defmodule VeryGood do
           @moduledoc "Lots of good info here"
         end
       end
       """ |> test
-      %{ script: script }
+      %{ errors: errors }
     end
     should_register_errors [
       %Error{
@@ -92,5 +92,16 @@ defmodule Dogma.Rules.ModuleDocTest do
         position: 1,
       }
     ]
+  end
+
+  with "an exs file (meaning it's to be skipped)" do
+    setup context do
+      errors = """
+      defmodule NotGood do
+      end
+      """ |> Script.parse( "foo.exs" ) |> ModuleDoc.test
+      %{ errors: errors }
+    end
+    should_register_no_errors
   end
 end

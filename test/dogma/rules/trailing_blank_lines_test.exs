@@ -7,11 +7,11 @@ defmodule Dogma.Rules.TrailingBlankLinesTest do
 
   with "no trailing blank lines" do
     setup context do
-      script = """
+      errors = """
       IO.puts 1
-      """ |> Script.parse( "foo.ex" )
+      """  |> test
       %{
-        script: TrailingBlankLines.test( script )
+        errors: errors
       }
     end
 
@@ -21,12 +21,12 @@ defmodule Dogma.Rules.TrailingBlankLinesTest do
 
   with "trailing blank lines" do
     setup context do
-      script = """
+      errors = """
       IO.puts 1
 
 
-      """ |> Script.parse( "foo.ex" ) |> TrailingBlankLines.test
-      %{ script: script }
+      """ |> test
+      %{ errors: errors }
     end
 
     should_register_errors [
@@ -36,5 +36,9 @@ defmodule Dogma.Rules.TrailingBlankLinesTest do
         position: 2,
       }
     ]
+  end
+
+  defp test(source) do
+    source |> Script.parse( "foo.ex" ) |> TrailingBlankLines.test
   end
 end

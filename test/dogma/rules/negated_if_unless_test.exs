@@ -14,7 +14,7 @@ defmodule Dogma.Rules.NegatedIfUnlessTest do
         end
         """ |> Script.parse( "foo.ex" )
         %{
-          script: NegatedIfUnless.test( script )
+          errors: NegatedIfUnless.test( script )
         }
       end
       should_register_no_errors
@@ -28,7 +28,7 @@ defmodule Dogma.Rules.NegatedIfUnlessTest do
         end
         """ |> Script.parse( "foo.ex" )
         %{
-          script: NegatedIfUnless.test( script )
+          errors: NegatedIfUnless.test( script )
         }
       end
       should_register_no_errors
@@ -45,7 +45,7 @@ defmodule Dogma.Rules.NegatedIfUnlessTest do
         end
         """ |> Script.parse( "foo.ex" )
         %{
-          script: NegatedIfUnless.test( script )
+          errors: NegatedIfUnless.test( script )
         }
       end
       should_register_errors [
@@ -65,7 +65,7 @@ defmodule Dogma.Rules.NegatedIfUnlessTest do
         end
         """ |> Script.parse( "foo.ex" )
         %{
-          script: NegatedIfUnless.test( script )
+          errors: NegatedIfUnless.test( script )
         }
       end
       should_register_errors [
@@ -87,7 +87,7 @@ defmodule Dogma.Rules.NegatedIfUnlessTest do
         end
         """ |> Script.parse( "foo.ex" )
         %{
-          script: NegatedIfUnless.test( script )
+          errors: NegatedIfUnless.test( script )
         }
       end
       should_register_errors [
@@ -108,7 +108,7 @@ defmodule Dogma.Rules.NegatedIfUnlessTest do
         end
         """ |> Script.parse( "foo.ex" )
         %{
-          script: NegatedIfUnless.test( script )
+          errors: NegatedIfUnless.test( script )
         }
       end
       should_register_errors [

@@ -10,8 +10,8 @@ defmodule Dogma.Rules.WindowsLineEndingsTest do
       source = "# This line is good\n"
             <> "# This line is bad\r\n"
             <> "# back to good again"
-      script = source |> Script.parse( "foo.ex" ) |> WindowsLineEndings.test
-      %{ script: script }
+      errors = source |> Script.parse( "foo.ex" ) |> WindowsLineEndings.test
+      %{ errors: errors }
     end
 
     should_register_errors [

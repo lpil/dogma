@@ -5,27 +5,26 @@ defmodule Dogma.Rules.TrailingWhitespace do
 
   @behaviour Dogma.Rule
 
-  alias Dogma.Script
   alias Dogma.Error
 
   @regex ~r/\s+\z/
 
   def test(script) do
-    Enum.reduce( script.processed_lines, script, &check_line(&1, &2) )
+    Enum.reduce( script.processed_lines, [], &check_line(&1, &2) )
   end
 
-  defp check_line({i, line}, script) do
+  defp check_line({i, line}, errors) do
     trimmed_line = String.replace(line, ~r/\r\z/, "")
     case Regex.run( @regex, trimmed_line, return: :index ) do
-      [{x, _}] -> Script.register_error( script, error(x, i) )
-      nil      -> script
+      nil -> errors
+      _   -> [error(i) | errors]
     end
   end
 
-  defp error(col, pos) do
+  defp error(pos) do
     %Error{
       rule:     __MODULE__,
-      message:  "Trailing whitespace detected [#{col}]",
+      message:  "Trailing whitespace detected",
       position: pos,
     }
   end

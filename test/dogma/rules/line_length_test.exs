@@ -7,31 +7,30 @@ defmodule Dogma.Rules.LineLengthTest do
 
   with "long lines" do
     setup context do
-      script = [
+      errors = [
         String.duplicate( "x",  90 ),
         String.duplicate( "y",  30 ),
         String.duplicate( "z", 101 ),
       ] |> Enum.join( "\n" ) |> Script.parse( "foo.ex" ) |> LineLength.test
-      %{ script: script }
+      %{ errors: errors }
     end
-
     should_register_errors [
       %Error{
         rule: LineLength,
-        message: "Line too long [101]",
-        position: 3,
+        message: "Line too long",
+        position: 1,
       },
       %Error{
         rule: LineLength,
-        message: "Line too long [90]",
-        position: 1,
+        message: "Line too long",
+        position: 3,
       },
     ]
   end
 
   with "long lines but with a custom rule config" do
     setup context do
-      script = [
+      errors = [
         String.duplicate( "x",  90 ),
         String.duplicate( "y",  30 ),
         String.duplicate( "z", 101 ),
@@ -40,9 +39,8 @@ defmodule Dogma.Rules.LineLengthTest do
       |> Script.parse( "foo.ex" )
       |> LineLength.test(max_length: 120)
 
-      %{ script: script }
+      %{ errors: errors }
     end
-
     should_register_no_errors
   end
 end

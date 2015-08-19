@@ -11,7 +11,7 @@ defmodule Dogma.Rules.FunctionNameTest do
 
   with "valid names" do
     setup context do
-      script = """
+      errors = """
       def foo do
       end
 
@@ -25,32 +25,32 @@ defmodule Dogma.Rules.FunctionNameTest do
       defp private_foo do
       end
       """ |> test
-      %{ script: script }
+      %{ errors: errors }
     end
     should_register_no_errors
   end
 
   with "valid but weird names" do
     setup context do
-      script = """
+      errors = """
       def unquote(function_name)(_state) do
         {:ok, "something"}
       end
       """ |> test
-      %{ script: script }
+      %{ errors: errors }
     end
     should_register_no_errors
   end
 
   with "invalid names using def" do
     setup context do
-      script = """
+      errors = """
       def fooBar do
       end
 
       def barFoo, do: nil
       """ |> test
-      %{ script: script }
+      %{ errors: errors }
     end
     should_register_errors [
       %Error{
@@ -68,13 +68,13 @@ defmodule Dogma.Rules.FunctionNameTest do
 
   with "invalid names using defp" do
     setup context do
-      script = """
+      errors = """
       defp fooBar do
       end
 
       defp barFoo, do: nil
       """ |> test
-      %{ script: script }
+      %{ errors: errors }
     end
     should_register_errors [
       %Error{
