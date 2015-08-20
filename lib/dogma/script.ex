@@ -50,7 +50,8 @@ defmodule Dogma.Script do
   def run_tests(script, rule_module \\ nil) do
     (rule_module || Rules.Sets.All).list()
     |> Enum.map( &namespace_rule/1 )
-    |> Enum.map( &run_test(&1, script) )
+    |> Enum.map( &Task.async(fn -> run_test(&1, script) end) )
+    |> Enum.map( &Task.await(&1) )
     |> List.flatten
   end
 
