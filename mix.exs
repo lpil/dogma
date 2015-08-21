@@ -9,6 +9,8 @@ defmodule Dogma.Mixfile do
       version: @version,
       elixir: "~> 1.0",
       deps: deps,
+      build_embedded: Mix.env == :prod,
+      start_permanent: Mix.env == :prod,
       test_coverage: [tool: ExCoveralls],
 
       name: "Dogma",
@@ -24,7 +26,9 @@ defmodule Dogma.Mixfile do
   end
 
   def application do
-    [applications: [:logger]]
+    [
+      applications: []
+    ]
   end
 
   defp deps do
