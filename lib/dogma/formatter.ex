@@ -24,19 +24,20 @@ defmodule Dogma.Formatter do
   defcallback finish( [%Script{}] ) :: String.t
 
 
+  @default_formatter Dogma.Formatter.Simple
 
   @doc """
   Runs at the start of the test suite.
   """
-  def start(files, formatter) do
+  def start(files, formatter \\ @default_formatter) do
     IO.write formatter.start( files )
     files
   end
 
   @doc """
-  Runs after each script is tested.
+  Runs after each script is tested. Useful for progress indicators.
   """
-  def script(script, formatter) do
+  def script(script, formatter \\ @default_formatter) do
     IO.write formatter.script( script )
     script
   end
@@ -44,8 +45,15 @@ defmodule Dogma.Formatter do
   @doc """
   Runs at the end of the test suite.
   """
-  def finish(files, formatter) do
+  def finish(files, formatter \\ @default_formatter) do
     IO.write formatter.finish( files )
     files
+  end
+
+  @doc """
+  Returns the default formatter
+  """
+  def default_formatter do
+    @default_formatter
   end
 end

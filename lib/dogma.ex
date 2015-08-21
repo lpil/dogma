@@ -2,46 +2,21 @@ defmodule Dogma do
   @moduledoc """
   Welcome to Dogma.
 
-  This module is our entry point, and provides the `run/1` function through
-  which you can run the tests on your current working directory.
+  This module is our entry point, and does nothing but deligate to various
+  other modules through the divine `run/2` function.
   """
 
-
-  alias Dogma.Script
   alias Dogma.Formatter
+  alias Dogma.Rules
+  alias Dogma.ScriptSources
 
   def run(dir_path \\ "", rule_set \\ nil) do
     dir_path
-    |> find_source_paths
-    |> paths_to_scripts
-    |> Formatter.start( Formatter.Simple )
-    |> test_scripts( Formatter.Simple, rule_set)
-    |> Formatter.finish( Formatter.Simple )
+    |> ScriptSources.find
+    |> ScriptSources.to_scripts
+    |> Formatter.start
+    |> Rules.test( rule_set )
+    |> Formatter.finish
   end
 
-
-  def test_scripts(scripts, formatter, rule_set) do
-    scripts
-    |> Enum.map(&test_script(&1, formatter, rule_set))
-  end
-
-  defp test_script(script, formatter, rule_set) do
-    errors = script |> Script.run_tests( rule_set )
-    script = %Script{ script | errors: errors }
-    Formatter.script( script, formatter )
-    script
-  end
-
-  defp find_source_paths(dir_path) do
-    Path.wildcard( dir_path <> "**/*.{ex,exs}" )
-    |> Enum.reject( &String.starts_with?(&1, "deps/") )
-  end
-
-  defp paths_to_scripts(paths) do
-    for path <- paths do
-      path
-      |> File.read!
-      |> Script.parse( path )
-    end
-  end
 end
