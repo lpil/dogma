@@ -26,7 +26,7 @@ defmodule Dogma.Rules.ComparisonToBoolean do
   defp error(pos) do
     %Error{
       rule: __MODULE__,
-      message: "Comparison to a boolean is pointless",
+      message: "Comparison to a boolean is usually pontless",
       position: pos
     }
   end

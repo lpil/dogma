@@ -18,7 +18,7 @@ defmodule Dogma.Rules.ComparisonToBooleanTest do
     for line_no <- (count..1) do
       %Error{
         rule: ComparisonToBoolean,
-        message: "Comparison to a boolean is pointless",
+        message: "Comparison to a boolean is usually pontless",
         position: line_no
       }
     end
