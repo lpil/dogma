@@ -17,6 +17,7 @@ defmodule Dogma.Rules.Sets.All do
       {ModuleDoc},
       {ModuleName},
       {NegatedIfUnless},
+      {PredicateName},
       {QuotesInString},
       {TrailingBlankLines},
       {TrailingWhitespace},

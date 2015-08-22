@@ -21,7 +21,7 @@ defmodule Dogma.Rules.ModuleDoc do
   end
 
   defp check_node({:defmodule, m, [_, [do: module_body]]} = node, errors) do
-    if module_body |> has_moduledoc? do
+    if module_body |> moduledoc? do
       {node, errors}
     else
       {node, [error( m[:line] ) | errors]}
@@ -32,32 +32,30 @@ defmodule Dogma.Rules.ModuleDoc do
   end
 
 
-  defp has_moduledoc?(node) do
-    {_, pred} = Macro.prewalk( node, false, &has_moduledoc?(&1, &2) )
+  defp moduledoc?(node) do
+    {_, pred} = Macro.prewalk( node, false, &moduledoc?(&1, &2) )
     pred
   end
 
-
   # moduledocs inside child modules don't count
-  defp has_moduledoc?({:defmodule, _, _}, found_or_not) do
+  defp moduledoc?({:defmodule, _, _}, found_or_not) do
     {[], found_or_not}
   end
 
   # We've found a moduledoc
-  defp has_moduledoc?({:@, _, [{:moduledoc, _, _} | _]}, _) do
+  defp moduledoc?({:@, _, [{:moduledoc, _, _} | _]}, _) do
     {[], true}
   end
 
   # We've already found one, so don't check further
-  defp has_moduledoc?(_, true) do
+  defp moduledoc?(_, true) do
     {[], true}
   end
 
   # Nothing here, keep looking
-  defp has_moduledoc?(node, false) do
+  defp moduledoc?(node, false) do
     {node, false}
   end
-
 
   defp error(position) do
     %Error{
