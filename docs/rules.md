@@ -5,6 +5,7 @@ These are the rules included in Dogma by default. Currently there are
 
 ## Contents
 
+* [ComparisonToBoolean](https://github.com/lpil/dogma/blob/master/docs/rules.md#comparisontoboolean)
 * [DebuggerStatement](https://github.com/lpil/dogma/blob/master/docs/rules.md#debuggerstatement)
 * [FinalNewline](https://github.com/lpil/dogma/blob/master/docs/rules.md#finalnewline)
 * [FunctionArity](https://github.com/lpil/dogma/blob/master/docs/rules.md#functionarity)
@@ -25,6 +26,11 @@ These are the rules included in Dogma by default. Currently there are
 
 
 ---
+
+### ComparisonToBoolean
+
+A rule that disallows comparison to booleans.
+
 
 ### DebuggerStatement
 

@@ -7,6 +7,7 @@ defmodule Dogma.Rules.Sets.All do
 
   def list do
     [
+      {ComparisonToBoolean},
       {DebuggerStatement},
       {FinalNewline},
       {FunctionArity, max: 4},
