@@ -9,7 +9,7 @@ defmodule Dogma.Rules.VariableName do
 
       my_mood = :happy
 
-  and this one invalid:
+  But it considers this one invalid:
 
       myMood = :sad
   """

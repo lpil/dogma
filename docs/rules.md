@@ -98,6 +98,35 @@ A rule that disallows trailing whitespace at the end of a line.
 
 A rule that disallows the use of an `else` block with the `unless` macro.
 
+For example, the rule considers these valid:
+
+    unless something do
+      :ok
+    end
+
+    if something do
+      :one
+    else
+      :two
+    end
+
+But it considers this one invalid as it is an `unless` with an `else`:
+
+    unless something do
+      :one
+    else
+      :two
+    end
+
+The solution is to swap the order of the blocks, and change the `unless` to
+an `if`, so the previous invalid example would become this:
+
+    if something do
+      :two
+    else
+      :one
+    end
+
 
 ### VariableName
 
@@ -110,7 +139,7 @@ For example, this rule considers this variable assignment valid:
 
     my_mood = :happy
 
-and this one invalid:
+But it considers this one invalid:
 
     myMood = :sad
 
