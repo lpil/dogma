@@ -53,7 +53,11 @@ mix test.watch # Run tests on file changes
 mix dogma      # Dogfooding- run the linter!
 ```
 
-### Read the docs
+### Read the developer docs
+
+Check them out on [hexdocs](hexdocs-dogma), or generate them yourself:
+
+[hexdocs-dogma]: http://hexdocs.pm/dogma/overview.html
 
 ```sh
 mix docs
