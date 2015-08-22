@@ -20,7 +20,7 @@ defmodule Dogma.Mixfile do
         contributors: ["Louis Pilfold"],
         licenses: ["MIT"],
         links: %{ "GitHub" => "https://github.com/lpil/dogma" },
-        files: ~w(mix.exs lib README.md LICENCE)
+        files: files
       ]
     ]
   end
@@ -29,6 +29,16 @@ defmodule Dogma.Mixfile do
     [
       applications: []
     ]
+  end
+
+  def files do
+    ~w(
+      LICENCE
+      README.md
+      lib/dogma
+      lib/mix/tasks/dogma.ex
+      mix.exs
+    )
   end
 
   defp deps do

@@ -16,6 +16,15 @@ It's also a code style linter for Elixir, powered by shame.
 <br/>
 <br/>
 
+
+## Rules
+
+A list of the currently supported rules can be found at
+[`docs/rules.md`][rules-doc].
+
+[rules-doc]: https://github.com/lpil/dogma/blob/master/docs/rules.md
+
+
 ## Usage
 
 Add Dogma to your Mix dependencies
