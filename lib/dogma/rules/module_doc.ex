@@ -1,8 +1,31 @@
 defmodule Dogma.Rules.ModuleDoc do
   @moduledoc """
-  A rule that disallows the use of an if or unless with a negated predicate
+  A rule which states that all modules must have documentation in the form of a
+  `@moduledoc` attribute.
 
-  Skips .exs files.
+  This rule does run check interpreted Elixir files, i.e. those with the file
+  extension `.exs`.
+
+  This would be valid according to this rule:
+
+      defmodule MyModule do
+        @moduledoc \"\"\"
+        This module is valid as it has a moduledoc!
+        Ideally the documentation would be more useful though...
+        \"\"\"
+      end
+
+  This would not be valid:
+
+      defmodule MyModule do
+      end
+
+  If you do not want to document a module, explicitly do so by setting the
+  attribute to `false`.
+
+      defmodule MyModule do
+        @moduledoc false
+      end
   """
 
   @behaviour Dogma.Rule
