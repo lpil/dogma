@@ -1,6 +1,17 @@
 defmodule Dogma.Rules.VariableName do
   @moduledoc """
-  A rule that disallows variable names not in snake_case
+  A rule that disallows variable names not in `snake_case`.
+
+  `snake_case` is when only lowercase letters are used, and words are separated
+  with underscores, rather than spaces.
+
+  For example, this rule considers this variable assignment valid:
+
+      my_mood = :happy
+
+  and this one invalid:
+
+      myMood = :sad
   """
 
   @behaviour Dogma.Rule
