@@ -1,6 +1,7 @@
 # Dogma Rules
 
-These are the rules included in Dogma by default.
+These are the rules included in Dogma by default. Currently there are
+16 of them.
 
 ## Contents
 

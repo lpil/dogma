@@ -22,7 +22,8 @@ defmodule Mix.Tasks.Dogma.RulesList do
     """
     # Dogma Rules
 
-    These are the rules included in Dogma by default.
+    These are the rules included in Dogma by default. Currently there are
+    #{length rules} of them.
 
     ## Contents
 
