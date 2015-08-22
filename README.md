@@ -18,13 +18,24 @@ It's also a code style linter for Elixir, powered by shame.
 
 ## Usage
 
-We've got a mix task!
+Add Dogma to your Mix dependencies
+
+```elixir
+# mix.exs
+def deps do
+  [
+    {:mix_test_watch, github: "lpil/dogma", only: :dev},
+  ]
+end
+```
+
+Run the mix task:
 
 ```
 mix dogma
 ```
 
-Run it, and you'll get something like this:
+You'll get something like this:
 
 ```
 Inspecting 27 files.
