@@ -38,7 +38,7 @@ defmodule Dogma.Mixfile do
       # Test coverage checker
       {:excoveralls, only: ~w(dev test)a},
       # Automatic test runner
-      {:mix_test_watch, "~> 0.1.2", only: :dev},
+      {:mix_test_watch, only: :dev},
 
       # Benchmark framework
       {:benchfella, "~> 0.2", only: :dev},
