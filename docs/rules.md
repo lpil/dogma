@@ -2,82 +2,104 @@
 
 These are the rules included in Dogma by default.
 
-## DebuggerStatement
+## Contents
+
+* [DebuggerStatement](https://github.com/lpil/dogma/blob/master/docs/rules.md#debuggerstatement)
+* [FinalNewline](https://github.com/lpil/dogma/blob/master/docs/rules.md#finalnewline)
+* [FunctionArity](https://github.com/lpil/dogma/blob/master/docs/rules.md#functionarity)
+* [FunctionName](https://github.com/lpil/dogma/blob/master/docs/rules.md#functionname)
+* [LineLength](https://github.com/lpil/dogma/blob/master/docs/rules.md#linelength)
+* [LiteralInCondition](https://github.com/lpil/dogma/blob/master/docs/rules.md#literalincondition)
+* [ModuleAttributeName](https://github.com/lpil/dogma/blob/master/docs/rules.md#moduleattributename)
+* [ModuleDoc](https://github.com/lpil/dogma/blob/master/docs/rules.md#moduledoc)
+* [ModuleName](https://github.com/lpil/dogma/blob/master/docs/rules.md#modulename)
+* [NegatedIfUnless](https://github.com/lpil/dogma/blob/master/docs/rules.md#negatedifunless)
+* [QuotesInString](https://github.com/lpil/dogma/blob/master/docs/rules.md#quotesinstring)
+* [TrailingBlankLines](https://github.com/lpil/dogma/blob/master/docs/rules.md#trailingblanklines)
+* [TrailingWhitespace](https://github.com/lpil/dogma/blob/master/docs/rules.md#trailingwhitespace)
+* [UnlessElse](https://github.com/lpil/dogma/blob/master/docs/rules.md#unlesselse)
+* [VariableName](https://github.com/lpil/dogma/blob/master/docs/rules.md#variablename)
+* [WindowsLineEndings](https://github.com/lpil/dogma/blob/master/docs/rules.md#windowslineendings)
+
+
+---
+
+### DebuggerStatement
 
 A rule that disallows calls to IEx.pry, as while useful, we probably don't
 want them committed.
 
 
-## FinalNewline
+### FinalNewline
 
 A rule that disallows files that don't end with a final newline.
 
 
-## FunctionArity
+### FunctionArity
 
 A rule that disallows functions with arity greater than 4 (configurable)
 
 
-## FunctionName
+### FunctionName
 
 A rule that disallows function names not in snake_case
 
 
-## LineLength
+### LineLength
 
 A rule that disallows lines longer than 80 columns in length.
 
 
-## LiteralInCondition
+### LiteralInCondition
 
 A rule that disallows useless conditional statements that contain a literal
 in place of a variable or predicate function.
 
 
-## ModuleAttributeName
+### ModuleAttributeName
 
 A rule that disallows module attribute names not in snake_case
 
 
-## ModuleDoc
+### ModuleDoc
 
 A rule that disallows the use of an if or unless with a negated predicate
 
 Skips .exs files.
 
 
-## ModuleName
+### ModuleName
 
 A rule that disallows module names not in PascalCase
 
 
-## NegatedIfUnless
+### NegatedIfUnless
 
 A rule that disallows the use of an if or unless with a negated predicate
 
 
-## QuotesInString
+### QuotesInString
 
 A rule that disallows strings containing double quotes.
 Use s_sigil or S_sigil instead.
 
 
-## TrailingBlankLines
+### TrailingBlankLines
 
 A rule that disallows trailing blank lines as the end of a source file.
 
 
-## TrailingWhitespace
+### TrailingWhitespace
 
 A rule that disallows trailing whitespace at the end of a line.
 
 
-## UnlessElse
+### UnlessElse
 
 A rule that disallows the use of an `else` block with the `unless` macro.
 
 
-## VariableName
+### VariableName
 
 A rule that disallows variable names not in `snake_case`.
 
@@ -93,7 +115,7 @@ and this one invalid:
     myMood = :sad
 
 
-## WindowsLineEndings
+### WindowsLineEndings
 
 A rule that disallows any lines terminated with `\r\n`, the line terminator
 commonly used on the Windows operating system.
