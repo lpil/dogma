@@ -24,7 +24,7 @@ Add Dogma to your Mix dependencies
 # mix.exs
 def deps do
   [
-    {:mix_test_watch, github: "lpil/dogma", only: :dev},
+    {:dogma, "~> 0.0", only: :dev},
   ]
 end
 ```
@@ -66,7 +66,7 @@ mix dogma      # Dogfooding- run the linter!
 
 ### Read the developer docs
 
-Check them out on [hexdocs](hexdocs-dogma), or generate them yourself:
+Check them out on [hexdocs][hexdocs-dogma], or generate them yourself:
 
 [hexdocs-dogma]: http://hexdocs.pm/dogma/overview.html
 
