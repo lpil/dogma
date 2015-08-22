@@ -44,7 +44,30 @@ A rule that disallows functions with arity greater than 4 (configurable)
 
 ### FunctionName
 
-A rule that disallows function names not in snake_case
+A rule that disallows function names not in `snake_case`.
+
+`snake_case` is when only lowercase letters are used, and words are separated
+with underscores, rather than spaces.
+
+For example, this rule considers these function definition valid:
+
+    def my_mood do
+      :happy
+    end
+
+    defp my_belly do
+      :full
+    end
+
+But it considers these invalid:
+
+    def myMood do
+      :sad
+    end
+
+    defp myBelly do
+      :empty
+    end
 
 
 ### LineLength
