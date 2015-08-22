@@ -14,6 +14,7 @@ These are the rules included in Dogma by default.
 * [ModuleDoc](https://github.com/lpil/dogma/blob/master/docs/rules.md#moduledoc)
 * [ModuleName](https://github.com/lpil/dogma/blob/master/docs/rules.md#modulename)
 * [NegatedIfUnless](https://github.com/lpil/dogma/blob/master/docs/rules.md#negatedifunless)
+* [PredicateName](https://github.com/lpil/dogma/blob/master/docs/rules.md#predicatename)
 * [QuotesInString](https://github.com/lpil/dogma/blob/master/docs/rules.md#quotesinstring)
 * [TrailingBlankLines](https://github.com/lpil/dogma/blob/master/docs/rules.md#trailingblanklines)
 * [TrailingWhitespace](https://github.com/lpil/dogma/blob/master/docs/rules.md#trailingwhitespace)
@@ -76,6 +77,11 @@ A rule that disallows module names not in PascalCase
 ### NegatedIfUnless
 
 A rule that disallows the use of an if or unless with a negated predicate
+
+
+### PredicateName
+
+A rule that disallows tautological predicate names.
 
 
 ### QuotesInString
