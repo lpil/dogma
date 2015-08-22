@@ -22,11 +22,7 @@ defmodule Dogma.Rules.PredicateName do
   end
 
   defp test_predicate(line) do
-    Regex.run(~r{(is|has)_(\w+)\?}, line)
-  end
-
-  defp tautological_predicate?(line) do
-    !!(test_predicate(line))
+    Regex.run(~r{\A(is|has)_(\w+)\?\Z}, line)
   end
 
   defp test_predicate({:unquote,_,_} , _meta, node, errors) do
@@ -34,9 +30,9 @@ defmodule Dogma.Rules.PredicateName do
   end
 
   defp test_predicate(function_name, meta, node, errors) do
-    name = function_name |> to_string
-    if name |> tautological_predicate? do
-      {node, [error( meta[:line], test_predicate(name) ) | errors]}
+    name = function_name |> to_string |> test_predicate
+    if name do
+      {node, [error( meta[:line], name ) | errors]}
     else
       {node, errors}
     end

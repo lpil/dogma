@@ -31,7 +31,6 @@ defmodule Dogma.Rules.ModuleDoc do
     {node, errors}
   end
 
-
   defp moduledoc?(node) do
     {_, pred} = Macro.prewalk( node, false, &moduledoc?(&1, &2) )
     pred
