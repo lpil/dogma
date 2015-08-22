@@ -84,7 +84,12 @@ A rule that disallows variable names not in snake_case
 
 ## WindowsLineEndings
 
-A rule that disallows any lines terminated with 
+A rule that disallows any lines terminated with `\r\n`, the line terminator
+commonly used on the Windows operating system.
 
+The preferred line terminator is is the Unix style `\n`.
+
+If you are a Windows user you should be able to configure your editor to
+write files with Unix style `\n` line terminators.
 
 

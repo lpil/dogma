@@ -1,6 +1,12 @@
 defmodule Dogma.Rules.WindowsLineEndings do
-  @moduledoc """
-  A rule that disallows any lines terminated with \r\n
+  @moduledoc ~S"""
+  A rule that disallows any lines terminated with `\r\n`, the line terminator
+  commonly used on the Windows operating system.
+  
+  The preferred line terminator is is the Unix style `\n`.
+
+  If you are a Windows user you should be able to configure your editor to
+  write files with Unix style `\n` line terminators.
   """
 
   @behaviour Dogma.Rule
