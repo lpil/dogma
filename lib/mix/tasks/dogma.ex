@@ -2,20 +2,14 @@ defmodule Mix.Tasks.Dogma do
   use Mix.Task
 
   @shortdoc  "Check Elixir source files for style violations"
-  @moduledoc "Check Elixir source files for style violations"
+  @moduledoc @shortdoc
 
   def run(argv) do
-    {options, arguments, _} = OptionParser.parse(argv)
-    rule_set = ruleset_from_options(options)
-
-    case arguments do
-      [path | _ ]  -> run_dogma(path, rule_set)
-      []           -> run_dogma("", rule_set)
-    end
+    argv |> List.first |> run_dogma
   end
 
-  defp run_dogma(path, rule_set) do
-    Dogma.run(path, rule_set)
+  defp run_dogma(path) do
+    Dogma.run(path)
     |> any_errors?
     |> if do
       System.halt(666)
@@ -26,10 +20,4 @@ defmodule Mix.Tasks.Dogma do
     scripts
     |> Enum.any?( &Enum.any?( &1.errors ) )
   end
-
-  defp ruleset_from_options(rules: module_name) do
-    Module.concat([module_name])
-  end
-  defp ruleset_from_options(_), do: nil
-
 end
