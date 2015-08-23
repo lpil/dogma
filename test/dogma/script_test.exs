@@ -67,7 +67,7 @@ defmodule Dogma.ScriptTest do
       end
 
       should "assign valid? as true", context do
-        assert true == context.script.valid?
+        assert context.script.valid?
       end
 
       should "assigns the quoted abstract syntax tree", context do
@@ -93,7 +93,7 @@ defmodule Dogma.ScriptTest do
       end
 
       should "assign valid? as false", context do
-        assert false == context.script.valid?
+        refute context.script.valid?
       end
 
       should "assign [] in place of AST", context do
