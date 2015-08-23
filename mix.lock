@@ -8,8 +8,8 @@
   "idna": {:hex, :idna, "1.0.2"},
   "inch_ex": {:hex, :inch_ex, "0.4.0"},
   "jsx": {:hex, :jsx, "2.6.2"},
-  "mix_test_watch": {:hex, :mix_test_watch, "0.1.2"},
-  "poison": {:hex, :poison, "1.4.0"},
+  "mix_test_watch": {:hex, :mix_test_watch, "0.2.0"},
+  "poison": {:hex, :poison, "1.5.0"},
   "porcelain": {:hex, :porcelain, "2.0.0"},
   "shouldi": {:hex, :shouldi, "0.2.3"},
   "ssl_verify_hostname": {:hex, :ssl_verify_hostname, "1.0.5"}}
