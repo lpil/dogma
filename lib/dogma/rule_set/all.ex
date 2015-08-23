@@ -1,4 +1,4 @@
-defmodule Dogma.Rules.Sets.All do
+defmodule Dogma.RuleSet.All do
   @moduledoc """
   The module which defines all the rules to run in Dogma.
 

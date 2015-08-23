@@ -169,23 +169,18 @@ defmodule Dogma.ScriptTest do
 
   with "run_tests/1" do
 
-    defmodule CustomRules do
-      def list do
-        [
-          {TestRules.TestOne},
-          {TestRules.TestTwo, output: "hello world"}
-        ]
-      end
-    end
-
     setup context do
       %{
-        script: Script.parse( "1 + 1", "foo.ex" )
+        script: Script.parse( "1 + 1", "foo.ex" ),
+        rules: [
+          {TestRules.TestOne},
+          {TestRules.TestTwo, output: "hello world"}
+        ],
       }
     end
 
-    should "run each test in the provided configuration", context do
-      errors = context.script |> Script.run_tests(CustomRules)
+    should "run the given rules", context do
+      errors = context.script |> Script.run_tests(context.rules)
       assert [1, "hello world"] == errors
     end
   end

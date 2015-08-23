@@ -21,16 +21,17 @@ defmodule Dogma.Rules do
   @doc """
   Returns currently selected rule set, as specified in the mix config.
 
-  Defaults to `Dogma.Rules.Sets.All`
+  Defaults to `Dogma.RuleSet.All`
   """
   def selected_set do
     set = Application.get_env :dogma, :rule_set, All
-    Module.concat Dogma.Rules.Sets, set
+    Module.concat Dogma.RuleSet, set
   end
 
 
   defp test_script(script, formatter, rule_set) do
-    errors = script |> Script.run_tests( rule_set )
+    rules  = rule_set.list
+    errors = script |> Script.run_tests( rules )
     script = %Script{ script | errors: errors }
     Formatter.script( script, formatter )
     script

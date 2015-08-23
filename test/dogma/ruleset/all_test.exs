@@ -1,7 +1,7 @@
-defmodule Dogma.Rules.Sets.AllTest do
+defmodule Dogma.RuleSet.AllTest do
   use ShouldI
 
-  alias Dogma.Rules.Sets.All
+  alias Dogma.RuleSet.All
 
   with ".list" do
 

@@ -37,7 +37,7 @@ defmodule Mix.Tasks.Dogma.RulesList do
 
 
   defp all_rules do
-    Dogma.Rules.Sets.All.list
+    Dogma.RuleSet.All.list
     |> Enum.map(&rule_tuple_to_name/1)
   end
 

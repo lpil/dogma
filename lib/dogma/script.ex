@@ -45,10 +45,10 @@ defmodule Dogma.Script do
 
 
   @doc """
-  Runs each of the rules Rules.list on the given script
+  Runs each of the given on the given script
   """
-  def run_tests(script, rule_set \\ Rules.Sets.All) do
-    rule_set.list
+  def run_tests(script, rules) do
+    rules
     |> Enum.map( &namespace_rule/1 )
     |> Enum.map( &run_test(&1, script) )
     |> List.flatten
