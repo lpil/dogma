@@ -57,7 +57,7 @@ defmodule Dogma.Rules.FunctionArityTest do
       %Error{
         rule:     FunctionArity,
         message:  "Function arity should be 4 or less",
-        position: 1,
+        line: 1,
       }
     ]
   end
@@ -77,7 +77,7 @@ defmodule Dogma.Rules.FunctionArityTest do
       %Error{
         rule:     FunctionArity,
         message:  "Function arity should be 2 or less",
-        position: 1,
+        line: 1,
       }
     ]
   end

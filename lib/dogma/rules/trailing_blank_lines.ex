@@ -30,7 +30,7 @@ defmodule Dogma.Rules.TrailingBlankLines do
     %Error{
       rule:     __MODULE__,
       message:  "Blank lines detected at end of file",
-      position: pos,
+      line: pos,
     }
   end
 end

@@ -42,7 +42,7 @@ defmodule Dogma.Rules.PredicateName do
     %Error{
       rule:     __MODULE__,
       message:  "Favour `#{suffix}?` over `#{name}`",
-      position: pos,
+      line: pos,
     }
   end
 end

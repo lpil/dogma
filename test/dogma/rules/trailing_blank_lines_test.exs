@@ -33,7 +33,7 @@ defmodule Dogma.Rules.TrailingBlankLinesTest do
       %Error{
         rule: TrailingBlankLines,
         message: "Blank lines detected at end of file",
-        position: 2,
+        line: 2,
       }
     ]
   end

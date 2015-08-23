@@ -63,7 +63,7 @@ defmodule Dogma.Rules.LiteralInConditionTest do
         %Error{
           rule:     LiteralInCondition,
           message:  "Literal value found in conditional",
-          position: 1,
+          line: 1,
         }
       ]
     end
@@ -81,7 +81,7 @@ defmodule Dogma.Rules.LiteralInConditionTest do
         %Error{
           rule:     LiteralInCondition,
           message:  "Literal value found in conditional",
-          position: 1,
+          line: 1,
         }
       ]
     end
@@ -100,7 +100,7 @@ defmodule Dogma.Rules.LiteralInConditionTest do
         %Error{
           rule:     LiteralInCondition,
           message:  "Literal value found in conditional",
-          position: 1,
+          line: 1,
         }
       ]
     end

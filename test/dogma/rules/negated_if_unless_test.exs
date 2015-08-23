@@ -51,7 +51,7 @@ defmodule Dogma.Rules.NegatedIfUnlessTest do
       should_register_errors [
         %Error{
           message: "Favour unless over a negated if",
-          position: 1,
+          line: 1,
           rule: NegatedIfUnless,
         }
       ]
@@ -71,7 +71,7 @@ defmodule Dogma.Rules.NegatedIfUnlessTest do
       should_register_errors [
         %Error{
           message: "Favour if over a negated unless",
-          position: 1,
+          line: 1,
           rule: NegatedIfUnless,
         }
       ]
@@ -93,7 +93,7 @@ defmodule Dogma.Rules.NegatedIfUnlessTest do
       should_register_errors [
         %Error{
           message: "Favour unless over a negated if",
-          position: 1,
+          line: 1,
           rule: NegatedIfUnless,
         }
       ]
@@ -114,7 +114,7 @@ defmodule Dogma.Rules.NegatedIfUnlessTest do
       should_register_errors [
         %Error{
           message: "Favour if over a negated unless",
-          position: 2,
+          line: 2,
           rule: NegatedIfUnless,
         }
       ]

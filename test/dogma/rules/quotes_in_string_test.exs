@@ -79,7 +79,7 @@ defmodule Dogma.Rules.QuotesInStringTest do
       %Error{
         rule:     QuotesInString,
         message:  ~s(Prefer the S sigil for strings containing `"`),
-        position: nil, # FIXME: How do we get the line number for a string?
+        line: nil, # FIXME: How do we get the line number for a string?
       }
     ]
   end

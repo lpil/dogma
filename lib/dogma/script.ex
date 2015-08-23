@@ -86,9 +86,9 @@ defmodule Dogma.Script do
 
   defp error({:error, {line, err, _}}) do
     %Error{
-      rule:     SyntaxError,
-      message:  err,
-      position: line - 1,
+      rule:    SyntaxError,
+      message: err,
+      line:    line - 1,
     }
   end
 

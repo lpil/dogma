@@ -26,7 +26,7 @@ defmodule Dogma.Rules.FinalNewlineTest do
       %Error{
         rule: FinalNewline,
         message: "End of file newline missing",
-        position: 3,
+        line: 3,
       }
     ]
   end

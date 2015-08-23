@@ -4,7 +4,7 @@ defmodule Dogma.Error do
   Rules. These `%Errors` are to be passed to and reported by a formatter.
   """
 
-  defstruct rule:     nil,
-            message:  nil,
-            position: nil
+  defstruct rule:    nil,
+            message: nil,
+            line:    nil
 end

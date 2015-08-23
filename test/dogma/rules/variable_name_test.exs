@@ -33,12 +33,12 @@ defmodule Dogma.Rules.VariableNameTest do
       %Error{
         rule:     VariableName,
         message:  "Variable names should be in snake_case",
-        position: 2,
+        line: 2,
       },
       %Error{
         rule:     VariableName,
         message:  "Variable names should be in snake_case",
-        position: 1,
+        line: 1,
       },
     ]
   end

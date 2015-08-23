@@ -104,7 +104,7 @@ defmodule Dogma.ScriptTest do
         error = %Error{
           rule: SyntaxError,
           message: ~s[missing terminator: >> (for "<<" starting at line 1)],
-          position: 1,
+          line: 1,
         }
         assert [error] == context.script.errors
       end

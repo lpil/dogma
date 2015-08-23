@@ -76,7 +76,7 @@ defmodule Dogma.Formatter.Simple do
   end
 
   defp format_error(error) do
-    "\n#{error.position}: #{shorten error.rule}: #{error.message}"
+    "\n#{error.line}: #{shorten error.rule}: #{error.message}"
   end
 
   defp shorten(rule) do

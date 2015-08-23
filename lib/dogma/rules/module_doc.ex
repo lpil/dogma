@@ -81,9 +81,9 @@ defmodule Dogma.Rules.ModuleDoc do
 
   defp error(position) do
     %Error{
-      rule: __MODULE__,
+      rule:    __MODULE__,
       message: "Module without a @moduledoc detected.",
-      position: position,
+      line:    position,
     }
   end
 end

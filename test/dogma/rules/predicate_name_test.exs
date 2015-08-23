@@ -28,12 +28,12 @@ defmodule Dogma.Rules.PredicateNameTest do
       %Error{
         rule: PredicateName,
         message: "Favour `bad?` over `is_bad?`",
-        position: 5,
+        line: 5,
       },
       %Error{
         rule: PredicateName,
         message: "Favour `naughty?` over `is_naughty?`",
-        position: 1,
+        line: 1,
       },
     ]
   end

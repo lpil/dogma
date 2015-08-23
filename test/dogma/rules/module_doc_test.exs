@@ -49,7 +49,7 @@ defmodule Dogma.Rules.ModuleDocTest do
       %Error{
         rule: ModuleDoc,
         message: "Module without a @moduledoc detected.",
-        position: 1,
+        line: 1,
       }
     ]
   end
@@ -69,7 +69,7 @@ defmodule Dogma.Rules.ModuleDocTest do
       %Error{
         rule: ModuleDoc,
         message: "Module without a @moduledoc detected.",
-        position: 3,
+        line: 3,
       }
     ]
   end
@@ -89,7 +89,7 @@ defmodule Dogma.Rules.ModuleDocTest do
       %Error{
         rule: ModuleDoc,
         message: "Module without a @moduledoc detected.",
-        position: 1,
+        line: 1,
       }
     ]
   end

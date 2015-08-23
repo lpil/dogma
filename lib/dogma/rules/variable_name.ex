@@ -38,9 +38,9 @@ defmodule Dogma.Rules.VariableName do
 
   defp error(pos) do
     %Error{
-      rule:     __MODULE__,
-      message:  "Variable names should be in snake_case",
-      position: pos,
+      rule:    __MODULE__,
+      message: "Variable names should be in snake_case",
+      line:    pos,
     }
   end
 end

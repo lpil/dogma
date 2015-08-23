@@ -18,7 +18,7 @@ defmodule Dogma.Rules.WindowsLineEndingsTest do
       %Error{
         rule: WindowsLineEndings,
         message: "Windows line ending detected (\r\n)",
-        position: 2,
+        line: 2,
       }
     ]
   end

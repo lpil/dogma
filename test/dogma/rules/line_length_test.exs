@@ -18,12 +18,12 @@ defmodule Dogma.Rules.LineLengthTest do
       %Error{
         rule: LineLength,
         message: "Line too long",
-        position: 1,
+        line: 1,
       },
       %Error{
         rule: LineLength,
         message: "Line too long",
-        position: 3,
+        line: 3,
       },
     ]
   end

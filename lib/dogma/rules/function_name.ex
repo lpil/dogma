@@ -62,9 +62,9 @@ defmodule Dogma.Rules.FunctionName do
 
   defp error(pos) do
     %Error{
-      rule:     __MODULE__,
-      message:  "Function names should be in snake_case",
-      position: pos,
+      rule:    __MODULE__,
+      message: "Function names should be in snake_case",
+      line:    pos,
     }
   end
 end

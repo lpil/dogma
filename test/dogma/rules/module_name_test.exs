@@ -70,7 +70,7 @@ defmodule Dogma.Rules.ModuleNameTest do
       %Error{
         rule:     ModuleName,
         message:  "Module names should be in PascalCase",
-        position: 1,
+        line: 1,
       }
     ]
   end
@@ -87,7 +87,7 @@ defmodule Dogma.Rules.ModuleNameTest do
       %Error{
         rule:     ModuleName,
         message:  "Module names should be in PascalCase",
-        position: 1,
+        line: 1,
       }
     ]
   end
@@ -104,7 +104,7 @@ defmodule Dogma.Rules.ModuleNameTest do
       %Error{
         rule:     ModuleName,
         message:  "Module names should be in PascalCase",
-        position: 1,
+        line: 1,
       }
     ]
   end
@@ -125,7 +125,7 @@ defmodule Dogma.Rules.ModuleNameTest do
       %Error{
         rule:     ModuleName,
         message:  "Module names should be in PascalCase",
-        position: 2,
+        line: 2,
       }
     ]
   end
@@ -143,7 +143,7 @@ defmodule Dogma.Rules.ModuleNameTest do
       %Error{
         rule:     ModuleName,
         message:  "Module names should be in PascalCase",
-        position: 1,
+        line: 1,
       }
     ]
   end

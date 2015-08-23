@@ -53,7 +53,7 @@ defmodule Dogma.Rules.UnlessElse do
     %Error{
       rule:     __MODULE__,
       message:  "Favour if over unless with else",
-      position: pos,
+      line: pos,
     }
   end
 end

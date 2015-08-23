@@ -23,9 +23,9 @@ defmodule Dogma.Rules.DebuggerStatement do
 
   defp error(pos) do
     %Error{
-      rule:     __MODULE__,
+      rule:    __MODULE__,
       message: "Possible forgotten debugger statement detected",
-      position: pos,
+      line:    pos,
     }
   end
 end

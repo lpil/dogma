@@ -26,7 +26,7 @@ defmodule Dogma.Rules.LineLength do
     %Error{
       rule:     __MODULE__,
       message:  "Line too long",
-      position: line_num,
+      line: line_num,
     }
   end
 end

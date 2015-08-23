@@ -35,18 +35,18 @@ defmodule Dogma.Rules.NegatedIfUnless do
   end
 
 
-  defp error(:unless, position) do
+  defp error(:unless, line) do
     %Error{
       rule: __MODULE__,
       message: "Favour if over a negated unless",
-      position: position,
+      line: line,
     }
   end
-  defp error(:if, position) do
+  defp error(:if, line) do
     %Error{
       rule: __MODULE__,
       message: "Favour unless over a negated if",
-      position: position,
+      line: line,
     }
   end
 end

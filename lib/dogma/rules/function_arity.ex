@@ -51,7 +51,7 @@ defmodule Dogma.Rules.FunctionArity do
     %Error{
       rule:     __MODULE__,
       message:  "Function arity should be #{max_arity} or less",
-      position: line_number,
+      line: line_number,
     }
   end
 end

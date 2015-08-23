@@ -21,7 +21,7 @@ defmodule Dogma.Rules.DebuggerStatementTest do
       %Error{
         rule: DebuggerStatement,
         message: "Possible forgotten debugger statement detected",
-        position: 2,
+        line: 2,
       },
     ]
   end

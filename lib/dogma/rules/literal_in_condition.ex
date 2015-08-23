@@ -50,7 +50,7 @@ defmodule Dogma.Rules.LiteralInCondition do
     %Error{
       rule:     __MODULE__,
       message:  "Literal value found in conditional",
-      position: pos,
+      line: pos,
     }
   end
 end

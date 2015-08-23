@@ -22,7 +22,7 @@ defmodule Dogma.Rules.UnlessElseTest do
     should_register_errors [
       %Error{
         message: "Favour if over unless with else",
-        position: 1,
+        line: 1,
         rule: UnlessElse,
       }
     ]

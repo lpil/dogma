@@ -56,12 +56,12 @@ defmodule Dogma.Rules.FunctionNameTest do
       %Error{
         rule:     FunctionName,
         message:  "Function names should be in snake_case",
-        position: 4,
+        line: 4,
       },
       %Error{
         rule:     FunctionName,
         message:  "Function names should be in snake_case",
-        position: 1,
+        line: 1,
       },
     ]
   end
@@ -80,12 +80,12 @@ defmodule Dogma.Rules.FunctionNameTest do
       %Error{
         rule:     FunctionName,
         message:  "Function names should be in snake_case",
-        position: 4,
+        line: 4,
       },
       %Error{
         rule:     FunctionName,
         message:  "Function names should be in snake_case",
-        position: 1,
+        line: 1,
       },
     ]
   end

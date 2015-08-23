@@ -57,7 +57,7 @@ defmodule Dogma.Rules.QuotesInString do
     %Error{
       rule:     __MODULE__,
       message:  ~s(Prefer the S sigil for strings containing `"`),
-      position: pos,
+      line: pos,
     }
   end
 end

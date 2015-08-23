@@ -19,7 +19,7 @@ defmodule Dogma.Rules.FinalNewline do
     %Error{
       rule:     __MODULE__,
       message:  "End of file newline missing",
-      position: length( script.lines ),
+      line: length( script.lines ),
     }
   end
 end

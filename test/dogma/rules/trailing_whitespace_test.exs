@@ -19,12 +19,12 @@ defmodule Dogma.Rules.TrailingWhitespaceTest do
       %Error{
         rule: TrailingWhitespace,
         message: "Trailing whitespace detected",
-        position: 4,
+        line: 4,
       },
       %Error{
         rule: TrailingWhitespace,
         message: "Trailing whitespace detected",
-        position: 2,
+        line: 2,
       },
     ]
   end

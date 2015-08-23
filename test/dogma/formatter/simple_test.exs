@@ -55,7 +55,7 @@ defmodule Dogma.Formatter.SimpleTest do
 
   with "An error" do
     setup context do
-      error = %Error{ rule: Foo.BadCode, position: 44, message: "Awful." }
+      error = %Error{ rule: Foo.BadCode, line: 44, message: "Awful." }
       %{
         scripts: [ %Script{ path: "foo.ex", errors: [error] }, %Script{} ]
       }
@@ -75,9 +75,9 @@ defmodule Dogma.Formatter.SimpleTest do
 
   with "Several errors" do
     setup context do
-      error1 = %Error{ rule: Foo.BadCode,    position: 44, message: "Awful." }
-      error2 = %Error{ rule: Foo.Confusing,  position: 2, message: "Wtf?" }
-      error3 = %Error{ rule: Foo.UglyAsHell, position: 63, message: "Not ok." }
+      error1 = %Error{ rule: Foo.BadCode,    line: 44, message: "Awful." }
+      error2 = %Error{ rule: Foo.Confusing,  line: 2,  message: "Wtf?" }
+      error3 = %Error{ rule: Foo.UglyAsHell, line: 63, message: "Not ok." }
       %{
         scripts: [
           %Script{ path: "foo.ex", errors: [error1] },
