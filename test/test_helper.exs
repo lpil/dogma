@@ -9,7 +9,8 @@ defmodule DogmaTest.Helper do
   end
 
   def pending do
-    IO.ANSI.format( [:yellow, "P"] )
+    [:yellow, "P"]
+    |> IO.ANSI.format
     |> IO.write
   end
 end

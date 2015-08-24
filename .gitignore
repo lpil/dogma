@@ -2,6 +2,7 @@
 /deps
 erl_crash.dump
 *.ez
+*.beam
 /doc/
 /docs/all.json
 /bench/snapshots

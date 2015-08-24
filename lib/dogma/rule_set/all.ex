@@ -7,6 +7,7 @@ defmodule Dogma.RuleSet.All do
 
   def list do
     [
+      {BarePipeChainStart},
       {ComparisonToBoolean},
       {DebuggerStatement},
       {FinalNewline},
