@@ -9,7 +9,8 @@ defmodule Mix.Tasks.Dogma do
   end
 
   defp run_dogma(path) do
-    Dogma.run(path)
+    path
+    |> Dogma.run
     |> any_errors?
     |> if do
       System.halt(666)

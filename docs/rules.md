@@ -1,10 +1,11 @@
 # Dogma Rules
 
 These are the rules included in Dogma by default. Currently there are
-18 of them.
+19 of them.
 
 ## Contents
 
+* [BarePipeChainStart](https://github.com/lpil/dogma/blob/master/docs/rules.md#barepipechainstart)
 * [ComparisonToBoolean](https://github.com/lpil/dogma/blob/master/docs/rules.md#comparisontoboolean)
 * [DebuggerStatement](https://github.com/lpil/dogma/blob/master/docs/rules.md#debuggerstatement)
 * [FinalNewline](https://github.com/lpil/dogma/blob/master/docs/rules.md#finalnewline)
@@ -26,6 +27,11 @@ These are the rules included in Dogma by default. Currently there are
 
 
 ---
+
+### BarePipeChainStart
+
+A rule that enforces that function chains always begin with a bare value.
+
 
 ### ComparisonToBoolean
 

@@ -92,7 +92,8 @@ defmodule Dogma.Script do
   end
 
   defp lines(source) do
-    Regex.replace( ~r/\n\z/, source, "" )
+    ~r/\n\z/
+    |> Regex.replace(source, "")
     |> String.split("\n")
     |> Enum.with_index
     |> Enum.map(fn {line, i} -> {i + 1, line} end)
