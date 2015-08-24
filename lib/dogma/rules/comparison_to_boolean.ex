@@ -8,7 +8,7 @@ defmodule Dogma.Rules.ComparisonToBoolean do
   alias Dogma.Script
   alias Dogma.Error
 
-  def test(script) do
+  def test(script, _config = [] \\ []) do
     script |> Script.walk( &check_node(&1, &2) )
   end
 

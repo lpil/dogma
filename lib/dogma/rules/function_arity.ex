@@ -8,7 +8,9 @@ defmodule Dogma.Rules.FunctionArity do
   alias Dogma.Script
   alias Dogma.Error
 
-  def test(script) do
+  def test(script), do: test(script, [])
+
+  def test(script, _config = []) do
     test(script, max: 4)
   end
 

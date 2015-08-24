@@ -9,10 +9,9 @@ defmodule Dogma.Rules.ModuleName do
   alias Dogma.Error
   alias Dogma.Util.Name
 
-  def test(script) do
+  def test(script, _config = [] \\ []) do
     script |> Script.walk( &check_node(&1, &2) )
   end
-
 
   defp check_node({:defmodule, m, [x, _]} = node, errors) when is_atom x do
     errors = check_names( [x], errors, m[:line] )

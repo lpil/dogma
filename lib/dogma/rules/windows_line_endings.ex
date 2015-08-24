@@ -2,7 +2,7 @@ defmodule Dogma.Rules.WindowsLineEndings do
   @moduledoc ~S"""
   A rule that disallows any lines terminated with `\r\n`, the line terminator
   commonly used on the Windows operating system.
-  
+
   The preferred line terminator is is the Unix style `\n`.
 
   If you are a Windows user you should be able to configure your editor to
@@ -15,7 +15,7 @@ defmodule Dogma.Rules.WindowsLineEndings do
 
   @violation_regex ~r/\r\z/
 
-  def test(script) do
+  def test(script, _config = [] \\ []) do
     Enum.reduce( script.lines, [], &check_line(&1, &2) )
   end
 

@@ -7,7 +7,9 @@ defmodule Dogma.Rules.LineLength do
 
   alias Dogma.Error
 
-  def test(script) do
+  def test(script), do: test(script, [])
+
+  def test(script, _config = []) do
     test(script, max_length: 80)
   end
 
