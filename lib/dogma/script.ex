@@ -5,7 +5,6 @@ defmodule Dogma.Script do
   with them.
   """
 
-  alias Dogma.Rules
   alias Dogma.Script
   alias Dogma.Error
   alias Dogma.Util.ScriptStrings
