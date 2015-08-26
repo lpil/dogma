@@ -5,7 +5,7 @@ defmodule Dogma.Rules.ComparisonToBooleanTest do
   alias Dogma.Script
   alias Dogma.Error
 
-  @errors [
+  @expected_errors [
     %Error{
       rule:    ComparisonToBoolean,
       message: "Comparison to a boolean is pointless",
@@ -54,57 +54,45 @@ defmodule Dogma.Rules.ComparisonToBooleanTest do
     |> ComparisonToBoolean.test
   end
 
-  with "right hand booleans" do
-    setup context do
-      errors = """
-      foo ==  false
-      foo ==  true
-      foo === false
-      foo === true
-      foo !=  false
-      foo !=  true
-      foo !== false
-      foo !== true
-      """ |> test
-      %{errors: errors}
-    end
-
-    should_register_errors @errors
+  should "error with right hand booleans" do
+    errors = """
+    foo ==  false
+    foo ==  true
+    foo === false
+    foo === true
+    foo !=  false
+    foo !=  true
+    foo !== false
+    foo !== true
+    """ |> test
+    assert @expected_errors == errors
   end
 
-  with "righthand booleans" do
-    setup context do
-      errors = """
-      true  ==  foo
-      true  === foo
-      true  !=  foo
-      true  !== foo
-      false ==  foo
-      false === foo
-      false !=  foo
-      false !== foo
-      """ |> test
-      %{errors: errors}
-    end
-
-    should_register_errors @errors
+  should "error with lefthand booleans" do
+    errors = """
+    true  ==  foo
+    true  === foo
+    true  !=  foo
+    true  !== foo
+    false ==  foo
+    false === foo
+    false !=  foo
+    false !== foo
+    """ |> test
+    assert @expected_errors == errors
   end
 
-  with "vars on both sides" do
-    setup context do
-      errors = """
-      foo ==  bar
-      foo === bar
-      foo !=  bar
-      foo !== bar
-      foo ==  bar
-      foo === bar
-      foo !=  bar
-      foo !== bar
-      """ |> test
-      %{errors: errors}
-    end
-
-    should_register_no_errors
+  should "not error with vars on both sides" do
+    errors = """
+    foo ==  bar
+    foo === bar
+    foo !=  bar
+    foo !== bar
+    foo ==  bar
+    foo === bar
+    foo !=  bar
+    foo !== bar
+    """ |> test
+    assert [] == errors
   end
 end

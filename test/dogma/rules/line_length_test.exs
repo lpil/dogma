@@ -5,16 +5,13 @@ defmodule Dogma.Rules.LineLengthTest do
   alias Dogma.Script
   alias Dogma.Error
 
-  with "long lines" do
-    setup context do
-      errors = [
-        String.duplicate( "x",  90 ),
-        String.duplicate( "y",  30 ),
-        String.duplicate( "z", 101 ),
-      ] |> Enum.join( "\n" ) |> Script.parse( "foo.ex" ) |> LineLength.test
-      %{ errors: errors }
-    end
-    should_register_errors [
+  should "error on long lines" do
+    errors = [
+      String.duplicate( "x",  90 ),
+      String.duplicate( "y",  30 ),
+      String.duplicate( "z", 101 ),
+    ] |> Enum.join( "\n" ) |> Script.parse( "foo.ex" ) |> LineLength.test
+    expected_errors = [
       %Error{
         rule: LineLength,
         message: "Line too long",
@@ -26,21 +23,25 @@ defmodule Dogma.Rules.LineLengthTest do
         line: 3,
       },
     ]
+    assert expected_errors == errors
   end
 
-  with "long lines but with a custom rule config" do
-    setup context do
-      errors = [
-        String.duplicate( "x",  90 ),
-        String.duplicate( "y",  30 ),
-        String.duplicate( "z", 101 ),
-      ]
-      |> Enum.join( "\n" )
-      |> Script.parse( "foo.ex" )
-      |> LineLength.test(max_length: 120)
-
-      %{ errors: errors }
-    end
-    should_register_no_errors
+  should "allow the lien length to be configured" do
+    errors = [
+      String.duplicate( "x",  90 ),
+      String.duplicate( "y",  30 ),
+      String.duplicate( "z", 101 ),
+    ]
+    |> Enum.join( "\n" )
+    |> Script.parse( "foo.ex" )
+    |> LineLength.test(max_length: 100)
+    expected_errors = [
+      %Error{
+        rule: LineLength,
+        message: "Line too long",
+        line: 3,
+      },
+    ]
+    assert expected_errors == errors
   end
 end

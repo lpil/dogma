@@ -9,84 +9,54 @@ defmodule Dogma.Rules.FunctionNameTest do
     script |> Script.parse( "foo.ex" ) |> FunctionName.test
   end
 
-  with "valid names" do
-    setup context do
-      errors = """
-      def foo do
-      end
-
-      def foo2, do: nil
-
-      def foo_bar2 do
-      end
-
-      def foo_bar, do: nil
-
-      defp private_foo do
-      end
-      """ |> test
-      %{ errors: errors }
+  should "not error with snake_case names" do
+    errors = """
+    def foo do
     end
-    should_register_no_errors
+    def foo_bar do
+    end
+    defp private_foo do
+    end
+    """ |> test
+    assert [] == errors
+    end
+
+  should "not error with an unquoted name" do
+    errors = """
+    def unquote(function_name)(_state) do
+      {:ok, "something"}
+    end
+    """ |> test
+    assert [] == errors
   end
 
-  with "valid but weird names" do
-    setup context do
-      errors = """
-      def unquote(function_name)(_state) do
-        {:ok, "something"}
-      end
-      """ |> test
-      %{ errors: errors }
+  should "error with invalid public function names" do
+    errors = """
+    def fooBar do
     end
-    should_register_no_errors
-  end
-
-  with "invalid names using def" do
-    setup context do
-      errors = """
-      def fooBar do
-      end
-
-      def barFoo, do: nil
-      """ |> test
-      %{ errors: errors }
-    end
-    should_register_errors [
-      %Error{
-        rule:     FunctionName,
-        message:  "Function names should be in snake_case",
-        line: 4,
-      },
+    """ |> test
+    expected_errors = [
       %Error{
         rule:     FunctionName,
         message:  "Function names should be in snake_case",
         line: 1,
       },
     ]
+    assert expected_errors == errors
   end
 
-  with "invalid names using defp" do
-    setup context do
-      errors = """
-      defp fooBar do
-      end
-
-      defp barFoo, do: nil
-      """ |> test
-      %{ errors: errors }
+  should "error with invalid private function names" do
+    errors = """
+    defp fooBar do
     end
-    should_register_errors [
-      %Error{
-        rule:     FunctionName,
-        message:  "Function names should be in snake_case",
-        line: 4,
-      },
+    """ |> test
+    expected_errors = [
       %Error{
         rule:     FunctionName,
         message:  "Function names should be in snake_case",
         line: 1,
       },
     ]
+    assert expected_errors == errors
   end
 end

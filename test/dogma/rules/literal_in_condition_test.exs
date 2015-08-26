@@ -10,141 +10,117 @@ defmodule Dogma.Rules.LiteralInConditionTest do
   end
 
   with "a variable/function argument" do
-    with "if" do
-      setup context do
-        errors = """
-        if feeling_tired do
-          have_an_early_night
-        end
-        """ |> test
-        %{ errors: errors }
+    should "not error for if" do
+      errors = """
+      if feeling_tired do
+        have_an_early_night
       end
-      should_register_no_errors
+      """ |> test
+      assert [] == errors
     end
 
-    with "unless" do
-      setup context do
-        errors = """
-        unless feeling_sleepy do
-          a_little_dance
-        end
-        """ |> test
-        %{ errors: errors }
+    should "not error for unless" do
+      errors = """
+      unless feeling_sleepy do
+        a_little_dance
       end
-      should_register_no_errors
+      """ |> test
+      assert [] == errors
     end
 
-    with "case" do
-      setup context do
-        errors = """
-        case status do
-          :hyped -> run_like_the_wind
-          _      -> dawdle
-        end
-        """ |> test
-        %{ errors: errors }
+    should "not error for case" do
+      errors = """
+      case status do
+        :hyped -> run_like_the_wind
+        _      -> dawdle
       end
-      should_register_no_errors
+      """ |> test
+      assert [] == errors
     end
   end
 
 
   with "a literal argument" do
-    with "if" do
-      setup context do
-        errors = """
-        if false do
-          i_will_never_run
-        end
-        """ |> test
-        %{ errors: errors }
+    should "error for if" do
+      errors = """
+      if false do
+        i_will_never_run
       end
-      should_register_errors [
+      """ |> test
+      expected_errors = [
         %Error{
           rule:     LiteralInCondition,
           message:  "Literal value found in conditional",
           line: 1,
         }
       ]
+      assert expected_errors == errors
     end
 
-    with "unless" do
-      setup context do
-        errors = """
-        unless [] do
-          useless_unless
-        end
-        """ |> test
-        %{ errors: errors }
+    should "error for unless" do
+      errors = """
+      unless [] do
+        useless_unless
       end
-      should_register_errors [
+      """ |> test
+      expected_errors = [
         %Error{
           rule:     LiteralInCondition,
           message:  "Literal value found in conditional",
           line: 1,
         }
       ]
+      assert expected_errors == errors
     end
 
-    with "case" do
-      setup context do
-        errors = """
-        case 0 do
-          1 -> the_loneliest_number
-          _ -> go_to_guy
-        end
-        """ |> test
-        %{ errors: errors }
+    should "error for case" do
+      errors = """
+      case 0 do
+        1 -> the_loneliest_number
+        _ -> go_to_guy
       end
-      should_register_errors [
+      """ |> test
+      expected_errors = [
         %Error{
           rule:     LiteralInCondition,
           message:  "Literal value found in conditional",
           line: 1,
         }
       ]
+      assert expected_errors == errors
     end
   end
 
   with "a piped in argument" do
-    with "if" do
-      setup context do
-        errors = """
-        something
-        |> if do
-          i_will_never_run
-        end
-        """ |> test
-        %{ errors: errors }
+    should "not error for if" do
+      errors = """
+      something
+      |> if do
+        i_will_never_run
       end
-      should_register_no_errors
+      """ |> test
+      assert [] == errors
     end
 
-    with "unless" do
-      setup context do
-        errors = """
-        something
-        |> unless do
-          useless_unless
-        end
-        """ |> test
-        %{ errors: errors }
+    should "not error for unless" do
+      errors = """
+      something
+      |> unless do
+        useless_unless
       end
-      should_register_no_errors
+      """ |> test
+      assert [] == errors
     end
 
-    with "case" do
-      setup context do
-        errors = """
-        something
-        |> case do
-          1 -> the_loneliest_number
-          _ -> go_to_guy
-        end
-        """ |> test
-        %{ errors: errors }
+    should "not error for case" do
+      errors = """
+      something
+      |> case do
+      1 -> the_loneliest_number
+      _ -> go_to_guy
       end
-      should_register_no_errors
+      """ |> test
+      assert [] == errors
     end
   end
 end
