@@ -1,11 +1,10 @@
-defmodule Mix.Tasks.Dogma.RulesList do
-  use Mix.Task
-
+defmodule Dogma.Documentation.RuleList do
   @shortdoc  "Generate documentation file detailing all rules"
   @moduledoc "Generate documentation file detailing all rules"
 
-  def run(_) do
+  def write! do
     File.write!( "docs/rules.md", rules_doc )
+    IO.puts "Generated docs/rules.md"
   end
 
   @doc """
