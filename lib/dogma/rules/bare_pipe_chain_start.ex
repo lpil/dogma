@@ -51,6 +51,10 @@ defmodule Dogma.Rules.BarePipeChainStart do
   defp function_line({:@, _, _}),
   do: nil
 
+  # exception for module atoms
+  defp function_line({:__aliases__, _, _}),
+  do: nil
+
   defp function_line({atom, meta, args})
   when is_atom(atom) and is_list(args) do
     if atom |> to_string |> String.starts_with?("sigil") do
