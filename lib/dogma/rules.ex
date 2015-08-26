@@ -7,6 +7,7 @@ defmodule Dogma.Rules do
   alias Dogma.Formatter
   alias Dogma.Script
 
+  @default_rule_set Dogma.RuleSet.All
 
   @doc """
   Runs the rules in the current rule set on the given scripts.
@@ -24,8 +25,7 @@ defmodule Dogma.Rules do
   Defaults to `Dogma.RuleSet.All`
   """
   def selected_set do
-    set = Application.get_env :dogma, :rule_set, All
-    Module.concat Dogma.RuleSet, set
+    Application.get_env :dogma, :rule_set, @default_rule_set
   end
 
 
