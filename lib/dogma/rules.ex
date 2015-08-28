@@ -14,8 +14,10 @@ defmodule Dogma.Rules do
   """
   def test(scripts) do
     formatter = Formatter.default_formatter
+    test_set = selected_set
     scripts
-    |> Enum.map(&test_script(&1, formatter, selected_set))
+      |> Enum.map(&Task.async(fn -> test_script(&1, formatter, test_set) end))
+      |> Enum.map(&Task.await/1)
   end
 
 
@@ -27,7 +29,6 @@ defmodule Dogma.Rules do
   def selected_set do
     Application.get_env :dogma, :rule_set, @default_rule_set
   end
-
 
   defp test_script(script, formatter, rule_set) do
     rules  = rule_set.list
