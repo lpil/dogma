@@ -10,13 +10,12 @@ defmodule Dogma do
   alias Dogma.Rules
   alias Dogma.ScriptSources
 
-  def run(dir_path \\ "") do
-    dir_path
+  def run({dir, formatter}) do
+    dir
     |> ScriptSources.find
     |> ScriptSources.to_scripts
-    |> Formatter.start
-    |> Rules.test
-    |> Formatter.finish
+    |> Formatter.start(formatter)
+    |> Rules.test(formatter)
+    |> Formatter.finish(formatter)
   end
-
 end
