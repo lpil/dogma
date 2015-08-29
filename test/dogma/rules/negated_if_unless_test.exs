@@ -1,123 +1,101 @@
 defmodule Dogma.Rules.NegatedIfUnlessTest do
-  use DogmaTest.Helper
+  use ShouldI
 
   alias Dogma.Rules.NegatedIfUnless
   alias Dogma.Script
   alias Dogma.Error
 
+  defp test(source) do
+    source |> Script.parse( "foo.ex" ) |> NegatedIfUnless.test
+  end
+
   with "a non negated predicate" do
-    with "if" do
-      setup context do
-        script = """
-        if it_was_really_good do
-          boast_about_your_weekend
-        end
-        """ |> Script.parse( "foo.ex" )
-        %{
-          errors: NegatedIfUnless.test( script )
-        }
+    should "not error with if" do
+      errors = """
+      if it_was_really_good do
+        boast_about_your_weekend
       end
-      should_register_no_errors
+      """ |> test
+      assert [] == errors
     end
 
-    with "unless" do
-      setup context do
-        script = """
-        unless youre_quite_full do
-          have_another_slice_of_cake
-        end
-        """ |> Script.parse( "foo.ex" )
-        %{
-          errors: NegatedIfUnless.test( script )
-        }
+    should "not error with unless" do
+      errors = """
+      unless youre_quite_full do
+        have_another_slice_of_cake
       end
-      should_register_no_errors
+      """ |> test
+      assert [] == errors
     end
   end
 
 
   with "a predicate negated with 'not'" do
-    with "if" do
-      setup context do
-        script = """
-        if not that_great do
-          make_the_best_of_it
-        end
-        """ |> Script.parse( "foo.ex" )
-        %{
-          errors: NegatedIfUnless.test( script )
-        }
+    should "error with if" do
+      errors = """
+      if not that_great do
+        make_the_best_of_it
       end
-      should_register_errors [
+      """ |> test
+      expected_errors = [
         %Error{
           message: "Favour unless over a negated if",
           line: 1,
           rule: NegatedIfUnless,
         }
       ]
+      assert expected_errors == errors
     end
 
-    with "unless" do
-      setup context do
-        script = """
-        unless not acceptable do
-          find_something_better
-        end
-        """ |> Script.parse( "foo.ex" )
-        %{
-          errors: NegatedIfUnless.test( script )
-        }
+    should "error with unless" do
+      errors = """
+      unless not acceptable do
+        find_something_better
       end
-      should_register_errors [
+      """ |> test
+      expected_errors = [
         %Error{
           message: "Favour if over a negated unless",
           line: 1,
           rule: NegatedIfUnless,
         }
       ]
+      assert expected_errors == errors
     end
   end
 
   with "a predicate negated with '!'" do
-    with "if" do
-      setup context do
-        script = """
-        if ! that_great do
-          make_the_best_of_it
-        end
-        """ |> Script.parse( "foo.ex" )
-        %{
-          errors: NegatedIfUnless.test( script )
-        }
+    should "error with if" do
+      errors = """
+      if ! that_great do
+        make_the_best_of_it
       end
-      should_register_errors [
+      """ |> test
+      expected_errors = [
         %Error{
           message: "Favour unless over a negated if",
           line: 1,
           rule: NegatedIfUnless,
         }
       ]
+      assert expected_errors == errors
     end
 
-    with "unless" do
-      setup context do
-        script = """
-        IO.puts "Hello, world!"
-        unless ! acceptable do
-          find_something_better
-        end
-        """ |> Script.parse( "foo.ex" )
-        %{
-          errors: NegatedIfUnless.test( script )
-        }
+    should "error with unless" do
+      errors = """
+      IO.puts "Hello, world!"
+      unless ! acceptable do
+        find_something_better
       end
-      should_register_errors [
+      """ |> test
+      expected_errors = [
         %Error{
           message: "Favour if over a negated unless",
           line: 2,
           rule: NegatedIfUnless,
         }
       ]
+      assert expected_errors == errors
     end
   end
 end

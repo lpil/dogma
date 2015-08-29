@@ -1,5 +1,5 @@
 defmodule Dogma.Rules.ModuleDocTest do
-  use DogmaTest.Helper
+  use ShouldI
 
   alias Dogma.Rules.ModuleDoc
   alias Dogma.Script

@@ -1,5 +1,5 @@
 defmodule Dogma.Rules.LineLengthTest do
-  use DogmaTest.Helper
+  use ShouldI
 
   alias Dogma.Rules.LineLength
   alias Dogma.Script

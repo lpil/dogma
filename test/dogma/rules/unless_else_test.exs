@@ -1,5 +1,5 @@
 defmodule Dogma.Rules.UnlessElseTest do
-  use DogmaTest.Helper
+  use ShouldI
 
   alias Dogma.Rules.UnlessElse
   alias Dogma.Script

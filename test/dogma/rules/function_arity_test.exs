@@ -1,5 +1,5 @@
 defmodule Dogma.Rules.FunctionArityTest do
-  use DogmaTest.Helper
+  use ShouldI
 
   alias Dogma.Rules.FunctionArity
   alias Dogma.Script

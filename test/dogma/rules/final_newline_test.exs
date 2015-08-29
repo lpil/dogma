@@ -1,5 +1,5 @@
 defmodule Dogma.Rules.FinalNewlineTest do
-  use DogmaTest.Helper
+  use ShouldI
 
   alias Dogma.Rules.FinalNewline
   alias Dogma.Script

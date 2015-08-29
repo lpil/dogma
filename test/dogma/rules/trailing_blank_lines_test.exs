@@ -1,5 +1,5 @@
 defmodule Dogma.Rules.TrailingBlankLinesTest do
-  use DogmaTest.Helper
+  use ShouldI
 
   alias Dogma.Rules.TrailingBlankLines
   alias Dogma.Script

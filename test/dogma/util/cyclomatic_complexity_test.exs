@@ -1,5 +1,5 @@
 defmodule Dogma.Util.CyclomaticComplexityTest do
-  use DogmaTest.Helper
+  use ShouldI
 
   alias Dogma.Util.CyclomaticComplexity
 

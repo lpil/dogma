@@ -1,5 +1,5 @@
 defmodule Dogma.Rules.FunctionNameTest do
-  use DogmaTest.Helper
+  use ShouldI
 
   alias Dogma.Rules.FunctionName
   alias Dogma.Script

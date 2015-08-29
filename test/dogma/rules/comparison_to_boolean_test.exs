@@ -1,5 +1,5 @@
 defmodule Dogma.Rules.ComparisonToBooleanTest do
-  use DogmaTest.Helper
+  use ShouldI
 
   alias Dogma.Rules.ComparisonToBoolean
   alias Dogma.Script

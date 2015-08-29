@@ -1,5 +1,5 @@
 defmodule Dogma.Rules.LiteralInConditionTest do
-  use DogmaTest.Helper
+  use ShouldI
 
   alias Dogma.Rules.LiteralInCondition
   alias Dogma.Script

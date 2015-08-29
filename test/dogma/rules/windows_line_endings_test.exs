@@ -1,5 +1,5 @@
 defmodule Dogma.Rules.WindowsLineEndingsTest do
-  use DogmaTest.Helper
+  use ShouldI
 
   alias Dogma.Rules.WindowsLineEndings
   alias Dogma.Script

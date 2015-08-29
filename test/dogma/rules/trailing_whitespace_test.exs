@@ -1,5 +1,5 @@
 defmodule Dogma.Rules.TrailingWhitespaceTest do
-  use DogmaTest.Helper
+  use ShouldI
 
   alias Dogma.Rules.TrailingWhitespace
   alias Dogma.Script

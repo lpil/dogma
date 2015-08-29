@@ -1,5 +1,5 @@
 defmodule Dogma.Rules.BarePipeChainStartTest do
-  use DogmaTest.Helper
+  use ShouldI
 
   alias Dogma.Rules.BarePipeChainStart
   alias Dogma.Script
