@@ -48,7 +48,7 @@ defmodule Dogma.Rules.ComparisonToBooleanTest do
     }
   ]
 
-  def test(script) do
+  defp test(script) do
     script
     |> Script.parse("foo.ex")
     |> ComparisonToBoolean.test

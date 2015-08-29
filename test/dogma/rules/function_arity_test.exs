@@ -5,7 +5,7 @@ defmodule Dogma.Rules.FunctionArityTest do
   alias Dogma.Script
   alias Dogma.Error
 
-  def test(script) do
+  defp test(script) do
     script |> Script.parse( "foo.ex" ) |> FunctionArity.test
   end
 

@@ -5,147 +5,124 @@ defmodule Dogma.Rules.ModuleNameTest do
   alias Dogma.Script
   alias Dogma.Error
 
-  def test(script) do
+  defp test(script) do
     script |> Script.parse( "foo.ex" ) |> ModuleName.test
   end
 
-  with "a valid module name" do
-    setup context do
-      errors = """
-      defmodule HelloWorld do
-      end
-      """ |> test
-      %{ errors: errors }
+  should "not error with a valid module name" do
+    errors = """
+    defmodule HelloWorld do
     end
-    should_register_no_errors
+    """ |> test
+    assert [] == errors
   end
 
-  with "a valid module name as a symbol" do
-    setup context do
-      errors = """
-      defmodule :HelloWorld do
-      end
-      """ |> test
-      %{ errors: errors }
+  should "a valid module name as a symbol" do
+    errors = """
+    defmodule :HelloWorld do
     end
-    should_register_no_errors
+    """ |> test
+    assert [] == errors
   end
 
-  with "a valid nested module name" do
-    setup context do
-      errors = """
-      defmodule Hello.World do
-      end
-      """ |> test
-      %{ errors: errors }
+  should "a valid nested module name" do
+    errors = """
+    defmodule Hello.World do
     end
-    should_register_no_errors
+    """ |> test
+    assert [] == errors
   end
 
-  with "nested modules with valid names" do
-    setup context do
-      errors = """
-      defmodule Hello do
-        defmodule There do
-          defmodule World do
-          end
+  should "nested modules with valid names" do
+    errors = """
+    defmodule Hello do
+      defmodule There do
+        defmodule World do
         end
       end
-      """ |> test
-      %{ errors: errors }
     end
-    should_register_no_errors
+    """ |> test
+    assert [] == errors
   end
 
 
-  with "a snake_case module name" do
-    setup context do
-      errors = """
-      defmodule Snake_case do
-      end
-      """ |> test
-      %{ errors: errors }
+  should "a snake_case module name" do
+    errors = """
+    defmodule Snake_case do
     end
-    should_register_errors [
+    """ |> test
+    expected_errors = [
       %Error{
         rule:     ModuleName,
         message:  "Module names should be in PascalCase",
         line: 1,
       }
     ]
+    assert expected_errors == errors
   end
 
-  with "a snake_case symbol module name" do
-    setup context do
-      errors = """
-      defmodule :snake_case do
-      end
-      """ |> test
-      %{ errors: errors }
+  should "a snake_case symbol module name" do
+    errors = """
+    defmodule :snake_case do
     end
-    should_register_errors [
+    """ |> test
+    expected_errors = [
       %Error{
         rule:     ModuleName,
         message:  "Module names should be in PascalCase",
         line: 1,
       }
     ]
+    assert expected_errors == errors
   end
 
-  with "a snake_case 2 part module name" do
-    setup context do
-      errors = """
-      defmodule Hello.There_world do
-      end
-      """ |> test
-      %{ errors: errors }
+  should "a snake_case 2 part module name" do
+    errors = """
+    defmodule Hello.There_world do
     end
-    should_register_errors [
+    """ |> test
+    expected_errors = [
       %Error{
         rule:     ModuleName,
         message:  "Module names should be in PascalCase",
         line: 1,
       }
     ]
+    assert expected_errors == errors
   end
 
-  with "a nested snake_case name" do
-    setup context do
-      errors = """
-      defmodule Hello do
-        defmodule I_am_interrupting do
-          defmodule World do
-          end
+  should "a nested snake_case name" do
+    errors = """
+    defmodule Hello do
+      defmodule I_am_interrupting do
+        defmodule World do
         end
       end
-      """ |> test
-      %{ errors: errors }
     end
-    should_register_errors [
+    """ |> test
+    expected_errors = [
       %Error{
         rule:     ModuleName,
         message:  "Module names should be in PascalCase",
         line: 2,
       }
     ]
+    assert expected_errors == errors
   end
 
 
-  with "a non-capitalised 2 part name" do
-    setup context do
-      errors = """
-      defmodule :"Hello.world" do
-      end
-      """ |> test
-      %{ errors: errors }
+  should "a non-capitalised 2 part name" do
+    errors = """
+    defmodule :"Hello.world" do
     end
-    should_register_errors [
+    """ |> test
+    expected_errors = [
       %Error{
         rule:     ModuleName,
         message:  "Module names should be in PascalCase",
         line: 1,
       }
     ]
+    assert expected_errors == errors
   end
-
 end

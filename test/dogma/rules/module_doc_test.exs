@@ -5,103 +5,90 @@ defmodule Dogma.Rules.ModuleDocTest do
   alias Dogma.Script
   alias Dogma.Error
 
-  def test(script) do
+  defp test(script) do
     script |> Script.parse( "foo.ex" ) |> ModuleDoc.test
   end
 
 
   with "module docs" do
-    setup context do
+    should "not error" do
       errors = """
       defmodule VeryGood do
         @moduledoc "Lots of good info here"
       end
       """ |> test
-      %{ errors: errors }
+      assert [] == errors
     end
-    should_register_no_errors
 
-    with "nested modules" do
-      setup context do
-        errors = """
-        defmodule VeryGood do
-          @moduledoc "Lots of good info here"
-          defmodule AlsoGood do
-            @moduledoc "And even more here!"
-          end
+    should "not error with nested modules" do
+      errors = """
+      defmodule VeryGood do
+        @moduledoc "Lots of good info here"
+        defmodule AlsoGood do
+          @moduledoc "And even more here!"
         end
-        """ |> test
-        %{ errors: errors }
       end
-      should_register_no_errors
+      """ |> test
+      assert [] == errors
     end
   end
 
-  with "a module missing a module doc" do
-    setup context do
-      errors = """
-      defmodule NotGood do
-      end
-      """ |> test
-      %{ errors: errors }
+  should "error for a module missing a module doc" do
+    errors = """
+    defmodule NotGood do
     end
-    should_register_errors [
+    """ |> test
+    expected_errors = [
       %Error{
         rule: ModuleDoc,
         message: "Module without a @moduledoc detected.",
         line: 1,
       }
     ]
+    assert expected_errors == errors
   end
 
-  with "a nested module missing a module doc" do
-    setup context do
-      errors = """
-      defmodule VeryGood do
-        @moduledoc "Lots of good info here"
-        defmodule NotGood do
-        end
+  should "error for a nested module missing a module doc" do
+    errors = """
+    defmodule VeryGood do
+      @moduledoc "Lots of good info here"
+      defmodule NotGood do
       end
-      """ |> test
-      %{ errors: errors }
     end
-    should_register_errors [
+    """ |> test
+    expected_errors = [
       %Error{
         rule: ModuleDoc,
         message: "Module without a @moduledoc detected.",
         line: 3,
       }
     ]
+    assert expected_errors == errors
   end
 
-  with "a parent module missing a module doc" do
-    setup context do
-      errors = """
-      defmodule NotGood do
-        defmodule VeryGood do
-          @moduledoc "Lots of good info here"
-        end
+  should "error for a parent module missing a module doc" do
+    errors = """
+    defmodule NotGood do
+      defmodule VeryGood do
+        @moduledoc "Lots of good info here"
       end
-      """ |> test
-      %{ errors: errors }
     end
-    should_register_errors [
+    """ |> test
+    expected_errors = [
       %Error{
         rule: ModuleDoc,
         message: "Module without a @moduledoc detected.",
         line: 1,
       }
     ]
+    assert expected_errors == errors
   end
 
-  with "an exs file (meaning it's to be skipped)" do
-    setup context do
-      errors = """
-      defmodule NotGood do
-      end
-      """ |> Script.parse( "foo.exs" ) |> ModuleDoc.test
-      %{ errors: errors }
+  should "not error for an exs file (exs is skipped)" do
+    errors = """
+    defmodule NotGood do
     end
-    should_register_no_errors
+    """ |> Script.parse( "foo.exs" ) |> ModuleDoc.test
+    assert [] == errors
   end
 end

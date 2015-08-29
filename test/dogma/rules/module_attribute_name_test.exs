@@ -5,39 +5,39 @@ defmodule Dogma.Rules.ModuleAttributeNameTest do
   alias Dogma.Script
   alias Dogma.Error
 
-  def test(script) do
+  defp test(script) do
     script |> Script.parse( "foo.ex" ) |> ModuleAttributeName.test
   end
 
-  with "valid module attribute names" do
-    setup context do
-      errors = """
-      defmodule HelloWorld do
-        @hello_world 1
-        @hello 2
-      end
-      """ |> test
-      %{ errors: errors }
+  should "not error with snake_case module attribute names" do
+    errors = """
+    defmodule HelloWorld do
+      @hello_world 1
+      @hello 2
     end
-    should_register_no_errors
+    """ |> test
+    assert [] == errors
   end
 
-  with "a camelCase module attribute name" do
-    setup context do
-      errors = """
-      defmodule :snake_case do
-        @helloWorld 1
-      end
-      """ |> test
-      %{ errors: errors }
+  should "error for a camelCase module attribute name" do
+    errors = """
+    defmodule SnakeCase do
+      @helloWorld 1
+      @hello_World 1
     end
-    should_register_errors [
+    """ |> test
+    expected_errors = [
+      %Error{
+        rule:     ModuleAttributeName,
+        message:  "Module attribute names should be in snake_case",
+        line: 3,
+      },
       %Error{
         rule:     ModuleAttributeName,
         message:  "Module attribute names should be in snake_case",
         line: 2,
-      }
+      },
     ]
+    assert expected_errors == errors
   end
-
 end
