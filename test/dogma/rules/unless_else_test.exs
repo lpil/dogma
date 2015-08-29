@@ -6,7 +6,7 @@ defmodule Dogma.Rules.UnlessElseTest do
   alias Dogma.Error
 
   defp test(source) do
-    source |> Script.parse( "foo.ex" ) |> UnlessElse.test
+    source |> Script.parse!( "foo.ex" ) |> UnlessElse.test
   end
 
 

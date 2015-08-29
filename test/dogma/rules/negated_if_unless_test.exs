@@ -6,7 +6,7 @@ defmodule Dogma.Rules.NegatedIfUnlessTest do
   alias Dogma.Error
 
   defp test(source) do
-    source |> Script.parse( "foo.ex" ) |> NegatedIfUnless.test
+    source |> Script.parse!( "foo.ex" ) |> NegatedIfUnless.test
   end
 
   with "a non negated predicate" do

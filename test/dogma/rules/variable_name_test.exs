@@ -6,7 +6,7 @@ defmodule Dogma.Rules.VariableNameTest do
   alias Dogma.Error
 
   defp test(script) do
-    script |> Script.parse( "foo.ex" ) |> VariableName.test
+    script |> Script.parse!( "foo.ex" ) |> VariableName.test
   end
 
   should "not error for snake_case names" do

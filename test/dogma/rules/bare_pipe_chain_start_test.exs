@@ -7,7 +7,7 @@ defmodule Dogma.Rules.BarePipeChainStartTest do
 
   defp test(script) do
     script
-    |> Script.parse("foo.ex")
+    |> Script.parse!("foo.ex")
     |> BarePipeChainStart.test
   end
 

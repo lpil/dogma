@@ -6,7 +6,7 @@ defmodule Dogma.Rules.ModuleAttributeNameTest do
   alias Dogma.Error
 
   defp test(script) do
-    script |> Script.parse( "foo.ex" ) |> ModuleAttributeName.test
+    script |> Script.parse!( "foo.ex" ) |> ModuleAttributeName.test
   end
 
   should "not error with snake_case module attribute names" do

@@ -6,7 +6,7 @@ defmodule Dogma.Rules.FunctionArityTest do
   alias Dogma.Error
 
   defp test(script) do
-    script |> Script.parse( "foo.ex" ) |> FunctionArity.test
+    script |> Script.parse!( "foo.ex" ) |> FunctionArity.test
   end
 
   should "not error with a low arity" do
@@ -60,7 +60,7 @@ defmodule Dogma.Rules.FunctionArityTest do
     def point(a,b,c) do
     end
     """
-    |> Script.parse( "foo.ex" )
+    |> Script.parse!( "foo.ex" )
     |> FunctionArity.test(max: 2)
     expected_errors = [
       %Error{

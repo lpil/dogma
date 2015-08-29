@@ -6,7 +6,7 @@ defmodule Dogma.Rules.QuotesInStringTest do
   alias Dogma.Error
 
   defp test(script) do
-    script |> Script.parse( "foo.ex" ) |> QuotesInString.test
+    script |> Script.parse!( "foo.ex" ) |> QuotesInString.test
   end
 
 
@@ -71,7 +71,7 @@ defmodule Dogma.Rules.QuotesInStringTest do
   not error for a quote in a binary literal, as sigils are not valid in the
   binary syntax.
   """ do
-    errors = """
+    errors = ~S"""
     << "\""::utf8, cs::binary >> = string
     """ |> test
     assert [] == errors

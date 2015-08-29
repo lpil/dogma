@@ -6,7 +6,7 @@ defmodule Dogma.Rules.LiteralInConditionTest do
   alias Dogma.Error
 
   defp test(script) do
-    script |> Script.parse( "foo.ex" ) |> LiteralInCondition.test
+    script |> Script.parse!( "foo.ex" ) |> LiteralInCondition.test
   end
 
   with "a variable/function argument" do

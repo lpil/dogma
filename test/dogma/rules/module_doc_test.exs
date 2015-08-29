@@ -6,7 +6,7 @@ defmodule Dogma.Rules.ModuleDocTest do
   alias Dogma.Error
 
   defp test(script) do
-    script |> Script.parse( "foo.ex" ) |> ModuleDoc.test
+    script |> Script.parse!( "foo.ex" ) |> ModuleDoc.test
   end
 
 
@@ -88,7 +88,7 @@ defmodule Dogma.Rules.ModuleDocTest do
     errors = """
     defmodule NotGood do
     end
-    """ |> Script.parse( "foo.exs" ) |> ModuleDoc.test
+    """ |> Script.parse!( "foo.exs" ) |> ModuleDoc.test
     assert [] == errors
   end
 end

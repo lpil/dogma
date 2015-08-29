@@ -6,7 +6,7 @@ defmodule Dogma.Rules.ModuleNameTest do
   alias Dogma.Error
 
   defp test(script) do
-    script |> Script.parse( "foo.ex" ) |> ModuleName.test
+    script |> Script.parse!( "foo.ex" ) |> ModuleName.test
   end
 
   should "not error with a valid module name" do

@@ -6,6 +6,7 @@ defmodule Dogma.Script do
   """
 
   defmodule InvalidScriptError do
+    @moduledoc "An exception that can raised when source has invalid syntax."
     defexception [:message]
   end
 

@@ -6,7 +6,7 @@ defmodule Dogma.Rules.FinalNewlineTest do
   alias Dogma.Error
 
   defp test(script) do
-    script |> Script.parse( "foo.ex" ) |> FinalNewline.test
+    script |> Script.parse!( "foo.ex" ) |> FinalNewline.test
   end
 
   should "not error with a final newline" do

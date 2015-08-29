@@ -11,7 +11,7 @@ defmodule Dogma.Rules.DebuggerStatementTest do
       IEx.pry
       x
     end
-    """ |> Script.parse( "foo.ex" ) |> DebuggerStatement.test
+    """ |> Script.parse!( "foo.ex" ) |> DebuggerStatement.test
     expected_errors = [
       %Error{
         rule: DebuggerStatement,

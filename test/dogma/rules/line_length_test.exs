@@ -10,7 +10,7 @@ defmodule Dogma.Rules.LineLengthTest do
       String.duplicate( "x",  90 ),
       String.duplicate( "y",  30 ),
       String.duplicate( "z", 101 ),
-    ] |> Enum.join( "\n" ) |> Script.parse( "foo.ex" ) |> LineLength.test
+    ] |> Enum.join( "\n" ) |> Script.parse!( "foo.ex" ) |> LineLength.test
     expected_errors = [
       %Error{
         rule: LineLength,
@@ -33,7 +33,7 @@ defmodule Dogma.Rules.LineLengthTest do
       String.duplicate( "z", 101 ),
     ]
     |> Enum.join( "\n" )
-    |> Script.parse( "foo.ex" )
+    |> Script.parse!( "foo.ex" )
     |> LineLength.test(max_length: 100)
     expected_errors = [
       %Error{

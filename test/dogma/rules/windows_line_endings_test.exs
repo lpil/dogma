@@ -6,7 +6,7 @@ defmodule Dogma.Rules.WindowsLineEndingsTest do
   alias Dogma.Error
 
   defp test(source) do
-    source |> Script.parse( "foo.ex" ) |> WindowsLineEndings.test
+    source |> Script.parse!( "foo.ex" ) |> WindowsLineEndings.test
   end
 
   should "error for windows line endings" do

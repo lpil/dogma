@@ -6,7 +6,7 @@ defmodule Dogma.Rules.PredicateNameTest do
   alias Dogma.Error
 
   defp test(source) do
-    source |> Script.parse( "foo.ex" ) |> PredicateName.test
+    source |> Script.parse!( "foo.ex" ) |> PredicateName.test
   end
 
 

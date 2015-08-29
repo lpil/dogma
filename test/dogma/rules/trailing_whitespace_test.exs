@@ -6,7 +6,7 @@ defmodule Dogma.Rules.TrailingWhitespaceTest do
   alias Dogma.Error
 
   defp test(source) do
-    source |> Script.parse( "foo.ex" ) |> TrailingWhitespace.test
+    source |> Script.parse!( "foo.ex" ) |> TrailingWhitespace.test
   end
 
   should "error when there is trailing whitespace" do

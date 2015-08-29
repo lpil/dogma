@@ -6,7 +6,7 @@ defmodule Dogma.Rules.TrailingBlankLinesTest do
   alias Dogma.Error
 
   defp test(source) do
-    source |> Script.parse( "foo.ex" ) |> TrailingBlankLines.test
+    source |> Script.parse!( "foo.ex" ) |> TrailingBlankLines.test
   end
 
 
