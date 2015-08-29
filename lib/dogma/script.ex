@@ -5,6 +5,10 @@ defmodule Dogma.Script do
   with them.
   """
 
+  defmodule InvalidScriptError do
+    defexception [:message]
+  end
+
   alias Dogma.Script
   alias Dogma.Error
   alias Dogma.Util.ScriptStrings
@@ -31,6 +35,20 @@ defmodule Dogma.Script do
       processed_source: processed_source,
       processed_lines:  lines( processed_source ),
     } |> add_ast
+  end
+
+  @doc """
+  Builds a Script struct from the given source code and path.
+
+  Raises an exception if the source is invalid.
+  """
+  def parse!(source, path) do
+    script = parse( source, path )
+    if script.valid? do
+      script
+    else
+      raise InvalidScriptError
+    end
   end
 
   defp add_ast(script) do

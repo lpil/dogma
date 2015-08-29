@@ -1,10 +1,11 @@
 defmodule Dogma.ScriptTest do
   use ShouldI
 
-  alias Dogma.Script
   alias Dogma.Error
+  alias Dogma.Script
+  alias Dogma.Script.InvalidScriptError
 
-  with "Script.parse" do
+  with "parse/2" do
 
     with "a valid script" do
       setup context do
@@ -135,8 +136,29 @@ defmodule Dogma.ScriptTest do
     end
   end
 
+  with "parse!/2" do
+    should "raise InvalidScriptError with an invalid script" do
+      assert_raise InvalidScriptError, fn ->
+        "<>>>>>>><><>><><>>>>>>>>>>>>>><<><" |> Script.parse!( "foo.ex" )
+      end
+    end
 
-  with ".walk" do
+    should "be identical to parse/2 for valid scripts" do
+      source = """
+      defmodule Foo do
+        def greet do
+          "Hello world!"
+        end
+      end
+      """
+      expected = source |> Script.parse( "foo.ex" )
+      actual   = source |> Script.parse!( "foo.ex" )
+      assert expected == actual
+    end
+  end
+
+
+  with "walk/2" do
     setup context do
       %{
         script: Script.parse( "2 * 3 + 1", "foo.ex" )
