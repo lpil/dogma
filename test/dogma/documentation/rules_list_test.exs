@@ -9,7 +9,7 @@ defmodule Dogma.Documentation.RuleListTest do
     assert actual == expected, """
     docs/rules.md is out of date.
 
-    Run `mix run script/generate_documentation.ex` in order to regenerate
+    Run `mix run scripts/generate_documentation.exs` in order to regenerate
     the documentation.
     """
   end
