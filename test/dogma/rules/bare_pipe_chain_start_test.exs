@@ -215,4 +215,18 @@ defmodule Dogma.Rules.BarePipeChainStartTest do
     """ |> test
     assert [] == errors
   end
+
+  should "not error with an interpolated string start" do
+    errors = ~S"""
+    "A #{baked_good}" |> String.upcase |> IO.puts
+    """ |> test
+    assert [] == errors
+  end
+
+  should "not error with binary start" do
+    errors = ~S"""
+    << thing::utf8 >> |> String.upcase |> IO.puts
+    """ |> test
+    assert [] == errors
+  end
 end
