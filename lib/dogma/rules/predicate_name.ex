@@ -1,6 +1,9 @@
 defmodule Dogma.Rules.PredicateName do
   @moduledoc """
-  A rule that disallows tautological predicate names.
+  A rule that disallows tautological predicate names, meaning those that start
+  with the prefix `has_` or the prefix `is_`.
+
+  Favour `valid?` over `is_valid?`, and `picture?` over `has_picture?`.
   """
 
   @behaviour Dogma.Rule

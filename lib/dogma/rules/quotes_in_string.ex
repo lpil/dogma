@@ -1,7 +1,14 @@
 defmodule Dogma.Rules.QuotesInString do
-  @moduledoc """
-  A rule that disallows strings containing double quotes.
-  Use s_sigil or S_sigil instead.
+  @moduledoc ~S"""
+  A rule that disallows strings containing the double quote character (`"`).
+
+  Use s_sigil or S_sigil instead or string literals in these situation.
+
+      # Bad
+      "\""
+
+      # Good
+      ~s(")
   """
 
   @behaviour Dogma.Rule

@@ -30,12 +30,40 @@ These are the rules included in Dogma by default. Currently there are
 
 ### BarePipeChainStart
 
-A rule that enforces that function chains always begin with a bare value.
+A rule that enforces that function chains always begin with a bare value,
+rather than a function call with arguments.
+
+For example, this is considered valid:
+
+    "Hello World"
+    |> String.split("")
+    |> Enum.reverse
+    |> Enum.join
+
+While this is not:
+
+    String.split("Hello World", "")
+    |> Enum.reverse
+    |> Enum.join
 
 
 ### ComparisonToBoolean
 
 A rule that disallows comparison to booleans.
+
+For example, these are considered invalid:
+
+    foo == true
+    true != bar
+    false === baz
+
+This is because these expressions evalutate to `true` or `false`, so you
+could get the same result by using either the variable directly, or negating
+the variable.
+
+Additionally, with a duck typed language such as Elixir, we should be more
+interested in whether something is "truthy" or "falsey" than if they are
+`true` or `false`.
 
 
 ### DebuggerStatement
@@ -130,23 +158,62 @@ attribute to `false`.
 
 ### ModuleName
 
-A rule that disallows module names not in PascalCase
+A rule that disallows module names not in PascalCase.
+
+For example, this is considered valid:
+
+    defmodule HelloWorld do
+    end
+
+While this is considered invalid:
+
+    defmodule Hello_World do
+    end
 
 
 ### NegatedIfUnless
 
-A rule that disallows the use of an if or unless with a negated predicate
+A rule that disallows the use of an if or unless with a negated predicate,
+When you do this, swap the `if` for an `unless`, or vice versa.
+
+These are considered valid:
+
+    if happy? do
+      party()
+    end
+    unless sad? do
+      jump_up()
+    end
+
+These are considered invalid:
+
+    if !happy? do
+      stay_in_bed()
+    end
+    unless not sad? do
+      mope_about()
+    end
 
 
 ### PredicateName
 
-A rule that disallows tautological predicate names.
+A rule that disallows tautological predicate names, meaning those that start
+with the prefix `has_` or the prefix `is_`.
+
+Favour `valid?` over `is_valid?`, and `picture?` over `has_picture?`.
 
 
 ### QuotesInString
 
-A rule that disallows strings containing double quotes.
-Use s_sigil or S_sigil instead.
+A rule that disallows strings containing the double quote character (`"`).
+
+Use s_sigil or S_sigil instead or string literals in these situation.
+
+    # Bad
+    "\""
+
+    # Good
+    ~s(")
 
 
 ### TrailingBlankLines

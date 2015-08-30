@@ -1,6 +1,20 @@
 defmodule Dogma.Rules.ComparisonToBoolean do
   @moduledoc """
   A rule that disallows comparison to booleans.
+
+  For example, these are considered invalid:
+
+      foo == true
+      true != bar
+      false === baz
+
+  This is because these expressions evalutate to `true` or `false`, so you
+  could get the same result by using either the variable directly, or negating
+  the variable.
+
+  Additionally, with a duck typed language such as Elixir, we should be more
+  interested in whether something is "truthy" or "falsey" than if they are
+  `true` or `false`.
   """
 
   @behaviour Dogma.Rule

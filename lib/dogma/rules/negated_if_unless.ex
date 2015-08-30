@@ -1,6 +1,25 @@
 defmodule Dogma.Rules.NegatedIfUnless do
   @moduledoc """
-  A rule that disallows the use of an if or unless with a negated predicate
+  A rule that disallows the use of an if or unless with a negated predicate,
+  When you do this, swap the `if` for an `unless`, or vice versa.
+
+  These are considered valid:
+
+      if happy? do
+        party()
+      end
+      unless sad? do
+        jump_up()
+      end
+
+  These are considered invalid:
+
+      if !happy? do
+        stay_in_bed()
+      end
+      unless not sad? do
+        mope_about()
+      end
   """
 
   @behaviour Dogma.Rule

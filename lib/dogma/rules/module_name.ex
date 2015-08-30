@@ -1,6 +1,16 @@
 defmodule Dogma.Rules.ModuleName do
   @moduledoc """
-  A rule that disallows module names not in PascalCase
+  A rule that disallows module names not in PascalCase.
+
+  For example, this is considered valid:
+
+      defmodule HelloWorld do
+      end
+
+  While this is considered invalid:
+
+      defmodule Hello_World do
+      end
   """
 
   @behaviour Dogma.Rule

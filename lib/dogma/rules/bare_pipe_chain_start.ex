@@ -1,6 +1,20 @@
 defmodule Dogma.Rules.BarePipeChainStart do
   @moduledoc """
-  A rule that enforces that function chains always begin with a bare value.
+  A rule that enforces that function chains always begin with a bare value,
+  rather than a function call with arguments.
+
+  For example, this is considered valid:
+
+      "Hello World"
+      |> String.split("")
+      |> Enum.reverse
+      |> Enum.join
+
+  While this is not:
+
+      String.split("Hello World", "")
+      |> Enum.reverse
+      |> Enum.join
   """
 
   @behaviour Dogma.Rule
