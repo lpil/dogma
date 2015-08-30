@@ -1,7 +1,7 @@
 # Dogma Rules
 
 These are the rules included in Dogma by default. Currently there are
-21 of them.
+22 of them.
 
 ## Contents
 
@@ -26,6 +26,7 @@ These are the rules included in Dogma by default. Currently there are
 * [UnlessElse](https://github.com/lpil/dogma/blob/master/docs/rules.md#unlesselse)
 * [VariableName](https://github.com/lpil/dogma/blob/master/docs/rules.md#variablename)
 * [WindowsLineEndings](https://github.com/lpil/dogma/blob/master/docs/rules.md#windowslineendings)
+* [LiteralInInterpolation](https://github.com/lpil/dogma/blob/master/docs/rules.md#literalininterpolation)
 
 
 ---
@@ -328,5 +329,11 @@ The preferred line terminator is is the Unix style `\n`.
 
 If you are a Windows user you should be able to configure your editor to
 write files with Unix style `\n` line terminators.
+
+
+### LiteralInInterpolation
+
+A rule that disallows useless string interpolations that contain a literal value
+instead of a variable or function.
 
 

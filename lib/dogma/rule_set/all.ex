@@ -27,7 +27,8 @@ defmodule Dogma.RuleSet.All do
       {TrailingWhitespace},
       {UnlessElse},
       {VariableName},
-      {WindowsLineEndings}
+      {WindowsLineEndings},
+      {LiteralInInterpolation}
     ]
   end
 end
