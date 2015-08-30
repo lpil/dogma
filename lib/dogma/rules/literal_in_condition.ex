@@ -9,6 +9,8 @@ defmodule Dogma.Rules.LiteralInCondition do
   alias Dogma.Script
   alias Dogma.Error
 
+  import Dogma.Util.ASTNode, only: [literal?: 1]
+
   def test(script, _config = [] \\ []) do
     script |> Script.walk( &check_node(&1, &2) )
   end
@@ -24,26 +26,6 @@ defmodule Dogma.Rules.LiteralInCondition do
   defp check_node(node, errors) do
     {node, errors}
   end
-
-
-  defp literal?(x) when is_atom       x do true end
-  defp literal?(x) when is_binary     x do true end
-  defp literal?(x) when is_bitstring  x do true end
-  defp literal?(x) when is_boolean    x do true end
-  defp literal?(x) when is_function   x do true end
-  defp literal?(x) when is_list       x do true end
-  defp literal?(x) when is_map        x do true end
-  defp literal?(x) when is_pid        x do true end
-  defp literal?(x) when is_port       x do true end
-  defp literal?(x) when is_number     x do true end
-  defp literal?(x) when is_reference  x do true end
-  defp literal?({:{}, _, _}) do
-    true
-  end
-  defp literal?(_) do
-    false
-  end
-
 
   defp error(pos) do
     %Error{
