@@ -24,8 +24,8 @@ defmodule Dogma.Rules.VariableName do
     script |> Script.walk( &check_node(&1, &2) )
   end
 
-  defp check_node({:=, _, [{name, meta, _}|_]} = node, errors) do
-    if name |> to_string |> Name.probably_snake_case? do
+  defp check_node({:=, meta, [lhs|_]} = node, errors) do
+    if variable_names_are_snake_case?(lhs) do
       {node, errors}
     else
       {node, [error( meta[:line] ) | errors]}
@@ -34,6 +34,21 @@ defmodule Dogma.Rules.VariableName do
   defp check_node(node, errors) do
     {node, errors}
   end
+
+  # Check for single tuples
+  defp variable_names_are_snake_case?({:{}, _, value}) do
+    variable_names_are_snake_case?(value)
+  end
+  defp variable_names_are_snake_case?({name, _, _}) do
+    name |> to_string |> Name.probably_snake_case?
+  end
+  defp variable_names_are_snake_case?(lhs) when is_list(lhs) do
+    lhs |> Enum.all?(&variable_names_are_snake_case?/1)
+  end
+  defp variable_names_are_snake_case?(lhs) when is_tuple(lhs) do
+    lhs |> Tuple.to_list |> variable_names_are_snake_case?
+  end
+  defp variable_names_are_snake_case?(_), do: true
 
   defp error(pos) do
     %Error{
