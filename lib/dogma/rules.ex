@@ -12,8 +12,7 @@ defmodule Dogma.Rules do
   @doc """
   Runs the rules in the current rule set on the given scripts.
   """
-  def test(scripts) do
-    formatter = Formatter.default_formatter
+  def test(scripts, formatter) do
     test_set = selected_set
     scripts
       |> Enum.map(&Task.async(fn -> test_script(&1, formatter, test_set) end))
