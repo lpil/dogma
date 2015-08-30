@@ -333,7 +333,7 @@ write files with Unix style `\n` line terminators.
 
 ### LiteralInInterpolation
 
-A rule that disallows useless string interpolations that contain a literal value
-instead of a variable or function.
+A rule that disallows useless string interpolations
+that contain a literal value instead of a variable or function.
 
 

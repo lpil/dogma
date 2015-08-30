@@ -2,7 +2,7 @@ defmodule Dogma.Util.ASTNode do
   @moduledoc"""
   Utility functions for analyzing and categorizing AST nodes
   """
-  
+
   @doc """
   Returns true if the node x is a literal
       
@@ -30,4 +30,3 @@ defmodule Dogma.Util.ASTNode do
     false
   end
 end
-

@@ -31,5 +31,3 @@ defmodule Dogma.Rules.LiteralInInterpolationTest do
     assert expected_errors == errors
   end
 end
-
-
