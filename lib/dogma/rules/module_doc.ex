@@ -43,11 +43,12 @@ defmodule Dogma.Rules.ModuleDoc do
     end
   end
 
-  defp check_node({:defmodule, m, [_, [do: module_body]]} = node, errors) do
+  defp check_node({:defmodule, m, [mod, [do: module_body]]} = node, errors) do
+    {_,_,names} = mod
     if module_body |> moduledoc? do
       {node, errors}
     else
-      {node, [error( m[:line] ) | errors]}
+      {node, [error( m[:line], Enum.join(names, ".") ) | errors]}
     end
   end
   defp check_node(node, errors) do
@@ -79,10 +80,10 @@ defmodule Dogma.Rules.ModuleDoc do
     {node, false}
   end
 
-  defp error(position) do
+  defp error(position, module_name) do
     %Error{
       rule:    __MODULE__,
-      message: "Module without a @moduledoc detected.",
+      message: "Module #{module_name} is missing a @moduledoc.",
       line:    position,
     }
   end

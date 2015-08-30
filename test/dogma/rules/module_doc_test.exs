@@ -41,10 +41,26 @@ defmodule Dogma.Rules.ModuleDocTest do
     expected_errors = [
       %Error{
         rule: ModuleDoc,
-        message: "Module without a @moduledoc detected.",
+        message: "Module NotGood is missing a @moduledoc.",
         line: 1,
       }
     ]
+    assert expected_errors == errors
+  end
+
+  should "print the module name correctly when it is namespaced" do
+    errors = """
+    defmodule NotGood.AtAll do
+    end
+    """ |> test
+    expected_errors = [
+      %Error{
+        rule: ModuleDoc,
+        message: "Module NotGood.AtAll is missing a @moduledoc.",
+        line: 1,
+      }
+    ]
+
     assert expected_errors == errors
   end
 
@@ -59,7 +75,7 @@ defmodule Dogma.Rules.ModuleDocTest do
     expected_errors = [
       %Error{
         rule: ModuleDoc,
-        message: "Module without a @moduledoc detected.",
+        message: "Module NotGood is missing a @moduledoc.",
         line: 3,
       }
     ]
@@ -77,7 +93,7 @@ defmodule Dogma.Rules.ModuleDocTest do
     expected_errors = [
       %Error{
         rule: ModuleDoc,
-        message: "Module without a @moduledoc detected.",
+        message: "Module NotGood is missing a @moduledoc.",
         line: 1,
       }
     ]
