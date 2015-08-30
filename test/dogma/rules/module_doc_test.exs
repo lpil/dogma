@@ -48,20 +48,24 @@ defmodule Dogma.Rules.ModuleDocTest do
     assert expected_errors == errors
   end
 
-  should "print the module name correctly when it is namespaced" do
-    errors = """
-    defmodule NotGood.AtAll do
+  should "print the module name in the error message" do
+    module_name = "ModName"
+    source = """
+    defmodule #{module_name} do
     end
-    """ |> test
-    expected_errors = [
-      %Error{
-        rule: ModuleDoc,
-        message: "Module NotGood.AtAll is missing a @moduledoc.",
-        line: 1,
-      }
-    ]
+    """
+    error = source |> test |> List.first
+    assert error.message |> String.contains?(module_name)
+  end
 
-    assert expected_errors == errors
+  should "print the module name correctly when it is namespaced" do
+    module_name = "Namespace.ModName"
+    source = """
+    defmodule #{module_name} do
+    end
+    """
+    error = source |> test |> List.first
+    assert error.message |> String.contains?(module_name)
   end
 
   should "error for a nested module missing a module doc" do
