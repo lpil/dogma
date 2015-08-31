@@ -13,6 +13,7 @@ defmodule Dogma.RuleSet.All do
       {FinalNewline},
       {FunctionArity, max: 4},
       {FunctionName},
+      {HardTabs},
       {LineLength, max_length: 80},
       {LiteralInCondition},
       {ModuleAttributeName},

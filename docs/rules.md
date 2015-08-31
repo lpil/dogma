@@ -11,6 +11,7 @@ These are the rules included in Dogma by default. Currently there are
 * [FinalNewline](https://github.com/lpil/dogma/blob/master/docs/rules.md#finalnewline)
 * [FunctionArity](https://github.com/lpil/dogma/blob/master/docs/rules.md#functionarity)
 * [FunctionName](https://github.com/lpil/dogma/blob/master/docs/rules.md#functionname)
+* [HardTabs](https://github.com/lpil/dogma/blob/master/docs/rules.md#hardtabs)
 * [LineLength](https://github.com/lpil/dogma/blob/master/docs/rules.md#linelength)
 * [LiteralInCondition](https://github.com/lpil/dogma/blob/master/docs/rules.md#literalincondition)
 * [ModuleAttributeName](https://github.com/lpil/dogma/blob/master/docs/rules.md#moduleattributename)
@@ -109,6 +110,17 @@ But it considers these invalid:
     defp myBelly do
       :empty
     end
+
+
+### HardTabs
+
+Requires that all indentation is done using spaces rather than hard tabs.
+
+So the following would be invalid:
+
+def something do
+	:body
+end
 
 
 ### LineLength
