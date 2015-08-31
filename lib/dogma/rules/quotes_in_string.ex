@@ -50,9 +50,9 @@ defmodule Dogma.Rules.QuotesInString do
 
 
   defp check_string(str, errors) do
-    contains_quote       = fn(str) -> String.match?(str, ~r/"/) end
-    probably_not_heredoc = fn(str) -> !String.ends_with?(str, "\n") end
-    if contains_quote.(str) and probably_not_heredoc.(str) do
+    contains_quote   = String.contains?(str, ~s("))
+    probably_heredoc = String.ends_with?(str, "\n")
+    if not probably_heredoc and contains_quote do
       # FIXME: How do we get the line number from a string?
       [error( nil ) | errors]
     else
