@@ -125,7 +125,10 @@ So the following would be invalid:
 
 ### LineLength
 
-A rule that disallows lines longer than 80 columns in length.
+A rule that disallows lines longer than 80 characters in length.
+
+This rule can be configured with the `max_length` option, which allows you to
+specify your own line max character count.
 
 
 ### LiteralInCondition
@@ -213,7 +216,21 @@ These are considered invalid:
 A rule that disallows tautological predicate names, meaning those that start
 with the prefix `has_` or the prefix `is_`.
 
-Favour `valid?` over `is_valid?`, and `picture?` over `has_picture?`.
+Favour these:
+
+    def valid?(x) do
+    end
+
+    def picture?(x) do
+    end
+
+Over these:
+
+    def is_valid?(x) do
+    end
+
+    def has_picture?(x) do
+    end
 
 
 ### QuotesInString
@@ -235,8 +252,8 @@ A rule that disallows semicolons to terminate or separate statements.
 
 For example, these are considered invalid:
 
-   foo = "bar";
-   bar = "baz"; fizz = :buzz
+    foo = "bar";
+    bar = "baz"; fizz = :buzz
 
 This is because Elixir does not require semicolons to terminate expressions,
 and breaking up multiple expressions on different lines improves readability.

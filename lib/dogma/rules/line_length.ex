@@ -1,6 +1,9 @@
 defmodule Dogma.Rules.LineLength do
   @moduledoc """
-  A rule that disallows lines longer than 80 columns in length.
+  A rule that disallows lines longer than 80 characters in length.
+
+  This rule can be configured with the `max_length` option, which allows you to
+  specify your own line max character count.
   """
 
   @behaviour Dogma.Rule

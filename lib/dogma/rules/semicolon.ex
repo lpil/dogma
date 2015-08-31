@@ -4,8 +4,8 @@ defmodule Dogma.Rules.Semicolon do
 
   For example, these are considered invalid:
 
-     foo = "bar";
-     bar = "baz"; fizz = :buzz
+      foo = "bar";
+      bar = "baz"; fizz = :buzz
 
   This is because Elixir does not require semicolons to terminate expressions,
   and breaking up multiple expressions on different lines improves readability.
