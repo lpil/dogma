@@ -35,7 +35,6 @@ defmodule Dogma.Rules.VariableName do
     {node, errors}
   end
 
-  # Check for single tuples
   defp variable_names_are_snake_case?({:{}, _, value}) do
     variable_names_are_snake_case?(value)
   end
@@ -45,8 +44,8 @@ defmodule Dogma.Rules.VariableName do
   defp variable_names_are_snake_case?(lhs) when is_list(lhs) do
     lhs |> Enum.all?(&variable_names_are_snake_case?/1)
   end
-  defp variable_names_are_snake_case?(lhs) when is_tuple(lhs) do
-    lhs |> Tuple.to_list |> variable_names_are_snake_case?
+  defp variable_names_are_snake_case?({l,r}) do
+    variable_names_are_snake_case?([l,r])
   end
   defp variable_names_are_snake_case?(_), do: true
 
