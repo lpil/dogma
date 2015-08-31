@@ -16,12 +16,7 @@ defmodule Dogma.Rules.Semicolon do
   alias Dogma.Error
 
   def test(script, _config \\ []) do
-    {:ok, _, tokens} =
-      script.source
-      |> String.to_char_list
-      |> :elixir_tokenizer.tokenize(1, [])
-
-    tokens
+    script.tokens
     |> get_semicolon_lines
     |> Enum.map(&to_error/1)
   end

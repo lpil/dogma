@@ -11,7 +11,7 @@ defmodule Dogma.Rules.HardTabsTest do
 
   should "allow spaces to be used for indenteding." do
     errors = """
-    def
+    def foo
       :function_body
     end
     """ |> test
@@ -20,7 +20,7 @@ defmodule Dogma.Rules.HardTabsTest do
 
   should "error when tab is used to indent function body." do
     errors = """
-    def
+    def foo
     \t:function_body
     end
     """ |> test
@@ -29,7 +29,7 @@ defmodule Dogma.Rules.HardTabsTest do
 
   should "allow tabs to be used for other reasons." do
     errors = """
-    def
+    def foo
       ~s"have some tabs:\t\t\t"
     end
     """ |> test
