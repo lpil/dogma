@@ -118,9 +118,9 @@ Requires that all indentation is done using spaces rather than hard tabs.
 
 So the following would be invalid:
 
-def something do
-	:body
-end
+    def something do
+    \t:body # this line starts with a tab, not spaces
+    end
 
 
 ### LineLength

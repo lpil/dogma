@@ -1,12 +1,12 @@
 defmodule Dogma.Rules.HardTabs do
-  @moduledoc """
+  @moduledoc ~S"""
   Requires that all indentation is done using spaces rather than hard tabs.
 
   So the following would be invalid:
 
-  def something do
-  \t:body
-  end
+      def something do
+      \t:body # this line starts with a tab, not spaces
+      end
   """
   @behaviour Dogma.Rule
 
