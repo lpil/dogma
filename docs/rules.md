@@ -1,7 +1,7 @@
 # Dogma Rules
 
 These are the rules included in Dogma by default. Currently there are
-19 of them.
+20 of them.
 
 ## Contents
 
@@ -19,6 +19,7 @@ These are the rules included in Dogma by default. Currently there are
 * [NegatedIfUnless](https://github.com/lpil/dogma/blob/master/docs/rules.md#negatedifunless)
 * [PredicateName](https://github.com/lpil/dogma/blob/master/docs/rules.md#predicatename)
 * [QuotesInString](https://github.com/lpil/dogma/blob/master/docs/rules.md#quotesinstring)
+* [Semicolon](https://github.com/lpil/dogma/blob/master/docs/rules.md#semicolon)
 * [TrailingBlankLines](https://github.com/lpil/dogma/blob/master/docs/rules.md#trailingblanklines)
 * [TrailingWhitespace](https://github.com/lpil/dogma/blob/master/docs/rules.md#trailingwhitespace)
 * [UnlessElse](https://github.com/lpil/dogma/blob/master/docs/rules.md#unlesselse)
@@ -214,6 +215,19 @@ Use s_sigil or S_sigil instead or string literals in these situation.
 
     # Good
     ~s(")
+
+
+### Semicolon
+
+A rule that disallows semicolons to terminate or separate statements.
+
+For example, these are considered invalid:
+
+   foo = "bar";
+   bar = "baz"; fizz = :buzz
+
+This is because Elixir does not require semicolons to terminate expressions,
+and breaking up multiple expressions on different lines improves readability.
 
 
 ### TrailingBlankLines

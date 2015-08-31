@@ -21,6 +21,7 @@ defmodule Dogma.RuleSet.All do
       {NegatedIfUnless},
       {PredicateName},
       {QuotesInString},
+      {Semicolon},
       {TrailingBlankLines},
       {TrailingWhitespace},
       {UnlessElse},
