@@ -20,6 +20,7 @@ defmodule Dogma.Script do
             processed_source: nil,
             processed_lines:  nil,
             ast:              nil,
+            tokens:           nil,
             valid?:           nil,
             errors:           []
 
@@ -35,7 +36,7 @@ defmodule Dogma.Script do
       lines:            lines( source ),
       processed_source: processed_source,
       processed_lines:  lines( processed_source ),
-    } |> add_ast
+    } |> add_ast |> add_tokens
   end
 
   @doc """
@@ -59,6 +60,22 @@ defmodule Dogma.Script do
       err ->
         %Script{ script | valid?: false, ast: [], errors: [error( err )] }
     end
+  end
+
+  defp add_tokens(script) do
+    if script.valid? do
+      tokens = script.source |> tokenize
+      %Script{ script | tokens: tokens }
+    else
+      script
+    end
+  end
+
+  defp tokenize(source) do
+    {:ok, _, tokens} = source
+                        |> String.to_char_list
+                        |> :elixir_tokenizer.tokenize( 1, [] )
+    tokens
   end
 
 

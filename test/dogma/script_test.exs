@@ -80,6 +80,13 @@ defmodule Dogma.ScriptTest do
         script = Script.parse( "1 + 1", "" )
         assert {:+, [line: 1], [1, 1]} == script.ast
       end
+
+      should "assigns the tokenized source", context do
+        {:ok, _, tokens} = context.source
+                            |> String.to_char_list
+                            |> :elixir_tokenizer.tokenize( 1, [] )
+        assert tokens == context.script.tokens
+      end
     end
 
 
@@ -98,6 +105,10 @@ defmodule Dogma.ScriptTest do
       end
 
       should "assign [] in place of AST", context do
+        assert [] == context.script.ast
+      end
+
+      should "assign [] in place of tokens", context do
         assert [] == context.script.ast
       end
 
