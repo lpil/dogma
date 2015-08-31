@@ -89,7 +89,7 @@ defmodule Dogma.Rules.VariableNameTest do
       assert expected_errors == errors
     end
 
-    should "error for non snake_case single member tuples" do
+    should "error for tuples" do
       errors = """
       {fooBar} = baz
       """ |> test
@@ -103,7 +103,7 @@ defmodule Dogma.Rules.VariableNameTest do
       assert expected_errors == errors
     end
 
-    should "error for non snake_case multi-member tuples" do
+    should "error for two-element tuples" do
       errors = """
       {foo, barBaz} = baz
       """ |> test
@@ -134,6 +134,19 @@ defmodule Dogma.Rules.VariableNameTest do
           line: 1,
         },]
       assert expected_errors == errors
+    end
+
+    should "error for maps" do
+      errors = """
+      %{test: fooBar} = foo_bar
+      """ |> test
+      expected_errors = [
+        %Error{
+          rule:     VariableName,
+          message:  "Variable names should be in snake_case",
+          line: 2,
+        },]
+      assert expected_errors = errors
     end
   end
 end
