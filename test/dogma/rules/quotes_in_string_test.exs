@@ -10,6 +10,20 @@ defmodule Dogma.Rules.QuotesInStringTest do
   end
 
 
+  should "error for a quote in a string" do
+    errors = ~S"""
+    "Hello, \" world!"
+    """ |> test
+    expected_errors = [
+      %Error{
+        rule:    QuotesInString,
+        message: ~s(Prefer the S sigil for strings containing `"`),
+        line: 1,
+      }
+    ]
+    assert expected_errors == errors
+  end
+
   should "not error for a quote free string" do
     errors = """
     "Hello, world!"
@@ -51,20 +65,6 @@ defmodule Dogma.Rules.QuotesInStringTest do
     Hey look, a quote -> "
     """) |> test
     assert [] == errors
-  end
-
-  should ~s(not error for a quote in a "" string) do
-    errors = ~S"""
-    "This here -> \" <- is a quote"
-    """ |> test
-    expected_errors = [
-      %Error{
-        rule:     QuotesInString,
-        message:  ~s(Prefer the S sigil for strings containing `"`),
-        line: nil, # FIXME: How do we get the line number for a string?
-      }
-    ]
-    assert expected_errors == errors
   end
 
   should """

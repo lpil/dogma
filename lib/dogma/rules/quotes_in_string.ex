@@ -13,58 +13,56 @@ defmodule Dogma.Rules.QuotesInString do
 
   @behaviour Dogma.Rule
 
-  alias Dogma.Script
   alias Dogma.Error
 
   def test(script, _config = [] \\ []) do
-    script |> Script.walk( &check_node(&1, &2) )
-  end
-
-  sigals = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
-            |> String.split("")
-            |> Enum.map(fn(char) -> String.to_atom( "sigil_" <> char ) end)
-  @sigils sigals
-
-  # Don't check inside sigils
-  for sigil <- @sigils do
-    defp check_node({unquote(sigil), _, _}, errors) do
-      {[], errors}
-    end
-  end
-
-  # Don't check inside binary patterns
-  defp check_node({:<<>>, _, _}, errors) do
-    {[], errors}
-  end
-
-  defp check_node(bin, errors) when is_binary bin do
-    if bin |> String.valid? do
-      errors = check_string( bin, errors )
-    end
-    {node, errors}
-  end
-
-  defp check_node(node, errors) do
-    {node, errors}
+    script.tokens |> check_binary_strings
   end
 
 
-  defp check_string(str, errors) do
-    contains_quote   = String.contains?(str, ~s("))
-    probably_heredoc = String.ends_with?(str, "\n")
-    if not probably_heredoc and contains_quote do
-      # FIXME: How do we get the line number from a string?
-      [error( nil ) | errors]
+  defp check_binary_strings(tokens, acc \\ [])
+
+  defp check_binary_strings([], acc) do
+    Enum.reverse(acc)
+  end
+
+  defp check_binary_strings([{:bin_string, line, [str]} | rest], acc) do
+    if str |> invalid? do
+      check_binary_strings(rest, [error(line) | acc])
     else
-      errors
+      check_binary_strings(rest, acc)
     end
   end
 
-  defp error(pos) do
+  defp check_binary_strings([{:"<<", _} | rest], acc) do
+    # Don't check inside binary patterns
+    inside_binary_literal(rest, acc)
+  end
+
+  defp check_binary_strings([_ | rest], acc) do
+    check_binary_strings(rest, acc)
+  end
+
+
+  defp inside_binary_literal([{:">>", _} | rest], acc) do
+    check_binary_strings(rest, acc)
+  end
+  defp inside_binary_literal([_ | rest], acc) do
+    inside_binary_literal(rest, acc)
+  end
+
+
+  defp invalid?(str) do
+    probably_not_heredoc = not String.ends_with?(str, "\n")
+    probably_not_heredoc and String.contains?(str, ~s("))
+  end
+
+
+  defp error(line) do
     %Error{
-      rule:     __MODULE__,
-      message:  ~s(Prefer the S sigil for strings containing `"`),
-      line: pos,
+      rule:    __MODULE__,
+      message: ~s(Prefer the S sigil for strings containing `"`),
+      line:    line,
     }
   end
 end
