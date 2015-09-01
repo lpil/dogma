@@ -1,13 +1,14 @@
 # Dogma Rules
 
 These are the rules included in Dogma by default. Currently there are
-22 of them.
+23 of them.
 
 ## Contents
 
 * [BarePipeChainStart](https://github.com/lpil/dogma/blob/master/docs/rules.md#barepipechainstart)
 * [ComparisonToBoolean](https://github.com/lpil/dogma/blob/master/docs/rules.md#comparisontoboolean)
 * [DebuggerStatement](https://github.com/lpil/dogma/blob/master/docs/rules.md#debuggerstatement)
+* [FinalCondition](https://github.com/lpil/dogma/blob/master/docs/rules.md#finalcondition)
 * [FinalNewline](https://github.com/lpil/dogma/blob/master/docs/rules.md#finalnewline)
 * [FunctionArity](https://github.com/lpil/dogma/blob/master/docs/rules.md#functionarity)
 * [FunctionName](https://github.com/lpil/dogma/blob/master/docs/rules.md#functionname)
@@ -73,6 +74,67 @@ interested in whether something is "truthy" or "falsey" than if they are
 
 A rule that disallows calls to IEx.pry, as while useful, we probably don't
 want them committed.
+
+
+### FinalCondition
+
+A rule that checks that the last condition of a `cond` statement is `true`.
+
+For example, prefer this:
+
+    cond do
+      1 + 2 == 5 ->
+        "Nope"
+      1 + 3 == 5 ->
+        "Uh, uh"
+      true ->
+        "OK"
+    end
+
+Not this:
+
+    cond do
+      1 + 2 == 5 ->
+        "Nope"
+      1 + 3 == 5 ->
+        "Nada"
+      _ ->
+        "OK"
+    end
+
+This rule will only catch those `cond` statements where the last condition
+is a literal or a `_`. Complex expressions and function calls will not
+generate an error.
+
+For example, neither of the following will generate an error:
+
+    cond do
+      some_predicate? -> "Nope"
+      var == :atom    -> "Yep"
+    end
+
+    cond do
+      var == :atom    -> "Nope"
+      some_predicate? -> "Yep"
+    end
+
+An atom may also be used as a catch-all expression in a `cond`, since it
+evaluates to a truthy value. Suggested atoms are `:else` or `:otherwise`.
+
+To allow one of these instead of `true`, pass it to the rule as a `:catch_all`
+option.
+
+If you would like to enforce the use of `_` as your catch-all condition, pass
+the atom `:_` into the `:catch_all` option. This will, however, allow both a
+literal `_` and the atom `:_` to be used as your catch-all.
+
+    cond do
+      _ -> "Yep"
+    end
+
+    cond do
+      :_ -> "Yep"
+    end
 
 
 ### FinalNewline
