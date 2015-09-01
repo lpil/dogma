@@ -174,5 +174,18 @@ defmodule Dogma.Rules.VariableNameTest do
         },]
       assert expected_errors == errors
     end
+
+    should "error for the end of a binary pattern" do
+      errors = """
+      "test" <> fooBar = foo_bar
+      """ |> test
+      expected_errors = [
+        %Error{
+          rule:     VariableName,
+          message:  "Variable names should be in snake_case",
+          line: 1,
+        },]
+      assert expected_errors == errors
+    end
   end
 end

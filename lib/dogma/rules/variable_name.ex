@@ -35,7 +35,7 @@ defmodule Dogma.Rules.VariableName do
     {node, errors}
   end
 
-  for fun <- [:{}, :%{}, :^, :|] do
+  for fun <- [:{}, :%{}, :^, :|, :<>] do
     defp variable_names_are_snake_case?({unquote(fun),_,value}) do
       variable_names_are_snake_case?(value)
     end
