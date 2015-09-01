@@ -46,6 +46,19 @@ defmodule Dogma.Rules.VariableNameTest do
     assert [] == errors
   end
 
+  should "error for pinned variables not in snake_case" do
+    errors = """
+    ^fooBar = foo_bar
+    """ |> test
+    expected_errors = [
+      %Error{
+        rule:     VariableName,
+        message:  "Variable names should be in snake_case",
+        line: 1,
+      },]
+    assert expected_errors == errors
+  end
+
   with "non snake_case variable names in destructuring assignment" do
     should "error for one member lists" do
       errors = """
@@ -144,9 +157,22 @@ defmodule Dogma.Rules.VariableNameTest do
         %Error{
           rule:     VariableName,
           message:  "Variable names should be in snake_case",
-          line: 2,
+          line: 1,
         },]
-      assert expected_errors = errors
+      assert expected_errors == errors
+    end
+
+    should "error for head/tail pattern matching" do
+      errors = """
+      [hEAD | tail] = foo_bar
+      """ |> test
+      expected_errors = [
+        %Error{
+          rule:     VariableName,
+          message:  "Variable names should be in snake_case",
+          line: 1,
+        },]
+      assert expected_errors == errors
     end
   end
 end

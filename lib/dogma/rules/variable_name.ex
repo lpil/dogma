@@ -35,17 +35,19 @@ defmodule Dogma.Rules.VariableName do
     {node, errors}
   end
 
-  defp variable_names_are_snake_case?({:{}, _, value}) do
-    variable_names_are_snake_case?(value)
-  end
-  defp variable_names_are_snake_case?({name, _, _}) do
-    name |> to_string |> Name.probably_snake_case?
+  for fun <- [:{}, :%{}, :^, :|] do
+    defp variable_names_are_snake_case?({unquote(fun),_,value}) do
+      variable_names_are_snake_case?(value)
+    end
   end
   defp variable_names_are_snake_case?(lhs) when is_list(lhs) do
     lhs |> Enum.all?(&variable_names_are_snake_case?/1)
   end
   defp variable_names_are_snake_case?({l,r}) do
     variable_names_are_snake_case?([l,r])
+  end
+  defp variable_names_are_snake_case?({name,_,_}) do
+    name |> to_string |> Name.probably_snake_case?
   end
   defp variable_names_are_snake_case?(_), do: true
 
