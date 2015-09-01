@@ -40,8 +40,11 @@ defmodule Dogma.Rules.VariableNameTest do
 
   should "not error with destructuring assignment for snake_case" do
     errors = """
-    [foo, bar] = foo_bar
-    {foo_bar}   = foo_bar
+    [foo, bar]       = foo_bar
+    {foo_bar}        = foo_bar
+    [hd | tl]        = foo_bar
+    %{key: foo}      = foo_bar
+    "strings" <> foo = foo_bar
     """ |> test
     assert [] == errors
   end
