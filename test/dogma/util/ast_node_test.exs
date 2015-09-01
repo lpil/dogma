@@ -63,6 +63,11 @@ defmodule Dogma.Util.ASTNodeTest do
       assert ASTNode.literal?(regex)
     end
 
+    should "be true for custom sigils" do
+      sigil = quote do: ~p(wow)
+      assert ASTNode.literal?(sigil)
+    end
+
     should "be false for variables/functions" do
       variable = quote do: foo
       refute ASTNode.literal?(variable)
