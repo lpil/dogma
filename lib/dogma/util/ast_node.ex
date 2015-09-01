@@ -20,8 +20,12 @@ defmodule Dogma.Util.ASTNode do
   def literal?({_,_})               do true end
   def literal?({:{}, _, _})         do true end
   def literal?({:%{}, _, _})        do true end
-  def literal?({:sigil_s,_,_})      do true end
-  def literal?({:sigil_S,_,_})      do true end
-  def literal?({:sigil_w,_,_})      do true end
-  def literal?(_)                   do false end
+  def literal?(node) do
+    sigil?(node)
+  end
+
+  def sigil?({fun, _, _}) when is_atom fun do
+    fun |> to_string |> String.starts_with?("sigil_")
+  end
+  def sigil?(_) do false end
 end

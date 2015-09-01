@@ -58,6 +58,11 @@ defmodule Dogma.Util.ASTNodeTest do
       assert ASTNode.literal?(word_list)
     end
 
+    should "be true for regex" do
+      regex = quote do: ~r/test/
+      assert ASTNode.literal?(regex)
+    end
+
     should "be false for variables/functions" do
       variable = quote do: foo
       refute ASTNode.literal?(variable)
