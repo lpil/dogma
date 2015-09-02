@@ -5,13 +5,15 @@ defmodule Dogma.Rules.VariableName do
   `snake_case` is when only lowercase letters are used, and words are separated
   with underscores, rather than spaces.
 
-  For example, this rule considers this variable assignment valid:
-
+  Good:
       my_mood = :happy
+      [number_of_cats] = [3]
+      {function_name, _, other_stuff} = node
 
-  But it considers this one invalid:
-
+  Bad:
       myMood = :sad
+      [numberOfCats] = [3]
+      {functionName, meta, otherStuff} = node
   """
 
   @behaviour Dogma.Rule
