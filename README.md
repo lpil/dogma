@@ -73,39 +73,10 @@ lib/dogma/rules.ex:23:1: W: Blank lines detected at end of file
 test/dogma/formatter_test.exs:9:1: W: Trailing whitespace detected
 ```
 
-#### Simple
+A complete list of available formatters can be found at
+[`docs/formatters.md`][formatters-doc]
 
-This is the default formatter. It displays the progress of the checker
-followed by a summary of violations.
-
-```
-> mix dogma --format=simple
-
-Inspecting 27 files.
-
-.....X..........X..........
-
-27 files, 2 errors!
-
-== lib/dogma/rules.ex ==
-23: TrailingBlankLines: Blank lines detected at end of file
-
-== test/dogma/formatter_test.exs ==
-9: TrailingWhitespace: Trailing whitespace detected [33]
-```
-
-#### Flycheck
-
-A machine-readable format suitable for integration with tools like
-[Flycheck](https://github.com/flycheck/flycheck) or
-[Syntastic](https://github.com/scrooloose/syntastic).
-
-```
-> mix dogma --format=flycheck
-
-lib/dogma/rules.ex:23:1: W: Blank lines detected at end of file
-test/dogma/formatter_test.exs:9:1: W: Trailing whitespace detected
-```
+[formatters-doc]: https://github.com/lpil/dogma/blob/master/docs/formatters.md
 
 ## Contributor Information
 

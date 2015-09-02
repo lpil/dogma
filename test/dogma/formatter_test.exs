@@ -34,4 +34,20 @@ defmodule Dogma.FormatterTest do
       end)
     end
   end
+
+  with ".formatters" do
+    should "return a map containing each formatter" do
+      actual =
+        "lib/dogma/formatter/*.ex"
+        |> Path.wildcard
+        |> length
+
+      expected =
+        Formatter.formatters
+        |> Map.to_list
+        |> length
+
+      assert expected == actual
+    end
+  end
 end

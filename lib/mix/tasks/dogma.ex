@@ -6,11 +6,6 @@ defmodule Mix.Tasks.Dogma do
 
   alias Dogma.Formatter
 
-  @formatters %{
-    "simple" => Formatter.Simple,
-    "flycheck"  => Formatter.Flycheck
-  }
-
   def run(argv) do
     argv
     |> parse_args
@@ -26,7 +21,9 @@ defmodule Mix.Tasks.Dogma do
     {switches, files, []} = OptionParser.parse(argv, switches: switches)
 
     format = Keyword.get(switches, :format)
-    formatter = Map.get(@formatters, format, Formatter.default_formatter)
+    formatter = Map.get(Formatter.formatters,
+                        format,
+                        Formatter.default_formatter)
 
     {List.first(files), formatter}
   end
