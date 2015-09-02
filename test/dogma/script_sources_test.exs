@@ -4,34 +4,41 @@ defmodule Dogma.ScriptSourcesTest do
   alias Dogma.Script
   alias Dogma.ScriptSources
 
-  with "find/1" do
+  @fixture_path "test/fixtures/app/"
+  @fixture_files ~w(
+    test/fixtures/app/config/config.exs
+    test/fixtures/app/lib/app.ex
+    test/fixtures/app/mix.exs
+    test/fixtures/app/test/app_test.exs
+    test/fixtures/app/test/test_helper.exs
+  )
+
+  with "find/2" do
     should "exclude the /deps/ directory" do
       paths = ScriptSources.find "."
       refute Enum.any?( paths, &String.starts_with?(&1, "deps/") )
     end
 
     with "a given path" do
-      setup context do
-        %{
-          paths: ~w(
-            test/fixtures/app/config/config.exs
-            test/fixtures/app/lib/app.ex
-            test/fixtures/app/mix.exs
-            test/fixtures/app/test/app_test.exs
-            test/fixtures/app/test/test_helper.exs
-          )
-        }
+      should "be happy with a trailing slash" do
+        paths = ScriptSources.find @fixture_path
+        assert paths == @fixture_files
       end
 
-      should "be happy with a trailing slash", expected do
-        paths = ScriptSources.find "test/fixtures/app/"
-        assert paths == expected.paths
+      should "be happy without a trailing slash" do
+        paths = ScriptSources.find @fixture_path
+        assert paths == @fixture_files
       end
+    end
 
-      should "be happy without a trailing slash", expected do
-        paths = ScriptSources.find "test/fixtures/app"
-        assert paths == expected.paths
-      end
+    should "not return files that match given exclude patterns" do
+      patterns = [~r(config/), ~r(app/test/)]
+      paths    = ScriptSources.find( @fixture_path, patterns )
+      expected = ~w(
+        test/fixtures/app/lib/app.ex
+        test/fixtures/app/mix.exs
+      )
+      assert expected == paths
     end
   end
 

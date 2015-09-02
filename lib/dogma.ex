@@ -12,10 +12,14 @@ defmodule Dogma do
 
   def run({dir, formatter}) do
     dir
-    |> ScriptSources.find
+    |> ScriptSources.find(exclude_patterns)
     |> ScriptSources.to_scripts
     |> Formatter.start(formatter)
     |> Rules.test(formatter)
     |> Formatter.finish(formatter)
+  end
+
+  defp exclude_patterns do
+    Application.get_env :dogma, :exclude, []
   end
 end

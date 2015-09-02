@@ -13,16 +13,13 @@ Dogma is a principle or set of principles laid down by an authority as
 
 It's also a code style linter for Elixir, powered by shame.
 
-<br/>
-<br/>
+* [Usage](#usage)
+* [Configuration][config-doc]
+* [Rules][rules-doc]
 
-
-## Rules
-
-A list of the currently supported rules can be found at
-[`docs/rules.md`][rules-doc].
 
 [rules-doc]: https://github.com/lpil/dogma/blob/master/docs/rules.md
+[config-doc]: https://github.com/lpil/dogma/blob/master/docs/configuration.md
 
 
 ## Usage
