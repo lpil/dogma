@@ -3,9 +3,10 @@ defmodule Dogma.Util.ASTNode do
   Utility functions for analyzing and categorizing AST nodes
   """
 
+  @sigil_chars "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+
   @doc """
   Returns true if the node x is a literal
-      
       iex> Dogma.Util.ASTNode.literal?( "foo" )
       true
 
@@ -20,12 +21,10 @@ defmodule Dogma.Util.ASTNode do
   def literal?({_,_})               do true end
   def literal?({:{}, _, _})         do true end
   def literal?({:%{}, _, _})        do true end
-  def literal?(node) do
-    sigil?(node)
-  end
 
-  def sigil?({fun, _, _}) when is_atom fun do
-    fun |> to_string |> String.starts_with?("sigil_")
+  for char <- String.split(@sigil_chars, "", trim: true) do
+    sigil_atom = String.to_atom("sigil_" <> char)
+    def literal?({unquote(sigil_atom),_,_}), do: true
   end
-  def sigil?(_) do false end
+  def literal?(_) do false end
 end
