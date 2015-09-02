@@ -2,6 +2,10 @@ defmodule Dogma.Rules.LiteralInInterpolation do
   @moduledoc """
   A rule that disallows useless string interpolations
   that contain a literal value instead of a variable or function.
+  Examples:
+    "Hello #\{:jose}"
+    "The are #\{4} cats."
+    "Don't #\{~s(interpolate)} literals"
   """
 
   @behaviour Dogma.Rule
