@@ -1,6 +1,18 @@
 defmodule Dogma.Formatter.Simple do
   @moduledoc """
   A formatter that prints a dot per file, followed by details at the end.
+
+      Inspecting 27 files.
+
+      .....X..........X..........
+
+      27 files, 2 errors!
+
+      == lib/dogma/rules.ex ==
+      23: TrailingBlankLines: Blank lines detected at end of file
+
+      == test/dogma/formatter_test.exs ==
+      9: TrailingWhitespace: Trailing whitespace detected [33]
   """
 
   @behaviour Dogma.Formatter

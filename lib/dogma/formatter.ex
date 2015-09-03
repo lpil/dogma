@@ -56,4 +56,15 @@ defmodule Dogma.Formatter do
   def default_formatter do
     @default_formatter
   end
+
+  @doc """
+  Returns formatters mapped to their option keys"
+  """
+  def formatters do
+    %{
+      "simple"   => Dogma.Formatter.Simple,
+      "flycheck" => Dogma.Formatter.Flycheck,
+      "null"     => Dogma.Formatter.Null
+    }
+  end
 end

@@ -1,8 +1,10 @@
 defmodule Dogma.Formatter.Flycheck do
   @moduledoc """
-  A formatter that lists information for files with errors.
+  A machine-readable format suitable for integration with tools like
+  [Flycheck](https://github.com/flycheck/flycheck) or
+  [Syntastic](https://github.com/scrooloose/syntastic).
 
-      /project/lib/test.ex:1:1: W: Modulewith out a @moduledoc detected
+      /project/lib/test.ex:1:1: W: Module with out a @moduledoc detected
       /project/lib/test.ex:14:1: W: Comparison to a boolean is pointless
   """
 
