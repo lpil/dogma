@@ -45,8 +45,8 @@ defmodule Dogma.Util.CyclomaticComplexityTest do
   should "register cond" do
     size = complexity_of do
       cond do
-        foo == 1   -> :one
-        :otherwise -> :not_one
+        foo == 1 -> :one
+        true     -> :not_one
       end
     end
     assert 2 == size
