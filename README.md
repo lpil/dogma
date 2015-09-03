@@ -16,10 +16,11 @@ It's also a code style linter for Elixir, powered by shame.
 * [Usage](#usage)
 * [Configuration][config-doc]
 * [Rules][rules-doc]
+* [Output formats][formatters-doc]
 
-
-[rules-doc]: https://github.com/lpil/dogma/blob/master/docs/rules.md
 [config-doc]: https://github.com/lpil/dogma/blob/master/docs/configuration.md
+[rules-doc]: https://github.com/lpil/dogma/blob/master/docs/rules.md
+[formatters-doc]: https://github.com/lpil/dogma/blob/master/docs/formatters.md
 
 
 ## Usage
@@ -59,21 +60,6 @@ Inspecting 27 files.
 
 How handy!
 
-### Formatters
-
-You can pass a format to the mix task using the `--format` flag.
-
-```
-> mix dogma --format=flycheck
-
-lib/dogma/rules.ex:23:1: W: Blank lines detected at end of file
-test/dogma/formatter_test.exs:9:1: W: Trailing whitespace detected
-```
-
-A complete list of available formatters can be found at
-[`docs/formatters.md`][formatters-doc]
-
-[formatters-doc]: https://github.com/lpil/dogma/blob/master/docs/formatters.md
 
 ## Contributor Information
 
