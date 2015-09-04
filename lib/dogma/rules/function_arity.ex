@@ -1,7 +1,7 @@
 defmodule Dogma.Rules.FunctionArity do
   @moduledoc """
-  A rule that disallows functions with arity greater than 4, meaning a function
-  may not take more than 4 arguments.
+  A rule that disallows functions and macros with arity greater than 4, meaning
+  a function may not take more than 4 arguments.
 
   By default this function is considered invalid by this rule:
 
@@ -35,6 +35,9 @@ defmodule Dogma.Rules.FunctionArity do
     check_def(node, errors, max_arity)
   end
   defp check_node({:defp, _, _} = node, errors, max_arity) do
+    check_def(node, errors, max_arity)
+  end
+  defp check_node({:defmacro, _, _} = node, errors, max_arity) do
     check_def(node, errors, max_arity)
   end
   defp check_node(node, errors, _max_arity) do

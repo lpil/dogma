@@ -10,7 +10,7 @@ defmodule Dogma.Rules.FunctionArityTest do
   end
 
   should "not error with a low arity" do
-    errors = """
+    errors = ~S"""
     def something() do
     end
 
@@ -20,10 +20,10 @@ defmodule Dogma.Rules.FunctionArityTest do
     def point(a,b,c,d) do
     end
 
-    def has_defaults(a,b,c,d \\\\[]) do
+    def has_defaults(a,b,c,d \\ []) do
     end
 
-    def point(a,b,c,{d, e, f}) do
+    defmacro point(a,b,c) do
     end
     """ |> test
     assert [] == errors
@@ -38,17 +38,24 @@ defmodule Dogma.Rules.FunctionArityTest do
     assert [] == errors
   end
 
-  should "erro with a high arity" do
+  should "error with a high arity" do
     errors = """
     def point(a,b,c,d,e) do
+    end
+    defmacro point(a,b,c,d,e) do
     end
     """ |> test
     expected_errors = [
       %Error{
         rule:     FunctionArity,
         message:  "Function arity should be 4 or less",
+        line: 3,
+      },
+      %Error{
+        rule:     FunctionArity,
+        message:  "Function arity should be 4 or less",
         line: 1,
-      }
+      },
     ]
     assert expected_errors == errors
   end

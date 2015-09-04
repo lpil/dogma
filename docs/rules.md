@@ -145,8 +145,8 @@ A rule that disallows files that don't end with a final newline.
 
 ### FunctionArity
 
-A rule that disallows functions with arity greater than 4, meaning a function
-may not take more than 4 arguments.
+A rule that disallows functions and macros with arity greater than 4, meaning
+a function may not take more than 4 arguments.
 
 By default this function is considered invalid by this rule:
 
