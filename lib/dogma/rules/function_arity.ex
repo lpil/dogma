@@ -31,41 +31,36 @@ defmodule Dogma.Rules.FunctionArity do
     end)
   end
 
-  defp check_node({:def, _, _} = node, errors, max_arity) do
-    check_def(node, errors, max_arity)
+  @defs ~w(def defp defmacro)a
+  for type <- @defs do
+
+    defp check_node({unquote(type), _, _} = node, errors, max) do
+      {name, line, args} = get_fun_details(node)
+      arity = args |> length
+      if arity > max do
+        {node, [error(line, name, max) | errors]}
+      else
+        {node, errors}
+      end
+    end
+
   end
-  defp check_node({:defp, _, _} = node, errors, max_arity) do
-    check_def(node, errors, max_arity)
-  end
-  defp check_node({:defmacro, _, _} = node, errors, max_arity) do
-    check_def(node, errors, max_arity)
-  end
-  defp check_node(node, errors, _max_arity) do
+
+  defp check_node(node, errors, _) do
     {node, errors}
   end
 
-  defp check_def(node, errors, max_arity) do
-    case node do
-      {_, [line: line_number], [{_, _, args}, _function_body]}
-        -> check_args(args, line_number, errors, max_arity)
-      {_, [line: line_number], [{_, _, args}]}
-        -> check_args(args, line_number, errors, max_arity)
-    end
+  defp get_fun_details(node) do
+    {_, [line: line], details} = node
+    {name, _, args} = hd( details )
+    args = args || []
+    {name, line, args}
   end
 
-  defp check_args(function_args, line_number, errors, max_arity) do
-    function_arity = Enum.count(function_args || [])
-    if (function_arity > max_arity) do
-      {node, [error(line_number, max_arity) | errors]}
-    else
-      {node, errors}
-    end
-  end
-
-  defp error(line_number, max_arity) do
+  defp error(line_number, name, max) do
     %Error{
-      rule:     __MODULE__,
-      message:  "Function arity should be #{max_arity} or less",
+      rule:    __MODULE__,
+      message: "Arity of `#{name}` should be less than #{max}",
       line: line_number,
     }
   end

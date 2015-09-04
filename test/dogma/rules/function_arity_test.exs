@@ -11,19 +11,19 @@ defmodule Dogma.Rules.FunctionArityTest do
 
   should "not error with a low arity" do
     errors = ~S"""
-    def something() do
+    def no_args_with_brackets() do
     end
 
-    def something_else do
+    def no_args_without_brackets do
     end
 
-    def point(a,b,c,d) do
+    def has_args(a,b,c,d) do
     end
 
     def has_defaults(a,b,c,d \\ []) do
     end
 
-    defmacro point(a,b,c) do
+    defmacro macro(a,b,c) do
     end
     """ |> test
     assert [] == errors
@@ -42,18 +42,18 @@ defmodule Dogma.Rules.FunctionArityTest do
     errors = """
     def point(a,b,c,d,e) do
     end
-    defmacro point(a,b,c,d,e) do
+    defmacro volume(a,b,c,d,e) do
     end
     """ |> test
     expected_errors = [
       %Error{
-        rule:     FunctionArity,
-        message:  "Function arity should be 4 or less",
+        rule:    FunctionArity,
+        message: "Arity of `volume` should be less than 4",
         line: 3,
       },
       %Error{
-        rule:     FunctionArity,
-        message:  "Function arity should be 4 or less",
+        rule:    FunctionArity,
+        message: "Arity of `point` should be less than 4",
         line: 1,
       },
     ]
@@ -64,7 +64,7 @@ defmodule Dogma.Rules.FunctionArityTest do
     errors = """
     def point(a) do
     end
-    def point(a,b,c) do
+    def radius(a,b,c) do
     end
     """
     |> Script.parse!( "foo.ex" )
@@ -72,7 +72,7 @@ defmodule Dogma.Rules.FunctionArityTest do
     expected_errors = [
       %Error{
         rule:     FunctionArity,
-        message:  "Function arity should be 2 or less",
+        message:  "Arity of `radius` should be less than 2",
         line: 3,
       }
     ]
