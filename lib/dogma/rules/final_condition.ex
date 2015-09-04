@@ -43,12 +43,11 @@ defmodule Dogma.Rules.FinalCondition do
   An atom may also be used as a catch-all expression in a `cond`, since it
   evaluates to a truthy value. Suggested atoms are `:else` or `:otherwise`.
 
-  To allow one of these instead of `true`, pass it to the rule as a `:catch_all`
-  option.
+  To allow one of these instead of `true`, pass it to the rule as a
+  `:catch_all` option.
 
   If you would like to enforce the use of `_` as your catch-all condition, pass
-  the atom `:_` into the `:catch_all` option. This will, however, allow both a
-  literal `_` and the atom `:_` to be used as your catch-all.
+  the atom `:_` into the `:catch_all` option.
 
       cond do
         _ -> "Yep"

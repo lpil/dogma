@@ -1,7 +1,9 @@
 defmodule Dogma.Rules.DebuggerStatement do
   @moduledoc """
-  A rule that disallows calls to IEx.pry, as while useful, we probably don't
-  want them committed.
+  A rule that disallows calls to `IEx.pry`.
+
+  This is because we don't want debugger breakpoints accidentally being
+  committed into our codebase.
   """
 
   @behaviour Dogma.Rule

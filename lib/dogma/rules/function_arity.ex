@@ -1,6 +1,16 @@
 defmodule Dogma.Rules.FunctionArity do
   @moduledoc """
-  A rule that disallows functions with arity greater than 4 (configurable)
+  A rule that disallows functions with arity greater than 4, meaning a function
+  may not take more than 4 arguments.
+
+  By default this function is considered invalid by this rule:
+
+      def transform(a, b, c, d, e) do
+        # Do something
+      end
+
+  The maximum allowed arity for this rule can be configured with the `max`
+  option in your mix config.
   """
 
   @behaviour Dogma.Rule

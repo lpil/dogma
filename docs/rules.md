@@ -72,8 +72,10 @@ interested in whether something is "truthy" or "falsey" than if they are
 
 ### DebuggerStatement
 
-A rule that disallows calls to IEx.pry, as while useful, we probably don't
-want them committed.
+A rule that disallows calls to `IEx.pry`.
+
+This is because we don't want debugger breakpoints accidentally being
+committed into our codebase.
 
 
 ### FinalCondition
@@ -121,12 +123,11 @@ For example, neither of the following will generate an error:
 An atom may also be used as a catch-all expression in a `cond`, since it
 evaluates to a truthy value. Suggested atoms are `:else` or `:otherwise`.
 
-To allow one of these instead of `true`, pass it to the rule as a `:catch_all`
-option.
+To allow one of these instead of `true`, pass it to the rule as a
+`:catch_all` option.
 
 If you would like to enforce the use of `_` as your catch-all condition, pass
-the atom `:_` into the `:catch_all` option. This will, however, allow both a
-literal `_` and the atom `:_` to be used as your catch-all.
+the atom `:_` into the `:catch_all` option.
 
     cond do
       _ -> "Yep"
@@ -144,7 +145,17 @@ A rule that disallows files that don't end with a final newline.
 
 ### FunctionArity
 
-A rule that disallows functions with arity greater than 4 (configurable)
+A rule that disallows functions with arity greater than 4, meaning a function
+may not take more than 4 arguments.
+
+By default this function is considered invalid by this rule:
+
+    def transform(a, b, c, d, e) do
+      # Do something
+    end
+
+The maximum allowed arity for this rule can be configured with the `max`
+option in your mix config.
 
 
 ### FunctionName
@@ -198,6 +209,16 @@ specify your own line max character count.
 
 A rule that disallows useless conditional statements that contain a literal
 in place of a variable or predicate function.
+
+This is because a conditional construct with a literal predicate will always
+result in the same behaviour at run time, meaning it can be replaced with
+either the body of the construct, or deleted entirely.
+
+This is considered invalid:
+
+    if "something" do
+      my_function(bar)
+    end
 
 
 ### ModuleAttributeName
@@ -400,8 +421,9 @@ write files with Unix style `\n` line terminators.
 A rule that disallows useless string interpolations
 that contain a literal value instead of a variable or function.
 Examples:
-  "Hello #{:jose}"
-  "The are #{4} cats."
-  "Don't #{~s(interpolate)} literals"
+
+    "Hello #{:jose}"
+    "The are #{4} cats."
+    "Don't #{~s(interpolate)} literals"
 
 
