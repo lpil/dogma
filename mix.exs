@@ -59,6 +59,9 @@ defmodule Dogma.Mixfile do
       {:earmark, "~> 0.1", only: :dev},
       # Documentation generator
       {:ex_doc, "~> 0.7", only: :dev},
+
+      # JSON encoder
+      {:poison, "~>1.5"},
     ]
   end
 end

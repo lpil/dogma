@@ -14,6 +14,7 @@ The default formatter is [Simple](#simple).
 ## Contents
 
 * [Flycheck](#flycheck)
+* [JSON](#json)
 * [Null](#null)
 * [Simple](#simple)
 
@@ -29,6 +30,43 @@ A machine-readable format suitable for integration with tools like
 
     /project/lib/test.ex:1:1: W: Module with out a @moduledoc detected
     /project/lib/test.ex:14:1: W: Comparison to a boolean is pointless
+
+
+### JSON
+`json`
+
+A machine readable format in JSON.
+
+The JSON structure is like the following example:
+
+    {
+      "metadata": {
+        "dogma_version": "0.3.0",
+        "elixir_version": "1.0.5",
+        "erlang_version": "Erlang/OTP 10 [erts-7.0.3] [64-bit]",
+        "system_architecture": "x86_64-apple-darwin14.5.0"
+      },
+      "files": [{
+          "path": "lib/foo.ex",
+          "errors": []
+       }, {
+          "path": "lib/bar.ex",
+          "errors": [{
+              "line": 1,
+              "rule": "ModuleDoc",
+              "message": "Module without @moduledoc detected"
+           }, {
+              "line": 14,
+              "rule": "ComparisonToBoolean",
+              "message": "Comparison to a boolean is useless"
+           }
+          ]
+      }],
+      "summary": {
+        "error_count": 2,
+        "inspected_file_count": 2
+      }
+    }
 
 
 ### Null
