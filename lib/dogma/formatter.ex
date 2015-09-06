@@ -62,9 +62,10 @@ defmodule Dogma.Formatter do
   """
   def formatters do
     %{
-      "simple"   => Dogma.Formatter.Simple,
       "flycheck" => Dogma.Formatter.Flycheck,
-      "null"     => Dogma.Formatter.Null
+      "json"     => Dogma.Formatter.JSON,
+      "null"     => Dogma.Formatter.Null,
+      "simple"   => Dogma.Formatter.Simple,
     }
   end
 end
