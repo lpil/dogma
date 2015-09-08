@@ -17,6 +17,8 @@ defmodule Dogma.RuleSet.All do
       {HardTabs},
       {LineLength, max_length: 80},
       {LiteralInCondition},
+      {LiteralInInterpolation},
+      {MatchInCondition},
       {ModuleAttributeName},
       {ModuleDoc},
       {ModuleName},
@@ -29,7 +31,6 @@ defmodule Dogma.RuleSet.All do
       {UnlessElse},
       {VariableName},
       {WindowsLineEndings},
-      {LiteralInInterpolation}
     ]
   end
 end

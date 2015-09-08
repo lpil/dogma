@@ -109,7 +109,7 @@ defmodule Dogma.Formatter.JSONTest do
   end
 
   defp test_system_info(%{"metadata" => metadata}) do
-    assert metadata = %{
+    assert metadata == %{
       "dogma_version"       => dogma_version,
       "elixir_version"      => System.version,
       "erlang_version"      => erlang_version,

@@ -1,7 +1,7 @@
 # Dogma Rules
 
 These are the rules included in Dogma by default. Currently there are
-23 of them.
+24 of them.
 
 ## Contents
 
@@ -15,6 +15,8 @@ These are the rules included in Dogma by default. Currently there are
 * [HardTabs](https://github.com/lpil/dogma/blob/master/docs/rules.md#hardtabs)
 * [LineLength](https://github.com/lpil/dogma/blob/master/docs/rules.md#linelength)
 * [LiteralInCondition](https://github.com/lpil/dogma/blob/master/docs/rules.md#literalincondition)
+* [LiteralInInterpolation](https://github.com/lpil/dogma/blob/master/docs/rules.md#literalininterpolation)
+* [MatchInCondition](https://github.com/lpil/dogma/blob/master/docs/rules.md#matchincondition)
 * [ModuleAttributeName](https://github.com/lpil/dogma/blob/master/docs/rules.md#moduleattributename)
 * [ModuleDoc](https://github.com/lpil/dogma/blob/master/docs/rules.md#moduledoc)
 * [ModuleName](https://github.com/lpil/dogma/blob/master/docs/rules.md#modulename)
@@ -27,7 +29,6 @@ These are the rules included in Dogma by default. Currently there are
 * [UnlessElse](https://github.com/lpil/dogma/blob/master/docs/rules.md#unlesselse)
 * [VariableName](https://github.com/lpil/dogma/blob/master/docs/rules.md#variablename)
 * [WindowsLineEndings](https://github.com/lpil/dogma/blob/master/docs/rules.md#windowslineendings)
-* [LiteralInInterpolation](https://github.com/lpil/dogma/blob/master/docs/rules.md#literalininterpolation)
 
 
 ---
@@ -218,6 +219,31 @@ This is considered invalid:
 
     if "something" do
       my_function(bar)
+    end
+
+
+### LiteralInInterpolation
+
+A rule that disallows useless string interpolations
+that contain a literal value instead of a variable or function.
+Examples:
+
+    "Hello #{:jose}"
+    "The are #{4} cats."
+    "Don't #{~s(interpolate)} literals"
+
+
+### MatchInCondition
+
+Disallows use of the match operator in the conditional constructs `if` and
+`unless`. This is because it is often intended to be `==` instead, but was
+mistyped. Also, since a failed match raises a MatchError, the conditional
+construct is largely redundant.
+
+The following would be invalid:
+
+    if {x, y} = z do
+      something
     end
 
 
@@ -414,16 +440,5 @@ The preferred line terminator is is the Unix style `\n`.
 
 If you are a Windows user you should be able to configure your editor to
 write files with Unix style `\n` line terminators.
-
-
-### LiteralInInterpolation
-
-A rule that disallows useless string interpolations
-that contain a literal value instead of a variable or function.
-Examples:
-
-    "Hello #{:jose}"
-    "The are #{4} cats."
-    "Don't #{~s(interpolate)} literals"
 
 

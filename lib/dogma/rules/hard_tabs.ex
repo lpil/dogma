@@ -8,6 +8,7 @@ defmodule Dogma.Rules.HardTabs do
       \t:body # this line starts with a tab, not spaces
       end
   """
+
   @behaviour Dogma.Rule
 
   @indenting_tab_pattern ~r/^\t+.+/
