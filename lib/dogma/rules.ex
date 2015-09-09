@@ -30,7 +30,7 @@ defmodule Dogma.Rules do
   end
 
   defp test_script(script, formatter, rule_set) do
-    rules  = rule_set.list
+    rules  = rule_set.rules
     errors = script |> Script.run_tests( rules )
     script = %Script{ script | errors: errors }
     Formatter.script( script, formatter )

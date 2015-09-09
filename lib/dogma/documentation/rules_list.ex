@@ -36,7 +36,7 @@ defmodule Dogma.Documentation.RuleList do
 
 
   defp all_rules do
-    Dogma.RuleSet.All.list
+    Dogma.RuleSet.All.rules
     |> Enum.map(&rule_tuple_to_name/1)
   end
 

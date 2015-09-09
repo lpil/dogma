@@ -3,10 +3,10 @@ defmodule Dogma.RuleSet.AllTest do
 
   alias Dogma.RuleSet.All
 
-  with ".list" do
+  with "rules/0" do
 
     should "return tuples with the first element being a Module name" do
-      for rule <- All.list do
+      for rule <- All.rules do
         rule_name = case rule do
           {module, _} -> module |> to_string
           {module}    -> module |> to_string
@@ -17,12 +17,11 @@ defmodule Dogma.RuleSet.AllTest do
 
     should "return a module for each file in lib/dogma/rules/" do
       rules_files = Path.wildcard("lib/dogma/rules/*.ex")
-      assert All.list |> length == rules_files |> length
+      assert All.rules |> length == rules_files |> length
     end
 
     should "contain LiteralInCondition" do
-      assert Enum.member?(All.list, {LiteralInCondition})
+      assert Enum.member?(All.rules, {LiteralInCondition})
     end
-
   end
 end

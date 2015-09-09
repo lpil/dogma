@@ -5,7 +5,7 @@ defmodule Dogma.RuleSet.All do
   Rules to be run are returned by `list/0`
   """
 
-  def list do
+  def rules do
     [
       {BarePipeChainStart},
       {ComparisonToBoolean},
