@@ -14,9 +14,8 @@ defmodule Dogma.Rule do
   """
   defcallback test(%Script{}, List) :: []
 
-   @doc """
-   Same as test/2 but assumes default configuration
-   """
-   defcallback test(%Script{}) :: []
-
+  @doc """
+  Same as test/2 but assumes default configuration
+  """
+  defcallback test(%Script{}) :: []
 end

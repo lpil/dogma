@@ -5,6 +5,8 @@ defmodule Dogma.RuleSet.All do
   Rules to be run are returned by `list/0`
   """
 
+  @behaviour Dogma.RuleSet
+
   def rules do
     [
       {BarePipeChainStart},
