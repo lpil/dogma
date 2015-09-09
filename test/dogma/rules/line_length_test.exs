@@ -14,12 +14,12 @@ defmodule Dogma.Rules.LineLengthTest do
     expected_errors = [
       %Error{
         rule: LineLength,
-        message: "Line too long",
+        message: "Line length should not exceed 80 chars (was 90).",
         line: 1,
       },
       %Error{
         rule: LineLength,
-        message: "Line too long",
+        message: "Line length should not exceed 80 chars (was 101).",
         line: 3,
       },
     ]
@@ -38,7 +38,7 @@ defmodule Dogma.Rules.LineLengthTest do
     expected_errors = [
       %Error{
         rule: LineLength,
-        message: "Line too long",
+        message: "Line length should not exceed 100 chars (was 101).",
         line: 3,
       },
     ]

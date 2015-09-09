@@ -200,7 +200,8 @@ So the following would be invalid:
 
 ### LineLength
 
-A rule that disallows lines longer than 80 characters in length.
+A rule that disallows lines longer than X characters in length (defaults to
+80).
 
 This rule can be configured with the `max_length` option, which allows you to
 specify your own line max character count.

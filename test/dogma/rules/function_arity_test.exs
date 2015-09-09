@@ -48,12 +48,12 @@ defmodule Dogma.Rules.FunctionArityTest do
     expected_errors = [
       %Error{
         rule:    FunctionArity,
-        message: "Arity of `volume` should be less than 4",
+        message: "Arity of `volume` should be less than 4 (was 5).",
         line: 3,
       },
       %Error{
         rule:    FunctionArity,
-        message: "Arity of `point` should be less than 4",
+        message: "Arity of `point` should be less than 4 (was 5).",
         line: 1,
       },
     ]
@@ -72,7 +72,7 @@ defmodule Dogma.Rules.FunctionArityTest do
     expected_errors = [
       %Error{
         rule:     FunctionArity,
-        message:  "Arity of `radius` should be less than 2",
+        message:  "Arity of `radius` should be less than 2 (was 3).",
         line: 3,
       }
     ]
