@@ -38,7 +38,7 @@ defmodule Dogma.Rules.FunctionArity do
       {name, line, args} = get_fun_details(node)
       arity = args |> length
       if arity > max do
-        {node, [error(line, name, max) | errors]}
+        {node, [error(line, name, max, arity) | errors]}
       else
         {node, errors}
       end
@@ -57,10 +57,10 @@ defmodule Dogma.Rules.FunctionArity do
     {name, line, args}
   end
 
-  defp error(line_number, name, max) do
+  defp error(line_number, name, max, arity) do
     %Error{
       rule:    __MODULE__,
-      message: "Arity of `#{name}` should be less than #{max}",
+      message: "Arity of `#{name}` should be less than #{max} (was #{arity}).",
       line: line_number,
     }
   end
