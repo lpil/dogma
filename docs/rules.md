@@ -62,7 +62,7 @@ For example, these are considered invalid:
     true != bar
     false === baz
 
-This is because these expressions evalutate to `true` or `false`, so you
+This is because these expressions evaluate to `true` or `false`, so you
 could get the same result by using either the variable directly, or negating
 the variable.
 
