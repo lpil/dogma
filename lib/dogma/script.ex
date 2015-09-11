@@ -90,10 +90,10 @@ defmodule Dogma.Script do
   end
 
   defp namespace_rule({rule, custom_config}) do
-    {Module.concat(Dogma.Rules, rule), custom_config}
+    {Module.concat(Dogma.Rule, rule), custom_config}
   end
   defp namespace_rule({rule}) do
-    {Module.concat(Dogma.Rules, rule)}
+    {Module.concat(Dogma.Rule, rule)}
   end
 
   defp run_test({rule, custom_config}, script) do
