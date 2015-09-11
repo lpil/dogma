@@ -5,7 +5,7 @@ defmodule Dogma.Rule.UnlessElseTest do
   alias Dogma.Script
   alias Dogma.Error
 
-  defp test(source) do
+  defp lint(source) do
     source |> Script.parse!( "foo.ex" ) |> UnlessElse.test
   end
 
@@ -15,7 +15,7 @@ defmodule Dogma.Rule.UnlessElseTest do
     unless feeling_sleepy? do
       a_little_dance
     end
-    """ |> test
+    """ |> lint
     assert [] == errors
   end
 
@@ -26,7 +26,7 @@ defmodule Dogma.Rule.UnlessElseTest do
     else
       this_is_not_ok!
     end
-    """ |> test
+    """ |> lint
     expected_errors = [
       %Error{
         message: "Favour if over unless with else",
@@ -44,7 +44,7 @@ defmodule Dogma.Rule.UnlessElseTest do
     else
       be_very_sad( until: :fixed )
     end
-    """ |> test
+    """ |> lint
     assert [] == errors
   end
 end

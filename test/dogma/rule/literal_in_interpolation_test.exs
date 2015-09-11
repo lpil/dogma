@@ -5,21 +5,21 @@ defmodule Dogma.Rule.LiteralInInterpolationTest do
   alias Dogma.Script
   alias Dogma.Error
 
-  defp test(script) do
+  defp lint(script) do
     script |> Script.parse!( "foo.ex" ) |> LiteralInInterpolation.test
   end
 
   should "not error with a variable or function" do
     errors = """
     IO.puts( "Hi my name is #\{name}")
-    """ |> test
+    """ |> lint
     assert [] == errors
   end
 
   should "error with a literal in the interpolation" do
     errors = """
     IO.puts("Hi my name is #\{'Jose'}")
-    """ |> test
+    """ |> lint
     expected_errors = [
       %Error{
         rule:     LiteralInInterpolation,

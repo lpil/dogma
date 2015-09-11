@@ -5,7 +5,7 @@ defmodule Dogma.Rule.MatchInConditionTest do
   alias Dogma.Script
   alias Dogma.Error
 
-  defp test(script) do
+  defp lint(script) do
     script |> Script.parse!( "foo.ex" ) |> MatchInCondition.test
   end
 
@@ -15,7 +15,7 @@ defmodule Dogma.Rule.MatchInConditionTest do
       if feeling_tired do
         have_an_early_night
       end
-      """ |> test
+      """ |> lint
       assert [] == errors
     end
 
@@ -24,7 +24,7 @@ defmodule Dogma.Rule.MatchInConditionTest do
       unless feeling_sleepy do
         a_little_dance
       end
-      """ |> test
+      """ |> lint
       assert [] == errors
     end
   end
@@ -35,7 +35,7 @@ defmodule Dogma.Rule.MatchInConditionTest do
       if false do
         i_will_never_run
       end
-      """ |> test
+      """ |> lint
       assert [] == errors
     end
 
@@ -44,7 +44,7 @@ defmodule Dogma.Rule.MatchInConditionTest do
       unless [] do
         useless_unless
       end
-      """ |> test
+      """ |> lint
       assert [] == errors
     end
   end
@@ -56,7 +56,7 @@ defmodule Dogma.Rule.MatchInConditionTest do
       |> if do
         something_else
       end
-      """ |> test
+      """ |> lint
       assert [] == errors
     end
 
@@ -66,7 +66,7 @@ defmodule Dogma.Rule.MatchInConditionTest do
       |> unless do
         something_else
       end
-      """ |> test
+      """ |> lint
       assert [] == errors
     end
   end
@@ -78,7 +78,7 @@ defmodule Dogma.Rule.MatchInConditionTest do
       if x === y do z end
       if x !=  y do z end
       if x !== y do z end
-      """ |> test
+      """ |> lint
       assert [] == errors
     end
 
@@ -88,7 +88,7 @@ defmodule Dogma.Rule.MatchInConditionTest do
       unless x === y do z end
       unless x !=  y do z end
       unless x !== y do z end
-      """ |> test
+      """ |> lint
       assert [] == errors
     end
   end
@@ -100,7 +100,7 @@ defmodule Dogma.Rule.MatchInConditionTest do
       if {x1, x2}  = y do z end
       if [x, _, _] = y do z end
       if %{ x: x } = y do z end
-      """ |> test
+      """ |> lint
       expected_errors = [
         %Error{
           rule:    MatchInCondition,
@@ -132,7 +132,7 @@ defmodule Dogma.Rule.MatchInConditionTest do
       unless {x1, x2}  = y do z end
       unless [x, _, _] = y do z end
       unless %{ x: x } = y do z end
-      """ |> test
+      """ |> lint
       expected_errors = [
         %Error{
           rule:    MatchInCondition,

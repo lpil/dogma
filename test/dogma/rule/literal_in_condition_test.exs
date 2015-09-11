@@ -5,7 +5,7 @@ defmodule Dogma.Rule.LiteralInConditionTest do
   alias Dogma.Script
   alias Dogma.Error
 
-  defp test(script) do
+  defp lint(script) do
     script |> Script.parse!( "foo.ex" ) |> LiteralInCondition.test
   end
 
@@ -15,7 +15,7 @@ defmodule Dogma.Rule.LiteralInConditionTest do
       if feeling_tired do
         have_an_early_night
       end
-      """ |> test
+      """ |> lint
       assert [] == errors
     end
 
@@ -24,7 +24,7 @@ defmodule Dogma.Rule.LiteralInConditionTest do
       unless feeling_sleepy do
         a_little_dance
       end
-      """ |> test
+      """ |> lint
       assert [] == errors
     end
 
@@ -34,7 +34,7 @@ defmodule Dogma.Rule.LiteralInConditionTest do
         :hyped -> run_like_the_wind
         _      -> dawdle
       end
-      """ |> test
+      """ |> lint
       assert [] == errors
     end
   end
@@ -46,7 +46,7 @@ defmodule Dogma.Rule.LiteralInConditionTest do
       if false do
         i_will_never_run
       end
-      """ |> test
+      """ |> lint
       expected_errors = [
         %Error{
           rule:     LiteralInCondition,
@@ -62,7 +62,7 @@ defmodule Dogma.Rule.LiteralInConditionTest do
       unless [] do
         useless_unless
       end
-      """ |> test
+      """ |> lint
       expected_errors = [
         %Error{
           rule:     LiteralInCondition,
@@ -79,7 +79,7 @@ defmodule Dogma.Rule.LiteralInConditionTest do
         1 -> the_loneliest_number
         _ -> go_to_guy
       end
-      """ |> test
+      """ |> lint
       expected_errors = [
         %Error{
           rule:     LiteralInCondition,
@@ -98,7 +98,7 @@ defmodule Dogma.Rule.LiteralInConditionTest do
       |> if do
         i_will_never_run
       end
-      """ |> test
+      """ |> lint
       assert [] == errors
     end
 
@@ -108,7 +108,7 @@ defmodule Dogma.Rule.LiteralInConditionTest do
       |> unless do
         useless_unless
       end
-      """ |> test
+      """ |> lint
       assert [] == errors
     end
 
@@ -119,7 +119,7 @@ defmodule Dogma.Rule.LiteralInConditionTest do
       1 -> the_loneliest_number
       _ -> go_to_guy
       end
-      """ |> test
+      """ |> lint
       assert [] == errors
     end
   end

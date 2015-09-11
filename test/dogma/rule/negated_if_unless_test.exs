@@ -5,7 +5,7 @@ defmodule Dogma.Rule.NegatedIfUnlessTest do
   alias Dogma.Script
   alias Dogma.Error
 
-  defp test(source) do
+  defp lint(source) do
     source |> Script.parse!( "foo.ex" ) |> NegatedIfUnless.test
   end
 
@@ -15,7 +15,7 @@ defmodule Dogma.Rule.NegatedIfUnlessTest do
       if it_was_really_good do
         boast_about_your_weekend
       end
-      """ |> test
+      """ |> lint
       assert [] == errors
     end
 
@@ -24,7 +24,7 @@ defmodule Dogma.Rule.NegatedIfUnlessTest do
       unless youre_quite_full do
         have_another_slice_of_cake
       end
-      """ |> test
+      """ |> lint
       assert [] == errors
     end
   end
@@ -36,7 +36,7 @@ defmodule Dogma.Rule.NegatedIfUnlessTest do
       if not that_great do
         make_the_best_of_it
       end
-      """ |> test
+      """ |> lint
       expected_errors = [
         %Error{
           message: "Favour unless over a negated if",
@@ -52,7 +52,7 @@ defmodule Dogma.Rule.NegatedIfUnlessTest do
       unless not acceptable do
         find_something_better
       end
-      """ |> test
+      """ |> lint
       expected_errors = [
         %Error{
           message: "Favour if over a negated unless",
@@ -70,7 +70,7 @@ defmodule Dogma.Rule.NegatedIfUnlessTest do
       if ! that_great do
         make_the_best_of_it
       end
-      """ |> test
+      """ |> lint
       expected_errors = [
         %Error{
           message: "Favour unless over a negated if",
@@ -87,7 +87,7 @@ defmodule Dogma.Rule.NegatedIfUnlessTest do
       unless ! acceptable do
         find_something_better
       end
-      """ |> test
+      """ |> lint
       expected_errors = [
         %Error{
           message: "Favour if over a negated unless",

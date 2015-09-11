@@ -48,7 +48,7 @@ defmodule Dogma.Rule.ComparisonToBooleanTest do
     }
   ]
 
-  defp test(script) do
+  defp lint(script) do
     script
     |> Script.parse!("foo.ex")
     |> ComparisonToBoolean.test
@@ -64,7 +64,7 @@ defmodule Dogma.Rule.ComparisonToBooleanTest do
     foo !=  true
     foo !== false
     foo !== true
-    """ |> test
+    """ |> lint
     assert @expected_errors == errors
   end
 
@@ -78,7 +78,7 @@ defmodule Dogma.Rule.ComparisonToBooleanTest do
     false === foo
     false !=  foo
     false !== foo
-    """ |> test
+    """ |> lint
     assert @expected_errors == errors
   end
 
@@ -92,7 +92,7 @@ defmodule Dogma.Rule.ComparisonToBooleanTest do
     foo === bar
     foo !=  bar
     foo !== bar
-    """ |> test
+    """ |> lint
     assert [] == errors
   end
 end

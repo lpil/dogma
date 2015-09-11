@@ -5,7 +5,7 @@ defmodule Dogma.Rule.WindowsLineEndingsTest do
   alias Dogma.Script
   alias Dogma.Error
 
-  defp test(source) do
+  defp lint(source) do
     source |> Script.parse!( "foo.ex" ) |> WindowsLineEndings.test
   end
 
@@ -13,7 +13,7 @@ defmodule Dogma.Rule.WindowsLineEndingsTest do
     source = "# This line is good\n"
           <> "# This line is bad\r\n"
           <> "# back to good again"
-    errors = test( source )
+    errors = source |> lint
     expected_errors = [
       %Error{
         rule: WindowsLineEndings,

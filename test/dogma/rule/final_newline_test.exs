@@ -5,18 +5,18 @@ defmodule Dogma.Rule.FinalNewlineTest do
   alias Dogma.Script
   alias Dogma.Error
 
-  defp test(script) do
+  defp lint(script) do
     script |> Script.parse!( "foo.ex" ) |> FinalNewline.test
   end
 
   should "not error with a final newline" do
-    errors = "IO.puts 1\n" |> test
+    errors = "IO.puts 1\n" |> lint
     assert [] == errors
   end
 
 
   should "error with no final newline" do
-    errors = "IO.puts 1\nIO.puts 2\nIO.puts 3" |> test
+    errors = "IO.puts 1\nIO.puts 2\nIO.puts 3" |> lint
     expected_errors = [
       %Error{
         rule: FinalNewline,

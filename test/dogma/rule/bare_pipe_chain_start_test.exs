@@ -5,7 +5,7 @@ defmodule Dogma.Rule.BarePipeChainStartTest do
   alias Dogma.Script
   alias Dogma.Error
 
-  defp test(script) do
+  defp lint(script) do
     script
     |> Script.parse!("foo.ex")
     |> BarePipeChainStart.test
@@ -15,7 +15,7 @@ defmodule Dogma.Rule.BarePipeChainStartTest do
     errors = """
     42 |> Integer.to_char_list(16) |> IO.puts
     42 |> IO.puts
-    """ |> test
+    """ |> lint
     assert [] == errors
   end
 
@@ -25,14 +25,14 @@ defmodule Dogma.Rule.BarePipeChainStartTest do
     "A pie"
     |> String.upcase
     |> IO.puts
-    """ |> test
+    """ |> lint
     assert [] == errors
   end
 
   should "not error with a variable start" do
     errors = """
     foo |> String.downcase |> IO.puts
-    """ |> test
+    """ |> lint
     assert [] == errors
   end
 
@@ -41,14 +41,14 @@ defmodule Dogma.Rule.BarePipeChainStartTest do
     :foo
     |> is_atom
     |> &(&1)
-    """ |> test
+    """ |> lint
     assert [] == errors
   end
 
   should "not error with a module atom start" do
     errors = """
     Foo |> to_string
-    """ |> test
+    """ |> lint
     assert [] == errors
   end
 
@@ -60,7 +60,7 @@ defmodule Dogma.Rule.BarePipeChainStartTest do
     |> String.upcase
     |> String.downcase
     |> IO.puts
-    """ |> test
+    """ |> lint
     expected_errors = [
       %Error{
         rule: BarePipeChainStart,
@@ -89,7 +89,7 @@ defmodule Dogma.Rule.BarePipeChainStartTest do
     |> Enum.map(&(&1 * &1))
     |> Enum.join
     |> IO.puts
-    """ |> test
+    """ |> lint
     expected_errors = [
       %Error{
         rule: BarePipeChainStart,
@@ -117,7 +117,7 @@ defmodule Dogma.Rule.BarePipeChainStartTest do
     add_one.([1, 2, 3])
     |> Enum.join
     |> IO.puts
-    """ |> test
+    """ |> lint
     expected_errors = [
       %Error{
         rule: BarePipeChainStart,
@@ -144,7 +144,7 @@ defmodule Dogma.Rule.BarePipeChainStartTest do
     bar = [3, 2, 1]
     |> tl
     |> Enum.join
-    """ |> test
+    """ |> lint
     assert [] == errors
   end
 
@@ -155,7 +155,7 @@ defmodule Dogma.Rule.BarePipeChainStartTest do
     map.key
     |> Enum.map(&String.upcase/1)
     |> Enum.join
-    """ |> test
+    """ |> lint
     assert [] == errors
   end
 
@@ -166,7 +166,7 @@ defmodule Dogma.Rule.BarePipeChainStartTest do
     %Bar{}
     |> do_thing
     |> IO.puts
-    """ |> test
+    """ |> lint
     assert [] == errors
   end
 
@@ -177,7 +177,7 @@ defmodule Dogma.Rule.BarePipeChainStartTest do
     %{ foo: 1}
     |> do_thing
     |> IO.puts
-    """ |> test
+    """ |> lint
     assert [] == errors
   end
 
@@ -189,7 +189,7 @@ defmodule Dogma.Rule.BarePipeChainStartTest do
     {:ok, bar, 2}
     |> Module.do_thing
     |> do_other
-    """ |> test
+    """ |> lint
     assert [] == errors
   end
 
@@ -201,7 +201,7 @@ defmodule Dogma.Rule.BarePipeChainStartTest do
     ~s(qick brown fox)
     |> String.upcase
     |> IO.puts
-    """ |> test
+    """ |> lint
     assert [] == errors
   end
 
@@ -212,21 +212,21 @@ defmodule Dogma.Rule.BarePipeChainStartTest do
     @attribute
     |> Enum.map(&String.upcase/1)
     |> Enum.join
-    """ |> test
+    """ |> lint
     assert [] == errors
   end
 
   should "not error with an interpolated string start" do
     errors = ~S"""
     "A #{baked_good}" |> String.upcase |> IO.puts
-    """ |> test
+    """ |> lint
     assert [] == errors
   end
 
   should "not error with binary start" do
     errors = ~S"""
     << thing::utf8 >> |> String.upcase |> IO.puts
-    """ |> test
+    """ |> lint
     assert [] == errors
   end
 end

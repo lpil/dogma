@@ -5,7 +5,7 @@ defmodule Dogma.Rule.VariableNameTest do
   alias Dogma.Script
   alias Dogma.Error
 
-  defp test(script) do
+  defp lint(script) do
     script |> Script.parse!( "foo.ex" ) |> VariableName.test
   end
 
@@ -14,7 +14,7 @@ defmodule Dogma.Rule.VariableNameTest do
     x       = :ok
     foo     = :ok
     foo_bar = :ok
-    """ |> test
+    """ |> lint
     assert [] == errors
   end
 
@@ -22,7 +22,7 @@ defmodule Dogma.Rule.VariableNameTest do
     errors = """
     fooBar  = :error
     foo_Bar = :error
-    """ |> test
+    """ |> lint
     expected_errors = [
       %Error{
         rule:     VariableName,
@@ -45,14 +45,14 @@ defmodule Dogma.Rule.VariableNameTest do
     [hd | tl]        = foo_bar
     %{key: foo}      = foo_bar
     "strings" <> foo = foo_bar
-    """ |> test
+    """ |> lint
     assert [] == errors
   end
 
   should "error for pinned variables not in snake_case" do
     errors = """
     ^fooBar = foo_bar
-    """ |> test
+    """ |> lint
     expected_errors = [
       %Error{
         rule:     VariableName,
@@ -66,7 +66,7 @@ defmodule Dogma.Rule.VariableNameTest do
     should "error for one member lists" do
       errors = """
       [fooBar] = foo_bar
-      """ |> test
+      """ |> lint
       expected_errors = [
         %Error{
           rule:     VariableName,
@@ -80,7 +80,7 @@ defmodule Dogma.Rule.VariableNameTest do
     should "error for multi-member lists" do
       errors = """
       [foo, fooBar] = foo_bar
-      """ |> test
+      """ |> lint
       expected_errors = [
         %Error{
           rule:     VariableName,
@@ -94,7 +94,7 @@ defmodule Dogma.Rule.VariableNameTest do
     should "error for multi-member lists that include literals" do
       errors = """
       [1, fooBar] = foo_bar
-      """ |> test
+      """ |> lint
       expected_errors = [
         %Error{
           rule:     VariableName,
@@ -108,7 +108,7 @@ defmodule Dogma.Rule.VariableNameTest do
     should "error for tuples" do
       errors = """
       {fooBar} = baz
-      """ |> test
+      """ |> lint
       expected_errors = [
         %Error{
           rule:     VariableName,
@@ -122,7 +122,7 @@ defmodule Dogma.Rule.VariableNameTest do
     should "error for two-element tuples" do
       errors = """
       {foo, barBaz} = baz
-      """ |> test
+      """ |> lint
       expected_errors = [
         %Error{
           rule:     VariableName,
@@ -137,7 +137,7 @@ defmodule Dogma.Rule.VariableNameTest do
       errors = """
       [foo, {barBaz}] = foo_bar
       {3, [fooBar]}  = foo_bar
-      """ |> test
+      """ |> lint
       expected_errors = [
         %Error{
           rule:     VariableName,
@@ -155,7 +155,7 @@ defmodule Dogma.Rule.VariableNameTest do
     should "error for maps" do
       errors = """
       %{test: fooBar} = foo_bar
-      """ |> test
+      """ |> lint
       expected_errors = [
         %Error{
           rule:     VariableName,
@@ -168,7 +168,7 @@ defmodule Dogma.Rule.VariableNameTest do
     should "error for head/tail pattern matching" do
       errors = """
       [hEAD | tail] = foo_bar
-      """ |> test
+      """ |> lint
       expected_errors = [
         %Error{
           rule:     VariableName,
@@ -181,7 +181,7 @@ defmodule Dogma.Rule.VariableNameTest do
     should "error for the end of a binary pattern" do
       errors = """
       "test" <> fooBar = foo_bar
-      """ |> test
+      """ |> lint
       expected_errors = [
         %Error{
           rule:     VariableName,

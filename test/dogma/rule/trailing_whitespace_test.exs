@@ -5,7 +5,7 @@ defmodule Dogma.Rule.TrailingWhitespaceTest do
   alias Dogma.Script
   alias Dogma.Error
 
-  defp test(source) do
+  defp lint(source) do
     source |> Script.parse!( "foo.ex" ) |> TrailingWhitespace.test
   end
 
@@ -14,7 +14,7 @@ defmodule Dogma.Rule.TrailingWhitespaceTest do
           <> "'how'       \n"
           <> "  'are'\n"
           <> "      'you?'  \n"
-    errors = source |> test
+    errors = source |> lint
     expected_errors = [
       %Error{
         rule: TrailingWhitespace,
@@ -35,7 +35,7 @@ defmodule Dogma.Rule.TrailingWhitespaceTest do
           <> "'how'\r\n"
           <> "  'are'\r\n"
           <> "      'you?'\r\n"
-    errors = source |> test
+    errors = source |> lint
     assert [] == errors
   end
 
@@ -43,7 +43,7 @@ defmodule Dogma.Rule.TrailingWhitespaceTest do
     source = ~s("""\n)
           <> ~s(1 + 1       \n)
           <> ~s("""\n)
-    errors = source |> test
+    errors = source |> lint
     assert [] == errors
   end
 end

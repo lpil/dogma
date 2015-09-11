@@ -5,7 +5,7 @@ defmodule Dogma.Rule.HardTabsTest do
   alias Dogma.Script
   alias Dogma.Error
 
-  defp test(script) do
+  defp lint(script) do
     script |> Script.parse( "foo.ex" ) |> HardTabs.test
   end
 
@@ -14,7 +14,7 @@ defmodule Dogma.Rule.HardTabsTest do
     def foo
       :function_body
     end
-    """ |> test
+    """ |> lint
     assert [] == errors
   end
 
@@ -23,7 +23,7 @@ defmodule Dogma.Rule.HardTabsTest do
     def foo
     \t:function_body
     end
-    """ |> test
+    """ |> lint
     assert [error_on_line(2)] == errors
   end
 
@@ -32,7 +32,7 @@ defmodule Dogma.Rule.HardTabsTest do
     def foo
       ~s"have some tabs:\t\t\t"
     end
-    """ |> test
+    """ |> lint
     assert [] == errors
   end
 

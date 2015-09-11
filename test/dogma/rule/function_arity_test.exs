@@ -5,7 +5,7 @@ defmodule Dogma.Rule.FunctionArityTest do
   alias Dogma.Script
   alias Dogma.Error
 
-  defp test(script) do
+  defp lint(script) do
     script |> Script.parse!( "foo.ex" ) |> FunctionArity.test
   end
 
@@ -25,7 +25,7 @@ defmodule Dogma.Rule.FunctionArityTest do
 
     defmacro macro(a,b,c) do
     end
-    """ |> test
+    """ |> lint
     assert [] == errors
   end
 
@@ -34,7 +34,7 @@ defmodule Dogma.Rule.FunctionArityTest do
     defprotocol Some.Protocol do
       def run(thing, context)
     end
-    """ |> test
+    """ |> lint
     assert [] == errors
   end
 
@@ -44,7 +44,7 @@ defmodule Dogma.Rule.FunctionArityTest do
     end
     defmacro volume(a,b,c,d,e) do
     end
-    """ |> test
+    """ |> lint
     expected_errors = [
       %Error{
         rule:    FunctionArity,

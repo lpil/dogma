@@ -5,7 +5,7 @@ defmodule Dogma.Rule.ModuleAttributeNameTest do
   alias Dogma.Script
   alias Dogma.Error
 
-  defp test(script) do
+  defp lint(script) do
     script |> Script.parse!( "foo.ex" ) |> ModuleAttributeName.test
   end
 
@@ -15,7 +15,7 @@ defmodule Dogma.Rule.ModuleAttributeNameTest do
       @hello_world 1
       @hello 2
     end
-    """ |> test
+    """ |> lint
     assert [] == errors
   end
 
@@ -25,7 +25,7 @@ defmodule Dogma.Rule.ModuleAttributeNameTest do
       @helloWorld 1
       @hello_World 1
     end
-    """ |> test
+    """ |> lint
     expected_errors = [
       %Error{
         rule:     ModuleAttributeName,

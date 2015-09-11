@@ -5,7 +5,7 @@ defmodule Dogma.Rule.TrailingBlankLinesTest do
   alias Dogma.Script
   alias Dogma.Error
 
-  defp test(source) do
+  defp lint(source) do
     source |> Script.parse!( "foo.ex" ) |> TrailingBlankLines.test
   end
 
@@ -13,7 +13,7 @@ defmodule Dogma.Rule.TrailingBlankLinesTest do
   should "not error when there are no trailing blank lines" do
     errors = """
     IO.puts 1
-    """  |> test
+    """  |> lint
     assert [] == errors
   end
 
@@ -22,7 +22,7 @@ defmodule Dogma.Rule.TrailingBlankLinesTest do
     IO.puts 1
 
 
-    """ |> test
+    """ |> lint
     expected_errors = [
       %Error{
         rule: TrailingBlankLines,

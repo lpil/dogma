@@ -5,7 +5,7 @@ defmodule Dogma.Rule.QuotesInStringTest do
   alias Dogma.Script
   alias Dogma.Error
 
-  defp test(script) do
+  defp lint(script) do
     script |> Script.parse!( "foo.ex" ) |> QuotesInString.test
   end
 
@@ -13,7 +13,7 @@ defmodule Dogma.Rule.QuotesInStringTest do
   should "error for a quote in a string" do
     errors = ~S"""
     "Hello, \" world!"
-    """ |> test
+    """ |> lint
     expected_errors = [
       %Error{
         rule:    QuotesInString,
@@ -27,35 +27,35 @@ defmodule Dogma.Rule.QuotesInStringTest do
   should "not error for a quote free string" do
     errors = """
     "Hello, world!"
-    """ |> test
+    """ |> lint
     assert [] == errors
   end
 
   should "not error for a quote in a ~s string" do
     errors = """
     ~s(hello, quote -> " <-)
-    """ |> test
+    """ |> lint
     assert [] == errors
   end
 
   should "not error for a quote in a ~r regex" do
     errors = """
     ~r/"/
-    """ |> test
+    """ |> lint
     assert [] == errors
   end
 
   should "not error for a quote in a ~R regex" do
     errors = """
     ~r/"/
-    """ |> test
+    """ |> lint
     assert [] == errors
   end
 
   should "not error for a quote in a ~S string" do
     errors = """
     ~S(hello, quote -> " <-)
-    """ |> test
+    """ |> lint
     assert [] == errors
   end
 
@@ -63,7 +63,7 @@ defmodule Dogma.Rule.QuotesInStringTest do
     errors = ~s(
     """
     Hey look, a quote -> "
-    """) |> test
+    """) |> lint
     assert [] == errors
   end
 
@@ -73,7 +73,7 @@ defmodule Dogma.Rule.QuotesInStringTest do
   """ do
     errors = ~S"""
     << "\""::utf8, cs::binary >> = string
-    """ |> test
+    """ |> lint
     assert [] == errors
   end
 end

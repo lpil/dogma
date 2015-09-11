@@ -5,7 +5,7 @@ defmodule Dogma.Rule.ModuleNameTest do
   alias Dogma.Script
   alias Dogma.Error
 
-  defp test(script) do
+  defp lint(script) do
     script |> Script.parse!( "foo.ex" ) |> ModuleName.test
   end
 
@@ -13,7 +13,7 @@ defmodule Dogma.Rule.ModuleNameTest do
     errors = """
     defmodule HelloWorld do
     end
-    """ |> test
+    """ |> lint
     assert [] == errors
   end
 
@@ -21,7 +21,7 @@ defmodule Dogma.Rule.ModuleNameTest do
     errors = """
     defmodule :HelloWorld do
     end
-    """ |> test
+    """ |> lint
     assert [] == errors
   end
 
@@ -29,7 +29,7 @@ defmodule Dogma.Rule.ModuleNameTest do
     errors = """
     defmodule Hello.World do
     end
-    """ |> test
+    """ |> lint
     assert [] == errors
   end
 
@@ -41,7 +41,7 @@ defmodule Dogma.Rule.ModuleNameTest do
         end
       end
     end
-    """ |> test
+    """ |> lint
     assert [] == errors
   end
 
@@ -50,7 +50,7 @@ defmodule Dogma.Rule.ModuleNameTest do
     errors = """
     defmodule Snake_case do
     end
-    """ |> test
+    """ |> lint
     expected_errors = [
       %Error{
         rule:     ModuleName,
@@ -65,7 +65,7 @@ defmodule Dogma.Rule.ModuleNameTest do
     errors = """
     defmodule :snake_case do
     end
-    """ |> test
+    """ |> lint
     expected_errors = [
       %Error{
         rule:     ModuleName,
@@ -80,7 +80,7 @@ defmodule Dogma.Rule.ModuleNameTest do
     errors = """
     defmodule Hello.There_world do
     end
-    """ |> test
+    """ |> lint
     expected_errors = [
       %Error{
         rule:     ModuleName,
@@ -99,7 +99,7 @@ defmodule Dogma.Rule.ModuleNameTest do
         end
       end
     end
-    """ |> test
+    """ |> lint
     expected_errors = [
       %Error{
         rule:     ModuleName,
@@ -115,7 +115,7 @@ defmodule Dogma.Rule.ModuleNameTest do
     errors = """
     defmodule :"Hello.world" do
     end
-    """ |> test
+    """ |> lint
     expected_errors = [
       %Error{
         rule:     ModuleName,

@@ -5,7 +5,7 @@ defmodule Dogma.Rule.FunctionNameTest do
   alias Dogma.Script
   alias Dogma.Error
 
-  defp test(script) do
+  defp lint(script) do
     script |> Script.parse!( "foo.ex" ) |> FunctionName.test
   end
 
@@ -17,7 +17,7 @@ defmodule Dogma.Rule.FunctionNameTest do
     end
     defp private_foo do
     end
-    """ |> test
+    """ |> lint
     assert [] == errors
     end
 
@@ -26,7 +26,7 @@ defmodule Dogma.Rule.FunctionNameTest do
     def unquote(function_name)(_state) do
       {:ok, "something"}
     end
-    """ |> test
+    """ |> lint
     assert [] == errors
   end
 
@@ -34,7 +34,7 @@ defmodule Dogma.Rule.FunctionNameTest do
     errors = """
     def fooBar do
     end
-    """ |> test
+    """ |> lint
     expected_errors = [
       %Error{
         rule:     FunctionName,
@@ -49,7 +49,7 @@ defmodule Dogma.Rule.FunctionNameTest do
     errors = """
     defp fooBar do
     end
-    """ |> test
+    """ |> lint
     expected_errors = [
       %Error{
         rule:     FunctionName,

@@ -5,7 +5,7 @@ defmodule Dogma.Rule.PredicateNameTest do
   alias Dogma.Script
   alias Dogma.Error
 
-  defp test(source) do
+  defp lint(source) do
     source |> Script.parse!( "foo.ex" ) |> PredicateName.test
   end
 
@@ -18,7 +18,7 @@ defmodule Dogma.Rule.PredicateNameTest do
     defp is_nice() do
       true
     end
-    """ |> test
+    """ |> lint
     assert [] == errors
   end
 
@@ -30,7 +30,7 @@ defmodule Dogma.Rule.PredicateNameTest do
     defp is_bad?() do
       true
     end
-    """ |> test
+    """ |> lint
     expected_errors = [
       %Error{
         rule: PredicateName,

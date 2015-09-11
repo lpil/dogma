@@ -5,7 +5,7 @@ defmodule Dogma.Rule.ModuleDocTest do
   alias Dogma.Script
   alias Dogma.Error
 
-  defp test(script) do
+  defp lint(script) do
     script |> Script.parse!( "foo.ex" ) |> ModuleDoc.test
   end
 
@@ -16,7 +16,7 @@ defmodule Dogma.Rule.ModuleDocTest do
       defmodule VeryGood do
         @moduledoc "Lots of good info here"
       end
-      """ |> test
+      """ |> lint
       assert [] == errors
     end
 
@@ -28,7 +28,7 @@ defmodule Dogma.Rule.ModuleDocTest do
           @moduledoc "And even more here!"
         end
       end
-      """ |> test
+      """ |> lint
       assert [] == errors
     end
   end
@@ -37,7 +37,7 @@ defmodule Dogma.Rule.ModuleDocTest do
     errors = """
     defmodule NotGood do
     end
-    """ |> test
+    """ |> lint
     expected_errors = [
       %Error{
         rule: ModuleDoc,
@@ -54,7 +54,7 @@ defmodule Dogma.Rule.ModuleDocTest do
     defmodule #{module_name} do
     end
     """
-    error = source |> test |> List.first
+    error = source |> lint |> List.first
     assert error.message |> String.contains?(module_name)
   end
 
@@ -64,7 +64,7 @@ defmodule Dogma.Rule.ModuleDocTest do
     defmodule #{module_name} do
     end
     """
-    error = source |> test |> List.first
+    error = source |> lint |> List.first
     assert error.message |> String.contains?(module_name)
   end
 
@@ -75,7 +75,7 @@ defmodule Dogma.Rule.ModuleDocTest do
       defmodule NotGood do
       end
     end
-    """ |> test
+    """ |> lint
     expected_errors = [
       %Error{
         rule: ModuleDoc,
@@ -93,7 +93,7 @@ defmodule Dogma.Rule.ModuleDocTest do
         @moduledoc "Lots of good info here"
       end
     end
-    """ |> test
+    """ |> lint
     expected_errors = [
       %Error{
         rule: ModuleDoc,
