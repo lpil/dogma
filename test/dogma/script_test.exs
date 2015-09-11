@@ -219,7 +219,7 @@ defmodule Dogma.ScriptTest do
   end
 end
 
-defmodule Dogma.Rules.TestRules do
+defmodule Dogma.Rule.TestRules do
   defmodule TestOne do
     def test(_) do
       [1]
