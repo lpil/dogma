@@ -64,7 +64,7 @@ defmodule Dogma.Documentation.RuleList do
   end
 
   defp namespace(name) do
-    Module.concat( Dogma.Rules, name )
+    Module.concat( Dogma.Rule, name )
   end
 
   defp printable_name(rule) do

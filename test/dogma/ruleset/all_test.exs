@@ -15,8 +15,8 @@ defmodule Dogma.RuleSet.AllTest do
       end
     end
 
-    should "return a module for each file in lib/dogma/rules/" do
-      rules_files = Path.wildcard("lib/dogma/rules/*.ex")
+    should "return a module for each file in lib/dogma/rule/" do
+      rules_files = Path.wildcard("lib/dogma/rule/*.ex")
       assert All.rules |> length == rules_files |> length
     end
 
