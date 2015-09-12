@@ -125,27 +125,28 @@ defmodule Dogma.Script do
   not been turned off by configuration. Then replaces the file at
   at the path with the corrected source.
   """
-  def repair(script) do
+  def repair(script, io \\ File) do
     script.errors
     |> Enum.group_by(&Map.get(&1, :rule))
     |> Enum.reduce(script, &repair_violation/2)
-    |> write_corrected_source
-
-    script
+    |> write_corrected_source(io)
   end
 
   defp repair_violation({rule, violations}, script) do
     if function_exported?(rule, :correction, 2) do
-      Map.put(script, :corrected_source, rule.correction(script, violations))
+      source = script.corrected_source || script.source
+      %Script{ script | corrected_source: rule.correction(source, violations) }
     else
       script
     end
   end
 
-  defp write_corrected_source(script) do
+  defp write_corrected_source(script, io) do
     unless is_nil(script.corrected_source) do
-      File.write(script.path, script.corrected_source)
+      io.write(script.path, script.corrected_source)
     end
+
+    script
   end
 
   defp error({:error, {line, err, _}}) do

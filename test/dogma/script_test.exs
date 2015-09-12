@@ -217,6 +217,60 @@ defmodule Dogma.ScriptTest do
       assert [1, "hello world"] == errors
     end
   end
+
+  with "repair/1" do
+    should "do nothing if there are no violations" do
+      script =
+        %Script{errors: [], source: "Test"}
+        |> Script.repair(FakeFile)
+      assert is_nil(script.corrected_source)
+    end
+
+    should "do nothing if the violated rules havn't implemented correction/2" do
+      error =
+        %Error{
+          rule: Dogma.Rules.TestRules.TestOne,
+        }
+      script =
+        %Script{errors: [error]}
+        |> Script.repair(FakeFile)
+
+      assert is_nil(script.corrected_source)
+    end
+
+    should "build a corrected source if the rule implmented correction/2" do
+      error =
+        %Error{
+          rule: Dogma.Rules.TestRules.WithCorrection,
+        }
+      script =
+        %Script{errors: [error], source: ""}
+        |> Script.repair(FakeFile)
+
+      assert "Correction Output" == script.corrected_source
+    end
+
+    should "two corrections should not clobber each other" do
+      error =
+        %Error{
+          rule: Dogma.Rules.TestRules.WithCorrection,
+        }
+      other_error =
+        %Error{
+          rule: Dogma.Rules.TestRules.OtherWithCorrection,
+        }
+      script =
+        %Script{errors: [error, other_error], source: ""}
+        |> Script.repair(FakeFile)
+
+      assert "Two Times Correction Output" == script.corrected_source
+    end
+  end
+end
+
+defmodule FakeFile do
+  def write(_path, _content, _opts \\ []) do
+  end
 end
 
 defmodule Dogma.Rules.TestRules do
@@ -229,6 +283,18 @@ defmodule Dogma.Rules.TestRules do
   defmodule TestTwo do
     def test(_, output: custom_out) do
       [custom_out]
+    end
+  end
+
+  defmodule WithCorrection do
+    def correction(source,_) do
+      source <> "Correction Output"
+    end
+  end
+
+  defmodule OtherWithCorrection do
+    def correction(source,_) do
+      source <> "Two Times "
     end
   end
 end

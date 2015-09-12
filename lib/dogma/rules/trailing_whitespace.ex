@@ -13,11 +13,21 @@ defmodule Dogma.Rules.TrailingWhitespace do
     Enum.reduce( script.processed_lines, [], &check_line(&1, &2) )
   end
 
-  def correction(script, error) do
-    script.source
-    |> String.split("\n")
-    |> Enum.map(&String.rstrip/1)
-    |> Enum.join("\n")
+  def correction(source, errors) do
+    lines = Enum.map(errors, fn err -> err.line end)
+    [newline] = Regex.run(~r/\r?\n\z/, source)
+
+    source
+    |> String.split(newline)
+    |> Enum.with_index
+    |> Enum.map(fn {line, i} ->
+      if Enum.member?(lines, i + 1) do
+        String.replace(line, @regex, "")
+      else
+        line
+      end
+    end)
+    |> Enum.join(newline)
   end
 
   defp check_line({i, line}, errors) do
