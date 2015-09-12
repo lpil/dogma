@@ -17,15 +17,16 @@ defmodule Mix.Tasks.Dogma do
   end
 
   def parse_args(argv) do
-    switches = [format: :string]
+    switches = [format: :string, fix: :boolean]
     {switches, files, []} = OptionParser.parse(argv, switches: switches)
 
     format = Keyword.get(switches, :format)
     formatter = Map.get(Formatter.formatters,
                         format,
                         Formatter.default_formatter)
+    fix = Keyword.get(switches, :fix, false)
 
-    {List.first(files), formatter}
+    {List.first(files), %{formatter: formatter, fix: fix}}
   end
 
   defp any_errors?(scripts) do

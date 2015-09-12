@@ -10,7 +10,7 @@ defmodule Dogma do
   alias Dogma.Rules
   alias Dogma.ScriptSources
 
-  def run({dir, formatter}) do
+  def run({dir, %{formatter: formatter, fix: fix}}) do
     dir
     |> ScriptSources.find(exclude_patterns)
     |> ScriptSources.to_scripts
