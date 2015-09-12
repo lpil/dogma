@@ -9,6 +9,7 @@ defmodule Dogma do
   alias Dogma.Formatter
   alias Dogma.Rules
   alias Dogma.ScriptSources
+  alias Dogma.Corrections
 
   def run({dir, %{formatter: formatter, fix: fix}}) do
     dir
@@ -16,6 +17,7 @@ defmodule Dogma do
     |> ScriptSources.to_scripts
     |> Formatter.start(formatter)
     |> Rules.test(formatter)
+    |> Corrections.repair(fix)
     |> Formatter.finish(formatter)
   end
 

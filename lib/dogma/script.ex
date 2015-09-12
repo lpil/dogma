@@ -22,7 +22,8 @@ defmodule Dogma.Script do
             ast:              nil,
             tokens:           nil,
             valid?:           nil,
-            errors:           []
+            errors:           [],
+            corrected_source: nil
 
 
   @doc """
@@ -118,6 +119,34 @@ defmodule Dogma.Script do
     errors
   end
 
+  @doc """
+  Builds the corrected_source by running the corrections
+  for any rule that has implemented one and which has
+  not been turned off by configuration. Then replaces the file at
+  at the path with the corrected source.
+  """
+  def repair(script) do
+    script.errors
+    |> Enum.group_by(&Map.get(&1, :rule))
+    |> Enum.reduce(script, &repair_violation/2)
+    |> write_corrected_source
+
+    script
+  end
+
+  defp repair_violation({rule, violations}, script) do
+    if function_exported?(rule, :correction, 2) do
+      Map.put(script, :corrected_source, rule.correction(script, violations))
+    else
+      script
+    end
+  end
+
+  defp write_corrected_source(script) do
+    unless is_nil(script.corrected_source) do
+      File.write(script.path, script.corrected_source)
+    end
+  end
 
   defp error({:error, {line, err, _}}) do
     %Error{
