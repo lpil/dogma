@@ -35,6 +35,7 @@ defmodule Dogma.Mixfile do
     ~w(
       LICENCE
       README.md
+      lib/dogma.ex
       lib/dogma
       lib/mix/tasks/dogma.ex
       mix.exs
