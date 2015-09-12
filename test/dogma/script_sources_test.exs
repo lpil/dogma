@@ -19,20 +19,19 @@ defmodule Dogma.ScriptSourcesTest do
       refute Enum.any?( paths, &String.starts_with?(&1, "deps/") )
     end
 
-    with "a given path" do
-      should "be happy with a trailing slash" do
-        paths = ScriptSources.find @fixture_path
-        assert paths == @fixture_files
-      end
+    should "exclude the /_build/ directory" do
+      paths = ScriptSources.find "."
+      refute Enum.any?( paths, &String.starts_with?(&1, "deps/") )
+    end
 
-      should "be happy without a trailing slash" do
-        paths = ScriptSources.find @fixture_path
-        assert paths == @fixture_files
-      end
+    should "be the same with or without a trailing slash in given path" do
+      with_slash    = ScriptSources.find "test/fixtures/app/"
+      without_slash = ScriptSources.find "test/fixtures/app"
+      assert with_slash == without_slash
     end
 
     should "not return files that match given exclude patterns" do
-      patterns = [~r(config/), ~r(app/test/)]
+      patterns = [~r(config/), ~r(app/test/), ~r(_build/)]
       paths    = ScriptSources.find( @fixture_path, patterns )
       expected = ~w(
         test/fixtures/app/lib/app.ex

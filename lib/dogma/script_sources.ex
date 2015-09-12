@@ -6,6 +6,11 @@ defmodule Dogma.ScriptSources do
 
   alias Dogma.Script
 
+  @ignored_dirs ~w(
+    deps/
+    _build/
+  )
+
   @doc """
   Finds all Elixir source files in the given directory.
 
@@ -17,7 +22,7 @@ defmodule Dogma.ScriptSources do
     |> to_string # Convert nil to ""
     |> Path.join( "**/*.{ex,exs}" )
     |> Path.wildcard
-    |> Enum.reject( &String.starts_with?(&1, "deps/") )
+    |> Enum.reject( &String.starts_with?(&1, @ignored_dirs) )
     |> Enum.reject( &match_any?(&1, exclude_patterns) )
   end
 
