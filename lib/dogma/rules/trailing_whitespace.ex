@@ -13,6 +13,13 @@ defmodule Dogma.Rules.TrailingWhitespace do
     Enum.reduce( script.processed_lines, [], &check_line(&1, &2) )
   end
 
+  def correction(script, error) do
+    script.source
+    |> String.split("\n")
+    |> Enum.map(&String.rstrip/1)
+    |> Enum.join("\n")
+  end
+
   defp check_line({i, line}, errors) do
     trimmed_line = String.replace(line, ~r/\r\z/, "")
     case Regex.run( @regex, trimmed_line, return: :index ) do
