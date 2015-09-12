@@ -36,6 +36,12 @@ def deps do
 end
 ```
 
+Fetch it:
+
+```
+mix deps.get
+```
+
 Run the mix task:
 
 ```
