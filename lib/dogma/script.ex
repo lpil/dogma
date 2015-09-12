@@ -121,9 +121,8 @@ defmodule Dogma.Script do
 
   @doc """
   Builds the corrected_source by running the corrections
-  for any rule that has implemented one and which has
-  not been turned off by configuration. Then replaces the file at
-  at the path with the corrected source.
+  for any rule that has implemented correction/2. Then replaces the file at
+  at the path with the corrected source. The correction is run once for each rule.
   """
   def repair(script, io \\ File) do
     script.errors

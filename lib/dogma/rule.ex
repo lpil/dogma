@@ -1,6 +1,8 @@
 defmodule Dogma.Rule do
   @moduledoc """
   The Rule behaviour, used to assert the interface used by our Rule modules.
+  A rule can also define an optional correction callback which takes
+  a source string and a list of violations.
   """
 
   alias Dogma.Script
