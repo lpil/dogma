@@ -1,7 +1,7 @@
 defmodule Dogma.Mixfile do
   use Mix.Project
 
-  @version "0.0.5"
+  @version "0.0.6"
 
   def project do
     [
@@ -20,7 +20,6 @@ defmodule Dogma.Mixfile do
         contributors: ["Louis Pilfold"],
         licenses: ["MIT"],
         links: %{ "GitHub" => "https://github.com/lpil/dogma" },
-        files: files
       ]
     ]
   end
@@ -29,16 +28,6 @@ defmodule Dogma.Mixfile do
     [
       applications: []
     ]
-  end
-
-  def files do
-    ~w(
-      LICENCE
-      README.md
-      lib/dogma
-      lib/mix/tasks/dogma.ex
-      mix.exs
-    )
   end
 
   defp deps do
