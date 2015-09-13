@@ -54,11 +54,13 @@ The JSON structure is like the following example:
           "errors": [{
               "line": 1,
               "rule": "ModuleDoc",
-              "message": "Module without @moduledoc detected"
+              "message": "Module without @moduledoc detected",
+              "fixed": false
            }, {
               "line": 14,
               "rule": "ComparisonToBoolean",
-              "message": "Comparison to a boolean is useless"
+              "message": "Comparison to a boolean is useless",
+              "fixed": true
            }
           ]
       }],

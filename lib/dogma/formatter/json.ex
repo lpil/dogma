@@ -19,11 +19,13 @@ defmodule Dogma.Formatter.JSON do
             "errors": [{
                 "line": 1,
                 "rule": "ModuleDoc",
-                "message": "Module without @moduledoc detected"
+                "message": "Module without @moduledoc detected",
+                "fixed": false
              }, {
                 "line": 14,
                 "rule": "ComparisonToBoolean",
-                "message": "Comparison to a boolean is useless"
+                "message": "Comparison to a boolean is useless",
+                "fixed": true
              }
             ]
         }],
@@ -85,7 +87,8 @@ defmodule Dogma.Formatter.JSON do
     %{
       line: error.line,
       rule: printable_name(error.rule),
-      message: error.message
+      message: error.message,
+      fixed: error.fixed?
     }
   end
 

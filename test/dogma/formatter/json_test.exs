@@ -66,12 +66,14 @@ defmodule Dogma.Formatter.JSONTest do
           %Error{
             line: 1,
             rule: Dogma.Rules.ModuleDoc,
-            message: "Module without a @moduledoc detected"
+            message: "Module without a @moduledoc detected",
+            fixed?: true
           },
           %Error{
             line: 14,
             rule: Dogma.Rules.ComparisonToBoolean,
-            message: "Comparison to a boolean is pointless"
+            message: "Comparison to a boolean is pointless",
+            fixed?: false
           }
         ]
 
@@ -90,12 +92,14 @@ defmodule Dogma.Formatter.JSONTest do
               %{
                 "line" => 1,
                 "rule" => "ModuleDoc",
-                "message" => "Module without a @moduledoc detected"
+                "message" => "Module without a @moduledoc detected",
+                "fixed" => true
               },
               %{
                 "line" => 14,
                 "rule" => "ComparisonToBoolean",
-                "message" => "Comparison to a boolean is pointless"
+                "message" => "Comparison to a boolean is pointless",
+                "fixed" => false
               }
             ]}
         ]
