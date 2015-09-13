@@ -8,7 +8,7 @@ defmodule Dogma.FormatterTest do
   defmodule TestFormatter do
     def start(_)  do "start"  end
     def script(_) do "script" end
-    def finish(_) do "finish" end
+    def finish(_, _) do "finish" end
   end
 
   with ".start" do
@@ -30,7 +30,7 @@ defmodule Dogma.FormatterTest do
   with ".finish" do
     should "print with the formatter" do
       assert "finish" == capture_io(fn ->
-        Formatter.finish( [], TestFormatter )
+        Formatter.finish( [], %{formatter: TestFormatter, fix?: false})
       end)
     end
   end

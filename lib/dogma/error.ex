@@ -6,5 +6,6 @@ defmodule Dogma.Error do
 
   defstruct rule:    nil,
             message: nil,
-            line:    nil
+            line:    nil,
+            fixed?:  false
 end

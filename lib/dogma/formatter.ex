@@ -45,8 +45,8 @@ defmodule Dogma.Formatter do
   @doc """
   Runs at the end of the test suite.
   """
-  def finish(files, formatter \\ @default_formatter) do
-    IO.write formatter.finish( files )
+  def finish(files, %{formatter: formatter, fix?: fix?}) do
+    IO.write formatter.finish( files, fix? )
     files
   end
 

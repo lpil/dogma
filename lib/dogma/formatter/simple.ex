@@ -42,12 +42,17 @@ defmodule Dogma.Formatter.Simple do
   @doc """
   Runs at the end of the test suite, displaying errors.
   """
-  def finish(scripts) do
+  def finish(scripts, fix? \\ false)
+  def finish(scripts, false) do
     {error_count, errors} = format_errors( scripts )
     len = length(scripts)
     "\n\n" <> summary( len, error_count ) <> Enum.join( errors ) <> "\n"
   end
-
+  def finish(scripts, true) do
+    {err_count, fix_count, unfixed} = format_errors_and_fixes( scripts )
+    summary = summary_with_fixes(length(scripts), err_count, fix_count)
+    "\n\n" <> summary <> Enum.join( unfixed ) <> "\n"
+  end
 
   defp reset do
     IO.ANSI.reset <> "\n"
@@ -63,27 +68,61 @@ defmodule Dogma.Formatter.Simple do
     "#{ num } files, #{ IO.ANSI.red }#{ err_count } errors!" <> reset
   end
 
+  defp summary_with_fixes(file_count, error_count, fix_count) do
+    conclusion = format_conclusion(error_count - fix_count)
+    error_count_formatted =
+      case error_count do
+        1 -> "1 error"
+        _ -> "#{error_count} errors"
+      end
+
+    "#{file_count} files, #{error_count_formatted},"
+      <> " #{fix_count} fixed, #{conclusion}" <> reset
+  end
+
+  defp format_conclusion(remaining) do
+    case remaining do
+      0 -> "#{IO.ANSI.green}no errors remaining!"
+      1 -> "#{IO.ANSI.red}1 error remaining!"
+      _ -> "#{IO.ANSI.red}#{remaining} errors remaining!"
+    end
+  end
+
+
   defp format_errors(scripts) do
     scripts
     |> Enum.reverse
     |> Enum.reduce({0, []}, fn(script, {count, errors}) ->
-      new_errors = script |> format_script_errors
+      new_errors = script.errors |> format_script_errors(script.path)
       count      = count + length( script.errors )
       {count, [new_errors | errors]}
     end)
   end
 
-  defp format_script_errors(script) do
-    case length script.errors do
+  defp format_errors_and_fixes(scripts) do
+    scripts
+    |> Enum.reverse
+    |> Enum.reduce({0, 0, []}, fn(script, {count, fix_count, errors}) ->
+      count = count + length( script.errors )
+      {fixed, unfixed} = Enum.partition(script.errors, fn err -> err.fixed? end)
+      fix_count = fix_count + length(fixed)
+      new_errors = unfixed |> format_script_errors(script.path)
+
+      {count, fix_count, [new_errors | errors]}
+    end)
+  end
+
+  defp format_script_errors(errors, path) do
+    case length errors do
       0 -> ""
-      _ -> do_format_script_errors( script )
+      _ -> do_format_script_errors( errors, path )
     end
   end
-  defp do_format_script_errors(script) do
-    errors = script.errors |> Enum.map( &format_error(&1) )
+  defp do_format_script_errors(errors, path) do
+    errors = errors |> Enum.map( &format_error(&1) )
     """
 
-    == #{ script.path } ==#{ errors }
+    == #{ path } ==#{ errors }
     """
   end
 

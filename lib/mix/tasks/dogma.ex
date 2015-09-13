@@ -24,9 +24,9 @@ defmodule Mix.Tasks.Dogma do
     formatter = Map.get(Formatter.formatters,
                         format,
                         Formatter.default_formatter)
-    fix = Keyword.get(switches, :fix, false)
+    fix? = Keyword.get(switches, :fix, false)
 
-    {List.first(files), %{formatter: formatter, fix: fix}}
+    {List.first(files), %{formatter: formatter, fix?: fix?}}
   end
 
   defp any_errors?(scripts) do

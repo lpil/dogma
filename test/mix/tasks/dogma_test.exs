@@ -12,7 +12,7 @@ defmodule Dogma.OptionParserTest do
       should "return nil and default formatter and fix set to false" do
         {dir, options} = parse_args([])
         assert dir == nil
-        assert options == %{fix: false, formatter: @default_formatter}
+        assert options == %{fix?: false, formatter: @default_formatter}
       end
     end
 
@@ -20,7 +20,7 @@ defmodule Dogma.OptionParserTest do
       should "return directory and default formatter and fix set to false" do
         {path, options} = parse_args(["lib/foo"])
         assert path == "lib/foo"
-        assert match?( %{fix: false, formatter: @default_formatter}, options)
+        assert match?( %{fix?: false, formatter: @default_formatter}, options)
       end
 
       with "multiple directories given" do
@@ -57,7 +57,7 @@ defmodule Dogma.OptionParserTest do
     with "--fix passed" do
       should "add fix: true to the options" do
         {_, options} = parse_args(["--fix"])
-        assert match?( %{fix: true}, options )
+        assert match?( %{fix?: true}, options )
       end
     end
   end

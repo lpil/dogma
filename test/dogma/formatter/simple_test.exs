@@ -61,15 +61,17 @@ defmodule Dogma.Formatter.SimpleTest do
       }
     end
 
-    should "print count, followed by detail", context do
-      output  = """
-      \n\n2 files, \e[31m1 error!\e[0m
+    with "no fixing" do
+      should "print count, followed by detail", context do
+        output  = """
+        \n\n2 files, \e[31m1 error!\e[0m
 
-      == foo.ex ==
-      44: BadCode: Awful.
+        == foo.ex ==
+        44: BadCode: Awful.
 
-      """
-      assert output == Simple.finish( context.scripts )
+        """
+        assert output == Simple.finish( context.scripts )
+      end
     end
   end
 
@@ -101,6 +103,87 @@ defmodule Dogma.Formatter.SimpleTest do
 
       """
       assert output == Simple.finish( context.scripts )
+    end
+  end
+
+  with "fixing" do
+    with "An unfixed error" do
+      setup context do
+        error = %Error{
+          rule: Foo.BadCode,
+          line: 44,
+          message: "Awful.",
+          fixed?: false
+        }
+        %{
+          scripts: [ %Script{ path: "foo.ex", errors: [error] }, %Script{} ]
+        }
+      end
+
+      should "print fixed count, followed by remaining count", context do
+        output  = """
+        \n\n2 files, 1 error, 0 fixed, \e[31m1 error remaining!\e[0m
+
+        == foo.ex ==
+        44: BadCode: Awful.
+
+        """
+        assert output == Simple.finish( context.scripts, true)
+      end
+    end
+
+    with "a fixed error" do
+      setup context do
+        error = %Error{
+          rule: Foo.BadCode,
+          line: 44,
+          message: "Awful.",
+          fixed?: true
+        }
+        %{
+          scripts: [ %Script{ path: "foo.ex", errors: [error] }, %Script{} ]
+        }
+      end
+
+      should "print success message if all errors were fixed", context do
+        output = """
+        \n\n2 files, 1 error, 1 fixed, \e[32mno errors remaining!\e[0m\n
+        """
+        assert output == Simple.finish( context.scripts, true)
+      end
+    end
+
+    with "Several errors" do
+      setup context do
+        error1 = %Error{
+          rule: Foo.BadCode,
+          line: 44,
+          message: "Awful.",
+          fixed?: true
+        }
+        error2 = %Error{ rule: Foo.Confusing,  line: 2,  message: "Wtf?"}
+        error3 = %Error{ rule: Foo.UglyAsHell, line: 63, message: "Not ok."}
+        %{
+          scripts: [
+            %Script{ path: "foo.ex", errors: [error1] },
+            %Script{},
+            %Script{},
+            %Script{ path: "bar.ex", errors: [error2, error3] },
+          ]
+        }
+      end
+
+      should "print count, followed by details", context do
+        output  = """
+        \n\n4 files, 3 errors, 1 fixed, \e[31m2 errors remaining!\e[0m
+
+        == bar.ex ==
+        2: Confusing: Wtf?
+        63: UglyAsHell: Not ok.
+
+        """
+        assert output == Simple.finish( context.scripts, true )
+      end
     end
   end
 end

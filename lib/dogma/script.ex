@@ -121,8 +121,9 @@ defmodule Dogma.Script do
 
   @doc """
   Builds the corrected_source by running the corrections
-  for any rule that has implemented correction/2. Then replaces the file at
-  at the path with the corrected source. The correction is run once for each rule.
+  for any rule that has implemented correction/2.
+  Then replaces the file at at the path with the corrected source.
+  The correction is run once for each rule.
   """
   def repair(script, io \\ File) do
     script.errors
@@ -134,7 +135,16 @@ defmodule Dogma.Script do
   defp repair_violation({rule, violations}, script) do
     if function_exported?(rule, :correction, 2) do
       source = script.corrected_source || script.source
-      %Script{ script | corrected_source: rule.correction(source, violations) }
+      errors = Enum.map(script.errors, fn err ->
+        if Enum.member?(violations, err) do
+          %Error{ err | fixed?: true}
+        else
+          err
+        end
+      end)
+
+      corrected = rule.correction(source, violations)
+      %Script{ script | corrected_source: corrected, errors: errors }
     else
       script
     end
