@@ -69,6 +69,36 @@ defmodule Dogma.Formatter.FlycheckTest do
 
         assert Flycheck.finish(script) == expected
       end
+
+      should "ignore fixed errors" do
+        error1 = %Error{
+          line: 1,
+          message: "Module without a @moduledoc detected"
+        }
+        error2 = %Error{
+          line: 14,
+          message: "Comparison to a boolean is pointless"
+        }
+        error3 = %Error{
+          line: 15,
+          message: "Trailing whitespace detected",
+          fixed?: true
+        }
+
+        script = [
+          %Script{ path: "foo.ex", errors: [error1, error3] },
+          %Script{ path: "bar.ex", errors: [error1, error2, error3] },
+          %Script{ path: "baz.ex", errors: [error3] }
+        ]
+
+        expected = """
+        foo.ex:1:1: W: Module without a @moduledoc detected
+        bar.ex:1:1: W: Module without a @moduledoc detected
+        bar.ex:14:1: W: Comparison to a boolean is pointless
+        """
+
+        assert Flycheck.finish(script) == expected
+      end
     end
   end
 end

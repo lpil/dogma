@@ -35,6 +35,7 @@ defmodule Dogma.Formatter.Flycheck do
 
   defp format_errors(script = %Script{}) do
     script.errors
+    |> Enum.filter(fn err -> !err.fixed? end)
     |> Enum.map(&(format_error(&1, script.path)))
   end
 
