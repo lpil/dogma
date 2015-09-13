@@ -52,6 +52,15 @@ defmodule Dogma.Rule.BarePipeChainStartTest do
     assert [] == errors
   end
 
+  should "not error with a keyword lookup start" do
+    errors = """
+    map[:foo]
+    |> is_atom
+    |> IO.inspect
+    """ |> lint
+    assert [] == errors
+  end
+
   should "error for non-bare start namespaced functions" do
     errors = """
     String.strip("nope") |> String.upcase |> String.downcase
