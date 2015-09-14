@@ -33,8 +33,11 @@ defmodule Dogma.Rule.BarePipeChainStart do
 
   defp check_node({:|>, _, [lhs, _]}, errors) do
     case function_line(lhs) do
-      {:ok, line} -> {node, [error(line) | errors]}
-      _           -> {node, errors}
+      {:error, line} ->
+        {node, [error(line) | errors]}
+
+      _ ->
+        {node, errors}
     end
   end
 
@@ -45,48 +48,52 @@ defmodule Dogma.Rule.BarePipeChainStart do
   defp function_line({:|>, _, [lhs, _]}),
   do: function_line(lhs)
 
-  # exception for map keys
+  # exception for map.key
   defp function_line({{:., _, _}, _, []}),
-  do: nil
+  do: :ok
+
+  # exception for map[key]
+  defp function_line({{:., _, [Access, :get]}, _, _}),
+  do: :ok
 
   # exception for bare maps
   defp function_line({:%, _, _}),
-  do: nil
+  do: :ok
 
   # exception for structs
   defp function_line({:%{}, _, _}),
-  do: nil
+  do: :ok
 
   # exception for large tuples (size > 2)
   defp function_line({:{}, _, _}),
-  do: nil
+  do: :ok
 
   # exception for module attributes
   defp function_line({:@, _, _}),
-  do: nil
+  do: :ok
 
   # exception for module atoms
   defp function_line({:__aliases__, _, _}),
-  do: nil
+  do: :ok
 
   # exception for binaries
   defp function_line({:<<>>, _, _}),
-  do: nil
+  do: :ok
 
   defp function_line({atom, meta, args})
   when is_atom(atom) and is_list(args) do
     if atom |> to_string |> String.starts_with?("sigil") do
-      nil # exception for sigils
+      :ok # exception for sigils
     else
-      {:ok, meta[:line]}
+      {:error, meta[:line]}
     end
   end
 
   defp function_line({{:., meta, _}, _, _}),
-  do: {:ok, meta[:line]}
+  do: {:error, meta[:line]}
 
   defp function_line(_),
-  do: nil
+  do: :ok
 
   defp error(line) do
     %Error{
