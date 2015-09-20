@@ -53,7 +53,7 @@ defmodule Dogma.Rule.FunctionName do
   end
 
   defp check_function(name, meta, node, errors) do
-    if name |> to_string |> Name.probably_snake_case? do
+    if name |> to_string |> Name.snake_case? do
       {node, errors}
     else
       {node, [error( meta[:line] ) | errors]}

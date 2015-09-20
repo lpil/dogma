@@ -49,7 +49,7 @@ defmodule Dogma.Rule.VariableName do
     variable_names_are_snake_case?([l,r])
   end
   defp variable_names_are_snake_case?({name,_,_}) do
-    name |> to_string |> Name.probably_snake_case?
+    name |> to_string |> Name.snake_case?
   end
   defp variable_names_are_snake_case?(_), do: true
 

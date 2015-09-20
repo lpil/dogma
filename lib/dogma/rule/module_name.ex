@@ -39,7 +39,7 @@ defmodule Dogma.Rule.ModuleName do
   defp check_names(names, errors, line) do
     names
     |> Enum.flat_map( &prepare_names(&1) )
-    |> Enum.filter( &Name.probably_not_pascal_case?(&1) )
+    |> Enum.filter( &Name.not_pascal_case?(&1) )
     |> case do
        [] ->
          errors
