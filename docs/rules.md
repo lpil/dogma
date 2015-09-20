@@ -1,13 +1,14 @@
 # Dogma Rules
 
 These are the rules included in Dogma by default. Currently there are
-24 of them.
+25 of them.
 
 ## Contents
 
 * [BarePipeChainStart](https://github.com/lpil/dogma/blob/master/docs/rules.md#barepipechainstart)
 * [ComparisonToBoolean](https://github.com/lpil/dogma/blob/master/docs/rules.md#comparisontoboolean)
 * [DebuggerStatement](https://github.com/lpil/dogma/blob/master/docs/rules.md#debuggerstatement)
+* [ExceptionName](https://github.com/lpil/dogma/blob/master/docs/rules.md#exceptionname)
 * [FinalCondition](https://github.com/lpil/dogma/blob/master/docs/rules.md#finalcondition)
 * [FinalNewline](https://github.com/lpil/dogma/blob/master/docs/rules.md#finalnewline)
 * [FunctionArity](https://github.com/lpil/dogma/blob/master/docs/rules.md#functionarity)
@@ -77,6 +78,27 @@ A rule that disallows calls to `IEx.pry`.
 
 This is because we don't want debugger breakpoints accidentally being
 committed into our codebase.
+
+
+### ExceptionName
+
+A Rule that checks that exception names end with a trailing Error.
+
+For example, prefer this:
+
+    defmodule BadHTTPCodeError do
+      defexception [:message]
+    end
+
+Not one of these:
+
+    defmodule BadHTTPCode do
+      defexception [:message]
+    end
+
+    defmodule BadHTTPCodeException do
+      defexception [:message]
+    end
 
 
 ### FinalCondition

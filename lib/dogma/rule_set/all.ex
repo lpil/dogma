@@ -12,6 +12,7 @@ defmodule Dogma.RuleSet.All do
       {BarePipeChainStart},
       {ComparisonToBoolean},
       {DebuggerStatement},
+      {ExceptionName},
       {FinalCondition},
       {FinalNewline},
       {FunctionArity, max: 4},
