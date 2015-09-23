@@ -61,6 +61,17 @@ defmodule Dogma.Rule.BarePipeChainStartTest do
     assert [] == errors
   end
 
+  should "not error with a range start" do
+    errors = """
+    1..4
+    |> IO.inspect
+
+    a..@some_value
+    |> IO.inspect
+    """ |> lint
+    assert [] == errors
+  end
+
   should "error for non-bare start namespaced functions" do
     errors = """
     String.strip("nope") |> String.upcase |> String.downcase
