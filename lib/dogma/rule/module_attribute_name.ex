@@ -14,7 +14,7 @@ defmodule Dogma.Rule.ModuleAttributeName do
   end
 
   defp check_node({:@, meta, [{name, _, _}]} = node, errors) do
-    if name |> to_string |> Name.probably_not_snake_case? do
+    if name |> to_string |> Name.not_snake_case? do
       errors = [error( meta[:line] ) | errors]
     end
     {node, errors}

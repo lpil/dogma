@@ -49,6 +49,46 @@ defmodule Dogma.Rule.VariableNameTest do
     assert [] == errors
   end
 
+  should "error with destructuring assignment of structs for non snake_case" do
+    errors = """
+      assert [
+        %Script{ source: sourcePascal },
+        %Script{ source: "defmodule App do\n  @moduledoc false\nend\n" },
+      ] = predefinedScripts
+    """ |> lint
+    expected_errors = [
+      %Error{
+        rule:     VariableName,
+        message:  "Variable names should be in snake_case",
+        line: 7,
+      },]
+    assert expected_errors == errors
+  end
+
+  should "not error with destructuring assignment of structs for snake_case" do
+    errors = """
+      assert [
+        %Script{ source: source_snake },
+        %Script{ source: "defmodule App do\n  @moduledoc false\nend\n" },
+      ] = scripts
+    """ |> lint
+    assert [] == errors
+  end
+
+  should "not error with assignment for snake_case 2" do
+    errors = """
+    def formatters_doc do
+      formatters =
+        Formatter.formatters
+        |> Enum.map(&extract_doc/1)
+
+      default_name = printable_name(Formatter.default_formatter)
+      default_id   = String.downcase(default_name)
+    end
+    """ |> lint
+    assert [] == errors
+  end
+
   should "error for pinned variables not in snake_case" do
     errors = """
     ^fooBar = foo_bar

@@ -5,7 +5,7 @@ defmodule Dogma.Documentation.FormattersList do
 
   alias Dogma.Formatter
 
-  @doc"""
+  @doc """
   Writes formatter documentation to `docs/formatters.md`.
   """
   def write! do

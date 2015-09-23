@@ -4,61 +4,79 @@ defmodule Dogma.Util.Name do
   """
 
   @doc """
-  Returns true if the name is (probably) `snake_case`
+  Returns true if the name is in `snake_case`.
 
-      iex> Dogma.Util.Name.probably_snake_case?( "foo_bar" )
+      iex> Dogma.Util.Name.snake_case?("to_string")
       true
 
-      iex> Dogma.Util.Name.probably_snake_case?( "fooBar" )
+      iex> Dogma.Util.Name.snake_case?("starts_with?")
+      true
+
+      iex> Dogma.Util.Name.snake_case?("read!")
+      true
+
+      iex> Dogma.Util.Name.snake_case?("foo_bar_baz")
+      true
+
+      iex> Dogma.Util.Name.snake_case?("fooBar")
+      false
+
+      iex> Dogma.Util.Name.snake_case?("Foobar")
+      false
+
+      iex> Dogma.Util.Name.snake_case?("foo_Bar")
       false
   """
-  def probably_snake_case?(name) do
-    not probably_not_snake_case?( name )
+  def snake_case?(name) do
+    name |> String.match?(~r/^[a-z0-9\_\?\!]+$/)
   end
 
   @doc """
-  Returns true if the name is (probably) not `snake_case`
+  Returns true if the name is not in `snake_case`
 
-      iex> Dogma.Util.Name.probably_not_snake_case?( "foo_bar" )
+      iex> Dogma.Util.Name.not_snake_case?( "foo_bar" )
       false
 
-      iex> Dogma.Util.Name.probably_not_snake_case?( "fooBar" )
+      iex> Dogma.Util.Name.not_snake_case?( "fooBar" )
       true
   """
-  def probably_not_snake_case?(name) do
-    String.match?( name, ~r/[A-Z]/ )
+  def not_snake_case?(name) do
+    not snake_case?(name)
   end
 
 
   @doc """
-  Returns true if the name is (probably) `PascalCase`
+  Returns true if the name is in `PascalCase`
 
-      iex> Dogma.Util.Name.probably_pascal_case?( "FooBar" )
+      iex> Dogma.Util.Name.pascal_case?( "GenServer" )
       true
 
-      iex> Dogma.Util.Name.probably_pascal_case?( "fooBar" )
+      iex> Dogma.Util.Name.pascal_case?( "IO" )
+      true
+
+      iex> Dogma.Util.Name.pascal_case?( "fooBar" )
       false
 
-      iex> Dogma.Util.Name.probably_pascal_case?( "foo_bar" )
+      iex> Dogma.Util.Name.pascal_case?( "foo_bar" )
       false
   """
-  def probably_pascal_case?(name) do
-    not probably_not_pascal_case?( name )
+  def pascal_case?(name) do
+    name |> String.match?(~r/^[A-Z][a-zA-Z0-9]*$/)
   end
 
   @doc """
-  Returns true if the name is (probably) not `PascalCase`
+  Returns true if the name is not in `PascalCase`
 
-      iex> Dogma.Util.Name.probably_not_pascal_case?( "FooBar" )
+      iex> Dogma.Util.Name.not_pascal_case?( "GenServer" )
       false
 
-      iex> Dogma.Util.Name.probably_not_pascal_case?( "fooBar" )
+      iex> Dogma.Util.Name.not_pascal_case?( "fooBar" )
       true
 
-      iex> Dogma.Util.Name.probably_not_pascal_case?( "foo_bar" )
+      iex> Dogma.Util.Name.not_pascal_case?( "foo_bar" )
       true
   """
-  def probably_not_pascal_case?(name) do
-    String.contains?( name, "_" ) or String.match?( name, ~r/\A[^A-Z]/ )
+  def not_pascal_case?(name) do
+    not pascal_case?(name)
   end
 end
