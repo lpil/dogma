@@ -80,7 +80,7 @@ defmodule Dogma.Rule.BarePipeChainStart do
   defp function_line({:<<>>, _, _}),
   do: :ok
 
-  # exception for binaries
+  # exception for ranges
   defp function_line({:.., _, _}),
   do: :ok
 
