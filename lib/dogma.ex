@@ -10,6 +10,8 @@ defmodule Dogma do
   alias Dogma.Rules
   alias Dogma.ScriptSources
 
+  @version Mix.Project.config[:version]
+
   def run({dir, formatter}) do
     dir
     |> ScriptSources.find(exclude_patterns)
@@ -22,4 +24,6 @@ defmodule Dogma do
   defp exclude_patterns do
     Application.get_env :dogma, :exclude, []
   end
+
+  def version, do: @version
 end
