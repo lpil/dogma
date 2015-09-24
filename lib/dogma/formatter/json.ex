@@ -6,7 +6,6 @@ defmodule Dogma.Formatter.JSON do
 
       {
         "metadata": {
-          "dogma_version": "0.3.0",
           "elixir_version": "1.0.5",
           "erlang_version": "Erlang/OTP 10 [erts-7.0.3] [64-bit]",
           "system_architecture": "x86_64-apple-darwin14.5.0"
@@ -67,7 +66,6 @@ defmodule Dogma.Formatter.JSON do
                    |> to_string
 
     %{
-      dogma_version: Keyword.get(Dogma.Mixfile.project, :version),
       elixir_version: System.version,
       erlang_version: erl_version,
       system_architecture: architecture

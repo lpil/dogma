@@ -110,15 +110,10 @@ defmodule Dogma.Formatter.JSONTest do
 
   defp test_system_info(%{"metadata" => metadata}) do
     assert metadata == %{
-      "dogma_version"       => dogma_version,
       "elixir_version"      => System.version,
       "erlang_version"      => erlang_version,
       "system_architecture" => system_architecture
     }
-  end
-
-  defp dogma_version do
-    Keyword.get(Dogma.Mixfile.project, :version)
   end
 
   defp erlang_version do

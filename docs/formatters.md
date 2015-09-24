@@ -41,7 +41,6 @@ The JSON structure is like the following example:
 
     {
       "metadata": {
-        "dogma_version": "0.3.0",
         "elixir_version": "1.0.5",
         "erlang_version": "Erlang/OTP 10 [erts-7.0.3] [64-bit]",
         "system_architecture": "x86_64-apple-darwin14.5.0"
