@@ -30,17 +30,17 @@ defmodule Dogma.Rule.ExceptionName do
   end
 
   defp check_node(
-    {:defmodule, _metadata, [{:__aliases__, _, _name_arr}, children]} = node,
+    {:defmodule, metadata, [{:__aliases__, _, name_arr}, children]} = node,
     errors
   ) do
     error_module? =
       children[:do]
       |> block_children_as_list
       |> Enum.any?(&exception?/1)
-    name = Enum.join(_name_arr, ".")
+    name = Enum.join(name_arr, ".")
 
     if error_module? && bad_name?(name) do
-      {node, [error(_metadata[:line], name) | errors]}
+      {node, [error(metadata[:line], name) | errors]}
     else
       {node, errors}
     end
