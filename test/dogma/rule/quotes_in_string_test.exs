@@ -18,7 +18,7 @@ defmodule Dogma.Rule.QuotesInStringTest do
       %Error{
         rule:    QuotesInString,
         message: ~s(Prefer the S sigil for strings containing `"`),
-        line: 1,
+        line: {1, 1, 19},
       }
     ]
     assert expected_errors == errors

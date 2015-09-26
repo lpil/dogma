@@ -23,12 +23,12 @@ defmodule Dogma.Rule.SemicolonTest do
       %Error{
         rule: Semicolon,
         message: @message,
-        line: 1
+        line: {1, 6, 7}
       },
       %Error{
         rule: Semicolon,
         message: @message,
-        line: 2
+        line: {2, 6, 7}
       }
     ]
   end
@@ -42,7 +42,7 @@ defmodule Dogma.Rule.SemicolonTest do
       %Error{
         rule: Semicolon,
         message: @message,
-        line: 1
+        line: {1, 6, 7}
       }
     ]
   end
@@ -56,12 +56,12 @@ defmodule Dogma.Rule.SemicolonTest do
       %Error{
         rule: Semicolon,
         message: @message,
-        line: 1
+        line: {1, 6, 7}
       },
       %Error{
         rule: Semicolon,
         message: @message,
-        line: 1
+        line: {1, 13, 14}
       }
     ]
   end
@@ -94,7 +94,7 @@ defmodule Dogma.Rule.SemicolonTest do
       %Error{
         rule: Semicolon,
         message: @message,
-        line: 1
+        line: {1, 18, 19}
       }
     ]
   end
@@ -110,7 +110,7 @@ defmodule Dogma.Rule.SemicolonTest do
       %Error{
         rule: Semicolon,
         message: @message,
-        line: 1
+        line: {1, 10, 11}
       }
     ]
   end

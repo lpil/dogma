@@ -72,7 +72,7 @@ defmodule Dogma.Script do
   end
 
   defp tokenize(source) do
-    {:ok, _, tokens} = source
+    {:ok, _, _, tokens} = source
                         |> String.to_char_list
                         |> :elixir_tokenizer.tokenize( 1, [] )
     tokens
@@ -118,6 +118,14 @@ defmodule Dogma.Script do
     errors
   end
 
+
+  defp error({:error, {{line, _, _}, err, _}}) do
+    %Error{
+      rule:    SyntaxError,
+      message: err,
+      line:    line - 1,
+    }
+  end
 
   defp error({:error, {line, err, _}}) do
     %Error{

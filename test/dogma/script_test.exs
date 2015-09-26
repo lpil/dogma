@@ -82,7 +82,7 @@ defmodule Dogma.ScriptTest do
       end
 
       should "assigns the tokenized source", context do
-        {:ok, _, tokens} = context.source
+        {:ok, _, _,  tokens} = context.source
                             |> String.to_char_list
                             |> :elixir_tokenizer.tokenize( 1, [] )
         assert tokens == context.script.tokens
