@@ -81,6 +81,9 @@ defmodule Dogma.Script do
     end
   end
 
+  def line({line, _, _}), do: line
+  def line(line) when is_integer(line), do: line
+
 
   @doc """
   Runs each of the given on the given script
@@ -122,11 +125,11 @@ defmodule Dogma.Script do
   end
 
 
-  defp error({:error, {line, err, _}}) do
+  defp error({:error, {pos, err, _}}) do
     %Error{
       rule:    SyntaxError,
       message: err,
-      line:    line - 1,
+      line:    line(pos) - 1,
     }
   end
 
