@@ -88,7 +88,7 @@ defmodule Dogma.ScriptTest do
                   {:do_identifier, _, :greet}, {:do, _}, {:eol, _},
                   {:bin_string, _, ["Hello world!"]}, {:eol, _}, {:end, _},
                   {:eol, _}, {:end, _}, {:eol, _}]
-            -> assert true
+            -> assert 1 == 1
           _ -> assert false
         end
       end
