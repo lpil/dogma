@@ -30,7 +30,7 @@ defmodule Dogma.Rule.WindowsLineEndings do
     %Error{
       rule:     __MODULE__,
       message:  "Windows line ending detected (\r\n)",
-      line: pos,
+      line: Dogma.Script.line(pos),
     }
   end
 end

@@ -38,7 +38,7 @@ defmodule Dogma.Rule.HardTabsTest do
 
   defp error_on_line(line) do
     %Error{
-      line: line,
+      line: Dogma.Script.line(line),
       message: "Hard tab indention. Use spaces instead.",
       rule: HardTabs
     }

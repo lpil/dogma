@@ -26,11 +26,11 @@ defmodule Dogma.Rule.HardTabs do
     @indenting_tab_pattern |> Regex.match?(line)
   end
 
-  defp error({line_num, _}) do
+  defp error({pos, _}) do
     %Error{
       rule:     __MODULE__,
       message:  "Hard tab indention. Use spaces instead.",
-      line: line_num,
+      line: Dogma.Script.line(pos),
     }
   end
 end

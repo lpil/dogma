@@ -25,7 +25,7 @@ defmodule Dogma.Rule.TrailingWhitespace do
     %Error{
       rule:     __MODULE__,
       message:  "Trailing whitespace detected",
-      line: pos,
+      line: Dogma.Script.line(pos),
     }
   end
 end

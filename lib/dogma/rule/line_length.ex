@@ -28,12 +28,12 @@ defmodule Dogma.Rule.LineLength do
     String.length(line) > max
   end
 
-  defp error({line_num, line}, max) do
+  defp error({pos, line}, max) do
     len = String.length(line)
     %Error{
       rule:     __MODULE__,
       message:  "Line length should not exceed #{max} chars (was #{len}).",
-      line: line_num,
+      line: Dogma.Script.line(pos),
     }
   end
 end

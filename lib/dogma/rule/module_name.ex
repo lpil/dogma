@@ -58,7 +58,7 @@ defmodule Dogma.Rule.ModuleName do
     %Error{
       rule:     __MODULE__,
       message:  "Module names should be in PascalCase",
-      line: pos,
+      line: Dogma.Script.line(pos),
     }
   end
 end

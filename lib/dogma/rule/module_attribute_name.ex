@@ -28,7 +28,7 @@ defmodule Dogma.Rule.ModuleAttributeName do
     %Error{
       rule:     __MODULE__,
       message:  "Module attribute names should be in snake_case",
-      line: pos,
+      line: Dogma.Script.line(pos),
     }
   end
 end

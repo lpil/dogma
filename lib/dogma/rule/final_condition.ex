@@ -102,7 +102,7 @@ defmodule Dogma.Rule.FinalCondition do
       rule: __MODULE__,
       message:
         "Always use #{inspect check} as the last condition of a cond statement",
-      line: line
+      line: Dogma.Script.line(line)
     }
   end
 end

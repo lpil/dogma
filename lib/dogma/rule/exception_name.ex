@@ -61,7 +61,7 @@ defmodule Dogma.Rule.ExceptionName do
     %Error{
       rule:     __MODULE__,
       message:  "Exception names should end with '#{@good_name_suffix}'.",
-      line: line,
+      line: Dogma.Script.line(line),
     }
   end
 end
