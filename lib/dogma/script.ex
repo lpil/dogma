@@ -72,10 +72,13 @@ defmodule Dogma.Script do
   end
 
   defp tokenize(source) do
-    {:ok, _, tokens} = source
+    result = source
                         |> String.to_char_list
                         |> :elixir_tokenizer.tokenize( 1, [] )
-    tokens
+    case result do
+      {:ok, _, tokens}    -> tokens # Elixir 1.0.x
+      {:ok, _, _, tokens} -> tokens # Elixir 1.1.x
+    end
   end
 
 
