@@ -57,11 +57,11 @@ defmodule Dogma.Rule.FunctionArity do
     {name, line, args}
   end
 
-  defp error(line_number, name, max, arity) do
+  defp error(pos, name, max, arity) do
     %Error{
       rule:    __MODULE__,
       message: "Arity of `#{name}` should be less than #{max} (was #{arity}).",
-      line: line_number,
+      line: Dogma.Script.line(pos),
     }
   end
 end

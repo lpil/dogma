@@ -49,7 +49,7 @@ defmodule Dogma.Rule.Semicolon do
     %Error{
       rule: __MODULE__,
       message: "Expressions should not be terminated by semicolons.",
-      line: line
+      line: Dogma.Script.line(line)
     }
   end
 end

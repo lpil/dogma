@@ -49,7 +49,7 @@ defmodule Dogma.Rule.LiteralInInterpolation do
     %Error{
       rule:     __MODULE__,
       message:  "Literal value found in interpolation",
-      line: pos,
+      line: Dogma.Script.line(pos),
     }
   end
 end
