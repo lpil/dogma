@@ -1,7 +1,7 @@
 defmodule Dogma.Mixfile do
   use Mix.Project
 
-  @version "0.0.7"
+  @version "0.0.8"
 
   def project do
     [
@@ -17,7 +17,7 @@ defmodule Dogma.Mixfile do
       source_url: "https://github.com/lpil/dogma",
       description: "A code style linter for Elixir, powered by shame.",
       package: [
-        contributors: ["Louis Pilfold"],
+        maintainers: ["Louis Pilfold"],
         licenses: ["MIT"],
         links: %{ "GitHub" => "https://github.com/lpil/dogma" },
       ]
