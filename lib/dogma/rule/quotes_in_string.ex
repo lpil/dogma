@@ -55,7 +55,7 @@ defmodule Dogma.Rule.QuotesInString do
     probably_not_heredoc = not String.ends_with?(str, "\n")
     probably_not_heredoc and String.contains?(str, ~s("))
   end
-  defp invalid?(str), do: false
+  defp invalid?(_), do: false
 
 
   defp error(line) do
