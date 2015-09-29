@@ -43,7 +43,6 @@ defmodule Dogma.Rule.QuotesInString do
     check_binary_strings(rest, acc)
   end
 
-
   defp inside_binary_literal([{:">>", _} | rest], acc) do
     check_binary_strings(rest, acc)
   end
@@ -52,10 +51,11 @@ defmodule Dogma.Rule.QuotesInString do
   end
 
 
-  defp invalid?(str) do
+  defp invalid?(str) when is_binary(str) do
     probably_not_heredoc = not String.ends_with?(str, "\n")
     probably_not_heredoc and String.contains?(str, ~s("))
   end
+  defp invalid?(str), do: false
 
 
   defp error(line) do
