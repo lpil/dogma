@@ -31,6 +31,13 @@ defmodule Dogma.Rule.QuotesInStringTest do
     assert [] == errors
   end
 
+  should "not error for an interpolation-only string" do
+    errors = ~S"""
+      "#{inspect app_servers_pids}"
+    """ |> lint
+    assert [] == errors
+  end
+
   should "not error for a quote in a ~s string" do
     errors = """
     ~s(hello, quote -> " <-)
