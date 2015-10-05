@@ -444,11 +444,13 @@ A rule that disallows variable names not in `snake_case`.
 with underscores, rather than spaces.
 
 Good:
+
     my_mood = :happy
     [number_of_cats] = [3]
     {function_name, _, other_stuff} = node
 
 Bad:
+
     myMood = :sad
     [numberOfCats] = [3]
     {functionName, meta, otherStuff} = node
