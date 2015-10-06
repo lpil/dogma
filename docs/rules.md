@@ -1,7 +1,7 @@
 # Dogma Rules
 
 These are the rules included in Dogma by default. Currently there are
-25 of them.
+26 of them.
 
 ## Contents
 
@@ -21,6 +21,7 @@ These are the rules included in Dogma by default. Currently there are
 * [ModuleAttributeName](https://github.com/lpil/dogma/blob/master/docs/rules.md#moduleattributename)
 * [ModuleDoc](https://github.com/lpil/dogma/blob/master/docs/rules.md#moduledoc)
 * [ModuleName](https://github.com/lpil/dogma/blob/master/docs/rules.md#modulename)
+* [NegatedAssert](https://github.com/lpil/dogma/blob/master/docs/rules.md#negatedassert)
 * [NegatedIfUnless](https://github.com/lpil/dogma/blob/master/docs/rules.md#negatedifunless)
 * [PredicateName](https://github.com/lpil/dogma/blob/master/docs/rules.md#predicatename)
 * [QuotesInString](https://github.com/lpil/dogma/blob/master/docs/rules.md#quotesinstring)
@@ -320,10 +321,28 @@ While this is considered invalid:
     end
 
 
+### NegatedAssert
+
+A rule that disallows the use of an assert or refute with a negated
+argument. If you do this, swap the `assert` for an `refute`, or vice versa.
+
+These are considered valid:
+
+    assert foo
+    refute bar
+
+These are considered invalid:
+
+    assert ! foo
+    refute ! bar
+    assert not foo
+    refute not bar
+
+
 ### NegatedIfUnless
 
-A rule that disallows the use of an if or unless with a negated predicate,
-When you do this, swap the `if` for an `unless`, or vice versa.
+A rule that disallows the use of an if or unless with a negated predicate.
+If you do this, swap the `if` for an `unless`, or vice versa.
 
 These are considered valid:
 

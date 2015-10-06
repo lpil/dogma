@@ -25,6 +25,7 @@ defmodule Dogma.RuleSet.All do
       {ModuleAttributeName},
       {ModuleDoc},
       {ModuleName},
+      {NegatedAssert},
       {NegatedIfUnless},
       {PredicateName},
       {QuotesInString},

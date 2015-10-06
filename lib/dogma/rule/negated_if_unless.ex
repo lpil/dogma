@@ -1,7 +1,7 @@
 defmodule Dogma.Rule.NegatedIfUnless do
   @moduledoc """
-  A rule that disallows the use of an if or unless with a negated predicate,
-  When you do this, swap the `if` for an `unless`, or vice versa.
+  A rule that disallows the use of an if or unless with a negated predicate.
+  If you do this, swap the `if` for an `unless`, or vice versa.
 
   These are considered valid:
 
