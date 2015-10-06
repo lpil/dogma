@@ -44,12 +44,11 @@ defmodule Dogma.Documentation.RuleList do
     tuple |> Tuple.to_list |> hd
   end
 
-  @document_url "https://github.com/lpil/dogma/blob/master/docs/rules.md"
   defp contents(rule) do
     name = rule |> printable_name
     id   = name |> String.downcase
     """
-    * [#{name}](#{@document_url}##{id})
+    * [#{name}](##{id})
     """
   end
 
