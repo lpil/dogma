@@ -1,4 +1,4 @@
-defmodule Dogma.Util.ASTNode do
+defmodule Dogma.Util.AST do
   @moduledoc """
   Utility functions for analyzing and categorizing AST nodes
   """
@@ -10,10 +10,10 @@ defmodule Dogma.Util.ASTNode do
 
   ## Examples:
 
-      iex> Dogma.Util.ASTNode.literal?( "foo" )
+      iex> Dogma.Util.AST.literal?( "foo" )
       true
 
-      iex> Dogma.Util.ASTNode.literal?({:foo, [], Elixir})
+      iex> Dogma.Util.AST.literal?({:foo, [], Elixir})
       false
   """
   def literal?(x) when is_atom(x), do: true

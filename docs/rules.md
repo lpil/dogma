@@ -5,7 +5,7 @@ These are the rules included in Dogma by default. Currently there are
 
 ## Contents
 
-* [BarePipeChainStart](#barepipechainstart)
+* [PipelineStart](#pipelinestart)
 * [ComparisonToBoolean](#comparisontoboolean)
 * [DebuggerStatement](#debuggerstatement)
 * [ExceptionName](#exceptionname)
@@ -35,7 +35,7 @@ These are the rules included in Dogma by default. Currently there are
 
 ---
 
-### BarePipeChainStart
+### PipelineStart
 
 A rule that enforces that function chains always begin with a bare value,
 rather than a function call with arguments.

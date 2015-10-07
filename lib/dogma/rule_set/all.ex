@@ -9,7 +9,7 @@ defmodule Dogma.RuleSet.All do
 
   def rules do
     [
-      {BarePipeChainStart},
+      {PipelineStart},
       {ComparisonToBoolean},
       {DebuggerStatement},
       {ExceptionName},

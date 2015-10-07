@@ -1,4 +1,4 @@
-defmodule Dogma.Rule.BarePipeChainStart do
+defmodule Dogma.Rule.PipelineStart do
   @moduledoc """
   A rule that enforces that function chains always begin with a bare value,
   rather than a function call with arguments.

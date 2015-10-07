@@ -1,81 +1,81 @@
-defmodule Dogma.Util.ASTNodeTest do
+defmodule Dogma.Util.ASTTest do
   use ShouldI
 
-  alias Dogma.Util.ASTNode
+  alias Dogma.Util.AST
 
-  doctest Dogma.Util.ASTNode
+  doctest Dogma.Util.AST
 
   with "literal?/1" do
     should "be true for atom literals" do
       atom = quote do: :foo
-      assert ASTNode.literal?(atom)
+      assert AST.literal?(atom)
     end
 
     should "be true for string literals" do
       string = quote do: "foo"
-      assert ASTNode.literal?(string)
+      assert AST.literal?(string)
     end
 
     should "be true for booleans" do
       bool = quote do: false
-      assert ASTNode.literal?(bool)
+      assert AST.literal?(bool)
     end
 
     should "be true for numbers" do
       number = quote do: 1.3
-      assert ASTNode.literal?(number)
+      assert AST.literal?(number)
     end
 
     should "be true for lists" do
       list = quote do: ["foo", "bar", "baz"]
-      assert ASTNode.literal?(list)
+      assert AST.literal?(list)
     end
 
     should "be true for tuples" do
       tuple = quote do: {4}
-      assert ASTNode.literal?(tuple)
+      assert AST.literal?(tuple)
     end
 
     should "be true for tuples with two elements" do
       tuple = quote do: {4,5}
-      assert ASTNode.literal?(tuple)
+      assert AST.literal?(tuple)
     end
 
     should "be true for maps" do
       map = quote do: %{foo: :bar}
-      assert ASTNode.literal?(map)
+      assert AST.literal?(map)
     end
 
     should "be true for sigil strings" do
       string = quote do: ~s(foo)
       without_escapes = quote do: ~S(foo)
-      assert ASTNode.literal?(string)
-      assert ASTNode.literal?(without_escapes)
+      assert AST.literal?(string)
+      assert AST.literal?(without_escapes)
     end
 
     should "be true for word lists" do
       word_list = quote do: ~w(foo bar)
-      assert ASTNode.literal?(word_list)
+      assert AST.literal?(word_list)
     end
 
     should "be true for regex" do
       regex = quote do: ~r/test/
-      assert ASTNode.literal?(regex)
+      assert AST.literal?(regex)
     end
 
     should "be true for custom sigils" do
       sigil = quote do: ~p(wow)
-      assert ASTNode.literal?(sigil)
+      assert AST.literal?(sigil)
     end
 
     should "be false for variables/functions" do
       variable = quote do: foo
-      refute ASTNode.literal?(variable)
+      refute AST.literal?(variable)
     end
 
     should "be false for module names" do
       module = quote do: TestModuleName
-      refute ASTNode.literal?(module)
+      refute AST.literal?(module)
     end
   end
 end

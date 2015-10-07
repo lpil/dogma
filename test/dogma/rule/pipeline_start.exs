@@ -1,14 +1,14 @@
-defmodule Dogma.Rule.BarePipeChainStartTest do
+defmodule Dogma.Rule.PipelineStartTest do
   use ShouldI
 
-  alias Dogma.Rule.BarePipeChainStart
+  alias Dogma.Rule.PipelineStart
   alias Dogma.Script
   alias Dogma.Error
 
   defp lint(script) do
     script
     |> Script.parse!("foo.ex")
-    |> BarePipeChainStart.test
+    |> PipelineStart.test
   end
 
   should "not error with a number start" do
@@ -83,17 +83,17 @@ defmodule Dogma.Rule.BarePipeChainStartTest do
     """ |> lint
     expected_errors = [
       %Error{
-        rule: BarePipeChainStart,
+        rule: PipelineStart,
         message: "Function Pipe Chains must start with a bare value",
         line: 1
       },
       %Error{
-        rule: BarePipeChainStart,
+        rule: PipelineStart,
         message: "Function Pipe Chains must start with a bare value",
         line: 2
       },
       %Error{
-        rule: BarePipeChainStart,
+        rule: PipelineStart,
         message: "Function Pipe Chains must start with a bare value",
         line: 3
       }
@@ -112,17 +112,17 @@ defmodule Dogma.Rule.BarePipeChainStartTest do
     """ |> lint
     expected_errors = [
       %Error{
-        rule: BarePipeChainStart,
+        rule: PipelineStart,
         message: "Function Pipe Chains must start with a bare value",
         line: 1
       },
       %Error{
-        rule: BarePipeChainStart,
+        rule: PipelineStart,
         message: "Function Pipe Chains must start with a bare value",
         line: 2
       },
       %Error{
-        rule: BarePipeChainStart,
+        rule: PipelineStart,
         message: "Function Pipe Chains must start with a bare value",
         line: 3
       }
@@ -140,17 +140,17 @@ defmodule Dogma.Rule.BarePipeChainStartTest do
     """ |> lint
     expected_errors = [
       %Error{
-        rule: BarePipeChainStart,
+        rule: PipelineStart,
         message: "Function Pipe Chains must start with a bare value",
         line: 1
       },
       %Error{
-        rule: BarePipeChainStart,
+        rule: PipelineStart,
         message: "Function Pipe Chains must start with a bare value",
         line: 2
       },
       %Error{
-        rule: BarePipeChainStart,
+        rule: PipelineStart,
         message: "Function Pipe Chains must start with a bare value",
         line: 3
       }

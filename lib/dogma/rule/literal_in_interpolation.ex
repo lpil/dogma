@@ -14,7 +14,7 @@ defmodule Dogma.Rule.LiteralInInterpolation do
   alias Dogma.Script
   alias Dogma.Error
 
-  import Dogma.Util.ASTNode, only: [literal?: 1]
+  import Dogma.Util.AST, only: [literal?: 1]
 
   def test(script, _config = [] \\ []) do
     script |> Script.walk( &check_node(&1, &2) )

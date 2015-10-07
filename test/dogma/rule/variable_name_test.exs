@@ -188,7 +188,8 @@ defmodule Dogma.Rule.VariableNameTest do
           rule:     VariableName,
           message:  "Variable names should be in snake_case",
           line: 1,
-        },]
+        },
+      ]
       assert expected_errors == errors
     end
 
@@ -201,7 +202,8 @@ defmodule Dogma.Rule.VariableNameTest do
           rule:     VariableName,
           message:  "Variable names should be in snake_case",
           line: 1,
-        },]
+        },
+      ]
       assert expected_errors == errors
     end
 
@@ -214,7 +216,8 @@ defmodule Dogma.Rule.VariableNameTest do
           rule:     VariableName,
           message:  "Variable names should be in snake_case",
           line: 1,
-        },]
+        },
+      ]
       assert expected_errors == errors
     end
 
@@ -227,8 +230,30 @@ defmodule Dogma.Rule.VariableNameTest do
           rule:     VariableName,
           message:  "Variable names should be in snake_case",
           line: 1,
-        },]
+        },
+      ]
       assert expected_errors == errors
+    end
+
+    @tag :skip
+    should "find all errors when there are several" do
+      IO.write "PENDING"
+      # errors = """
+      # %{some_value: someValue, other_value: otherValue} = load_something()
+      # """ |> lint
+      # expected_errors = [
+      #   %Error{
+      #     rule:     VariableName,
+      #     message:  "Variable names should be in snake_case",
+      #     line: 1,
+      #   },
+      #   %Error{
+      #     rule:     VariableName,
+      #     message:  "Variable names should be in snake_case",
+      #     line: 1,
+      #   },
+      # ]
+      # assert expected_errors == errors
     end
   end
 end

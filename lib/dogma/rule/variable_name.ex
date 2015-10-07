@@ -29,7 +29,7 @@ defmodule Dogma.Rule.VariableName do
   end
 
   defp check_node({:=, meta, [lhs|rhs]} = node, errors) do
-    if [lhs, rhs] |> Enum.all?(&variable_names_are_snake_case?/1) do
+    if [lhs, rhs] |> Enum.all?(&snake_case_variables?/1) do
       {node, errors}
     else
       {node, [error( meta[:line] ) | errors]}
@@ -40,19 +40,19 @@ defmodule Dogma.Rule.VariableName do
   end
 
   for fun <- [:{}, :%{}, :^, :|, :|>, :<>, :%] do
-    defp variable_names_are_snake_case?({unquote(fun),_,value}) do
-      variable_names_are_snake_case?(value)
+    defp snake_case_variables?({unquote(fun),_,value}) do
+      snake_case_variables?(value)
     end
   end
-  defp variable_names_are_snake_case?({:__aliases__,_,_}), do: true
-  defp variable_names_are_snake_case?({{:.,_,_}, _, _}), do: true
-  defp variable_names_are_snake_case?(lhs) when is_list(lhs) do
-    lhs |> Enum.all?(&variable_names_are_snake_case?/1)
+  defp snake_case_variables?({:__aliases__,_,_}), do: true
+  defp snake_case_variables?({{:.,_,_}, _, _}), do: true
+  defp snake_case_variables?(lhs) when is_list(lhs) do
+    lhs |> Enum.all?(&snake_case_variables?/1)
   end
-  defp variable_names_are_snake_case?({l,r}) do
-    variable_names_are_snake_case?([l,r])
+  defp snake_case_variables?({l,r}) do
+    snake_case_variables?([l,r])
   end
-  defp variable_names_are_snake_case?({name,_,_}) when is_atom(name) do
+  defp snake_case_variables?({name,_,_}) when is_atom(name) do
     name = name |> to_string
     cond do
       name |> String.starts_with?("sigil_") -> true
@@ -60,7 +60,7 @@ defmodule Dogma.Rule.VariableName do
       true -> true
     end
   end
-  defp variable_names_are_snake_case?(_), do: true
+  defp snake_case_variables?(_), do: true
 
   defp error(pos) do
     %Error{
