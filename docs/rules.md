@@ -370,10 +370,10 @@ A rule that disallows strings which are entirely the result of an
 interpolation.
 
 Good:
-    output = "Dogma.Rule.NoInterpolationOnlyStrings"
+  output = inspect(__MODULE__)
 
 Bad:
-    output = inspect(__MODULE__)
+  output = "Dogma.Rule.NoInterpolationOnlyStrings"
 
 
 ### PredicateName
