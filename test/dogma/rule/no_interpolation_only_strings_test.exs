@@ -18,7 +18,7 @@ defmodule Dogma.Rule.NoInterpolationOnlyStringsTest do
     expected_errors = [
       %Error{
         rule: NoInterpolationOnlyStrings,
-        message: "A string should not entirely be the value of an interpolation",
+        message: "A string should not only be the value of an interpolation",
         line: 1,
       }
     ]

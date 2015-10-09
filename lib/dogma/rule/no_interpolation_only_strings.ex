@@ -30,7 +30,7 @@ defmodule Dogma.Rule.NoInterpolationOnlyStrings do
   defp error(pos) do
     %Error{
       rule:    __MODULE__,
-      message: "A string should not entirely be the value of an interpolation",
+      message: "A string should not only be the value of an interpolation",
       line:    pos,
     }
   end
