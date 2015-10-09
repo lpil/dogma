@@ -1,7 +1,7 @@
 # Dogma Rules
 
 These are the rules included in Dogma by default. Currently there are
-26 of them.
+27 of them.
 
 ## Contents
 
@@ -23,6 +23,7 @@ These are the rules included in Dogma by default. Currently there are
 * [ModuleName](#modulename)
 * [NegatedAssert](#negatedassert)
 * [NegatedIfUnless](#negatedifunless)
+* [NoInterpolationOnlyStrings](#nointerpolationonlystrings)
 * [PredicateName](#predicatename)
 * [QuotesInString](#quotesinstring)
 * [Semicolon](#semicolon)
@@ -361,6 +362,18 @@ These are considered invalid:
     unless not sad? do
       mope_about()
     end
+
+
+### NoInterpolationOnlyStrings
+
+A rule that disallows strings which are entirely the result of an
+interpolation.
+
+Good:
+    output = "Dogma.Rule.NoInterpolationOnlyStrings"
+
+Bad:
+    output = inspect(__MODULE__)
 
 
 ### PredicateName
