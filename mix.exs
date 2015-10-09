@@ -35,7 +35,7 @@ defmodule Dogma.Mixfile do
       # Test framework
       {:shouldi, only: :test},
       # Test coverage checker
-      {:excoveralls, only: ~w(dev test)a},
+      {:excoveralls, only: :test},
       # Automatic test runner
       {:mix_test_watch, only: :dev},
 
