@@ -54,7 +54,7 @@ defmodule Dogma.Rule.QuotesInStringTest do
 
   should "not error for a quote in a ~R regex" do
     errors = """
-    ~r/"/
+    ~R/"/
     """ |> lint
     assert [] == errors
   end
