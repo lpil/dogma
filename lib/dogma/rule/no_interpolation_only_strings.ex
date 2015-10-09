@@ -4,10 +4,12 @@ defmodule Dogma.Rule.NoInterpolationOnlyStrings do
   interpolation.
 
   Good:
-    output = inspect(__MODULE__)
+
+        output = inspect(self)
 
   Bad:
-    output = "#{inspect __MODULE__}"
+
+        output = "#\{inspect self}"
   """
 
   @behaviour Dogma.Rule
