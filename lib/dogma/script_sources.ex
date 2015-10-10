@@ -28,7 +28,7 @@ defmodule Dogma.ScriptSources do
 
   @doc """
   Takes a collection of paths to Elixir source files, and returns list of
-  Script structs representing said source files. 
+  Script structs representing said source files.
   """
   def to_scripts(paths) when is_list paths do
     for path <- paths do
