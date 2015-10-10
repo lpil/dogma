@@ -35,7 +35,7 @@ defmodule Dogma.Rule.NoInterpolationOnlyStringsTest do
   should "not error for a string which includes more than an interpolation" do
     errors = ~S"""
     who = "world"
-    Hello #{who}
+    "Hello #{who}"
     """ |> lint
     assert [] == errors
   end
