@@ -40,42 +40,6 @@ defmodule Dogma.Rule.NoInterpolationOnlyStringsTest do
     assert [] == errors
   end
 
-  should "not error for a quote in a ~s string" do
-    errors = """
-    ~s(hello, quote -> " <-)
-    """ |> lint
-    assert [] == errors
-  end
-
-  should "not error for a quote in a ~r regex" do
-    errors = """
-    ~r/"/
-    """ |> lint
-    assert [] == errors
-  end
-
-  should "not error for a quote in a ~R regex" do
-    errors = """
-    ~R/"/
-    """ |> lint
-    assert [] == errors
-  end
-
-  should "not error for a quote in a ~S string" do
-    errors = """
-    ~S(hello, quote -> " <-)
-    """ |> lint
-    assert [] == errors
-  end
-
-  should "not error for a quote in a heredoc" do
-    errors = ~s(
-    """
-    Hey look, a quote -> "
-    """) |> lint
-    assert [] == errors
-  end
-
   should "not error for a quote in a binary literal" do
     errors = ~S"""
     << "\""::utf8, cs::binary >> = string
