@@ -40,17 +40,17 @@ defmodule Dogma.Mixfile do
       {:mix_test_watch, only: :dev},
 
       # Benchmark framework
-      {:benchfella, "~> 0.2", only: :dev},
+      {:benchfella, only: :dev},
 
       # Documentation checker
       {:inch_ex, only: ~w(dev test docs)a},
       # Markdown processor
-      {:earmark, "~> 0.1", only: :dev},
+      {:earmark, only: :dev},
       # Documentation generator
-      {:ex_doc, "~> 0.7", only: :dev},
+      {:ex_doc, only: :dev},
 
       # JSON encoder
-      {:poison, "~>1.5"},
+      {:poison, "~> 1.0"},
     ]
   end
 end
