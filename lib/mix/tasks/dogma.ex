@@ -4,12 +4,15 @@ defmodule Mix.Tasks.Dogma do
   @shortdoc  "Check Elixir source files for style violations"
   @moduledoc @shortdoc
 
+  alias Dogma.Config
   alias Dogma.Formatter
 
   def run(argv) do
-    argv
-    |> parse_args
-    |> Dogma.run
+    {dir, formatter} = argv |> parse_args
+    config = Config.build
+
+    dir
+    |> Dogma.run(config, formatter)
     |> any_errors?
     |> if do
       System.halt(666)
@@ -21,9 +24,11 @@ defmodule Mix.Tasks.Dogma do
     {switches, files, []} = OptionParser.parse(argv, switches: switches)
 
     format = Keyword.get(switches, :format)
-    formatter = Map.get(Formatter.formatters,
-                        format,
-                        Formatter.default_formatter)
+    formatter = Map.get(
+      Formatter.formatters,
+      format,
+      Formatter.default_formatter
+    )
 
     {List.first(files), formatter}
   end

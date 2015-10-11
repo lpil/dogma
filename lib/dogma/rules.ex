@@ -12,25 +12,13 @@ defmodule Dogma.Rules do
   @doc """
   Runs the rules in the current rule set on the given scripts.
   """
-  def test(scripts, formatter) do
-    test_set = selected_set
+  def test(scripts, rules, formatter) do
     scripts
-      |> Enum.map(&Task.async(fn -> test_script(&1, formatter, test_set) end))
-      |> Enum.map(&Task.await/1)
+    |> Enum.map(&Task.async(fn -> test_script(&1, formatter, rules) end))
+    |> Enum.map(&Task.await/1)
   end
 
-
-  @doc """
-  Returns currently selected rule set, as specified in the mix config.
-
-  Defaults to `Dogma.RuleSet.All`
-  """
-  def selected_set do
-    Application.get_env :dogma, :rule_set, @default_rule_set
-  end
-
-  defp test_script(script, formatter, rule_set) do
-    rules  = rule_set.rules
+  defp test_script(script, formatter, rules) do
     errors = script |> Script.run_tests( rules )
     script = %Script{ script | errors: errors }
     Formatter.script( script, formatter )
