@@ -49,11 +49,11 @@ defmodule Dogma.Test.AssertingFormatter do
   import ExUnit.Assertions
 
   def start_listening do
-    Process.register self, Dogma.Test.AssertingFormatter
+    Process.register self, __MODULE__
   end
 
   def script(script, _formatter \\ nil) do
-    send Dogma.Test.AssertingFormatter, {:script, script}
+    send __MODULE__, {:script, script}
     ""
   end
 
