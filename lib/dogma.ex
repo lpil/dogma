@@ -6,7 +6,6 @@ defmodule Dogma do
   other modules through the divine `run/2` function.
   """
 
-  alias Dogma.Config
   alias Dogma.Formatter
   alias Dogma.Rules
   alias Dogma.ScriptSources
