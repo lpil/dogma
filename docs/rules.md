@@ -5,7 +5,6 @@ These are the rules included in Dogma by default. Currently there are
 
 ## Contents
 
-* [PipelineStart](#pipelinestart)
 * [ComparisonToBoolean](#comparisontoboolean)
 * [DebuggerStatement](#debuggerstatement)
 * [ExceptionName](#exceptionname)
@@ -14,6 +13,7 @@ These are the rules included in Dogma by default. Currently there are
 * [FunctionArity](#functionarity)
 * [FunctionName](#functionname)
 * [HardTabs](#hardtabs)
+* [InterpolationOnlyString](#interpolationonlystring)
 * [LineLength](#linelength)
 * [LiteralInCondition](#literalincondition)
 * [LiteralInInterpolation](#literalininterpolation)
@@ -23,7 +23,7 @@ These are the rules included in Dogma by default. Currently there are
 * [ModuleName](#modulename)
 * [NegatedAssert](#negatedassert)
 * [NegatedIfUnless](#negatedifunless)
-* [InterpolationOnlyString](#interpolationonlystring)
+* [PipelineStart](#pipelinestart)
 * [PredicateName](#predicatename)
 * [QuotesInString](#quotesinstring)
 * [Semicolon](#semicolon)
@@ -35,25 +35,6 @@ These are the rules included in Dogma by default. Currently there are
 
 
 ---
-
-### PipelineStart
-
-A rule that enforces that function chains always begin with a bare value,
-rather than a function call with arguments.
-
-For example, this is considered valid:
-
-    "Hello World"
-    |> String.split("")
-    |> Enum.reverse
-    |> Enum.join
-
-While this is not:
-
-    String.split("Hello World", "")
-    |> Enum.reverse
-    |> Enum.join
-
 
 ### ComparisonToBoolean
 
@@ -222,6 +203,20 @@ So the following would be invalid:
     end
 
 
+### InterpolationOnlyString
+
+A rule that disallows strings which are entirely the result of an
+interpolation.
+
+Good:
+
+      output = inspect(self)
+
+Bad:
+
+      output = "#{inspect self}"
+
+
 ### LineLength
 
 A rule that disallows lines longer than X characters in length (defaults to
@@ -364,18 +359,23 @@ These are considered invalid:
     end
 
 
-### InterpolationOnlyString
+### PipelineStart
 
-A rule that disallows strings which are entirely the result of an
-interpolation.
+A rule that enforces that function chains always begin with a bare value,
+rather than a function call with arguments.
 
-Good:
+For example, this is considered valid:
 
-      output = inspect(self)
+    "Hello World"
+    |> String.split("")
+    |> Enum.reverse
+    |> Enum.join
 
-Bad:
+While this is not:
 
-      output = "#{inspect self}"
+    String.split("Hello World", "")
+    |> Enum.reverse
+    |> Enum.join
 
 
 ### PredicateName
