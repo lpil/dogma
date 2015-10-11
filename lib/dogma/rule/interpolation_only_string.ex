@@ -1,4 +1,4 @@
-defmodule Dogma.Rule.NoInterpolationOnlyStrings do
+defmodule Dogma.Rule.InterpolationOnlyString do
   @moduledoc """
   A rule that disallows strings which are entirely the result of an
   interpolation.
@@ -32,7 +32,7 @@ defmodule Dogma.Rule.NoInterpolationOnlyStrings do
   defp error(pos) do
     %Error{
       rule:    __MODULE__,
-      message: "A string should not only be the value of an interpolation",
+      message: "Useless string interpolation detected.",
       line:    pos,
     }
   end

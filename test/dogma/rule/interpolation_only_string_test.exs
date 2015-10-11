@@ -1,14 +1,14 @@
-defmodule Dogma.Rule.NoInterpolationOnlyStringsTest do
+defmodule Dogma.Rule.InterpolationOnlyStringTest do
   use ShouldI
 
-  alias Dogma.Rule.NoInterpolationOnlyStrings
+  alias Dogma.Rule.InterpolationOnlyString
   alias Dogma.Script
   alias Dogma.Error
 
   defp lint(script) do
     script
     |> Script.parse!("foo.ex")
-    |> NoInterpolationOnlyStrings.test
+    |> InterpolationOnlyString.test
   end
 
   should "error for an interpolation-only string" do
@@ -17,8 +17,8 @@ defmodule Dogma.Rule.NoInterpolationOnlyStringsTest do
     """ |> lint
     expected_errors = [
       %Error{
-        rule: NoInterpolationOnlyStrings,
-        message: "A string should not only be the value of an interpolation",
+        rule: InterpolationOnlyString,
+        message: "Useless string interpolation detected.",
         line: 1,
       }
     ]

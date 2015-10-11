@@ -23,7 +23,7 @@ These are the rules included in Dogma by default. Currently there are
 * [ModuleName](#modulename)
 * [NegatedAssert](#negatedassert)
 * [NegatedIfUnless](#negatedifunless)
-* [NoInterpolationOnlyStrings](#nointerpolationonlystrings)
+* [InterpolationOnlyString](#interpolationonlystring)
 * [PredicateName](#predicatename)
 * [QuotesInString](#quotesinstring)
 * [Semicolon](#semicolon)
@@ -364,7 +364,7 @@ These are considered invalid:
     end
 
 
-### NoInterpolationOnlyStrings
+### InterpolationOnlyString
 
 A rule that disallows strings which are entirely the result of an
 interpolation.
