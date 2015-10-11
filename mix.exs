@@ -34,6 +34,8 @@ defmodule Dogma.Mixfile do
     [
       # Test framework
       {:shouldi, only: :test},
+      # Mocking tool
+      {:mock, "~> 0.1.1", only: :test},
       # Test coverage checker
       {:excoveralls, only: :test},
       # Automatic test runner
