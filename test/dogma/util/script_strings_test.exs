@@ -89,6 +89,50 @@ world!"
       assert processed == desired
     end
 
+    should "strip an escaped backslash from docstrings" do
+      processed = [
+        ~s(defmodule Slashes do),
+        ~s[  def backslash() do],
+        ~s(    """),
+        ~s(      \\\\),
+        ~s(    """),
+        ~s(  end),
+        ~s(end),
+      ] |> Enum.join |> ScriptStrings.blank
+      desired = [
+        ~s(defmodule Slashes do),
+        ~s[  def backslash() do],
+        ~s(    """),
+        ~s(),
+        ~s("""),
+        ~s(  end),
+        ~s(end),
+      ] |> Enum.join
+      assert processed == desired
+    end
+
+    should "strip an escaped doublequote from docstrings" do
+      processed = [
+        ~s(defmodule Quotes do),
+        ~s[  def doublequote() do],
+        ~s(    """),
+        ~s(      \\\"),
+        ~s(    """),
+        ~s(  end),
+        ~s(end),
+      ] |> Enum.join |> ScriptStrings.blank
+      desired = [
+        ~s(defmodule Quotes do),
+        ~s[  def doublequote() do],
+        ~s(    """),
+        ~s(),
+        ~s("""),
+        ~s(  end),
+        ~s(end),
+      ] |> Enum.join
+      assert processed == desired
+    end
+
     should "handle quotes in strings" do
       processed = ~S"""
       defmodule Boardroom do
