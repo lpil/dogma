@@ -84,6 +84,10 @@ defmodule Dogma.Rule.PipelineStart do
   defp function_line({:.., _, _}),
   do: :ok
 
+  # exception for unquote
+  defp function_line({:unquote, _, _}),
+  do: :ok
+
   defp function_line({atom, meta, args})
   when is_atom(atom) and is_list(args) do
     if atom |> to_string |> String.starts_with?("sigil") do

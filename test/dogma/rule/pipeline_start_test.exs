@@ -249,4 +249,14 @@ defmodule Dogma.Rule.PipelineStartTest do
     """ |> lint
     assert [] == errors
   end
+
+  should "not error with unquote start" do
+    errors = ~S"""
+    quote do
+      unquote(foo)
+      |> bar
+    end
+    """ |> lint
+    assert [] == errors
+  end
 end
