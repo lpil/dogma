@@ -3,7 +3,7 @@ defmodule Dogma do
   Welcome to Dogma.
 
   This module is our entry point, and does nothing but deligate to various
-  other modules through the divine `run/2` function.
+  other modules through the divine `run/3` function.
   """
 
   alias Dogma.Formatter
