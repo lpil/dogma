@@ -34,6 +34,8 @@ defmodule Dogma.Mixfile do
     [
       # Test framework
       {:shouldi, only: :test},
+      # App config test helper
+      {:temporary_env, only: :test},
       # Test coverage checker
       {:excoveralls, only: :test},
       # Automatic test runner

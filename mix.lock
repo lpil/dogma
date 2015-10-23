@@ -1,5 +1,5 @@
 %{"benchfella": {:hex, :benchfella, "0.2.1"},
-  "earmark": {:hex, :earmark, "0.1.17"},
+  "earmark": {:hex, :earmark, "0.1.18"},
   "ex_doc": {:hex, :ex_doc, "0.10.0"},
   "excoveralls": {:hex, :excoveralls, "0.4.0"},
   "exjsx": {:hex, :exjsx, "3.2.0"},
@@ -12,4 +12,5 @@
   "poison": {:hex, :poison, "1.5.0"},
   "porcelain": {:hex, :porcelain, "2.0.0"},
   "shouldi": {:hex, :shouldi, "0.2.3"},
-  "ssl_verify_hostname": {:hex, :ssl_verify_hostname, "1.0.5"}}
+  "ssl_verify_hostname": {:hex, :ssl_verify_hostname, "1.0.5"},
+  "temporary_env": {:hex, :temporary_env, "1.0.1"}}
