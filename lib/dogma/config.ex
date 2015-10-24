@@ -24,7 +24,7 @@ defmodule Dogma.Config do
 
   defp get_rules do
     rules     = Application.get_env( :dogma, :rule_set, @default_set ).rules
-    overrides = Application.get_env( :dogma, :overrides, %{} )
+    overrides = Application.get_env( :dogma, :override, %{} )
     Enum.reduce( overrides, rules, &reconfigure_rule/2 )
   end
 
