@@ -28,39 +28,50 @@ defmodule Dogma.Rule.VariableName do
     script |> Script.walk( &check_node(&1, &2) )
   end
 
-  defp check_node({:=, meta, [lhs|rhs]} = node, errors) do
-    if [lhs, rhs] |> Enum.all?(&snake_case_variables?/1) do
-      {node, errors}
-    else
-      {node, [error( meta[:line] ) | errors]}
-    end
+  defp check_node({:=, _, nodes} = node, errors) do
+    new_errors =
+      nodes
+      |> invalid_lines
+      |> Enum.map( &error/1 )
+    {node, new_errors ++ errors}
   end
   defp check_node(node, errors) do
     {node, errors}
   end
 
+
+  defp invalid_lines(nodes) when is_list(nodes) do
+    nodes
+    |> Enum.map( &invalid_lines/1 )
+    |> List.flatten
+    |> Enum.filter(&(&1))
+    |> Enum.reverse
+  end
   for fun <- [:{}, :%{}, :^, :|, :|>, :<>, :%] do
-    defp snake_case_variables?({unquote(fun),_,value}) do
-      snake_case_variables?(value)
+    defp invalid_lines({unquote(fun), _, value}) do
+      invalid_lines(value)
     end
   end
-  defp snake_case_variables?({:__aliases__,_,_}), do: true
-  defp snake_case_variables?({{:.,_,_}, _, _}), do: true
-  defp snake_case_variables?(lhs) when is_list(lhs) do
-    lhs |> Enum.all?(&snake_case_variables?/1)
+  defp invalid_lines({:__aliases__, _, _}), do: false
+  defp invalid_lines({{:., _, _}, _, _}), do: false
+  defp invalid_lines({l, r}) do
+    invalid_lines([l, r])
   end
-  defp snake_case_variables?({l,r}) do
-    snake_case_variables?([l,r])
-  end
-  defp snake_case_variables?({name,_,_}) when is_atom(name) do
-    name = name |> to_string
-    cond do
-      name |> String.starts_with?("sigil_") -> true
-      name |> String.match?(~r/^[a-z]/i) -> name |> Name.snake_case?
-      true -> true
+  defp invalid_lines({name, meta, _}) when is_atom(name) do
+    if name |> to_string |> invalid_name? do
+      meta[:line]
+    else
+      false
     end
   end
-  defp snake_case_variables?(_), do: true
+  defp invalid_lines(_), do: false
+
+
+  defp invalid_name?(<< "sigil_" :: utf8, _ :: binary >>), do: false
+  defp invalid_name?(name) do
+    String.match?( name, ~r/\A[a-zA-Z]/) && (! Name.snake_case?( name ))
+  end
+
 
   defp error(pos) do
     %Error{
