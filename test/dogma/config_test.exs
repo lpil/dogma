@@ -9,20 +9,44 @@ defmodule Dogma.ConfigTest do
   with "rules" do
     should "take the rule set from the application env" do
       TemporaryEnv.set( :dogma, rule_set: @dummy_set ) do
-        assert Config.build.rules == %{ foo: [], bar: [] }
+        TemporaryEnv.delete( :dogma, :overrides ) do
+          assert Config.build.rules == %{ Foo => [], Bar => [] }
+        end
       end
     end
 
     should "default to Dogma.RuleSet.All" do
       TemporaryEnv.delete( :dogma, :rule_set ) do
-        assert Dogma.RuleSet.All.rules == Config.build.rules
+        TemporaryEnv.delete( :dogma, :overrides ) do
+          assert Dogma.RuleSet.All.rules == Config.build.rules
+        end
       end
     end
 
-    should "not include rules overriden with a falsey value" do
+    should "not include rules overridden with a falsey value" do
       TemporaryEnv.set( :dogma, rule_set: @dummy_set ) do
-        TemporaryEnv.set( :dogma, overrides: %{ foo: false } ) do
-          assert Config.build.rules == %{ bar: [] }
+        TemporaryEnv.set( :dogma, overrides: %{ Foo => false } ) do
+          assert Config.build.rules == %{ Bar => [] }
+        end
+      end
+    end
+
+    should "enable rule arguments to be overridden through application env" do
+      TemporaryEnv.set( :dogma, rule_set: @dummy_set ) do
+        TemporaryEnv.set( :dogma, overrides: %{ Foo => [answer: 42] } ) do
+          assert Config.build.rules == %{ Foo => [answer: 42], Bar => [] }
+        end
+      end
+    end
+
+    should "enable rules to be added through application env" do
+      TemporaryEnv.set( :dogma, rule_set: @dummy_set ) do
+        TemporaryEnv.set( :dogma, overrides: %{ Baz => [funky: true] } ) do
+          assert Config.build.rules == %{
+            Foo => [],
+            Bar => [],
+            Baz => [funky: true],
+          }
         end
       end
     end
@@ -46,8 +70,8 @@ defmodule Dogma.ConfigTest do
   defmodule RuleSet do
     def rules do
       %{
-        foo: [],
-        bar: [],
+        Foo => [],
+        Bar => [],
       }
     end
   end
