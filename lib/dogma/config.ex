@@ -23,7 +23,10 @@ defmodule Dogma.Config do
   end
 
   defp get_rules do
-    Application.get_env( :dogma, :rule_set, @default_set ).rules
+    rules     = Application.get_env( :dogma, :rule_set, @default_set ).rules
+    overrides = Application.get_env( :dogma, :overrides, %{} )
+    {_mods, offs} = Enum.partition( overrides, &elem(&1, 1) )
+    Enum.reduce( offs, rules, fn({x, _}, acc) -> Dict.delete(acc, x) end )
   end
 
   defp get_exclude do
