@@ -13,6 +13,7 @@ defmodule Dogma.Script do
   alias Dogma.Script
   alias Dogma.Error
   alias Dogma.Util.ScriptStrings
+  alias Dogma.Util.Lines
 
   defstruct path:             nil,
             source:           nil,
@@ -33,9 +34,9 @@ defmodule Dogma.Script do
     %Script{
       path:             path,
       source:           source,
-      lines:            lines( source ),
+      lines:            Lines.get( source ),
       processed_source: processed_source,
-      processed_lines:  lines( processed_source ),
+      processed_lines:  Lines.get( processed_source ),
     } |> add_ast |> add_tokens
   end
 
@@ -133,13 +134,5 @@ defmodule Dogma.Script do
       message: err,
       line:    line(pos) - 1,
     }
-  end
-
-  defp lines(source) do
-    ~r/\n\z/
-    |> Regex.replace(source, "")
-    |> String.split("\n")
-    |> Enum.with_index
-    |> Enum.map(fn {line, i} -> {i + 1, line} end)
   end
 end
