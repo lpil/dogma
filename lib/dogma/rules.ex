@@ -4,7 +4,6 @@ defmodule Dogma.Rules do
   with the appropriate configuration.
   """
 
-  alias Dogma.Formatter
   alias Dogma.Script
 
   @default_rule_set Dogma.RuleSet.All
@@ -12,16 +11,16 @@ defmodule Dogma.Rules do
   @doc """
   Runs the rules in the current rule set on the given scripts.
   """
-  def test(scripts, rules, formatter) do
+  def test(scripts, rules, dispatcher) do
     scripts
-    |> Enum.map(&Task.async(fn -> test_script(&1, formatter, rules) end))
+    |> Enum.map(&Task.async(fn -> test_script(&1, dispatcher, rules) end))
     |> Enum.map(&Task.await/1)
   end
 
-  defp test_script(script, formatter, rules) do
+  defp test_script(script, dispatcher, rules) do
     errors = script |> Script.run_tests( rules )
     script = %Script{ script | errors: errors }
-    Formatter.script( script, formatter )
+    GenEvent.sync_notify(dispatcher, {:script_tested, script})
     script
   end
 end

@@ -1,6 +1,6 @@
-defmodule Dogma.Formatter.Simple do
+defmodule Dogma.Reporter.Simple do
   @moduledoc """
-  A formatter that prints a dot per file, followed by details at the end.
+  A reporter that prints a dot per file, followed by details at the end.
 
       Inspecting 27 files.
 
@@ -15,12 +15,33 @@ defmodule Dogma.Formatter.Simple do
       9: TrailingWhitespace: Trailing whitespace detected [33]
   """
 
-  @behaviour Dogma.Formatter
+  use GenEvent
 
   @doc """
   Runs at the start of the test suite, displaying a file count
   """
-  def start(scripts) do
+  def handle_event({:start, scripts}, _) do
+    IO.write start(scripts)
+    {:ok, []}
+  end
+
+  @doc """
+  Runs after each script is tested. Prints a dot!
+  """
+  def handle_event({:script_tested, script}, _) do
+    IO.write script(script)
+    {:ok, []}
+  end
+
+  @doc """
+  Runs at the end of the test suite, displaying errors.
+  """
+  def handle_event({:finished, scripts}, _) do
+    IO.write finish(scripts)
+    {:ok, []}
+  end
+
+  defp start(scripts) do
     len = length( scripts )
     case len do
       0 -> "No tests to run!"
@@ -29,25 +50,18 @@ defmodule Dogma.Formatter.Simple do
     end <> "\n\n"
   end
 
-  @doc """
-  Runs after each script is tested. Prints a dot!
-  """
-  def script(script) do
+  defp script(script) do
     case length( script.errors ) do
       0 -> IO.ANSI.green <> "."
       _ -> IO.ANSI.red   <> "X"
     end <> IO.ANSI.reset
   end
 
-  @doc """
-  Runs at the end of the test suite, displaying errors.
-  """
-  def finish(scripts) do
+  defp finish(scripts) do
     {error_count, errors} = format_errors( scripts )
     len = length(scripts)
     "\n\n" <> summary( len, error_count ) <> Enum.join( errors ) <> "\n"
   end
-
 
   defp reset do
     IO.ANSI.reset <> "\n"
