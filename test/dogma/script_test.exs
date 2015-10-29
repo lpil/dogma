@@ -4,6 +4,7 @@ defmodule Dogma.ScriptTest do
   alias Dogma.Error
   alias Dogma.Script
   alias Dogma.Script.InvalidScriptError
+  alias Dogma.Util.Comment
 
   with "parse/2" do
 
@@ -12,8 +13,8 @@ defmodule Dogma.ScriptTest do
         source = """
         defmodule Foo do
           def greet do
-            "Hello world!"
-          end
+            "Hello world!" # Comment
+          end # Another
         end
         """
         %{
@@ -34,8 +35,8 @@ defmodule Dogma.ScriptTest do
         processed_source = """
         defmodule Foo do
           def greet do
-            ""
-          end
+            "" # Comment
+          end # Another
         end
         """
         assert processed_source == context.script.processed_source
@@ -49,8 +50,8 @@ defmodule Dogma.ScriptTest do
         lines = [
           {1,  ~s(defmodule Foo do)},
           {2,  ~s(  def greet do)},
-          {3,  ~s(    "Hello world!")},
-          {4,  ~s(  end)},
+          {3,  ~s(    "Hello world!" # Comment)},
+          {4,  ~s(  end # Another)},
           {5,  ~s(end)},
         ]
         assert lines == context.script.lines
@@ -60,8 +61,8 @@ defmodule Dogma.ScriptTest do
         lines = [
           {1,  ~s(defmodule Foo do)},
           {2,  ~s(  def greet do)},
-          {3,  ~s(    "")},
-          {4,  ~s(  end)},
+          {3,  ~s(    "" # Comment)},
+          {4,  ~s(  end # Another)},
           {5,  ~s(end)},
         ]
         assert lines == context.script.processed_lines
@@ -82,15 +83,20 @@ defmodule Dogma.ScriptTest do
       end
 
       should "assigns the tokenized source", context do
-        case context.script.tokens do
-          [{:identifier, _, :defmodule}, {:aliases, _, [:Foo]},
-                  {:do, _}, {:eol, _}, {:identifier, _, :def},
-                  {:do_identifier, _, :greet}, {:do, _}, {:eol, _},
-                  {:bin_string, _, ["Hello world!"]}, {:eol, _}, {:end, _},
-                  {:eol, _}, {:end, _}, {:eol, _}]
-            -> assert 1 == 1
-          _ -> assert false
-        end
+        assert [
+          {:identifier, _, :defmodule}, {:aliases, _, [:Foo]},
+          {:do, _}, {:eol, _}, {:identifier, _, :def},
+          {:do_identifier, _, :greet}, {:do, _}, {:eol, _},
+          {:bin_string, _, ["Hello world!"]}, {:eol, _}, {:end, _},
+          {:eol, _}, {:end, _}, {:eol, _},
+        ] = context.script.tokens
+      end
+
+      should "assign comments", context do
+        assert context.script.comments == [
+          %Comment{ content: " Comment", line: 3 },
+          %Comment{ content: " Another", line: 4 },
+        ]
       end
     end
 

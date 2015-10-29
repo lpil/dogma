@@ -20,7 +20,7 @@ defmodule Dogma.Util.Comment do
   end
 
   def get_comment( {n, content}, acc ) do
-    ~r/#\W*(?<content>.*)\z/
+    ~r/#(?<content>.*)\z/
     |> Regex.named_captures( content )
     |> case do
       nil -> acc

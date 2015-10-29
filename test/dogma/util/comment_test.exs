@@ -16,32 +16,16 @@ defmodule Dogma.Util.CommentsTest do
     comments = """
     # Very useful.
     defmodule Foo do
-      # this is rad.
-      def magic do
-        1 + 1
-      end
-    end
-    """ |> run
-    expected = [
-      %Comment{ line: 1, content: "Very useful." },
-      %Comment{ line: 3, content: "this is rad." },
-    ]
-    assert comments == expected
-  end
-
-  should "extract comments with no spaces after the #" do
-    comments = """
-    #Very useful.
-    defmodule Foo do
       #this is rad.
       def magic do
         1 + 1
-      end
+      end #    # Thuper.
     end
     """ |> run
     expected = [
-      %Comment{ line: 1, content: "Very useful." },
+      %Comment{ line: 1, content: " Very useful." },
       %Comment{ line: 3, content: "this is rad." },
+      %Comment{ line: 6, content: "    # Thuper." },
     ]
     assert comments == expected
   end
