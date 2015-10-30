@@ -9,6 +9,7 @@ defmodule Dogma.RuleSet.All do
 
   def rules do
     %{
+      CommentFormat           => [],
       ComparisonToBoolean     => [],
       DebuggerStatement       => [],
       ExceptionName           => [],

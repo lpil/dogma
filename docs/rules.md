@@ -1,10 +1,11 @@
 # Dogma Rules
 
 These are the rules included in Dogma by default. Currently there are
-29 of them.
+30 of them.
 
 ## Contents
 
+* [CommentFormat](#commentformat)
 * [ComparisonToBoolean](#comparisontoboolean)
 * [DebuggerStatement](#debuggerstatement)
 * [ExceptionName](#exceptionname)
@@ -37,6 +38,10 @@ These are the rules included in Dogma by default. Currently there are
 
 
 ---
+
+### CommentFormat
+
+
 
 ### ComparisonToBoolean
 
