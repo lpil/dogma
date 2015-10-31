@@ -12,7 +12,7 @@ defmodule Dogma.Script do
 
   alias Dogma.Script
   alias Dogma.Error
-  alias Dogma.Util.Comment
+  # alias Dogma.Util.Comment
   alias Dogma.Util.ScriptStrings
   alias Dogma.Util.Lines
 
@@ -24,7 +24,7 @@ defmodule Dogma.Script do
             ast:              nil,
             tokens:           nil,
             valid?:           nil,
-            comments:         nil,
+            # comments:         nil,
             errors:           []
 
 
@@ -39,7 +39,7 @@ defmodule Dogma.Script do
       lines:            Lines.get( source ),
       processed_source: processed_source,
       processed_lines:  Lines.get( processed_source ),
-    } |> add_ast |> add_tokens |> add_comments
+    } |> add_ast |> add_tokens # |> add_comments
   end
 
   @doc """
@@ -74,10 +74,10 @@ defmodule Dogma.Script do
     end
   end
 
-  defp add_comments(script) do
-    comments = script.processed_lines |> Comment.get_all
-    %Script{ script | comments: comments }
-  end
+  # defp add_comments(script) do
+  #   comments = script.processed_lines |> Comment.get_all
+  #   %Script{ script | comments: comments }
+  # end
 
   defp tokenize(source) do
     result =
