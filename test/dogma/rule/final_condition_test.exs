@@ -143,7 +143,7 @@ defmodule Dogma.Rule.FinalConditionTest do
     end
   end
 
-  with "no cachall condition" do
+  with "no catchall condition" do
     should "not error on expression" do
       errors = """
       cond do
@@ -166,7 +166,56 @@ defmodule Dogma.Rule.FinalConditionTest do
           "Otay!"
       end
       """ |> apply_rule
+      assert errors == []
+    end
+  end
 
+  with "a different cond" do
+    should "not error when defining a macro called cond" do
+      errors = """
+      defmacro cond
+      defmacro cond do end
+      defmacro cond()
+      defmacro cond() do end
+      defmacro cond(foo, bar)
+      defmacro cond(foo, bar) do end
+      """ |> apply_rule
+      assert errors == []
+    end
+
+    should "not error when defining a function called cond" do
+      errors = """
+      def cond
+      def cond do end
+      def cond()
+      def cond() do end
+      def cond(foo, bar)
+      def cond(foo, bar) do end
+      """ |> apply_rule
+      assert errors == []
+    end
+
+    should "not error when defining a private function called cond" do
+      errors = """
+      defp cond
+      defp cond do end
+      defp cond()
+      defp cond() do end
+      defp cond(foo, bar)
+      defp cond(foo, bar) do end
+      """ |> apply_rule
+      assert errors == []
+    end
+
+    should "not error when calling another cond" do
+      errors = """
+      cond 1, 2, 3
+      cond foo
+      cond(something)
+      cond(4, 6, 7) do
+        "Hello"
+      end
+      """ |> apply_rule
       assert errors == []
     end
   end

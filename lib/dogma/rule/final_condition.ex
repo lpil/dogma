@@ -73,21 +73,23 @@ defmodule Dogma.Rule.FinalCondition do
     |> Enum.reverse
   end
 
-  defp check_node({:cond, _, children}, errors, check) do
-    {:->, meta, [[con] | _]} = find_last_cond(children)
+  defp check_node({:cond, _, [[do: children]]} = node, errors, check) do
+    {:->, meta, [[con] | _]} = List.last( children )
 
-    if error?(con, check),
-    do: errors = [error(meta[:line], check) | errors]
+    if error?(con, check) do
+      {node, [error(meta[:line], check) | errors]}
+    else
+      {node, errors}
+    end
+  end
 
+  # Case for a custom cond function
+  defp check_node({:cond, _, _} = node, errors, _) do
     {node, errors}
   end
 
   defp check_node(node, errors, _) do
     {node, errors}
-  end
-
-  defp find_last_cond([[do: children] | _]) do
-    children |> List.last
   end
 
   defp error?(con, con),      do: false
