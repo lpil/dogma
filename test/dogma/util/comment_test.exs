@@ -19,7 +19,7 @@ defmodule Dogma.Util.CommentsTest do
       #this is rad.
       def magic do
         1 + 1
-      end #    # Thuper.
+      end#    # Thuper.
     end
     """ |> run
     expected = [
@@ -28,5 +28,16 @@ defmodule Dogma.Util.CommentsTest do
       %Comment{ line: 6, content: "    # Thuper." },
     ]
     assert comments == expected
+  end
+
+  @tag :skip
+  should "not mistake a # in a sigil for a comment" do
+    DogmaTest.Helper.pending
+    # comments = """
+    # ~r/#/
+    # ~S" # "
+    # ~w( # # # )
+    # """ |> run
+    # assert comments == []
   end
 end
