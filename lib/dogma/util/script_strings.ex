@@ -7,98 +7,101 @@ defmodule Dogma.Util.ScriptStrings do
   for Elixir code and reporting errors when there should be none.
   """
 
+  @sigil_delimiters [{"|", "|"}, {"\"", "\""}, {"'", "'"}, {"(", ")"},
+                      {"[", "]"}, {"{", "}"}, {"<", ">"}]
+  @all_string_sigils @sigil_delimiters
+                      |> Enum.flat_map(fn({b, e}) ->
+                          [{"~s#{b}", e}, {"~S#{b}", e}]
+                        end)
+
   @doc """
   Takes a source string and return it with all of the string literals stripped
   of their contents.
   """
   def blank(script) do
-    script |> not_in_string("")
+    script |> parse_code("")
   end
 
-
-  defp not_in_string("", acc) do
+  defp parse_code("", acc) do
     acc
   end
-
-  # \" is escaped, so continue
-  defp not_in_string(<< "\\\""::utf8, cs::binary >>, acc) do
-    not_in_string(cs, acc <> ~S(\"))
+  for {sigil_start, sigil_end} <- @all_string_sigils do
+    defp parse_code(<< unquote(sigil_start)::utf8, t::binary >>, acc) do
+      parse_string_sigil(t, acc <> unquote(sigil_start), unquote(sigil_end))
+    end
+  end
+  defp parse_code(<< "\\\""::utf8, t::binary >>, acc) do
+    parse_code(t, acc <> "\\\"")
+  end
+  defp parse_code(<< "?\""::utf8, t::binary >>, acc) do
+    parse_code(t, acc <> "?\"")
+  end
+  defp parse_code(<< "\"\"\""::utf8, t::binary >>, acc) do
+    parse_heredoc(t, acc <> ~s("""))
+  end
+  defp parse_code(<< "\""::utf8, t::binary >>, acc) do
+    parse_string_literal(t, acc <> "\"")
+  end
+  defp parse_code(<< h::utf8, t::binary >>, acc) do
+    parse_code(t, acc <> <<h>>)
   end
 
-  # If we meet a """ we're inside a docstring, so switch
-  defp not_in_string(<< "\"\"\""::utf8, cs::binary >>, acc) do
-    in_docstring(cs, acc <> ~s("""))
-  end
-
-  # If we meet a " we're inside a string, so switch
-  defp not_in_string(<< "\""::utf8, cs::binary >>, acc) do
-    in_string(cs, acc <> ~s("))
-  end
-
-  # Any other char we're still outside, so append to acc
-  defp not_in_string(<< c::utf8, cs::binary >>, acc) do
-    not_in_string(cs, acc <> <<c>>)
-  end
-
-
-
-  defp in_docstring("", acc) do
+  defp parse_string_literal("", acc) do
     acc
   end
-
-  # We want to preserve line numbers, so add newlines to acc
-  defp in_docstring(<< "\n"::utf8, cs::binary >>, acc) do
-    in_docstring(cs, acc <> "\n")
+  defp parse_string_literal(<< "\\\\"::utf8, t::binary >>, acc) do
+    parse_string_literal(t, acc)
+  end
+  defp parse_string_literal(<< "\\\""::utf8, t::binary >>, acc) do
+    parse_string_literal(t, acc)
+  end
+  defp parse_string_literal(<< "\""::utf8, t::binary >>, acc) do
+    parse_code(t, acc <> ~s("))
+  end
+  defp parse_string_literal(<< "\n"::utf8, t::binary >>, acc) do
+    parse_string_literal(t, acc <> "\n")
+  end
+  defp parse_string_literal(<< _::utf8, t::binary >>, acc) do
+    parse_string_literal(t, acc)
   end
 
-  # \\ is not going to escape the next char, so continue
-  defp in_docstring(<< "\\\\"::utf8, cs::binary >>, acc) do
-    in_docstring(cs, acc)
+  for {_sigil_start, sigil_end} <- @all_string_sigils do
+    defp parse_string_sigil("", acc, unquote(sigil_end)) do
+      acc
+    end
+    defp parse_string_sigil(<< "\\\\"::utf8, t::binary >>, acc, unquote(sigil_end)) do
+      parse_string_sigil(t, acc, unquote(sigil_end))
+    end
+    defp parse_string_sigil(<< "\\\""::utf8, t::binary >>, acc, unquote(sigil_end)) do
+      parse_string_sigil(t, acc, unquote(sigil_end))
+    end
+    defp parse_string_sigil(<< unquote(sigil_end)::utf8, t::binary >>, acc, unquote(sigil_end)) do
+      parse_code(t, acc <> unquote(sigil_end))
+    end
+    defp parse_string_sigil(<< "\n"::utf8, t::binary >>, acc, unquote(sigil_end)) do
+      parse_string_sigil(t, acc <> "\n", unquote(sigil_end))
+    end
+    defp parse_string_sigil(<< _::utf8, t::binary >>, acc, unquote(sigil_end)) do
+      parse_string_sigil(t, acc, unquote(sigil_end))
+    end
   end
 
-  # \" is escaped, so continue
-  defp in_docstring(<< "\\\""::utf8, cs::binary >>, acc) do
-    in_docstring(cs, acc)
-  end
-
-  # If we meet """ we're outside a string, so switch
-  defp in_docstring(<< "\"\"\""::utf8, cs::binary >>, acc) do
-    not_in_string(cs, acc <> ~s("""))
-  end
-
-  # Any other char we're still inside, so don't add it to acc
-  defp in_docstring(<< _::utf8, cs::binary >>, acc) do
-    in_docstring(cs, acc)
-  end
-
-
-
-  defp in_string("", acc) do
+  defp parse_heredoc("", acc) do
     acc
   end
-
-  # \\ is not going to escape the next char, so continue
-  defp in_string(<< "\\\\"::utf8, cs::binary >>, acc) do
-    in_string(cs, acc)
+  defp parse_heredoc(<< "\\\\"::utf8, t::binary >>, acc) do
+    parse_heredoc(t, acc)
   end
-
-  # \" is escaped, so continue
-  defp in_string(<< "\\\""::utf8, cs::binary >>, acc) do
-    in_string(cs, acc)
+  defp parse_heredoc(<< "\\\""::utf8, t::binary >>, acc) do
+    parse_heredoc(t, acc)
   end
-
-  # If we meet a " we're outside a string, so switch
-  defp in_string(<< "\""::utf8, cs::binary >>, acc) do
-    not_in_string(cs, acc <> ~s("))
+  defp parse_heredoc(<< "\"\"\""::utf8, t::binary >>, acc) do
+    parse_code(t, acc <> ~s("""))
   end
-
-  # We want to preserve line numbers, so add newlines to acc
-  defp in_string(<< "\n"::utf8, cs::binary >>, acc) do
-    in_string(cs, acc <> "\n")
+  defp parse_heredoc(<< "\n"::utf8, t::binary >>, acc) do
+    parse_heredoc(t, acc <> "\n")
   end
-
-  # Any other char we're still inside, so don't add it to acc
-  defp in_string(<< _::utf8, cs::binary >>, acc) do
-    in_string(cs, acc)
+  defp parse_heredoc(<< _::utf8, t::binary >>, acc) do
+    parse_heredoc(t, acc)
   end
 end
