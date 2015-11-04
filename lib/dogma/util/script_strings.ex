@@ -7,7 +7,7 @@ defmodule Dogma.Util.ScriptStrings do
   for Elixir code and reporting errors when there should be none.
   """
 
-  @sigil_delimiters [{"|", "|"}, {"\"", "\""}, {"'", "'"}, {"(", ")"},
+  @sigil_delimiters [{"|", "|"}, {~S("), ~S(")}, {"'", "'"}, {"(", ")"},
                       {"[", "]"}, {"{", "}"}, {"<", ">"}]
   @all_string_sigils @sigil_delimiters
                       |> Enum.flat_map(fn({b, e}) ->
@@ -31,16 +31,16 @@ defmodule Dogma.Util.ScriptStrings do
     end
   end
   defp parse_code(<< "\\\""::utf8, t::binary >>, acc) do
-    parse_code(t, acc <> "\\\"")
+    parse_code(t, acc <> ~s(\\"))
   end
   defp parse_code(<< "?\""::utf8, t::binary >>, acc) do
-    parse_code(t, acc <> "?\"")
+    parse_code(t, acc <> ~S(?"))
   end
   defp parse_code(<< "\"\"\""::utf8, t::binary >>, acc) do
     parse_heredoc(t, acc <> ~s("""))
   end
   defp parse_code(<< "\""::utf8, t::binary >>, acc) do
-    parse_string_literal(t, acc <> "\"")
+    parse_string_literal(t, acc <> ~S("))
   end
   defp parse_code(<< h::utf8, t::binary >>, acc) do
     parse_code(t, acc <> <<h>>)
@@ -69,19 +69,24 @@ defmodule Dogma.Util.ScriptStrings do
     defp parse_string_sigil("", acc, unquote(sigil_end)) do
       acc
     end
-    defp parse_string_sigil(<< "\\\\"::utf8, t::binary >>, acc, unquote(sigil_end)) do
+    defp parse_string_sigil(<< "\\\\"::utf8, t::binary >>, acc,
+                                                        unquote(sigil_end)) do
       parse_string_sigil(t, acc, unquote(sigil_end))
     end
-    defp parse_string_sigil(<< "\\\""::utf8, t::binary >>, acc, unquote(sigil_end)) do
+    defp parse_string_sigil(<< "\\\""::utf8, t::binary >>, acc,
+                                                        unquote(sigil_end)) do
       parse_string_sigil(t, acc, unquote(sigil_end))
     end
-    defp parse_string_sigil(<< unquote(sigil_end)::utf8, t::binary >>, acc, unquote(sigil_end)) do
+    defp parse_string_sigil(<< unquote(sigil_end)::utf8, t::binary >>, acc,
+                                                        unquote(sigil_end)) do
       parse_code(t, acc <> unquote(sigil_end))
     end
-    defp parse_string_sigil(<< "\n"::utf8, t::binary >>, acc, unquote(sigil_end)) do
+    defp parse_string_sigil(<< "\n"::utf8, t::binary >>, acc,
+                                                        unquote(sigil_end)) do
       parse_string_sigil(t, acc <> "\n", unquote(sigil_end))
     end
-    defp parse_string_sigil(<< _::utf8, t::binary >>, acc, unquote(sigil_end)) do
+    defp parse_string_sigil(<< _::utf8, t::binary >>, acc,
+                                                        unquote(sigil_end)) do
       parse_string_sigil(t, acc, unquote(sigil_end))
     end
   end

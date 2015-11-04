@@ -21,7 +21,7 @@ defmodule Dogma.Util.ScriptStringsTest do
       assert processed == script
     end
 
-    should "no-op with double quote character (?\")" do
+    should ~S{no-op with double quote character (?")} do
       script = """
       defmodule Hello do
         def World do
