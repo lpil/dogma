@@ -21,11 +21,11 @@ defmodule Dogma.Util.ScriptStringsTest do
       assert processed == script
     end
 
-    should "no-op with with s sigil" do
+    should "no-op with double quote character (?\")" do
       script = """
-      defmodule Sneaky do
-        def String do
-          ~s(Hey, look, this is a string!)
+      defmodule Hello do
+        def World do
+          [?", :dennis_rocks]
         end
       end
       """
@@ -33,7 +33,25 @@ defmodule Dogma.Util.ScriptStringsTest do
       assert processed == script
     end
 
-    should "no-op with with S sigil" do
+    should "strip contents from s sigil" do
+      script = """
+      defmodule Sneaky do
+        def String do
+          ~s(Hey, look, this is a string!)
+        end
+      end
+      """
+      desired = """
+      defmodule Sneaky do
+        def String do
+          ~s()
+        end
+      end
+      """
+      assert desired == script |> ScriptStrings.blank
+    end
+
+    should "strip contents from S sigil" do
       script = """
       defmodule Sneaky do
         def String do
@@ -41,8 +59,14 @@ defmodule Dogma.Util.ScriptStringsTest do
         end
       end
       """
-      processed = script |> ScriptStrings.blank
-      assert processed == script
+      desired = """
+      defmodule Sneaky do
+        def String do
+          ~S()
+        end
+      end
+      """
+      assert desired == script |> ScriptStrings.blank
     end
 
     should "strip contents from strings, preserving newlines" do
