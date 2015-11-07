@@ -18,6 +18,7 @@ defmodule Dogma.ScriptSources do
   any of these regexes will not be returned.
   """
   def find(path, exclude_patterns \\ []) when is_list exclude_patterns do
+    path = to_string path # Convert nil to ""
     case File.regular? path do
       true ->
         case String.ends_with? path, [".ex", ".exs"] do
@@ -28,7 +29,6 @@ defmodule Dogma.ScriptSources do
         end
       false ->
         path
-        |> to_string # Convert nil to ""
         |> Path.join( "**/*.{ex,exs}" )
         |> Path.wildcard
         |> Enum.reject( &String.starts_with?(&1, @ignored_dirs) )
