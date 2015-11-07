@@ -8,21 +8,24 @@ defmodule Mix.Tasks.Dogma do
   alias Dogma.Formatter
 
   def run(argv) do
-    {dir, formatter} = argv |> parse_args
+    {dir, formatter, noerrors} = argv |> parse_args
     config = Config.build
 
     dir
     |> Dogma.run(config, formatter)
     |> any_errors?
     |> if do
-      System.halt(666)
+      if !noerrors do
+        System.halt(666)
+      end
     end
   end
 
   def parse_args(argv) do
-    switches = [format: :string]
+    switches = [format: :string, noerrors: :boolean]
     {switches, files, []} = OptionParser.parse(argv, switches: switches)
 
+    noerrors = Keyword.get(switches, :noerrors, false)
     format = Keyword.get(switches, :format)
     formatter = Map.get(
       Formatter.formatters,
@@ -30,7 +33,7 @@ defmodule Mix.Tasks.Dogma do
       Formatter.default_formatter
     )
 
-    {List.first(files), formatter}
+    {List.first(files), formatter, noerrors}
   end
 
   defp any_errors?(scripts) do
