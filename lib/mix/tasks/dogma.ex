@@ -15,7 +15,7 @@ defmodule Mix.Tasks.Dogma do
     |> Dogma.run(config, formatter)
     |> any_errors?
     |> if do
-      if !noerrors do
+      unless noerrors do
         System.halt(666)
       end
     end
