@@ -19,20 +19,15 @@ defmodule Dogma.ScriptSources do
   """
   def find(path, exclude_patterns \\ []) when is_list exclude_patterns do
     path = to_string path # Convert nil to ""
-    case File.regular? path do
-      true ->
-        case String.ends_with? path, [".ex", ".exs"] do
-          true ->
-            [path]
-          false ->
-            []
-        end
+    case resolve_file path do
       false ->
         path
         |> Path.join( "**/*.{ex,exs}" )
         |> Path.wildcard
         |> Enum.reject( &String.starts_with?(&1, @ignored_dirs) )
         |> Enum.reject( &match_any?(&1, exclude_patterns) )
+      files ->
+        files
     end
   end
 
@@ -55,4 +50,19 @@ defmodule Dogma.ScriptSources do
       Regex.match?( regex, string )
     end)
   end
+
+  defp resolve_file(path) do
+    case File.regular? path do
+      true ->
+        case String.ends_with? path, [".ex", ".exs"] do
+          true ->
+            [path]
+          false ->
+            []
+        end
+      false ->
+        false
+    end
+  end
+
 end
