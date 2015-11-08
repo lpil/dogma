@@ -52,8 +52,8 @@ defmodule Dogma.OptionParserTest do
 
     with "noerrors option passed" do
       should "return disabled error exit code" do
-          parsed = parse_args(["--noerrors"])
-          assert parsed == {nil, @default_formatter, true}
+        parsed = parse_args(["--noerrors"])
+        assert parsed == {nil, @default_formatter, true}
       end
     end
   end
