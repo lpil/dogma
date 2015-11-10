@@ -1,7 +1,7 @@
 # Dogma Rules
 
 These are the rules included in Dogma by default. Currently there are
-27 of them.
+28 of them.
 
 ## Contents
 
@@ -12,6 +12,7 @@ These are the rules included in Dogma by default. Currently there are
 * [FinalNewline](#finalnewline)
 * [FunctionArity](#functionarity)
 * [FunctionName](#functionname)
+* [FunctionParentheses](#functionparentheses)
 * [HardTabs](#hardtabs)
 * [InterpolationOnlyString](#interpolationonlystring)
 * [LineLength](#linelength)
@@ -189,6 +190,32 @@ But it considers these invalid:
 
     defp myBelly do
       :empty
+    end
+
+
+### FunctionParentheses
+
+A rule that ensures function declarations use parentheses if and only if
+they have arguments.
+
+For example, this rule considers these function declarations valid:
+
+    def foo do
+      :bar
+    end
+
+    defp baz(a, b) do
+      :fudd
+    end
+
+But it considers these invalid:
+
+    def foo() do
+      :bar
+    end
+
+    defp baz a, b do
+      :fudd
     end
 
 
