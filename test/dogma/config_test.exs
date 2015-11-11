@@ -61,8 +61,9 @@ defmodule Dogma.ConfigTest do
     end
 
     should "default to []" do
-      assert nil == Application.get_env( :dogma, :rule_set )
-      assert [] == Config.build.exclude
+      TemporaryEnv.delete( :dogma, :exclude ) do
+        assert [] == Config.build.exclude
+      end
     end
   end
 

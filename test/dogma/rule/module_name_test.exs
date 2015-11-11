@@ -45,7 +45,6 @@ defmodule Dogma.Rule.ModuleNameTest do
     assert [] == errors
   end
 
-
   should "a snake_case module name" do
     errors = """
     defmodule Snake_case do
@@ -109,7 +108,6 @@ defmodule Dogma.Rule.ModuleNameTest do
     ]
     assert expected_errors == errors
   end
-
 
   should "a non-capitalised 2 part name" do
     errors = """

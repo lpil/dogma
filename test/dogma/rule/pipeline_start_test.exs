@@ -19,7 +19,6 @@ defmodule Dogma.Rule.PipelineStartTest do
     assert [] == errors
   end
 
-
   should "not error with a string start" do
     errors = """
     "A pie"
@@ -212,7 +211,6 @@ defmodule Dogma.Rule.PipelineStartTest do
     """ |> lint
     assert [] == errors
   end
-
 
   should "not error with a sigil start" do
     errors = """
