@@ -15,12 +15,10 @@ config :dogma,
 
   exclude: [
     ~r(\Alib/vendor/),
-  ]
+  ],
 
-  # This currently does nothing.
-  additional_config: [
-    LineLength: [ max_length: 80 ],
-  ]
+  # Override an existing rule set.
+  override: %{ LineLength => [ max_length: 120 ] }
 ```
 
 ## rule_set
