@@ -1,7 +1,7 @@
 # Dogma Rules
 
 These are the rules included in Dogma by default. Currently there are
-28 of them.
+29 of them.
 
 ## Contents
 
@@ -14,6 +14,7 @@ These are the rules included in Dogma by default. Currently there are
 * [FunctionName](#functionname)
 * [FunctionParentheses](#functionparentheses)
 * [HardTabs](#hardtabs)
+* [InfixOperatorSpaces](#infixoperatorspaces)
 * [InterpolationOnlyString](#interpolationonlystring)
 * [LineLength](#linelength)
 * [LiteralInCondition](#literalincondition)
@@ -228,6 +229,31 @@ So the following would be invalid:
     def something do
     \t:body # this line starts with a tab, not spaces
     end
+
+
+### InfixOperatorSpaces
+
+A rule that ensures infix operators are surrounded by spaces.
+
+For example, it considers the following expressions valid:
+
+    foo = bar
+
+    foo + bar
+
+    foo <= bar
+
+    foo || bar
+
+But it considers these invalid:
+
+    foo=bar
+
+    foo+bar
+
+    foo<=bar
+
+    foo||bar
 
 
 ### InterpolationOnlyString
