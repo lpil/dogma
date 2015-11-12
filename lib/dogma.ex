@@ -12,8 +12,8 @@ defmodule Dogma do
 
   @version Mix.Project.config[:version]
 
-  def run(dir, config, formatter) do
-    dir
+  def run(dir_or_file, config, formatter) do
+    dir_or_file
     |> ScriptSources.find(config.exclude)
     |> ScriptSources.to_scripts
     |> Formatter.start(formatter)
