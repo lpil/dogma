@@ -26,6 +26,7 @@ defmodule Dogma.RuleSet.All do
       ModuleAttributeName     => [],
       ModuleDoc               => [],
       ModuleName              => [],
+      MultipleBlankLines      => [max_lines: 1],
       NegatedAssert           => [],
       NegatedIfUnless         => [],
       PipelineStart           => [],

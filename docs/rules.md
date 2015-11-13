@@ -1,7 +1,7 @@
 # Dogma Rules
 
 These are the rules included in Dogma by default. Currently there are
-28 of them.
+29 of them.
 
 ## Contents
 
@@ -22,6 +22,7 @@ These are the rules included in Dogma by default. Currently there are
 * [ModuleAttributeName](#moduleattributename)
 * [ModuleDoc](#moduledoc)
 * [ModuleName](#modulename)
+* [MultipleBlankLines](#multipleblanklines)
 * [NegatedAssert](#negatedassert)
 * [NegatedIfUnless](#negatedifunless)
 * [PipelineStart](#pipelinestart)
@@ -342,6 +343,11 @@ While this is considered invalid:
 
     defmodule Hello_World do
     end
+
+
+### MultipleBlankLines
+
+A rule that disallows multiple consecutive blank lines.
 
 
 ### NegatedAssert

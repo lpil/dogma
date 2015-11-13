@@ -14,7 +14,6 @@ defmodule Dogma.Rule.FinalNewlineTest do
     assert [] == errors
   end
 
-
   should "error with no final newline" do
     errors = "IO.puts 1\nIO.puts 2\nIO.puts 3" |> lint
     expected_errors = [
