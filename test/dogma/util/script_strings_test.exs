@@ -33,7 +33,7 @@ defmodule Dogma.Util.ScriptStringsTest do
       assert processed == script
     end
 
-    should "strip contents from s sigil" do
+    should "not strip contents from s sigil" do
       script = """
       defmodule Sneaky do
         def String do
@@ -44,14 +44,14 @@ defmodule Dogma.Util.ScriptStringsTest do
       desired = """
       defmodule Sneaky do
         def String do
-          ~s()
+          ~s(Hey, look, this is a string!)
         end
       end
       """
       assert desired == script |> ScriptStrings.strip
     end
 
-    should "strip contents from S sigil" do
+    should "not strip contents from S sigil" do
       script = """
       defmodule Sneaky do
         def String do
@@ -62,7 +62,7 @@ defmodule Dogma.Util.ScriptStringsTest do
       desired = """
       defmodule Sneaky do
         def String do
-          ~S()
+          ~S(Hey, look, this is ALSO a string!)
         end
       end
       """

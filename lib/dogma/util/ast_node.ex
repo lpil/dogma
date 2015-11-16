@@ -3,7 +3,8 @@ defmodule Dogma.Util.AST do
   Utility functions for analyzing and categorizing AST nodes
   """
 
-  @sigil_chars "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+  sigil_chars =
+    "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ" |> String.graphemes
 
   @doc """
   Returns true if the node x is a literal
@@ -25,7 +26,7 @@ defmodule Dogma.Util.AST do
   def literal?({:{}, _, _}), do: true
   def literal?({:%{}, _, _}), do: true
 
-  for char <- String.split(@sigil_chars, "", trim: true) do
+  for char <- sigil_chars do
     sigil_atom = String.to_atom("sigil_" <> char)
     def literal?({unquote(sigil_atom),_,_}), do: true
   end

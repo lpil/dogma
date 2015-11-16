@@ -7,12 +7,12 @@ defmodule Dogma.Util.ScriptStrings do
   for Elixir code and reporting errors when there should be none.
   """
 
-  @sigil_delimiters [{"|", "|"}, {~S("), ~S(")}, {"'", "'"}, {"(", ")"},
-                      {"[", "]"}, {"{", "}"}, {"<", ">"}]
-  @all_string_sigils @sigil_delimiters
-                      |> Enum.flat_map(fn({b, e}) ->
-                          [{"~s#{b}", e}, {"~S#{b}", e}]
-                        end)
+  # @sigil_delimiters [{"|", "|"}, {~S("), ~S(")}, {"'", "'"}, {"(", ")"},
+  #                     {"[", "]"}, {"{", "}"}, {"<", ">"}]
+  # @all_string_sigils @sigil_delimiters
+  #                     |> Enum.flat_map(fn({b, e}) ->
+  #                         [{"~s#{b}", e}, {"~S#{b}", e}]
+  #                       end)
 
   @doc """
   Takes a source string and return it with all of the string literals stripped
@@ -25,11 +25,11 @@ defmodule Dogma.Util.ScriptStrings do
   defp parse_code("", acc) do
     acc
   end
-  for {sigil_start, sigil_end} <- @all_string_sigils do
-    defp parse_code(<< unquote(sigil_start)::utf8, t::binary >>, acc) do
-      parse_string_sigil(t, acc <> unquote(sigil_start), unquote(sigil_end))
-    end
-  end
+  # for {sigil_start, sigil_end} <- @all_string_sigils do
+  #   defp parse_code(<< unquote(sigil_start)::utf8, t::binary >>, acc) do
+  #     parse_string_sigil(t, acc <> unquote(sigil_start), unquote(sigil_end))
+  #   end
+  # end
   defp parse_code(<< "\\\""::utf8, t::binary >>, acc) do
     parse_code(t, acc <> ~s(\\"))
   end
@@ -65,31 +65,31 @@ defmodule Dogma.Util.ScriptStrings do
     parse_string_literal(t, acc)
   end
 
-  for {_sigil_start, sigil_end} <- @all_string_sigils do
-    defp parse_string_sigil("", acc, unquote(sigil_end)) do
-      acc
-    end
-    defp parse_string_sigil(<< "\\\\"::utf8, t::binary >>, acc,
-                                                        unquote(sigil_end)) do
-      parse_string_sigil(t, acc, unquote(sigil_end))
-    end
-    defp parse_string_sigil(<< "\\\""::utf8, t::binary >>, acc,
-                                                        unquote(sigil_end)) do
-      parse_string_sigil(t, acc, unquote(sigil_end))
-    end
-    defp parse_string_sigil(<< unquote(sigil_end)::utf8, t::binary >>, acc,
-                                                        unquote(sigil_end)) do
-      parse_code(t, acc <> unquote(sigil_end))
-    end
-    defp parse_string_sigil(<< "\n"::utf8, t::binary >>, acc,
-                                                        unquote(sigil_end)) do
-      parse_string_sigil(t, acc <> "\n", unquote(sigil_end))
-    end
-    defp parse_string_sigil(<< _::utf8, t::binary >>, acc,
-                                                        unquote(sigil_end)) do
-      parse_string_sigil(t, acc, unquote(sigil_end))
-    end
-  end
+  # for {_sigil_start, sigil_end} <- @all_string_sigils do
+  #   defp parse_string_sigil("", acc, unquote(sigil_end)) do
+  #     acc
+  #   end
+  #   defp parse_string_sigil(<< "\\\\"::utf8, t::binary >>, acc,
+  #                                                       unquote(sigil_end)) do
+  #     parse_string_sigil(t, acc, unquote(sigil_end))
+  #   end
+  #   defp parse_string_sigil(<< "\\\""::utf8, t::binary >>, acc,
+  #                                                       unquote(sigil_end)) do
+  #     parse_string_sigil(t, acc, unquote(sigil_end))
+  #   end
+  #   defp parse_string_sigil(<< unquote(sigil_end)::utf8, t::binary >>, acc,
+  #                                                       unquote(sigil_end)) do
+  #     parse_code(t, acc <> unquote(sigil_end))
+  #   end
+  #   defp parse_string_sigil(<< "\n"::utf8, t::binary >>, acc,
+  #                                                       unquote(sigil_end)) do
+  #     parse_string_sigil(t, acc <> "\n", unquote(sigil_end))
+  #   end
+  #   defp parse_string_sigil(<< _::utf8, t::binary >>, acc,
+  #                                                       unquote(sigil_end)) do
+  #     parse_string_sigil(t, acc, unquote(sigil_end))
+  #   end
+  # end
 
   defp parse_heredoc("", acc) do
     acc
