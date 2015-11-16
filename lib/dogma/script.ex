@@ -32,7 +32,7 @@ defmodule Dogma.Script do
   Builds a Script struct from the given source code and path
   """
   def parse(source, path) do
-    processed_source = ScriptStrings.blank( source )
+    processed_source = ScriptStrings.strip( source )
     %Script{
       path:             path,
       source:           source,

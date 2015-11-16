@@ -3,9 +3,9 @@ defmodule Dogma.Util.ScriptStringsTest do
 
   alias Dogma.Util.ScriptStrings
 
-  with "blank/1" do
+  with "strip/1" do
     should "no-op with empty scripts" do
-      processed = "" |> ScriptStrings.blank
+      processed = "" |> ScriptStrings.strip
       assert processed == ""
     end
 
@@ -17,7 +17,7 @@ defmodule Dogma.Util.ScriptStringsTest do
         end
       end
       """
-      processed = script |> ScriptStrings.blank
+      processed = script |> ScriptStrings.strip
       assert processed == script
     end
 
@@ -29,7 +29,7 @@ defmodule Dogma.Util.ScriptStringsTest do
         end
       end
       """
-      processed = script |> ScriptStrings.blank
+      processed = script |> ScriptStrings.strip
       assert processed == script
     end
 
@@ -48,7 +48,7 @@ defmodule Dogma.Util.ScriptStringsTest do
         end
       end
       """
-      assert desired == script |> ScriptStrings.blank
+      assert desired == script |> ScriptStrings.strip
     end
 
     should "strip contents from S sigil" do
@@ -66,7 +66,7 @@ defmodule Dogma.Util.ScriptStringsTest do
         end
       end
       """
-      assert desired == script |> ScriptStrings.blank
+      assert desired == script |> ScriptStrings.strip
     end
 
     should "strip contents from strings, preserving newlines" do
@@ -77,7 +77,7 @@ defmodule Dogma.Util.ScriptStringsTest do
 world!"
         end
       end
-      """ |> ScriptStrings.blank
+      """ |> ScriptStrings.strip
       desired = """
       defmodule Newliney do
         def string(x) do
@@ -99,7 +99,7 @@ world!"
         ~s(    """),
         ~s(  end),
         ~s(end),
-      ] |> Enum.join |> ScriptStrings.blank
+      ] |> Enum.join |> ScriptStrings.strip
       desired = [
         ~s(defmodule Docky do),
         ~s[  def string(x) do],
@@ -122,7 +122,7 @@ world!"
         ~s(    """),
         ~s(  end),
         ~s(end),
-      ] |> Enum.join |> ScriptStrings.blank
+      ] |> Enum.join |> ScriptStrings.strip
       desired = [
         ~s(defmodule Slashes do),
         ~s[  def backslash() do],
@@ -144,7 +144,7 @@ world!"
         ~s(    """),
         ~s(  end),
         ~s(end),
-      ] |> Enum.join |> ScriptStrings.blank
+      ] |> Enum.join |> ScriptStrings.strip
       desired = [
         ~s(defmodule Quotes do),
         ~s[  def doublequote() do],
@@ -164,7 +164,7 @@ world!"
           "You just said \"merger\"! Shots!"
         end
       end
-      """ |> ScriptStrings.blank
+      """ |> ScriptStrings.strip
       desired = """
       defmodule Boardroom do
         def say(x) do
@@ -182,7 +182,7 @@ world!"
           "This here is a slash -> \\"
         end
       end
-      """ |> ScriptStrings.blank
+      """ |> ScriptStrings.strip
       desired = """
       defmodule Identifier do
         def say(x) do
@@ -202,7 +202,7 @@ world!"
         ~s(    """),
         ~s(  end),
         ~s(end),
-      ] |> Enum.join |> ScriptStrings.blank
+      ] |> Enum.join |> ScriptStrings.strip
       desired = [
         ~s(defmodule Doc do),
         ~s[  def string(x) do],

@@ -18,7 +18,7 @@ defmodule Dogma.Util.ScriptStrings do
   Takes a source string and return it with all of the string literals stripped
   of their contents.
   """
-  def blank(script) do
+  def strip(script) do
     script |> parse_code("")
   end
 

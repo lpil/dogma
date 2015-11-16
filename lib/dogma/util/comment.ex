@@ -11,7 +11,7 @@ defmodule Dogma.Util.Comment do
   Extracts comments from script sources.
 
   To be run on lines from Dogma.Util.Lines that have been processed already by
-  Dogma.Util.ScriptStrings to blank the contents of all string literals.
+  Dogma.Util.ScriptStrings to strip the contents of all string literals.
   """
   def get_all(lines) do
     lines

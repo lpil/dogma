@@ -7,7 +7,7 @@ defmodule Dogma.Util.CommentsTest do
 
   def run(source) do
     source
-    |> ScriptStrings.blank
+    |> ScriptStrings.strip
     |> Lines.get
     |> Comment.get_all
   end
