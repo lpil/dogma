@@ -18,6 +18,7 @@ defmodule Dogma.RuleSet.All do
       FunctionName            => [],
       FunctionParentheses     => [],
       HardTabs                => [],
+      InfixOperatorSpaces     => [],
       InterpolationOnlyString => [],
       LineLength              => [max_length: 80],
       LiteralInCondition      => [],
