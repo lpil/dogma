@@ -12,7 +12,8 @@ defmodule Dogma.Script do
 
   alias Dogma.Script
   alias Dogma.Error
-  # alias Dogma.Util.Comment
+  alias Dogma.Util.Comment
+  alias Dogma.Util.ScriptSigils
   alias Dogma.Util.ScriptStrings
   alias Dogma.Util.Lines
 
@@ -24,7 +25,7 @@ defmodule Dogma.Script do
             ast:              nil,
             tokens:           nil,
             valid?:           nil,
-            # comments:         nil,
+            comments:         nil,
             errors:           []
 
 
@@ -32,14 +33,14 @@ defmodule Dogma.Script do
   Builds a Script struct from the given source code and path
   """
   def parse(source, path) do
-    processed_source = ScriptStrings.strip( source )
+    processed_source = source |> ScriptSigils.strip |> ScriptStrings.strip
     %Script{
       path:             path,
       source:           source,
       lines:            Lines.get( source ),
       processed_source: processed_source,
       processed_lines:  Lines.get( processed_source ),
-    } |> add_ast |> add_tokens # |> add_comments
+    } |> add_ast |> add_tokens |> add_comments
   end
 
   @doc """
@@ -74,10 +75,10 @@ defmodule Dogma.Script do
     end
   end
 
-  # defp add_comments(script) do
-  #   comments = script.processed_lines |> Comment.get_all
-  #   %Script{ script | comments: comments }
-  # end
+  defp add_comments(script) do
+    comments = script.processed_lines |> Comment.get_all
+    %Script{ script | comments: comments }
+  end
 
   defp tokenize(source) do
     result =

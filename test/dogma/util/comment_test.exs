@@ -2,11 +2,13 @@ defmodule Dogma.Util.CommentsTest do
   use ShouldI
 
   alias Dogma.Util.Lines
+  alias Dogma.Util.ScriptSigils
   alias Dogma.Util.ScriptStrings
   alias Dogma.Util.Comment
 
   def run(source) do
     source
+    |> ScriptSigils.strip
     |> ScriptStrings.strip
     |> Lines.get
     |> Comment.get_all
@@ -30,14 +32,12 @@ defmodule Dogma.Util.CommentsTest do
     assert comments == expected
   end
 
-  @tag :skip
   should "not mistake a # in a sigil for a comment" do
-    DogmaTest.Helper.pending
-    # comments = """
-    # ~r/#/
-    # ~S" # "
-    # ~w( # # # )
-    # """ |> run
-    # assert comments == []
+    comments = """
+    ~r/#/
+    ~S" # "
+    ~w( # # # )
+    """ |> run
+    assert comments == []
   end
 end

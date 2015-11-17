@@ -11,7 +11,7 @@ defmodule Dogma.Util.ScriptSigils do
     "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ" |> String.graphemes
 
   sigil_delimiters = [
-    "||", ~S(""), "''", "()", "[]", "{}", "<>",
+    "||", ~S(""), "''", "()", "[]", "{}", "<>", "//",
   ] |> Enum.map(&String.graphemes/1)
 
   sigils = for(

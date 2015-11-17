@@ -49,6 +49,7 @@ defmodule Dogma.Util.ScriptSigilsTest do
             ~#{unquote(char)}[Hello, world]
             ~#{unquote(char)}{Hello, world}
             ~#{unquote(char)}<Hello, world>
+            ~#{unquote(char)}/Hello, world/
           end
         end
         """
@@ -62,6 +63,7 @@ defmodule Dogma.Util.ScriptSigilsTest do
             ~#{unquote(char)}[]
             ~#{unquote(char)}{}
             ~#{unquote(char)}<>
+            ~#{unquote(char)}//
           end
         end
         """
@@ -80,6 +82,7 @@ defmodule Dogma.Util.ScriptSigilsTest do
           ~s[Hello, \] world]
           ~s{Hello, \} world}
           ~s<Hello, \> world>
+          ~s/Hello, \/ world/
         end
       end
       """
@@ -93,6 +96,7 @@ defmodule Dogma.Util.ScriptSigilsTest do
           ~s[]
           ~s{}
           ~s<>
+          ~s//
         end
       end
       """
