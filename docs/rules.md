@@ -41,6 +41,18 @@ These are the rules included in Dogma by default. Currently there are
 
 ### CommentFormat
 
+A rule that disallows comments with no space between the # and the comment
+text.
+
+This is considered valid:
+
+    # Here is a function:
+    #
+    #   def inc(n), do: n + 1
+
+This is considered invalid:
+
+    #Hello, world!
 
 
 ### ComparisonToBoolean
