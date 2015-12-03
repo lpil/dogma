@@ -61,7 +61,7 @@ Inspecting 27 files.
 23: TrailingBlankLines: Blank lines detected at end of file
 
 == test/dogma/formatter_test.exs ==
-9: TrailingWhitespace: Trailing whitespace detected [33]
+9: TrailingWhitespace: Trailing whitespace detected
 ```
 
 How handy!
