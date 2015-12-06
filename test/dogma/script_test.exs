@@ -156,6 +156,19 @@ defmodule Dogma.ScriptTest do
         assert lines == context.script.lines
       end
     end
+
+    should "register ignored lines" do
+      script = """
+      defmodule Foo_Bar do # dogma:ignore Something SomethingElse
+        @foo 1 # dogma:ignore SomethingElse
+      end
+      """ |> Script.parse("")
+      expected = %{
+        Something     => Enum.into([1], MapSet.new),
+        SomethingElse => Enum.into([1, 2], MapSet.new),
+      }
+      assert script.ignore_index == expected
+    end
   end
 
   with "parse!/2" do

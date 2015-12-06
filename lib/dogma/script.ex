@@ -11,21 +11,22 @@ defmodule Dogma.Script do
   end
 
   alias Dogma.Script
+  alias Dogma.Script.Metadata
   alias Dogma.Error
-  alias Dogma.Util.Comment
   alias Dogma.Util.ScriptSigils
   alias Dogma.Util.ScriptStrings
   alias Dogma.Util.Lines
 
   defstruct path:             nil,
             source:           nil,
-            lines:            nil,
-            processed_source: nil,
-            processed_lines:  nil,
-            ast:              nil,
-            tokens:           nil,
-            valid?:           nil,
-            comments:         nil,
+            lines:            [],
+            processed_source: [],
+            processed_lines:  [],
+            ast:              [],
+            tokens:           [],
+            valid?:           false,
+            comments:         [],
+            ignore_index:     %{},
             errors:           []
 
 
@@ -40,7 +41,7 @@ defmodule Dogma.Script do
       lines:            Lines.get( source ),
       processed_source: processed_source,
       processed_lines:  Lines.get( processed_source ),
-    } |> add_ast |> add_tokens |> add_comments
+    } |> add_ast |> add_tokens |> Metadata.add
   end
 
   @doc """
@@ -73,11 +74,6 @@ defmodule Dogma.Script do
     else
       script
     end
-  end
-
-  defp add_comments(script) do
-    comments = script.processed_lines |> Comment.get_all
-    %Script{ script | comments: comments }
   end
 
   defp tokenize(source) do
