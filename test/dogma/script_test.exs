@@ -164,8 +164,8 @@ defmodule Dogma.ScriptTest do
       end
       """ |> Script.parse("")
       expected = %{
-        Something     => Enum.into([1], MapSet.new),
-        SomethingElse => Enum.into([1, 2], MapSet.new),
+        Something     => Enum.into([1], HashSet.new),
+        SomethingElse => Enum.into([1, 2], HashSet.new),
       }
       assert script.ignore_index == expected
     end
