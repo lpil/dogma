@@ -1,4 +1,4 @@
-defmodule Dogma.Formatter.Flycheck do
+defmodule Dogma.Reporter.Flycheck do
   @moduledoc """
   A machine-readable format suitable for integration with tools like
   [Flycheck](https://github.com/flycheck/flycheck) or
@@ -8,19 +8,16 @@ defmodule Dogma.Formatter.Flycheck do
       /project/lib/test.ex:14:1: W: Comparison to a boolean is pointless
   """
 
-  @behaviour Dogma.Formatter
+  use GenEvent
+
+  def handle_event({:finished, scripts}, _) do
+    IO.write finish(scripts)
+    {:ok, []}
+  end
+
+  def handle_event(_,_), do: {:ok, []}
 
   alias Dogma.Script
-
-  @doc """
-  Runs at the start of the test suite, displaying nothing
-  """
-  def start(_scripts), do: ""
-
-  @doc """
-  Runs after each script is tested. Prints nothing.
-  """
-  def script(_script), do: ""
 
   @doc """
   Runs at the end of the test suite, displaying errors.

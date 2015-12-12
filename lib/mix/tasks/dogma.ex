@@ -5,14 +5,17 @@ defmodule Mix.Tasks.Dogma do
   @moduledoc @shortdoc
 
   alias Dogma.Config
-  alias Dogma.Formatter
+  alias Dogma.Reporters
 
   def run(argv) do
-    {dir, formatter, noerror} = argv |> parse_args
+    {dir, reporter, noerror} = argv |> parse_args
     config = Config.build
 
+    {:ok, dispatcher} = GenEvent.start_link([])
+    GenEvent.add_handler(dispatcher, reporter, [])
+
     dir
-    |> Dogma.run(config, formatter)
+    |> Dogma.run(config, dispatcher)
     |> any_errors?
     |> if do
       unless noerror do
@@ -27,13 +30,13 @@ defmodule Mix.Tasks.Dogma do
 
     noerror = !Keyword.get(switches, :error, true)
     format = Keyword.get(switches, :format)
-    formatter = Map.get(
-      Formatter.formatters,
+    reporter = Map.get(
+      Reporters.reporters,
       format,
-      Formatter.default_formatter
+      Reporters.default_reporter
     )
 
-    {List.first(files), formatter, noerror}
+    {List.first(files), reporter, noerror}
   end
 
   defp any_errors?(scripts) do

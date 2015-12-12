@@ -1,21 +1,20 @@
-# Dogma Formatters
+# Dogma Reporters
 
-You can pass a format to the mix task using the `--format` flag.
+You can pass a reporter to the mix task using the `--format` flag.
 
 ```
 > mix dogma --format=flycheck
 
 lib/dogma/rules.ex:23:1: W: Blank lines detected at end of file
-test/dogma/formatter_test.exs:9:1: W: Trailing whitespace detected
+test/dogma/reporters_test.exs:9:1: W: Trailing whitespace detected
 ```
 
-The default formatter is [Simple](#simple).
+The default reporter is [Simple](#simple).
 
 ## Contents
 
 * [Flycheck](#flycheck)
 * [JSON](#json)
-* [Null](#null)
 * [Simple](#simple)
 
 
@@ -69,16 +68,10 @@ The JSON structure is like the following example:
     }
 
 
-### Null
-`null`
-
-A formatter that prints nothing. Ever.
-
-
 ### Simple
 `simple`
 
-A formatter that prints a dot per file, followed by details at the end.
+A reporter that prints a dot per file, followed by details at the end.
 
     Inspecting 27 files.
 

@@ -6,20 +6,29 @@ defmodule Dogma do
   other modules through the divine `run/3` function.
   """
 
-  alias Dogma.Formatter
   alias Dogma.Rules
   alias Dogma.ScriptSources
 
   @version Mix.Project.config[:version]
 
-  def run(dir_or_file, config, formatter) do
+  def run(dir_or_file, config, dispatcher) do
     dir_or_file
     |> ScriptSources.find(config.exclude)
     |> ScriptSources.to_scripts
-    |> Formatter.start(formatter)
-    |> Rules.test(config.rules, formatter)
-    |> Formatter.finish(formatter)
+    |> notify_start(dispatcher)
+    |> Rules.test(config.rules, dispatcher)
+    |> notify_finish(dispatcher)
   end
 
   def version, do: @version
+
+  defp notify_start(scripts, dispatcher) do
+    GenEvent.sync_notify(dispatcher, {:start, scripts})
+    scripts
+  end
+
+  defp notify_finish(scripts, dispatcher) do
+    GenEvent.sync_notify(dispatcher, {:finished, scripts})
+    scripts
+  end
 end

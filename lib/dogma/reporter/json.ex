@@ -1,4 +1,4 @@
-defmodule Dogma.Formatter.JSON do
+defmodule Dogma.Reporter.JSON do
   @moduledoc """
   A machine readable format in JSON.
 
@@ -34,17 +34,14 @@ defmodule Dogma.Formatter.JSON do
       }
   """
 
-  @behaviour Dogma.Formatter
+  use GenEvent
 
-  @doc """
-  Runs at the start of the test suite, printing nothing.
-  """
-  def start(_), do: ""
+  def handle_event({:finished, scripts}, _) do
+    IO.write finish(scripts)
+    {:ok, []}
+  end
 
-  @doc """
-  Runs after each script is tested, printing nothing.
-  """
-  def script(_), do: ""
+  def handle_events(_,_), do: {:ok, []}
 
   @doc """
   Runs at the end of the test suite, printing json.
