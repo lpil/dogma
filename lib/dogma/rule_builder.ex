@@ -16,6 +16,9 @@ defmodule Dogma.RuleBuilder do
 
   The body of this macro must define the `test/2`, which returns a list
   of any errors found.
+
+  `Dogma.Error` and `Dogma.Script` are aliased to `Error` and `Script`
+  inside the body of the macro.
   """
 
   defmacro __using__(_) do
@@ -32,6 +35,9 @@ defmodule Dogma.RuleBuilder do
         @moduledoc """
         I'm a rule with no documentation. Yet.
         """
+        alias Dogma.Rule
+        alias Dogma.Error
+
         defstruct unquote(opts)
         unquote(module_ast)
       end

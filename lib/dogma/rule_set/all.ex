@@ -20,7 +20,6 @@ defmodule Dogma.RuleSet.All do
       FunctionParentheses     => [],
       HardTabs                => [],
       InterpolationOnlyString => [],
-      LineLength              => [max_length: 80],
       LiteralInCondition      => [],
       LiteralInInterpolation  => [],
       MatchInCondition        => [],
@@ -39,6 +38,7 @@ defmodule Dogma.RuleSet.All do
       UnlessElse              => [],
       VariableName            => [],
       WindowsLineEndings      => [],
+      # %Dogma.Rule.LineLength{},
     }
   end
 end
