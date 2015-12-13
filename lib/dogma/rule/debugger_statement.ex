@@ -1,4 +1,6 @@
-defmodule Dogma.Rule.DebuggerStatement do
+use Dogma.RuleBuilder
+
+defrule Dogma.Rule.DebuggerStatement, [] do
   @moduledoc """
   A rule that disallows calls to `IEx.pry`.
 
@@ -6,10 +8,7 @@ defmodule Dogma.Rule.DebuggerStatement do
   committed into our codebase.
   """
 
-  alias Dogma.Script
-  alias Dogma.Error
-
-  def test(script, _config = [] \\ []) do
+  def test(_rule, script) do
     script |> Script.walk( &check_node(&1, &2) )
   end
 

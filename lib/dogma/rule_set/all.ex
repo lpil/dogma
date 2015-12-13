@@ -11,11 +11,11 @@ defmodule Dogma.RuleSet.All do
   def rules do
     [
       %Rule.CommentFormat{},
-      %Rule.LineLength{},
       %Rule.ComparisonToBoolean{},
+      %Rule.DebuggerStatement{},
+      %Rule.LineLength{},
     ]
     %{
-      DebuggerStatement       => [],
       ExceptionName           => [],
       FinalCondition          => [],
       FinalNewline            => [],
