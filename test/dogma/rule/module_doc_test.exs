@@ -111,4 +111,20 @@ defmodule Dogma.Rule.ModuleDocTest do
     """ |> Script.parse!( "foo.exs" ) |> ModuleDoc.test
     assert [] == errors
   end
+
+  should "not crash for unquoted module names" do
+    errors = """
+    quote do
+      defmodule unquote(name) do
+      end
+    end
+    """ |> lint
+    assert errors == [
+      %Error{
+        rule: ModuleDoc,
+        message: "Unknown module is missing a @moduledoc.",
+        line: 2,
+      }
+    ]
+  end
 end

@@ -48,11 +48,19 @@ defmodule Dogma.Rule.ModuleDoc do
     if module_body |> moduledoc? do
       {node, errors}
     else
-      {node, [error( m[:line], Enum.join(names, ".") ) | errors]}
+      {node, [error( m[:line], module_name(names) ) | errors]}
     end
   end
   defp check_node(node, errors) do
     {node, errors}
+  end
+
+  defp module_name(names) do
+    if Enum.all?( names, &is_atom/1 ) do
+      Enum.join(names, ".")
+    else
+      nil
+    end
   end
 
   defp moduledoc?(node) do
@@ -80,6 +88,13 @@ defmodule Dogma.Rule.ModuleDoc do
     {node, false}
   end
 
+  defp error(position, nil) do
+    %Error{
+      rule:    __MODULE__,
+      message: "Unknown module is missing a @moduledoc.",
+      line:    position,
+    }
+  end
   defp error(position, module_name) do
     %Error{
       rule:    __MODULE__,
