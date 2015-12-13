@@ -3,8 +3,6 @@ defmodule Dogma.Rule.MultipleBlankLines do
   A rule that disallows multiple consecutive blank lines.
   """
 
-  @behaviour Dogma.Rule
-
   alias Dogma.Error
 
   def test(script), do: test(script, [])

@@ -3,8 +3,6 @@ defmodule Dogma.Rule.TrailingWhitespace do
   A rule that disallows trailing whitespace at the end of a line.
   """
 
-  @behaviour Dogma.Rule
-
   alias Dogma.Error
 
   @regex ~r/\s+\z/

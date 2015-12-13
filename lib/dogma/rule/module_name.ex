@@ -13,8 +13,6 @@ defmodule Dogma.Rule.ModuleName do
       end
   """
 
-  @behaviour Dogma.Rule
-
   alias Dogma.Script
   alias Dogma.Error
   alias Dogma.Util.Name

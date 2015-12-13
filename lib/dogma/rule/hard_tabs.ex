@@ -9,8 +9,6 @@ defmodule Dogma.Rule.HardTabs do
       end
   """
 
-  @behaviour Dogma.Rule
-
   @indenting_tab_pattern ~r/^[\t\s]*\t+/
 
   alias Dogma.Error

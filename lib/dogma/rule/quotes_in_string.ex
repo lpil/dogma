@@ -11,8 +11,6 @@ defmodule Dogma.Rule.QuotesInString do
       ~s(")
   """
 
-  @behaviour Dogma.Rule
-
   alias Dogma.Error
 
   def test(script, _config = [] \\ []) do

@@ -11,8 +11,6 @@ defmodule Dogma.Rule.Semicolon do
   and breaking up multiple expressions on different lines improves readability.
   """
 
-  @behaviour Dogma.Rule
-
   alias Dogma.Error
 
   def test(script, _config \\ []) do

@@ -12,8 +12,6 @@ defmodule Dogma.Rule.MatchInCondition do
       end
   """
 
-  @behaviour Dogma.Rule
-
   alias Dogma.Error
   alias Dogma.Script
 

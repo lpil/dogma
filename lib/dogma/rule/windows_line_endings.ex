@@ -9,8 +9,6 @@ defmodule Dogma.Rule.WindowsLineEndings do
   write files with Unix style `\n` line terminators.
   """
 
-  @behaviour Dogma.Rule
-
   alias Dogma.Error
 
   @violation_regex ~r/\r\z/

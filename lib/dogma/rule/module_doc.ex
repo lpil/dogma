@@ -28,8 +28,6 @@ defmodule Dogma.Rule.ModuleDoc do
       end
   """
 
-  @behaviour Dogma.Rule
-
   alias Dogma.Script
   alias Dogma.Error
 

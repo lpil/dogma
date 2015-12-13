@@ -17,8 +17,6 @@ defmodule Dogma.Rule.ComparisonToBoolean do
   `true` or `false`.
   """
 
-  @behaviour Dogma.Rule
-
   alias Dogma.Script
   alias Dogma.Error
 

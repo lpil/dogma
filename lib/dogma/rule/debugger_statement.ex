@@ -6,8 +6,6 @@ defmodule Dogma.Rule.DebuggerStatement do
   committed into our codebase.
   """
 
-  @behaviour Dogma.Rule
-
   alias Dogma.Script
   alias Dogma.Error
 

@@ -9,8 +9,6 @@ defmodule Dogma.Rule.LiteralInInterpolation do
       "Don't #\{~s(interpolate)} literals"
   """
 
-  @behaviour Dogma.Rule
-
   alias Dogma.Script
   alias Dogma.Error
 

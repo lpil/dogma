@@ -14,8 +14,6 @@ defmodule Dogma.Rule.LiteralInCondition do
       end
   """
 
-  @behaviour Dogma.Rule
-
   alias Dogma.Script
   alias Dogma.Error
 

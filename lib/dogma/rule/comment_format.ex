@@ -14,8 +14,6 @@ defmodule Dogma.Rule.CommentFormat do
       #Hello, world!
   """
 
-  @behaviour Dogma.Rule
-
   alias Dogma.Error
 
   def test(script, _config = [] \\ []) do

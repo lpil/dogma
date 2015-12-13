@@ -3,8 +3,6 @@ defmodule Dogma.Rule.ModuleAttributeName do
   A rule that disallows module attribute names not in snake_case
   """
 
-  @behaviour Dogma.Rule
-
   alias Dogma.Script
   alias Dogma.Error
   alias Dogma.Util.Name

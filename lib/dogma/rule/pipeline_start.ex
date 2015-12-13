@@ -17,8 +17,6 @@ defmodule Dogma.Rule.PipelineStart do
       |> Enum.join
   """
 
-  @behaviour Dogma.Rule
-
   alias Dogma.Script
   alias Dogma.Error
 

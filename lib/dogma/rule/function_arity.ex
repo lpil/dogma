@@ -13,8 +13,6 @@ defmodule Dogma.Rule.FunctionArity do
   option in your mix config.
   """
 
-  @behaviour Dogma.Rule
-
   alias Dogma.Script
   alias Dogma.Error
 

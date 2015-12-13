@@ -16,8 +16,6 @@ defmodule Dogma.Rule.NegatedAssert do
       refute not bar
   """
 
-  @behaviour Dogma.Rule
-
   alias Dogma.Script
   alias Dogma.Error
 

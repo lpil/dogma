@@ -19,7 +19,6 @@ defmodule Dogma.Rule.ExceptionName do
       end
   """
 
-  @behaviour Dogma.Rule
   @good_name_suffix "Error"
 
   alias Dogma.Script

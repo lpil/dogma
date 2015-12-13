@@ -18,8 +18,6 @@ defmodule Dogma.Rule.VariableName do
       {functionName, meta, otherStuff} = node
   """
 
-  @behaviour Dogma.Rule
-
   alias Dogma.Script
   alias Dogma.Error
   alias Dogma.Util.Name

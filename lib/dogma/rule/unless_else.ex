@@ -32,8 +32,6 @@ defmodule Dogma.Rule.UnlessElse do
       end
   """
 
-  @behaviour Dogma.Rule
-
   alias Dogma.Script
   alias Dogma.Error
 

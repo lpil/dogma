@@ -7,8 +7,6 @@ defmodule Dogma.Rule.LineLength do
   specify your own line max character count.
   """
 
-  @behaviour Dogma.Rule
-
   alias Dogma.Error
 
   def test(script), do: test(script, [])

@@ -26,8 +26,6 @@ defmodule Dogma.Rule.FunctionName do
       end
   """
 
-  @behaviour Dogma.Rule
-
   alias Dogma.Script
   alias Dogma.Error
   alias Dogma.Util.Name

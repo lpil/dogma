@@ -20,7 +20,6 @@ defmodule Dogma.Rule.PredicateName do
       end
   """
 
-  @behaviour Dogma.Rule
   alias Dogma.Script
   alias Dogma.Error
 

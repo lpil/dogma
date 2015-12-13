@@ -5,14 +5,12 @@ defmodule Dogma.Rule.InterpolationOnlyString do
 
   Good:
 
-        output = inspect(self)
+     output = inspect(self)
 
   Bad:
 
-        output = "#\{inspect self}"
+      output = "#\{inspect self}"
   """
-
-  @behaviour Dogma.Rule
 
   alias Dogma.Script
   alias Dogma.Error

@@ -24,8 +24,6 @@ defmodule Dogma.Rule.FunctionParentheses do
       end
   """
 
-  @behaviour Dogma.Rule
-
   alias Dogma.Error
 
   def test(script, _config = [] \\ []) do

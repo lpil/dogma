@@ -3,8 +3,6 @@ defmodule Dogma.Rule.FinalNewline do
   A rule that disallows files that don't end with a final newline.
   """
 
-  @behaviour Dogma.Rule
-
   alias Dogma.Error
 
   def test(script, _config = [] \\ []) do

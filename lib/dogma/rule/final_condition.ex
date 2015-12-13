@@ -58,8 +58,6 @@ defmodule Dogma.Rule.FinalCondition do
       end
   """
 
-  @behaviour Dogma.Rule
-
   alias Dogma.Script
   alias Dogma.Error
 
