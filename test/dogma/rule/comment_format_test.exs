@@ -1,34 +1,26 @@
 defmodule Dogma.Rule.CommentFormatTest do
-  use ShouldI
-
-  alias Dogma.Rule.CommentFormat
-  alias Dogma.Script
-  alias Dogma.Error
-
-  defp lint(script) do
-    script |> Script.parse!( "foo.ex" ) |> CommentFormat.test
-  end
+  use RuleCase, for: CommentFormat
 
   should "not error with a space after the #" do
-    errors = """
+    script = """
     1 + 1 # Hello, world!
-    """ |> lint
-    assert [] == errors
+    """ |> Script.parse!("")
+    assert [] == Rule.test( @rule, script )
   end
 
   should "not error with no content after the #" do
-    errors = """
+    script = """
     # This is cool.
     #
     1 + 1
-    """ |> lint
-    assert [] == errors
+    """ |> Script.parse!("")
+    assert [] == Rule.test( @rule, script )
   end
 
   should "error with not space after the #" do
-    errors = """
+    script = """
     1 + 1 #Hello, world!
-    """ |> lint
+    """ |> Script.parse!("")
     expected_errors = [
       %Error{
         line: 1,
@@ -36,16 +28,14 @@ defmodule Dogma.Rule.CommentFormatTest do
         rule: CommentFormat
       }
     ]
-    assert expected_errors == errors
+    assert expected_errors == Rule.test( @rule, script )
   end
 
   should "not error with not multiple spaces after the #" do
-    errors = """
+    script = """
     "Hi!"
     1 + 1 #     Hello, world!
-    """ |> lint
-    expected_errors = [
-    ]
-    assert expected_errors == errors
+    """ |> Script.parse!("")
+    assert [] == Rule.test( @rule, script )
   end
 end

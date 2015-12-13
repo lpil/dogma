@@ -5,7 +5,6 @@ defmodule Dogma.Documentation.RuleListTest do
 
   @tag :skip
   should "have an up to date docs/rules.md file" do
-    Dogma.TestHelper.pending
     # expected = RuleList.rules_doc
     # actual = File.read! "docs/rules.md"
     # assert actual == expected, """

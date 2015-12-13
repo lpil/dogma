@@ -8,8 +8,11 @@ defmodule Dogma.RuleSet.All do
   @behaviour Dogma.RuleSet
 
   def rules do
+    [
+      %Dogma.Rule.CommentFormat{},
+      %Dogma.Rule.LineLength{},
+    ]
     %{
-      CommentFormat           => [],
       ComparisonToBoolean     => [],
       DebuggerStatement       => [],
       ExceptionName           => [],
@@ -38,7 +41,6 @@ defmodule Dogma.RuleSet.All do
       UnlessElse              => [],
       VariableName            => [],
       WindowsLineEndings      => [],
-      # %Dogma.Rule.LineLength{},
     }
   end
 end

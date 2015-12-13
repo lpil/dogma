@@ -9,7 +9,6 @@ defmodule Dogma.RuleSet.AllTest do
 
     @tag :skip
     should "map module names to config keyword lists" do
-      Dogma.TestHelper.pending
       # for {name, config} <- All.rules do
       #   assert config |> is_list
       #   assert name |> to_string |> String.match?(@mod_regex)
@@ -18,7 +17,6 @@ defmodule Dogma.RuleSet.AllTest do
 
     @tag :skip
     should "return a module for each file in lib/dogma/rule/" do
-      Dogma.TestHelper.pending
       # dir_size = "lib/dogma/rule/*.ex" |> Path.wildcard |> length
       # set_size = All.rules |> Dict.size
       # assert dir_size == set_size
@@ -26,7 +24,6 @@ defmodule Dogma.RuleSet.AllTest do
 
     @tag :skip
     should "contain LiteralInCondition" do
-      Dogma.TestHelper.pending
       # assert All.rules |> Dict.has_key?( LiteralInCondition )
     end
   end

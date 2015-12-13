@@ -1,4 +1,6 @@
-defmodule Dogma.Rule.CommentFormat do
+use Dogma.RuleBuilder
+
+defrule Dogma.Rule.CommentFormat, [] do
   @moduledoc """
   A rule that disallows comments with no space between the # and the comment
   text.
@@ -14,9 +16,7 @@ defmodule Dogma.Rule.CommentFormat do
       #Hello, world!
   """
 
-  alias Dogma.Error
-
-  def test(script, _config = [] \\ []) do
+  def test(_rule, script) do
     script.comments |> Enum.reduce([], &check_comment/2)
   end
 

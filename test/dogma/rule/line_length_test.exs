@@ -1,13 +1,7 @@
 defmodule Dogma.Rule.LineLengthTest do
-  use ShouldI
-
-  alias Dogma.Rule
-  alias Dogma.Rule.LineLength
-  alias Dogma.Script
-  alias Dogma.Error
+  use RuleCase, for: LineLength
 
   should "error on long lines" do
-    rule   = %LineLength{}
     script = [
       String.duplicate( "x",  90 ),
       String.duplicate( "y",  30 ),
@@ -25,11 +19,11 @@ defmodule Dogma.Rule.LineLengthTest do
         line: 3,
       },
     ]
-    assert expected_errors == Rule.test( rule, script )
+    assert expected_errors == Rule.test( @rule, script )
   end
 
   should "allow the line length to be configured" do
-    rule   = %LineLength{max_length: 100}
+    rule   = %LineLength{ max_length: 100 }
     script = [
       String.duplicate( "x",  90 ),
       String.duplicate( "y",  30 ),
@@ -47,8 +41,6 @@ defmodule Dogma.Rule.LineLengthTest do
 
 
   defp to_script(lines) do
-    lines
-    |> Enum.join( "\n" )
-    |> Script.parse!( "foo.ex" )
+    lines |> Enum.join( "\n" ) |> Script.parse!( "foo.ex" )
   end
 end
