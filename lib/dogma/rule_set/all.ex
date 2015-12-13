@@ -4,16 +4,17 @@ defmodule Dogma.RuleSet.All do
 
   Rules to be run are returned by `list/0`
   """
+  alias Dogma.Rule
 
   @behaviour Dogma.RuleSet
 
   def rules do
     [
-      %Dogma.Rule.CommentFormat{},
-      %Dogma.Rule.LineLength{},
+      %Rule.CommentFormat{},
+      %Rule.LineLength{},
+      %Rule.ComparisonToBoolean{},
     ]
     %{
-      ComparisonToBoolean     => [],
       DebuggerStatement       => [],
       ExceptionName           => [],
       FinalCondition          => [],

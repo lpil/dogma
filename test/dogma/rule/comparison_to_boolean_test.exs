@@ -1,9 +1,5 @@
 defmodule Dogma.Rule.ComparisonToBooleanTest do
-  use ShouldI
-
-  alias Dogma.Rule.ComparisonToBoolean
-  alias Dogma.Script
-  alias Dogma.Error
+  use RuleCase, for: ComparisonToBoolean
 
   @expected_errors [
     %Error{
@@ -48,14 +44,8 @@ defmodule Dogma.Rule.ComparisonToBooleanTest do
     }
   ]
 
-  defp lint(script) do
-    script
-    |> Script.parse!("foo.ex")
-    |> ComparisonToBoolean.test
-  end
-
   should "error with right hand booleans" do
-    errors = """
+    script = """
     foo ==  false
     foo ==  true
     foo === false
@@ -64,12 +54,12 @@ defmodule Dogma.Rule.ComparisonToBooleanTest do
     foo !=  true
     foo !== false
     foo !== true
-    """ |> lint
-    assert @expected_errors == errors
+    """ |> Script.parse!("")
+    assert @expected_errors == Rule.test( @rule, script )
   end
 
   should "error with lefthand booleans" do
-    errors = """
+    script = """
     true  ==  foo
     true  === foo
     true  !=  foo
@@ -78,12 +68,12 @@ defmodule Dogma.Rule.ComparisonToBooleanTest do
     false === foo
     false !=  foo
     false !== foo
-    """ |> lint
-    assert @expected_errors == errors
+    """ |> Script.parse!("")
+    assert @expected_errors == Rule.test( @rule, script )
   end
 
   should "not error with vars on both sides" do
-    errors = """
+    script = """
     foo ==  bar
     foo === bar
     foo !=  bar
@@ -92,7 +82,7 @@ defmodule Dogma.Rule.ComparisonToBooleanTest do
     foo === bar
     foo !=  bar
     foo !== bar
-    """ |> lint
-    assert [] == errors
+    """ |> Script.parse!("")
+    assert [] == Rule.test( @rule, script )
   end
 end

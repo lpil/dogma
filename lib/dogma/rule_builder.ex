@@ -35,8 +35,8 @@ defmodule Dogma.RuleBuilder do
         @moduledoc """
         I'm a rule with no documentation. Yet.
         """
-        alias Dogma.Rule
         alias Dogma.Error
+        alias Dogma.Script
 
         defstruct unquote(opts)
         unquote(module_ast)
