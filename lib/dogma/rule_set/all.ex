@@ -14,10 +14,10 @@ defmodule Dogma.RuleSet.All do
       %Rule.ComparisonToBoolean{},
       %Rule.DebuggerStatement{},
       %Rule.ExceptionName{},
+      %Rule.FinalCondition{},
       %Rule.LineLength{},
     ]
     %{
-      FinalCondition          => [],
       FinalNewline            => [],
       FunctionArity           => [max: 4],
       FunctionName            => [],
