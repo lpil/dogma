@@ -13,10 +13,10 @@ defmodule Dogma.RuleSet.All do
       %Rule.CommentFormat{},
       %Rule.ComparisonToBoolean{},
       %Rule.DebuggerStatement{},
+      %Rule.ExceptionName{},
       %Rule.LineLength{},
     ]
     %{
-      ExceptionName           => [],
       FinalCondition          => [],
       FinalNewline            => [],
       FunctionArity           => [max: 4],
