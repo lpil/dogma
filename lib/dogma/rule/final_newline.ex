@@ -1,11 +1,13 @@
-defmodule Dogma.Rule.FinalNewline do
+use Dogma.RuleBuilder
+
+defrule Dogma.Rule.FinalNewline, [] do
   @moduledoc """
   A rule that disallows files that don't end with a final newline.
   """
 
   alias Dogma.Error
 
-  def test(script, _config = [] \\ []) do
+  def test(_rule, script) do
     if script.source |> String.ends_with?("\n") do
       []
     else

@@ -16,9 +16,9 @@ defmodule Dogma.RuleSet.All do
       %Rule.ExceptionName{},
       %Rule.FinalCondition{},
       %Rule.LineLength{},
+      %Rule.FinalNewline{},
     ]
     %{
-      FinalNewline            => [],
       FunctionArity           => [max: 4],
       FunctionName            => [],
       FunctionParentheses     => [],
