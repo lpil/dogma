@@ -1,16 +1,8 @@
 defmodule Dogma.Rule.FunctionParenthesesTest do
-  use ShouldI
-
-  alias Dogma.Rule.FunctionParentheses
-  alias Dogma.Script
-  alias Dogma.Error
-
-  defp lint(script) do
-    script |> Script.parse!( "foo.ex" ) |> FunctionParentheses.test
-  end
+  use RuleCase, for: FunctionParentheses
 
   should "not error without parentheses and without argument" do
-    errors = """
+    script = """
     def foo do
     end
     def foo_bar do
@@ -18,12 +10,12 @@ defmodule Dogma.Rule.FunctionParenthesesTest do
     defp private_foo do
     end
     def baz, do: :baz
-    """ |> lint
-    assert [] == errors
+    """ |> Script.parse!("")
+    assert [] == Rule.test( @rule, script )
   end
 
   should "not error with parentheses and arguments" do
-    errors = """
+    script = """
     def foo(a) do
     end
     def foo_bar(a, b, c) do
@@ -31,15 +23,15 @@ defmodule Dogma.Rule.FunctionParenthesesTest do
     defp private_foo(x, y) do
     end
     def baz(z), do: z
-    """ |> lint
-    assert [] == errors
+    """ |> Script.parse!("")
+    assert [] == Rule.test( @rule, script )
   end
 
   should "error with public function with parentheses and without arguments" do
-    errors = """
+    script = """
     def foo() do
     end
-    """ |> lint
+    """ |> Script.parse!("")
     expected_errors = [
       %Error{
         rule: FunctionParentheses,
@@ -48,14 +40,14 @@ defmodule Dogma.Rule.FunctionParenthesesTest do
         line: 1
       }
     ]
-    assert expected_errors == errors
+    assert expected_errors == Rule.test( @rule, script )
   end
 
   should "error with private function with parentheses and without arguments" do
-    errors = """
+    script = """
     defp foo() do
     end
-    """ |> lint
+    """ |> Script.parse!("")
     expected_errors = [
       %Error{
         rule: FunctionParentheses,
@@ -64,13 +56,13 @@ defmodule Dogma.Rule.FunctionParenthesesTest do
         line: 1
       }
     ]
-    assert expected_errors == errors
+    assert expected_errors == Rule.test( @rule, script )
   end
 
   should "error with single-line function parentheses and without arguments" do
-    errors = """
+    script = """
     def foo(), do: :bar
-    """ |> lint
+    """ |> Script.parse!("")
     expected_errors = [
       %Error{
         rule: FunctionParentheses,
@@ -79,14 +71,14 @@ defmodule Dogma.Rule.FunctionParenthesesTest do
         line: 1
       }
     ]
-    assert expected_errors == errors
+    assert expected_errors == Rule.test( @rule, script )
   end
 
   should "error with public function without parentheses and with arguments" do
-    errors = """
+    script = """
     def foo a, b do
     end
-    """ |> lint
+    """ |> Script.parse!("")
     expected_errors = [
       %Error{
         rule: FunctionParentheses,
@@ -95,14 +87,14 @@ defmodule Dogma.Rule.FunctionParenthesesTest do
         line: 1
       }
     ]
-    assert expected_errors == errors
+    assert expected_errors == Rule.test( @rule, script )
   end
 
   should "error with private function without parentheses and with arguments" do
-    errors = """
+    script = """
     defp foo a, b do
     end
-    """ |> lint
+    """ |> Script.parse!("")
     expected_errors = [
       %Error{
         rule: FunctionParentheses,
@@ -111,7 +103,6 @@ defmodule Dogma.Rule.FunctionParenthesesTest do
         line: 1
       }
     ]
-    assert expected_errors == errors
+    assert expected_errors == Rule.test( @rule, script )
   end
-
 end

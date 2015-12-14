@@ -1,4 +1,6 @@
-defmodule Dogma.Rule.FunctionParentheses do
+use Dogma.RuleBuilder
+
+defrule Dogma.Rule.FunctionParentheses, [] do
   @moduledoc """
   A rule that ensures function declarations use parentheses if and only if
   they have arguments.
@@ -24,9 +26,7 @@ defmodule Dogma.Rule.FunctionParentheses do
       end
   """
 
-  alias Dogma.Error
-
-  def test(script, _config = [] \\ []) do
+  def test(_rule, script) do
     script.tokens |> check_function_parens
   end
 
@@ -80,5 +80,4 @@ defmodule Dogma.Rule.FunctionParentheses do
       line:    Dogma.Script.line(line),
     }
   end
-
 end
