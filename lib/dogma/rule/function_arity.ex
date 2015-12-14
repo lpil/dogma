@@ -1,4 +1,6 @@
-defmodule Dogma.Rule.FunctionArity do
+use Dogma.RuleBuilder
+
+defrule Dogma.Rule.FunctionArity, max: 4 do
   @moduledoc """
   A rule that disallows functions and macros with arity greater than 4, meaning
   a function may not take more than 4 arguments.
@@ -16,17 +18,8 @@ defmodule Dogma.Rule.FunctionArity do
   alias Dogma.Script
   alias Dogma.Error
 
-  def test(script), do: test(script, [])
-
-  def test(script, _config = []) do
-    test(script, max: 4)
-  end
-
-  def test(script, max: max) do
-    script
-    |> Script.walk(fn node, errs ->
-      check_node(node, errs, max)
-    end)
+  def test(rule, script) do
+    Script.walk(script, &check_node(&1, &2, rule.max))
   end
 
   @defs ~w(def defp defmacro)a
