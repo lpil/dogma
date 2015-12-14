@@ -18,9 +18,9 @@ defmodule Dogma.RuleSet.All do
       %Rule.LineLength{},
       %Rule.FinalNewline{},
       %Rule.FunctionArity{},
+      %Rule.FunctionName{},
     ]
     %{
-      FunctionName            => [],
       FunctionParentheses     => [],
       HardTabs                => [],
       InterpolationOnlyString => [],
