@@ -1,6 +1,6 @@
 use Dogma.RuleBuilder
 
-defrule Dogma.Rule.ComparisonToBoolean, [] do
+defrule Dogma.Rule.ComparisonToBoolean do
   @moduledoc """
   A rule that disallows comparison to booleans.
 

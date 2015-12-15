@@ -1,6 +1,6 @@
 use Dogma.RuleBuilder
 
-defrule Dogma.Rule.CommentFormat, [] do
+defrule Dogma.Rule.CommentFormat do
   @moduledoc """
   A rule that disallows comments with no space between the # and the comment
   text.

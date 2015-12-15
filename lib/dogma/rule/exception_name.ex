@@ -1,6 +1,6 @@
 use Dogma.RuleBuilder
 
-defrule Dogma.Rule.ExceptionName, [] do
+defrule Dogma.Rule.ExceptionName do
   @moduledoc """
   A Rule that checks that exception names end with a trailing Error.
 

@@ -1,6 +1,6 @@
 use Dogma.RuleBuilder
 
-defrule Dogma.Rule.DebuggerStatement, [] do
+defrule Dogma.Rule.DebuggerStatement do
   @moduledoc """
   A rule that disallows calls to `IEx.pry`.
 

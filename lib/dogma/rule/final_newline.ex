@@ -1,6 +1,6 @@
 use Dogma.RuleBuilder
 
-defrule Dogma.Rule.FinalNewline, [] do
+defrule Dogma.Rule.FinalNewline do
   @moduledoc """
   A rule that disallows files that don't end with a final newline.
   """

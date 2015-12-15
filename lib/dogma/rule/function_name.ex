@@ -1,6 +1,6 @@
 use Dogma.RuleBuilder
 
-defrule Dogma.Rule.FunctionName, [] do
+defrule Dogma.Rule.FunctionName do
   @moduledoc """
   A rule that disallows function names not in `snake_case`.
 

@@ -24,7 +24,13 @@ defmodule Dogma.RuleBuilder do
   defmacro __using__(_) do
     quote do
       require Dogma.RuleBuilder
-      import Dogma.RuleBuilder, only: [defrule: 3]
+      import Dogma.RuleBuilder, only: [defrule: 3, defrule: 2]
+    end
+  end
+
+  defmacro defrule(name, [do: module_ast]) do
+    quote do
+      defrule unquote(name), [], do: unquote(module_ast)
     end
   end
 
