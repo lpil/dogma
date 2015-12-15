@@ -54,7 +54,7 @@ defmodule Dogma.Script do
     if script.valid? do
       script
     else
-      raise InvalidScriptError
+      raise InvalidScriptError, "Script source string has invalid syntax"
     end
   end
 
