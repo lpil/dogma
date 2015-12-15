@@ -20,9 +20,9 @@ defmodule Dogma.RuleSet.All do
       %Rule.FunctionArity{},
       %Rule.FunctionName{},
       %Rule.FunctionParentheses{},
+      %Rule.HardTabs{},
     ]
     %{
-      HardTabs                => [],
       InterpolationOnlyString => [],
       LiteralInCondition      => [],
       LiteralInInterpolation  => [],
