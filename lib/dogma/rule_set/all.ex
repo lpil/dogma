@@ -21,9 +21,9 @@ defmodule Dogma.RuleSet.All do
       %Rule.FunctionName{},
       %Rule.FunctionParentheses{},
       %Rule.HardTabs{},
+      %Rule.InterpolationOnlyString{},
     ]
     %{
-      InterpolationOnlyString => [],
       LiteralInCondition      => [],
       LiteralInInterpolation  => [],
       MatchInCondition        => [],
