@@ -17,11 +17,11 @@ It's also a code style linter for Elixir, powered by shame.
 * [Usage](#usage)
 * [Configuration][config-doc]
 * [Rules][rules-doc]
-* [Output formats][formatters-doc]
+* [Output formats][reporters-doc]
 
 [config-doc]: https://github.com/lpil/dogma/blob/master/docs/configuration.md
 [rules-doc]: https://github.com/lpil/dogma/blob/master/docs/rules.md
-[formatters-doc]: https://github.com/lpil/dogma/blob/master/docs/formatters.md
+[reporters-doc]: https://github.com/lpil/dogma/blob/master/docs/reporters.md
 
 
 ## About
