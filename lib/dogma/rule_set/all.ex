@@ -22,9 +22,9 @@ defmodule Dogma.RuleSet.All do
       %Rule.FunctionParentheses{},
       %Rule.HardTabs{},
       %Rule.InterpolationOnlyString{},
+      %Rule.LiteralInCondition{},
     ]
     %{
-      LiteralInCondition      => [],
       LiteralInInterpolation  => [],
       MatchInCondition        => [],
       ModuleAttributeName     => [],

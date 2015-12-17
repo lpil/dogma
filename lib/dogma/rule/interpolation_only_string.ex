@@ -14,9 +14,6 @@ defrule Dogma.Rule.InterpolationOnlyString do
       output = "#\{inspect self}"
   """
 
-  alias Dogma.Script
-  alias Dogma.Error
-
   def test(_rule, script) do
     script
     |> Script.walk(&check_node(&1, &2))
