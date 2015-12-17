@@ -173,8 +173,7 @@ defmodule Dogma.ScriptTest do
 
   with "parse!/2" do
     should "raise InvalidScriptError with an invalid script" do
-      message = "Script source string has invalid syntax"
-      assert_raise InvalidScriptError, message, fn ->
+      assert_raise InvalidScriptError, "Invalid syntax in foo.ex", fn ->
         "<>>>>>>><><>><><>>>>>>>>>>>>>><<><" |> Script.parse!( "foo.ex" )
       end
     end

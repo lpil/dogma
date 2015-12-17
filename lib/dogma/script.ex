@@ -8,6 +8,10 @@ defmodule Dogma.Script do
   defmodule InvalidScriptError do
     @moduledoc "An exception that can raised when source has invalid syntax."
     defexception [:message]
+
+    def exception(script) do
+      %__MODULE__{ message: "Invalid syntax in #{script.path}" }
+    end
   end
 
   alias Dogma.Script
@@ -54,7 +58,7 @@ defmodule Dogma.Script do
     if script.valid? do
       script
     else
-      raise InvalidScriptError, "Script source string has invalid syntax"
+      raise InvalidScriptError, script
     end
   end
 
