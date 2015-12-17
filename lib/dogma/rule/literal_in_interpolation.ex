@@ -1,20 +1,19 @@
-defmodule Dogma.Rule.LiteralInInterpolation do
-  @moduledoc """
+use Dogma.RuleBuilder
+
+defrule Dogma.Rule.LiteralInInterpolation do
+  @moduledoc ~S"""
   A rule that disallows useless string interpolations
   that contain a literal value instead of a variable or function.
   Examples:
 
-      "Hello #\{:jose}"
-      "The are #\{4} cats."
-      "Don't #\{~s(interpolate)} literals"
+      "Hello #{:jose}"
+      "The are #{4} cats."
+      "Don't #{~s(interpolate)} literals"
   """
-
-  alias Dogma.Script
-  alias Dogma.Error
 
   import Dogma.Util.AST, only: [literal?: 1]
 
-  def test(script, _config = [] \\ []) do
+  def test(_rule, script) do
     script |> Script.walk( &check_node(&1, &2) )
   end
 
