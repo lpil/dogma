@@ -1,4 +1,6 @@
-defmodule Dogma.Rule.MatchInCondition do
+use Dogma.RuleBuilder
+
+defrule Dogma.Rule.MatchInCondition do
   @moduledoc ~S"""
   Disallows use of the match operator in the conditional constructs `if` and
   `unless`. This is because it is often intended to be `==` instead, but was
@@ -12,10 +14,7 @@ defmodule Dogma.Rule.MatchInCondition do
       end
   """
 
-  alias Dogma.Error
-  alias Dogma.Script
-
-  def test(script, _config = [] \\ []) do
+  def test(_rule, script) do
     script |> Script.walk( &check_node(&1, &2) )
   end
 

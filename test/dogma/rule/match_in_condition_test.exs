@@ -1,106 +1,98 @@
 defmodule Dogma.Rule.MatchInConditionTest do
-  use ShouldI
-
-  alias Dogma.Rule.MatchInCondition
-  alias Dogma.Script
-  alias Dogma.Error
-
-  defp lint(script) do
-    script |> Script.parse!( "foo.ex" ) |> MatchInCondition.test
-  end
+  use RuleCase, for: MatchInCondition
 
   having "a variable/function argument" do
     should "not error for if" do
-      errors = """
+      script = """
       if feeling_tired do
         have_an_early_night
       end
-      """ |> lint
-      assert [] == errors
+      """ |> Script.parse!("")
+      assert [] == Rule.test( @rule, script )
     end
 
     should "not error for unless" do
-      errors = """
+      script = """
       unless feeling_sleepy do
         a_little_dance
       end
-      """ |> lint
-      assert [] == errors
+      """ |> Script.parse!("")
+      assert [] == Rule.test( @rule, script )
     end
   end
 
   having "a literal argument" do
     should "not error for if" do
-      errors = """
+      script = """
       if false do
         i_will_never_run
       end
-      """ |> lint
-      assert [] == errors
+      """ |> Script.parse!("")
+      assert [] == Rule.test( @rule, script )
     end
 
     should "not error for unless" do
-      errors = """
+      script = """
       unless [] do
         useless_unless
       end
-      """ |> lint
-      assert [] == errors
+      """ |> Script.parse!("")
+      assert [] == Rule.test( @rule, script )
     end
   end
 
   having "a piped in argument" do
     should "not error for if" do
-      errors = """
+      script = """
       something
       |> if do
         something_else
       end
-      """ |> lint
-      assert [] == errors
+      """ |> Script.parse!("")
+      assert [] == Rule.test( @rule, script )
     end
 
     should "not error for unless" do
-      errors = """
+      script = """
       something
       |> unless do
         something_else
       end
-      """ |> lint
-      assert [] == errors
+      """ |> Script.parse!("")
+      assert [] == Rule.test( @rule, script )
     end
   end
 
   having "a comparison argument" do
     should "not error for if" do
-      errors = """
+      script = """
       if x ==  y do z end
       if x === y do z end
       if x !=  y do z end
       if x !== y do z end
-      """ |> lint
-      assert [] == errors
+      """ |> Script.parse!("")
+      assert [] == Rule.test( @rule, script )
     end
 
     should "not error for unless" do
-      errors = """
+      script = """
       unless x ==  y do z end
       unless x === y do z end
       unless x !=  y do z end
       unless x !== y do z end
-      """ |> lint
-      assert [] == errors
+      """ |> Script.parse!("")
+      assert [] == Rule.test( @rule, script )
     end
   end
 
   having "match argument" do
     should "error for if" do
-      errors = """
+      script = """
       if x         = y do z end
       if {x1, x2}  = y do z end
       if [x, _, _] = y do z end
       if %{ x: x } = y do z end
-      """ |> lint
+      """ |> Script.parse!("")
       expected_errors = [
         %Error{
           rule:    MatchInCondition,
@@ -123,16 +115,16 @@ defmodule Dogma.Rule.MatchInConditionTest do
           line: 1,
         },
       ]
-      assert expected_errors == errors
+      assert expected_errors == Rule.test( @rule, script )
     end
 
     should "error for unless" do
-      errors = """
+      script = """
       unless x         = y do z end
       unless {x1, x2}  = y do z end
       unless [x, _, _] = y do z end
       unless %{ x: x } = y do z end
-      """ |> lint
+      """ |> Script.parse!("")
       expected_errors = [
         %Error{
           rule:    MatchInCondition,
@@ -155,7 +147,7 @@ defmodule Dogma.Rule.MatchInConditionTest do
           line: 1,
         },
       ]
-      assert expected_errors == errors
+      assert expected_errors == Rule.test( @rule, script )
     end
   end
 end
