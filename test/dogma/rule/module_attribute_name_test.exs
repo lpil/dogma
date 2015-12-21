@@ -1,31 +1,23 @@
 defmodule Dogma.Rule.ModuleAttributeNameTest do
-  use ShouldI
-
-  alias Dogma.Rule.ModuleAttributeName
-  alias Dogma.Script
-  alias Dogma.Error
-
-  defp lint(script) do
-    script |> Script.parse!( "foo.ex" ) |> ModuleAttributeName.test
-  end
+  use RuleCase, for: ModuleAttributeName
 
   should "not error with snake_case module attribute names" do
-    errors = """
+    script = """
     defmodule HelloWorld do
       @hello_world 1
       @hello 2
     end
-    """ |> lint
-    assert [] == errors
+    """ |> Script.parse!("")
+    assert [] == Rule.test( @rule, script )
   end
 
   should "error for a camelCase module attribute name" do
-    errors = """
+    script = """
     defmodule SnakeCase do
       @helloWorld 1
       @hello_World 1
     end
-    """ |> lint
+    """ |> Script.parse!("")
     expected_errors = [
       %Error{
         rule:     ModuleAttributeName,
@@ -38,6 +30,6 @@ defmodule Dogma.Rule.ModuleAttributeNameTest do
         line: 2,
       },
     ]
-    assert expected_errors == errors
+    assert expected_errors == Rule.test( @rule, script )
   end
 end

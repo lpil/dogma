@@ -25,9 +25,9 @@ defmodule Dogma.RuleSet.All do
       %Rule.LiteralInCondition{},
       %Rule.LiteralInInterpolation{},
       %Rule.MatchInCondition{},
+      %Rule.ModuleAttributeName{},
     ]
     %{
-      ModuleAttributeName     => [],
       ModuleDoc               => [],
       ModuleName              => [],
       MultipleBlankLines      => [max_lines: 2],
