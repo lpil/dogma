@@ -67,7 +67,7 @@ defmodule Dogma.Script do
       {:ok, ast} ->
         %Script{ script | valid?: true, ast: ast }
       err ->
-        %Script{ script | valid?: false, ast: [], errors: [error( err )] }
+        %Script{ script | valid?: false, errors: [error( err )] }
     end
   end
 
