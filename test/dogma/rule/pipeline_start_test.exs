@@ -1,85 +1,75 @@
 defmodule Dogma.Rule.PipelineStartTest do
-  use ShouldI
-
-  alias Dogma.Rule.PipelineStart
-  alias Dogma.Script
-  alias Dogma.Error
-
-  defp lint(script) do
-    script
-    |> Script.parse!("foo.ex")
-    |> PipelineStart.test
-  end
+  use RuleCase, for: PipelineStart
 
   should "not error with a number start" do
-    errors = """
+    script = """
     42 |> Integer.to_char_list(16) |> IO.puts
     42 |> IO.puts
-    """ |> lint
-    assert [] == errors
+    """ |> Script.parse!("")
+    assert [] == Rule.test( @rule, script )
   end
 
   should "not error with a string start" do
-    errors = """
+    script = """
     "A pie"
     |> String.upcase
     |> IO.puts
-    """ |> lint
-    assert [] == errors
+    """ |> Script.parse!("")
+    assert [] == Rule.test( @rule, script )
   end
 
   should "not error with a variable start" do
-    errors = """
+    script = """
     foo |> String.downcase |> IO.puts
-    """ |> lint
-    assert [] == errors
+    """ |> Script.parse!("")
+    assert [] == Rule.test( @rule, script )
   end
 
   should "not error with an atom start" do
-    errors = """
+    script = """
     :foo
     |> is_atom
     |> &(&1)
-    """ |> lint
-    assert [] == errors
+    """ |> Script.parse!("")
+    assert [] == Rule.test( @rule, script )
   end
 
   should "not error with a module atom start" do
-    errors = """
+    script = """
     Foo |> to_string
-    """ |> lint
-    assert [] == errors
+    """ |> Script.parse!("")
+    assert [] == Rule.test( @rule, script )
   end
 
   should "not error with a keyword lookup start" do
-    errors = """
+    script = """
     map[:foo]
     |> is_atom
     |> IO.inspect
-    """ |> lint
-    assert [] == errors
+    """ |> Script.parse!("")
+    assert [] == Rule.test( @rule, script )
   end
 
   should "not error with a range start" do
-    errors = """
+    script = """
     1..4
     |> IO.inspect
 
     a..@some_value
     |> IO.inspect
-    """ |> lint
-    assert [] == errors
+    """ |> Script.parse!("")
+    assert [] == Rule.test( @rule, script )
   end
 
   should "error for non-bare start namespaced functions" do
-    errors = """
+    script = """
     String.strip("nope") |> String.upcase |> String.downcase
     String.strip("nope") |> String.upcase
     String.strip("nope")
     |> String.upcase
     |> String.downcase
     |> IO.puts
-    """ |> lint
+    """ |> Script.parse!("")
     expected_errors = [
       %Error{
         rule: PipelineStart,
@@ -97,18 +87,18 @@ defmodule Dogma.Rule.PipelineStartTest do
         line: 3
       }
     ]
-    assert expected_errors == errors
+    assert expected_errors == Rule.test( @rule, script )
   end
 
   should "error for non-bare start functions" do
-    errors = """
+    script = """
     tl([1, 2, 3]) |> Enum.map(&(&1 + 1)) |> Enum.join
     tl([1, 2, 3]) |> Enum.join
     tl([1, 2, 3])
     |> Enum.map(&(&1 * &1))
     |> Enum.join
     |> IO.puts
-    """ |> lint
+    """ |> Script.parse!("")
     expected_errors = [
       %Error{
         rule: PipelineStart,
@@ -126,17 +116,17 @@ defmodule Dogma.Rule.PipelineStartTest do
         line: 3
       }
     ]
-    assert expected_errors == errors
+    assert expected_errors == Rule.test( @rule, script )
   end
 
   should "error for non-bare start anonymous functions" do
-    errors = """
+    script = """
     add_one.([1, 2, 3]) |> IO.inspect
     add_one.([1, 2, 3]) |> Enum.join |> IO.puts
     add_one.([1, 2, 3])
     |> Enum.join
     |> IO.puts
-    """ |> lint
+    """ |> Script.parse!("")
     expected_errors = [
       %Error{
         rule: PipelineStart,
@@ -154,107 +144,107 @@ defmodule Dogma.Rule.PipelineStartTest do
         line: 3
       }
     ]
-    assert expected_errors == errors
+    assert expected_errors == Rule.test( @rule, script )
   end
 
   should "not error with a pattern match" do
-    errors = """
+    script = """
     foo = [1, 2, 3] |> tl |> Enum.join
     bar = [3, 2, 1]
     |> tl
     |> Enum.join
-    """ |> lint
-    assert [] == errors
+    """ |> Script.parse!("")
+    assert [] == Rule.test( @rule, script )
   end
 
   should "not error with map values" do
-    errors = """
+    script = """
     map.key |> Enum.join
     map.key |> Enum.map(&String.upcase/1) |> Enum.join
     map.key
     |> Enum.map(&String.upcase/1)
     |> Enum.join
-    """ |> lint
-    assert [] == errors
+    """ |> Script.parse!("")
+    assert [] == Rule.test( @rule, script )
   end
 
   should "not error for structs" do
-    errors = """
+    script = """
     %Struct{} |> do_thing
     %Foo{} |> do_thing |> IO.puts
     %Bar{}
     |> do_thing
     |> IO.puts
-    """ |> lint
-    assert [] == errors
+    """ |> Script.parse!("")
+    assert [] == Rule.test( @rule, script )
   end
 
   should "not error for maps" do
-    errors = """
+    script = """
     %{} |> do_thing
     %{ "bar" => 2} |> do_thing |> IO.puts
     %{ foo: 1}
     |> do_thing
     |> IO.puts
-    """ |> lint
-    assert [] == errors
+    """ |> Script.parse!("")
+    assert [] == Rule.test( @rule, script )
   end
 
   should "not error for tuples" do
-    errors = """
+    script = """
     {} |> Module.do_thing
     {:ok} |> Module.do_thing |> do_other
     {:ok, foo} |> Module.do_thing |> do_other
     {:ok, bar, 2}
     |> Module.do_thing
     |> do_other
-    """ |> lint
-    assert [] == errors
+    """ |> Script.parse!("")
+    assert [] == Rule.test( @rule, script )
   end
 
   should "not error with a sigil start" do
-    errors = """
+    script = """
     ~r/\n\n+\z/ |> Regex.run(string)
     ~w(foo bar baz)a |> Enum.map(&to_string/1) |> Enum.join
     ~s(qick brown fox)
     |> String.upcase
     |> IO.puts
-    """ |> lint
-    assert [] == errors
+    """ |> Script.parse!("")
+    assert [] == Rule.test( @rule, script )
   end
 
   should "not error with a module attribute start" do
-    errors = """
+    script = """
     @attribute |> Enum.join
     @attribute |> Enum.map(&String.upcase/1) |> Enum.join
     @attribute
     |> Enum.map(&String.upcase/1)
     |> Enum.join
-    """ |> lint
-    assert [] == errors
+    """ |> Script.parse!("")
+    assert [] == Rule.test( @rule, script )
   end
 
   should "not error with an interpolated string start" do
-    errors = ~S"""
+    script = ~S"""
     "A #{baked_good}" |> String.upcase |> IO.puts
-    """ |> lint
-    assert [] == errors
+    """ |> Script.parse!("")
+    assert [] == Rule.test( @rule, script )
   end
 
   should "not error with binary start" do
-    errors = ~S"""
+    script = ~S"""
     << thing::utf8 >> |> String.upcase |> IO.puts
-    """ |> lint
-    assert [] == errors
+    """ |> Script.parse!("")
+    assert [] == Rule.test( @rule, script )
   end
 
   should "not error with unquote start" do
-    errors = ~S"""
+    script = ~S"""
     quote do
       unquote(foo)
       |> bar
     end
-    """ |> lint
-    assert [] == errors
+    """ |> Script.parse!("")
+    assert [] == Rule.test( @rule, script )
   end
 end

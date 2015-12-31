@@ -31,9 +31,9 @@ defmodule Dogma.RuleSet.All do
       %Rule.MultipleBlankLines{},
       %Rule.NegatedAssert{},
       %Rule.NegatedIfUnless{},
+      %Rule.PipelineStart{},
     ]
     %{
-      PipelineStart           => [],
       PredicateName           => [],
       QuotesInString          => [],
       Semicolon               => [],
