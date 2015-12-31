@@ -1,4 +1,6 @@
-defmodule Dogma.Rule.ModuleDoc do
+use Dogma.RuleBuilder
+
+defrule Dogma.Rule.ModuleDoc do
   @moduledoc """
   A rule which states that all modules must have documentation in the form of a
   `@moduledoc` attribute.
@@ -28,12 +30,9 @@ defmodule Dogma.Rule.ModuleDoc do
       end
   """
 
-  alias Dogma.Script
-  alias Dogma.Error
-
   @file_to_be_skipped ~r/\.exs\z/
 
-  def test(script, _config = [] \\ []) do
+  def test(_rule, script) do
     if Regex.match?( @file_to_be_skipped, script.path ) do
       []
     else

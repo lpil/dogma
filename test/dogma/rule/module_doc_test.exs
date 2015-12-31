@@ -1,43 +1,35 @@
 defmodule Dogma.Rule.ModuleDocTest do
-  use ShouldI
-
-  alias Dogma.Rule.ModuleDoc
-  alias Dogma.Script
-  alias Dogma.Error
-
-  defp lint(script) do
-    script |> Script.parse!( "foo.ex" ) |> ModuleDoc.test
-  end
+  use RuleCase, for: ModuleDoc
 
 
   having "module docs" do
     should "not error" do
-      errors = """
+      script = """
       defmodule VeryGood do
         @moduledoc "Lots of good info here"
       end
-      """ |> lint
-      assert [] == errors
+      """ |> Script.parse!("")
+      assert [] == Rule.test( @rule, script )
     end
 
     should "not error with nested modules" do
-      errors = """
+      script = """
       defmodule VeryGood do
         @moduledoc "Lots of good info here"
         defmodule AlsoGood do
           @moduledoc "And even more here!"
         end
       end
-      """ |> lint
-      assert [] == errors
+      """ |> Script.parse!("")
+      assert [] == Rule.test( @rule, script )
     end
   end
 
   should "error for a module missing a module doc" do
-    errors = """
+    script = """
     defmodule NotGood do
     end
-    """ |> lint
+    """ |> Script.parse!("")
     expected_errors = [
       %Error{
         rule: ModuleDoc,
@@ -45,37 +37,32 @@ defmodule Dogma.Rule.ModuleDocTest do
         line: 1,
       }
     ]
-    assert expected_errors == errors
-  end
-
-  should "print the module name in the error message" do
-    module_name = "ModName"
-    source = """
-    defmodule #{module_name} do
-    end
-    """
-    error = source |> lint |> List.first
-    assert error.message |> String.contains?(module_name)
+    assert expected_errors == Rule.test( @rule, script )
   end
 
   should "print the module name correctly when it is namespaced" do
-    module_name = "Namespace.ModName"
-    source = """
-    defmodule #{module_name} do
+    script = """
+    defmodule NameSpace.ModName do
     end
-    """
-    error = source |> lint |> List.first
-    assert error.message |> String.contains?(module_name)
+    """ |> Script.parse!("")
+    expected_errors = [
+      %Error{
+        rule: ModuleDoc,
+        message: "Module NameSpace.ModName is missing a @moduledoc.",
+        line: 1,
+      }
+    ]
+    assert expected_errors == Rule.test( @rule, script )
   end
 
   should "error for a nested module missing a module doc" do
-    errors = """
+    script = """
     defmodule VeryGood do
       @moduledoc "Lots of good info here"
       defmodule NotGood do
       end
     end
-    """ |> lint
+    """ |> Script.parse!("")
     expected_errors = [
       %Error{
         rule: ModuleDoc,
@@ -83,17 +70,17 @@ defmodule Dogma.Rule.ModuleDocTest do
         line: 3,
       }
     ]
-    assert expected_errors == errors
+    assert expected_errors == Rule.test( @rule, script )
   end
 
   should "error for a parent module missing a module doc" do
-    errors = """
+    script = """
     defmodule NotGood do
       defmodule VeryGood do
         @moduledoc "Lots of good info here"
       end
     end
-    """ |> lint
+    """ |> Script.parse!("")
     expected_errors = [
       %Error{
         rule: ModuleDoc,
@@ -101,30 +88,31 @@ defmodule Dogma.Rule.ModuleDocTest do
         line: 1,
       }
     ]
-    assert expected_errors == errors
+    assert expected_errors == Rule.test( @rule, script )
   end
 
   should "not error for an exs file (exs is skipped)" do
-    errors = """
+    script = """
     defmodule NotGood do
     end
-    """ |> Script.parse!( "foo.exs" ) |> ModuleDoc.test
-    assert [] == errors
+    """ |> Script.parse!( "foo.exs" )
+    assert [] == Rule.test( @rule, script )
   end
 
   should "not crash for unquoted module names" do
-    errors = """
+    script = """
     quote do
       defmodule unquote(name) do
       end
     end
-    """ |> lint
-    assert errors == [
+    """ |> Script.parse!("")
+    expected_errors = [
       %Error{
         rule: ModuleDoc,
         message: "Unknown module is missing a @moduledoc.",
         line: 2,
       }
     ]
+    assert expected_errors == Rule.test( @rule, script )
   end
 end
