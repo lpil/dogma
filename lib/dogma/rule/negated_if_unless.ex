@@ -1,4 +1,6 @@
-defmodule Dogma.Rule.NegatedIfUnless do
+use Dogma.RuleBuilder
+
+defrule Dogma.Rule.NegatedIfUnless do
   @moduledoc """
   A rule that disallows the use of an if or unless with a negated predicate.
   If you do this, swap the `if` for an `unless`, or vice versa.
@@ -22,10 +24,7 @@ defmodule Dogma.Rule.NegatedIfUnless do
       end
   """
 
-  alias Dogma.Script
-  alias Dogma.Error
-
-  def test(script, _config = [] \\ []) do
+  def test(_rule, script) do
     script |> Script.walk( &check_node(&1, &2) )
   end
 
