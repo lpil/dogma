@@ -27,9 +27,9 @@ defmodule Dogma.RuleSet.All do
       %Rule.MatchInCondition{},
       %Rule.ModuleAttributeName{},
       %Rule.ModuleDoc{},
+      %Rule.ModuleName{},
     ]
     %{
-      ModuleName              => [],
       MultipleBlankLines      => [max_lines: 2],
       NegatedAssert           => [],
       NegatedIfUnless         => [],
