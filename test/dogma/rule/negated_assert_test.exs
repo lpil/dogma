@@ -1,28 +1,20 @@
 defmodule Dogma.Rule.NegatedAssertTest do
-  use ShouldI
-
-  alias Dogma.Rule.NegatedAssert
-  alias Dogma.Script
-  alias Dogma.Error
-
-  defp lint(source) do
-    source |> Script.parse!( "foo.ex" ) |> NegatedAssert.test
-  end
+  use RuleCase, for: NegatedAssert
 
   having "assert" do
     should "not error without negation" do
-      errors = """
+      script = """
       assert foo
       assert foo, "ok"
-      """ |> lint
-      assert [] == errors
+      """ |> Script.parse!("")
+      assert [] == Rule.test( @rule, script )
     end
 
     should "error when negated with !" do
-      errors = """
+      script = """
       assert ! foo
       assert ! foo, "not ok"
-      """ |> lint
+      """ |> Script.parse!("")
       expected_errors = [
         %Error{
           message: "Favour refute over a negated assert",
@@ -35,14 +27,14 @@ defmodule Dogma.Rule.NegatedAssertTest do
           rule: NegatedAssert,
         }
       ]
-      assert expected_errors == errors
+      assert expected_errors == Rule.test( @rule, script )
     end
 
     should "error when negated with not" do
-      errors = """
+      script = """
       assert not foo
       assert not foo, "not ok"
-      """ |> lint
+      """ |> Script.parse!("")
       expected_errors = [
         %Error{
           message: "Favour refute over a negated assert",
@@ -55,24 +47,24 @@ defmodule Dogma.Rule.NegatedAssertTest do
           rule: NegatedAssert,
         }
       ]
-      assert expected_errors == errors
+      assert expected_errors == Rule.test( @rule, script )
     end
   end
 
 
   having "refute" do
     should "not error without negation" do
-      errors = """
+      script = """
       refute foo
-      """ |> lint
-      assert [] == errors
+      """ |> Script.parse!("")
+      assert [] == Rule.test( @rule, script )
     end
 
     should "error when negated with !" do
-      errors = """
+      script = """
       refute ! foo
       refute ! foo, "not ok"
-      """ |> lint
+      """ |> Script.parse!("")
       expected_errors = [
         %Error{
           message: "Favour assert over a negated refute",
@@ -85,14 +77,14 @@ defmodule Dogma.Rule.NegatedAssertTest do
           rule: NegatedAssert,
         }
       ]
-      assert expected_errors == errors
+      assert expected_errors == Rule.test( @rule, script )
     end
 
     should "error when negated with not" do
-      errors = """
+      script = """
       refute not foo
       refute not foo, "not ok"
-      """ |> lint
+      """ |> Script.parse!("")
       expected_errors = [
         %Error{
           message: "Favour assert over a negated refute",
@@ -105,7 +97,7 @@ defmodule Dogma.Rule.NegatedAssertTest do
           rule: NegatedAssert,
         }
       ]
-      assert expected_errors == errors
+      assert expected_errors == Rule.test( @rule, script )
     end
   end
 end

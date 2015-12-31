@@ -27,9 +27,7 @@ defmodule Dogma.RuleBuilderTest do
   end
 
 
-
   with "no options for the rule" do
-
     defrule ConfiglessTest do
       def test(_rule, script) do
         script <> " Also good!"
