@@ -28,9 +28,9 @@ defmodule Dogma.RuleSet.All do
       %Rule.ModuleAttributeName{},
       %Rule.ModuleDoc{},
       %Rule.ModuleName{},
+      %Rule.MultipleBlankLines{},
     ]
     %{
-      MultipleBlankLines      => [max_lines: 2],
       NegatedAssert           => [],
       NegatedIfUnless         => [],
       PipelineStart           => [],
