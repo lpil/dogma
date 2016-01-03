@@ -13,7 +13,7 @@ defmodule Dogma.ScriptSourcesTest do
     test/fixtures/app/test/test_helper.exs
   )
 
-  with "find/2" do
+  having "find/2" do
     should "exclude the /deps/ directory" do
       paths = ScriptSources.find "."
       refute Enum.any?( paths, &String.starts_with?(&1, "deps/") )
@@ -42,7 +42,7 @@ defmodule Dogma.ScriptSourcesTest do
   end
 
 
-  with "to_scripts/1" do
+  having "to_scripts/1" do
     should "convert each path to a script struct" do
       scripts = ~w(
         test/fixtures/app/lib/app.ex

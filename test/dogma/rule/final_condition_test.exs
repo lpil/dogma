@@ -17,7 +17,7 @@ defmodule Dogma.Rule.FinalConditionTest do
     |> FinalCondition.test(catch_all: catch_all)
   end
 
-  with "no options are passed" do
+  having "no options are passed" do
     should "not error when last condition is `true`" do
       errors = """
       cond do
@@ -51,7 +51,7 @@ defmodule Dogma.Rule.FinalConditionTest do
     end
   end
 
-  with "catch_all option passed" do
+  having "catch_all option passed" do
     should "not error when last condition is catch_all" do
       errors = """
       cond do
@@ -108,7 +108,7 @@ defmodule Dogma.Rule.FinalConditionTest do
       ]
     end
 
-    with ":_ sent as a catch-all" do
+    having ":_ sent as a catch-all" do
       should "not error with _" do
         errors = """
         cond do
@@ -143,7 +143,7 @@ defmodule Dogma.Rule.FinalConditionTest do
     end
   end
 
-  with "no catchall condition" do
+  having "no catchall condition" do
     should "not error on expression" do
       errors = """
       cond do
@@ -170,7 +170,7 @@ defmodule Dogma.Rule.FinalConditionTest do
     end
   end
 
-  with "a different cond" do
+  having "a different cond" do
     should "not error when defining a macro called cond" do
       errors = """
       defmacro cond

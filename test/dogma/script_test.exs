@@ -6,9 +6,9 @@ defmodule Dogma.ScriptTest do
   alias Dogma.Script.InvalidScriptError
   alias Dogma.Util.Comment
 
-  with "parse/2" do
+  having "parse/2" do
 
-    with "a valid script" do
+    having "a valid script" do
       setup context do
         source = """
         defmodule Foo do
@@ -101,7 +101,7 @@ defmodule Dogma.ScriptTest do
     end
 
 
-    with "an invalid script" do
+    having "an invalid script" do
       setup context do
         source = ~s"""
         <>>>>>>><><>><><>>>>>>>>>>>>>><<><
@@ -134,7 +134,7 @@ defmodule Dogma.ScriptTest do
     end
 
 
-    with "a script with trailing blank lines" do
+    having "a script with trailing blank lines" do
       setup context do
         source = """
         1 + 2
@@ -171,7 +171,7 @@ defmodule Dogma.ScriptTest do
     end
   end
 
-  with "parse!/2" do
+  having "parse!/2" do
     should "raise InvalidScriptError with an invalid script" do
       assert_raise InvalidScriptError, "Invalid syntax in foo.ex", fn ->
         "<>>>>>>><><>><><>>>>>>>>>>>>>><<><" |> Script.parse!( "foo.ex" )
@@ -193,7 +193,7 @@ defmodule Dogma.ScriptTest do
   end
 
 
-  with "walk/2" do
+  having "walk/2" do
     setup context do
       %{
         script: Script.parse( "2 * 3 + 1", "foo.ex" )
@@ -224,7 +224,7 @@ defmodule Dogma.ScriptTest do
   end
 
 
-  with "run_tests/1" do
+  having "run_tests/1" do
 
     setup context do
       %{

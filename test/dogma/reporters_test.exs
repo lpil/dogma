@@ -3,7 +3,7 @@ defmodule Dogma.ReportersTest do
 
   alias Dogma.Reporters
 
-  with ".reporters" do
+  having ".reporters" do
     should "return a map containing each reporter" do
       actual =
         "lib/dogma/reporter/*.ex"

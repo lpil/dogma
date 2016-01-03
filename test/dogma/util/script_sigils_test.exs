@@ -3,7 +3,7 @@ defmodule Dogma.Util.ScriptSigilsTest do
 
   alias Dogma.Util.ScriptSigils
 
-  with "strip/1" do
+  having "strip/1" do
     should "no-op with empty scripts" do
       processed = "" |> ScriptSigils.strip
       assert processed == ""

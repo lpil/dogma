@@ -33,7 +33,7 @@ defmodule Dogma.Mixfile do
   defp deps do
     [
       # Test framework
-      {:shouldi, only: :test},
+      {:shouldi, github: "batate/shouldi", only: :test},
       # App config test helper
       {:temporary_env, only: :test},
       # Test coverage checker

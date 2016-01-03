@@ -9,7 +9,7 @@ defmodule Dogma.Rule.NegatedAssertTest do
     source |> Script.parse!( "foo.ex" ) |> NegatedAssert.test
   end
 
-  with "assert" do
+  having "assert" do
     should "not error without negation" do
       errors = """
       assert foo
@@ -60,7 +60,7 @@ defmodule Dogma.Rule.NegatedAssertTest do
   end
 
 
-  with "refute" do
+  having "refute" do
     should "not error without negation" do
       errors = """
       refute foo

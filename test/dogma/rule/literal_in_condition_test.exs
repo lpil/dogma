@@ -9,7 +9,7 @@ defmodule Dogma.Rule.LiteralInConditionTest do
     script |> Script.parse!( "foo.ex" ) |> LiteralInCondition.test
   end
 
-  with "a variable/function argument" do
+  having "a variable/function argument" do
     should "not error for if" do
       errors = """
       if feeling_tired do
@@ -40,7 +40,7 @@ defmodule Dogma.Rule.LiteralInConditionTest do
   end
 
 
-  with "a literal argument" do
+  having "a literal argument" do
     should "error for if" do
       errors = """
       if false do
@@ -91,7 +91,7 @@ defmodule Dogma.Rule.LiteralInConditionTest do
     end
   end
 
-  with "a piped in argument" do
+  having "a piped in argument" do
     should "not error for if" do
       errors = """
       something

@@ -9,7 +9,7 @@ defmodule Dogma.Rule.NegatedIfUnlessTest do
     source |> Script.parse!( "foo.ex" ) |> NegatedIfUnless.test
   end
 
-  with "a non negated predicate" do
+  having "a non negated predicate" do
     should "not error with if" do
       errors = """
       if it_was_really_good do
@@ -30,7 +30,7 @@ defmodule Dogma.Rule.NegatedIfUnlessTest do
   end
 
 
-  with "a predicate negated with 'not'" do
+  having "a predicate negated with 'not'" do
     should "error with if" do
       errors = """
       if not that_great do
@@ -64,7 +64,7 @@ defmodule Dogma.Rule.NegatedIfUnlessTest do
     end
   end
 
-  with "a predicate negated with '!'" do
+  having "a predicate negated with '!'" do
     should "error with if" do
       errors = """
       if ! that_great do

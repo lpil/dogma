@@ -7,7 +7,7 @@ defmodule Dogma.Util.CyclomaticComplexityTest do
     code |> CyclomaticComplexity.count
   end
 
-  with "an empty AST" do
+  having "an empty AST" do
     should "be 1" do
       size = complexity_of do end
       assert 1 == size

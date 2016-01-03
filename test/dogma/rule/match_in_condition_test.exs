@@ -9,7 +9,7 @@ defmodule Dogma.Rule.MatchInConditionTest do
     script |> Script.parse!( "foo.ex" ) |> MatchInCondition.test
   end
 
-  with "a variable/function argument" do
+  having "a variable/function argument" do
     should "not error for if" do
       errors = """
       if feeling_tired do
@@ -29,7 +29,7 @@ defmodule Dogma.Rule.MatchInConditionTest do
     end
   end
 
-  with "a literal argument" do
+  having "a literal argument" do
     should "not error for if" do
       errors = """
       if false do
@@ -49,7 +49,7 @@ defmodule Dogma.Rule.MatchInConditionTest do
     end
   end
 
-  with "a piped in argument" do
+  having "a piped in argument" do
     should "not error for if" do
       errors = """
       something
@@ -71,7 +71,7 @@ defmodule Dogma.Rule.MatchInConditionTest do
     end
   end
 
-  with "a comparison argument" do
+  having "a comparison argument" do
     should "not error for if" do
       errors = """
       if x ==  y do z end
@@ -93,7 +93,7 @@ defmodule Dogma.Rule.MatchInConditionTest do
     end
   end
 
-  with "match argument" do
+  having "match argument" do
     should "error for if" do
       errors = """
       if x         = y do z end

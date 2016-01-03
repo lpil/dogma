@@ -108,7 +108,7 @@ defmodule Dogma.Rule.VariableNameTest do
     assert expected_errors == errors
   end
 
-  with "non snake_case variable names in destructuring assignment" do
+  having "non snake_case variable names in destructuring assignment" do
     should "error for one member lists" do
       errors = """
       [fooBar] = foo_bar

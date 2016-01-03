@@ -5,7 +5,7 @@ defmodule Dogma.Util.ASTTest do
 
   doctest Dogma.Util.AST
 
-  with "literal?/1" do
+  having "literal?/1" do
     should "be true for atom literals" do
       atom = quote do: :foo
       assert AST.literal?(atom)

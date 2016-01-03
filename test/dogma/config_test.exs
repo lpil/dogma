@@ -6,7 +6,7 @@ defmodule Dogma.ConfigTest do
 
   @dummy_set Module.concat [__MODULE__, RuleSet]
 
-  with "rules" do
+  having "rules" do
     should "take the rule set from the application env" do
       TemporaryEnv.set( :dogma, rule_set: @dummy_set ) do
         TemporaryEnv.delete( :dogma, :override ) do
@@ -53,7 +53,7 @@ defmodule Dogma.ConfigTest do
   end
 
 
-  with "exclude" do
+  having "exclude" do
     should "take the exclude from the application env" do
       TemporaryEnv.set( :dogma, exclude: [1, 2, 3] ) do
         assert Config.build.exclude == [1, 2, 3]

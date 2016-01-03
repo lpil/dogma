@@ -30,8 +30,8 @@ defmodule Dogma.Reporter.SimpleTest do
     },
   ]
 
-  with ".handle_event" do
-    with "start event" do
+  having ".handle_event" do
+    having "start event" do
       should "print no tests message when there are no tests" do
         assert capture_io(fn ->
           Simple.handle_event({:start, []}, [])
@@ -51,7 +51,7 @@ defmodule Dogma.Reporter.SimpleTest do
       end
     end
 
-    with "script_tested event" do
+    having "script_tested event" do
       should "print a green dot with now errors" do
         assert capture_io(fn ->
           Simple.handle_event({:script_tested, @no_errors}, [])
@@ -65,7 +65,7 @@ defmodule Dogma.Reporter.SimpleTest do
       end
     end
 
-    with "finished event" do
+    having "finished event" do
       should "print success message with no errors" do
         assert capture_io(fn ->
           Simple.handle_event({:finished, @files_no_errors}, [])

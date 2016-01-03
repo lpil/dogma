@@ -3,7 +3,7 @@ defmodule Dogma.RuleSet.AllTest do
 
   alias Dogma.RuleSet.All
 
-  with "rules/0" do
+  having "rules/0" do
 
     @mod_regex ~r/\A[A-Z][A-Za-z\.]+\z/
 

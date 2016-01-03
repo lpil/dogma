@@ -7,7 +7,7 @@ defmodule Dogma.Reporter.JSONTest do
   alias Dogma.Script
   alias Dogma.Error
 
-  with "no errors" do
+  having "no errors" do
     should "return JSON of files with no errors" do
       scripts = [
         %Script{ path: "foo.ex", errors: [] },
@@ -31,7 +31,7 @@ defmodule Dogma.Reporter.JSONTest do
     end
   end
 
-  with "some errors" do
+  having "some errors" do
     should "return JSON of files with some errors" do
       errors = [
         %Error{

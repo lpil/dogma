@@ -7,19 +7,19 @@ defmodule Dogma.OptionParserTest do
     Mix.Tasks.Dogma.parse_args(args)
   end
 
-  with ".parse_args" do
-    with "empty args" do
+  having ".parse_args" do
+    having "empty args" do
       should "return nil and default reporter" do
         assert parse_args([]) == {nil, @default_reporter, false}
       end
     end
 
-    with "directories given" do
+    having "directories given" do
       should "return directory and default reporter" do
         assert parse_args(["lib/foo"]) == {"lib/foo", @default_reporter, false}
       end
 
-      with "multiple directories given" do
+      having "multiple directories given" do
         should "return first directory only" do
           parsed = parse_args(["lib/foo", "lib/bar"])
           assert parsed == {"lib/foo", @default_reporter, false}
@@ -27,22 +27,22 @@ defmodule Dogma.OptionParserTest do
       end
     end
 
-    with "format option passed" do
-      with "simple passed" do
+    having "format option passed" do
+      having "simple passed" do
         should "return simple reporter" do
           parsed = parse_args(["--format", "simple"])
           assert parsed == {nil, Dogma.Reporter.Simple, false}
         end
       end
 
-      with "flycheck passed" do
+      having "flycheck passed" do
         should "return flycheck reporter" do
           parsed = parse_args(["--format=flycheck"])
           assert parsed == {nil, Dogma.Reporter.Flycheck, false}
         end
       end
 
-      with "unknown reporter passed" do
+      having "unknown reporter passed" do
         should "return default reporter" do
           parsed = parse_args(["--format", "false"])
           assert parsed == {nil, @default_reporter, false}
@@ -50,7 +50,7 @@ defmodule Dogma.OptionParserTest do
       end
     end
 
-    with "no-error option passed" do
+    having "no-error option passed" do
       should "return disabled error exit code" do
         parsed = parse_args(["--no-error"])
         assert parsed == {nil, @default_reporter, true}

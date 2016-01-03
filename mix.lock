@@ -13,6 +13,6 @@
   "mix_test_watch": {:hex, :mix_test_watch, "0.2.4"},
   "poison": {:hex, :poison, "1.5.0"},
   "porcelain": {:hex, :porcelain, "2.0.0"},
-  "shouldi": {:hex, :shouldi, "0.2.3"},
+  "shouldi": {:git, "https://github.com/batate/shouldi.git", "54559b9a694db4d7cf4c62b365a36686844eb3ea", []},
   "ssl_verify_hostname": {:hex, :ssl_verify_hostname, "1.0.5"},
   "temporary_env": {:hex, :temporary_env, "1.0.1"}}

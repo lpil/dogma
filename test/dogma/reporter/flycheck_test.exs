@@ -7,7 +7,7 @@ defmodule Dogma.Reporter.FlycheckTest do
   alias Dogma.Script
   alias Dogma.Error
 
-  with "no errors" do
+  having "no errors" do
     setup context do
       Dict.put(context, :script, [%Script{ errors: [] }])
     end
@@ -19,7 +19,7 @@ defmodule Dogma.Reporter.FlycheckTest do
     end
   end
 
-  with "some errors" do
+  having "some errors" do
     setup context do
       error1 = %Error{
         line: 1,

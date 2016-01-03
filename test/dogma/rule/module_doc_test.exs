@@ -10,7 +10,7 @@ defmodule Dogma.Rule.ModuleDocTest do
   end
 
 
-  with "module docs" do
+  having "module docs" do
     should "not error" do
       errors = """
       defmodule VeryGood do
