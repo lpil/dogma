@@ -36,9 +36,9 @@ defmodule Dogma.RuleSet.All do
       %Rule.QuotesInString{},
       %Rule.Semicolon{},
       %Rule.TrailingBlankLines{},
+      %Rule.TrailingWhitespace{},
     ]
     %{
-      TrailingWhitespace      => [],
       UnlessElse              => [],
       VariableName            => [],
       WindowsLineEndings      => [],
