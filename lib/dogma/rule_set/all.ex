@@ -34,9 +34,9 @@ defmodule Dogma.RuleSet.All do
       %Rule.PipelineStart{},
       %Rule.PredicateName{},
       %Rule.QuotesInString{},
+      %Rule.Semicolon{},
     ]
     %{
-      Semicolon               => [],
       TrailingBlankLines      => [],
       TrailingWhitespace      => [],
       UnlessElse              => [],
