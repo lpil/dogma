@@ -8,5 +8,5 @@ defmodule Dogma.RuleSet do
   @doc """
   Returns the rules and configurations for the set.
   """
-  defcallback rules :: []
+  defcallback rules :: [%{}]
 end
