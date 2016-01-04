@@ -1,28 +1,19 @@
 defmodule Dogma.Rule.TrailingBlankLinesTest do
-  use ShouldI
-
-  alias Dogma.Rule.TrailingBlankLines
-  alias Dogma.Script
-  alias Dogma.Error
-
-  defp lint(source) do
-    source |> Script.parse!( "foo.ex" ) |> TrailingBlankLines.test
-  end
-
+  use RuleCase, for: TrailingBlankLines
 
   should "not error when there are no trailing blank lines" do
-    errors = """
+    script = """
     IO.puts 1
-    """  |> lint
-    assert [] == errors
+    """  |> Script.parse!("")
+    assert [] == Rule.test( @rule, script )
   end
 
   should "error when there are trailing blank lines" do
-    errors = """
+    script = """
     IO.puts 1
 
 
-    """ |> lint
+    """ |> Script.parse!("")
     expected_errors = [
       %Error{
         rule: TrailingBlankLines,
@@ -30,6 +21,6 @@ defmodule Dogma.Rule.TrailingBlankLinesTest do
         line: 2,
       }
     ]
-    assert expected_errors == errors
+    assert expected_errors == Rule.test( @rule, script )
   end
 end
