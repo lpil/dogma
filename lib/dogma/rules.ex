@@ -20,7 +20,7 @@ defmodule Dogma.Rules do
   defp test_script(script, dispatcher, rules) do
     errors = script |> Script.run_tests( rules )
     script = %Script{ script | errors: errors }
-    GenEvent.sync_notify(dispatcher, {:script_tested, script})
+    GenEvent.sync_notify( dispatcher, {:script_tested, script} )
     script
   end
 end

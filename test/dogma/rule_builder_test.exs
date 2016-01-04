@@ -22,12 +22,8 @@ defmodule Dogma.RuleBuilderTest do
     assert %MagicTestRule{}.awesome == :yes
   end
 
-  should "implement the Dogma.Rule protocol" do
-    assert Rule.test(%MagicTestRule{}, "ok?") == "ok? ok!"
-  end
 
-
-  with "no options for the rule" do
+  having "no options for the rule" do
     defrule ConfiglessTest do
       def test(_rule, script) do
         script <> " Also good!"
@@ -40,10 +36,6 @@ defmodule Dogma.RuleBuilderTest do
 
     should "set :enabled to true" do
       assert true = %ConfiglessTest{}.enabled
-    end
-
-    should "implement the Dogma.Rule protocol" do
-      assert Rule.test(%ConfiglessTest{}, "ok?") == "ok? Also good!"
     end
   end
 end

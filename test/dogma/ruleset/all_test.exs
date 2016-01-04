@@ -1,30 +1,19 @@
 defmodule Dogma.RuleSet.AllTest do
   use ShouldI
 
-  # alias Dogma.RuleSet.All
+  alias Dogma.RuleSet.All
 
   having "rules/0" do
-
     @mod_regex ~r/\A[A-Z][A-Za-z\.]+\z/
 
-    @tag :skip
-    should "map module names to config keyword lists" do
-      # for {name, config} <- All.rules do
-      #   assert config |> is_list
-      #   assert name |> to_string |> String.match?(@mod_regex)
-      # end
-    end
-
-    @tag :skip
     should "return a module for each file in lib/dogma/rule/" do
-      # dir_size = "lib/dogma/rule/*.ex" |> Path.wildcard |> length
-      # set_size = All.rules |> Dict.size
-      # assert dir_size == set_size
+      dir_size = "lib/dogma/rule/*.ex" |> Path.wildcard |> length
+      set_size = All.rules |> Dict.size
+      assert dir_size == set_size
     end
 
-    @tag :skip
-    should "contain LiteralInCondition" do
-      # assert All.rules |> Dict.has_key?( LiteralInCondition )
+    should "contain a known rule struct" do
+      assert All.rules |> Enum.member?( %Dogma.Rule.LiteralInCondition{} )
     end
   end
 end

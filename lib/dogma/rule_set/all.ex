@@ -41,6 +41,5 @@ defmodule Dogma.RuleSet.All do
       %Rule.VariableName{},
       %Rule.WindowsLineEndings{},
     ]
-    %{}
   end
 end
