@@ -1,4 +1,6 @@
-defmodule Dogma.Rule.QuotesInString do
+use Dogma.RuleBuilder
+
+defrule Dogma.Rule.QuotesInString do
   @moduledoc ~S"""
   A rule that disallows strings containing the double quote character (`"`).
 
@@ -11,12 +13,9 @@ defmodule Dogma.Rule.QuotesInString do
       ~s(")
   """
 
-  alias Dogma.Error
-
-  def test(script, _config = [] \\ []) do
+  def test(_rule, script) do
     script.tokens |> check_binary_strings
   end
-
 
   defp check_binary_strings(tokens, acc \\ [])
 

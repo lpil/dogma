@@ -1,19 +1,10 @@
 defmodule Dogma.Rule.QuotesInStringTest do
-  use ShouldI
-
-  alias Dogma.Rule.QuotesInString
-  alias Dogma.Script
-  alias Dogma.Error
-
-  defp lint(script) do
-    script |> Script.parse!( "foo.ex" ) |> QuotesInString.test
-  end
-
+  use RuleCase, for: QuotesInString
 
   should "error for a quote in a string" do
-    errors = ~S"""
+    script = ~S"""
     "Hello, \" world!"
-    """ |> lint
+    """ |> Script.parse!("")
     expected_errors = [
       %Error{
         rule:    QuotesInString,
@@ -21,66 +12,66 @@ defmodule Dogma.Rule.QuotesInStringTest do
         line: 1,
       }
     ]
-    assert expected_errors == errors
+    assert expected_errors == Rule.test( @rule, script )
   end
 
   should "not error for a quote free string" do
-    errors = """
+    script = """
     "Hello, world!"
-    """ |> lint
-    assert [] == errors
+    """ |> Script.parse!("")
+    assert [] == Rule.test( @rule, script )
   end
 
   should "not error for an interpolation-only string" do
-    errors = ~S"""
+    script = ~S"""
       "#{inspect app_servers_pids}"
-    """ |> lint
-    assert [] == errors
+    """ |> Script.parse!("")
+    assert [] == Rule.test( @rule, script )
   end
 
   should "not error for a quote in a ~s string" do
-    errors = """
+    script = """
     ~s(hello, quote -> " <-)
-    """ |> lint
-    assert [] == errors
+    """ |> Script.parse!("")
+    assert [] == Rule.test( @rule, script )
   end
 
   should "not error for a quote in a ~r regex" do
-    errors = """
+    script = """
     ~r/"/
-    """ |> lint
-    assert [] == errors
+    """ |> Script.parse!("")
+    assert [] == Rule.test( @rule, script )
   end
 
   should "not error for a quote in a ~R regex" do
-    errors = """
+    script = """
     ~R/"/
-    """ |> lint
-    assert [] == errors
+    """ |> Script.parse!("")
+    assert [] == Rule.test( @rule, script )
   end
 
   should "not error for a quote in a ~S string" do
-    errors = """
+    script = """
     ~S(hello, quote -> " <-)
-    """ |> lint
-    assert [] == errors
+    """ |> Script.parse!("")
+    assert [] == Rule.test( @rule, script )
   end
 
   should "not error for a quote in a heredoc" do
-    errors = ~s(
+    script = ~s(
     """
     Hey look, a quote -> "
-    """) |> lint
-    assert [] == errors
+    """) |> Script.parse!("")
+    assert [] == Rule.test( @rule, script )
   end
 
   should """
   not error for a quote in a binary literal, as sigils are not valid in the
   binary syntax.
   """ do
-    errors = ~S"""
+    script = ~S"""
     << "\""::utf8, cs::binary >> = string
-    """ |> lint
-    assert [] == errors
+    """ |> Script.parse!("")
+    assert [] == Rule.test( @rule, script )
   end
 end
