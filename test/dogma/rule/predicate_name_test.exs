@@ -1,36 +1,27 @@
 defmodule Dogma.Rule.PredicateNameTest do
-  use ShouldI
-
-  alias Dogma.Rule.PredicateName
-  alias Dogma.Script
-  alias Dogma.Error
-
-  defp lint(source) do
-    source |> Script.parse!( "foo.ex" ) |> PredicateName.test
-  end
-
+  use RuleCase, for: PredicateName
 
   should "not error for predicates without the `is_` prefix" do
-    errors = """
+    script = """
     def nice?(arg) do
       true
     end
     defp is_nice() do
       true
     end
-    """ |> lint
-    assert [] == errors
+    """ |> Script.parse!("")
+    assert [] == Rule.test( @rule, script )
   end
 
   should "error for predicates with the `is_` prefix" do
-    errors = """
+    script = """
     def is_naughty?(arg) do
       true
     end
     defp is_bad?() do
       true
     end
-    """ |> lint
+    """ |> Script.parse!("")
     expected_errors = [
       %Error{
         rule: PredicateName,
@@ -43,6 +34,6 @@ defmodule Dogma.Rule.PredicateNameTest do
         line: 1,
       },
     ]
-    assert expected_errors == errors
+    assert expected_errors == Rule.test( @rule, script )
   end
 end
