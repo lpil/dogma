@@ -39,9 +39,8 @@ defmodule Dogma.RuleSet.All do
       %Rule.TrailingWhitespace{},
       %Rule.UnlessElse{},
       %Rule.VariableName{},
+      %Rule.WindowsLineEndings{},
     ]
-    %{
-      WindowsLineEndings      => [],
-    }
+    %{}
   end
 end
