@@ -88,6 +88,8 @@ defmodule Dogma.Rule.FinalConditionTest do
           line: 18
         }
       ]
+      rule = %{ @rule | catch_all: :else }
+      assert expected_errors == Rule.test( rule, script )
     end
 
     having ":_ sent as a catch-all" do
