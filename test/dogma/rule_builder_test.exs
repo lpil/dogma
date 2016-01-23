@@ -2,7 +2,6 @@ defmodule Dogma.RuleBuilderTest do
   use ShouldI
 
   use Dogma.RuleBuilder
-  alias Dogma.Rule
 
   defrule MagicTestRule, [awesome: :yes] do
     @moduledoc false

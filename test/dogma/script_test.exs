@@ -234,37 +234,4 @@ defmodule Dogma.ScriptTest do
       assert nodes_walked == walked
     end
   end
-
-
-  having "run_tests/1" do
-
-    setup context do
-      %{
-        script: Script.parse( "1 + 1", "foo.ex" ),
-        rules: [
-          {TestRules.TestOne},
-          {TestRules.TestTwo, output: "hello world"}
-        ],
-      }
-    end
-
-    should "run the given rules", context do
-      errors = context.script |> Script.run_tests(context.rules)
-      assert [1, "hello world"] == errors
-    end
-  end
-end
-
-defmodule Dogma.Rule.TestRules do
-  defmodule TestOne do
-    def test(_) do
-      [1]
-    end
-  end
-
-  defmodule TestTwo do
-    def test(_, output: custom_out) do
-      [custom_out]
-    end
-  end
 end

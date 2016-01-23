@@ -1,4 +1,5 @@
 defmodule Dogma.MissingRuleDocError do
+  @moduledoc false
   defexception [:message]
 end
 

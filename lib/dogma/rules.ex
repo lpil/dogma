@@ -5,6 +5,7 @@ defmodule Dogma.Rules do
   """
 
   alias Dogma.Script
+  alias Dogma.Runner
 
   @default_rule_set Dogma.RuleSet.All
 
@@ -18,7 +19,7 @@ defmodule Dogma.Rules do
   end
 
   defp test_script(script, dispatcher, rules) do
-    errors = script |> Script.run_tests( rules )
+    errors = script |> Runner.run_tests( rules )
     script = %Script{ script | errors: errors }
     GenEvent.sync_notify( dispatcher, {:script_tested, script} )
     script
