@@ -5,6 +5,7 @@ defmodule Dogma.RuleBuilderTest do
   alias Dogma.Rule
 
   defrule MagicTestRule, [awesome: :yes] do
+    @moduledoc false
     def test(_rule, script) do
       script <> " ok!"
     end
@@ -25,6 +26,7 @@ defmodule Dogma.RuleBuilderTest do
 
   having "no options for the rule" do
     defrule ConfiglessTest do
+      @moduledoc false
       def test(_rule, script) do
         script <> " Also good!"
       end

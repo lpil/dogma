@@ -1,3 +1,7 @@
+defmodule Dogma.MissingRuleDocError do
+  defexception [:message]
+end
+
 defmodule Dogma.RuleBuilder do
   @moduledoc """
   The provider of the `defrule/3` macro through which we define rules.
@@ -38,14 +42,15 @@ defmodule Dogma.RuleBuilder do
     opts = [{:enabled, true} | opts]
     quote do
       defmodule unquote(name) do
-        @moduledoc """
-        I'm a rule with no documentation. Yet.
-        """
         alias Dogma.Error
         alias Dogma.Script
 
         defstruct unquote(opts)
         unquote(module_ast)
+
+        if @moduledoc == nil do
+          raise Dogma.MissingRuleDocError, message: "Rule missing @moduledoc"
+        end
       end
 
       defimpl Dogma.Rule, for: unquote(name) do
