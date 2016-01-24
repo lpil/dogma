@@ -36,6 +36,15 @@ defmodule Dogma.Rule.HardTabsTest do
     assert [] == errors
   end
 
+  should "error when tabs are mixed with spaces" do
+    errors = """
+    def foo
+      \t:function_body
+    end
+    """ |> lint
+    assert [error_on_line(2)] == errors
+  end
+
   defp error_on_line(line) do
     %Error{
       line: Dogma.Script.line(line),
