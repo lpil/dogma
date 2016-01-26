@@ -20,6 +20,9 @@ defmodule Dogma.Rule.TakenName do
   defp check_node({:def, _, [{name, meta, _}|_]} = node, errors) do
     test_predicate(name, meta, node, errors)
   end
+  defp check_node({:defmacro, _, [{name, meta, _}|_]} = node, errors) do
+    test_predicate(name, meta, node, errors)
+  end
   defp check_node({:defp, _, [{name, meta, _}|_]} = node, errors) do
     test_predicate(name, meta, node, errors)
   end

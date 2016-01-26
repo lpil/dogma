@@ -27,6 +27,26 @@ defmodule Dogma.Rule.TakenNameTest do
     assert [error_on_line(1, :unless)] == errors
   end
 
+  should "error when private function overrides standart library." do
+    errors = """
+    defp unless do
+      :function_body
+    end
+    """ |> lint
+    assert [error_on_line(1, :unless)] == errors
+  end
+
+  should "error when macro name overrides standart library." do
+    errors = """
+    defmacro require(clause, expression) do
+      quote do
+        if(!unquote(clause), do: unquote(expression))
+      end
+    end
+    """ |> lint
+    assert [error_on_line(1, :require)] == errors
+  end
+
   defp error_on_line(line, name) do
     %Error{
       line: Dogma.Script.line(line),
