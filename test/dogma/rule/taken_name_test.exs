@@ -9,7 +9,7 @@ defmodule Dogma.Rule.TakenNameTest do
     script |> Script.parse( "foo.ex" ) |> TakenName.test
   end
 
-  should "allow function names which not overrides standart library namespace." do
+  should "allow function names which not overrides standart lib namespace." do
     errors = """
     def ok? do
       :function_body

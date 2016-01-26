@@ -1,17 +1,32 @@
 defmodule Dogma.Rule.TakenName do
   @moduledoc """
-  todo: docs
+  A rule that disallows function or macro names which overrides standart lib.
 
-  Favour these: TBD
-  Over these: TBD
+  For example, this is considered valid:
+
+    def just_do_it do
+    end
+
+    defmacro make_your_dreams_come_true(clause, expression) do
+    end
+
+  While this is considered invalid:
+
+    def unless do
+    end
+
+    defmacro require(clause, expression) do
+    end
   """
 
   @behaviour Dogma.Rule
   alias Dogma.Script
   alias Dogma.Error
 
-  reserved_words = ~w(case if unless use unquote cond import respawn require def)
-  @keywords  Enum.reduce(reserved_words, HashSet.new, fn el, acc -> HashSet.put(acc, el) end)
+  reserved_words = ~w(case if unless use unquote cond import respawn require
+          def)
+  @keywords  Enum.reduce(reserved_words, HashSet.new,
+        fn el, acc -> HashSet.put(acc, el) end)
 
   def test(script, _config = [] \\ []) do
     script |> Script.walk( &check_node(&1, &2) )

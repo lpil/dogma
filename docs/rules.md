@@ -1,7 +1,7 @@
 # Dogma Rules
 
 These are the rules included in Dogma by default. Currently there are
-30 of them.
+31 of them.
 
 ## Contents
 
@@ -30,6 +30,7 @@ These are the rules included in Dogma by default. Currently there are
 * [PredicateName](#predicatename)
 * [QuotesInString](#quotesinstring)
 * [Semicolon](#semicolon)
+* [TakenName](#takenname)
 * [TrailingBlankLines](#trailingblanklines)
 * [TrailingWhitespace](#trailingwhitespace)
 * [UnlessElse](#unlesselse)
@@ -474,6 +475,27 @@ For example, these are considered invalid:
 
 This is because Elixir does not require semicolons to terminate expressions,
 and breaking up multiple expressions on different lines improves readability.
+
+
+### TakenName
+
+A rule that disallows function or macro names which overrides standart lib.
+
+For example, this is considered valid:
+
+  def just_do_it do
+  end
+
+  defmacro make_your_dreams_come_true(clause, expression) do
+  end
+
+While this is considered invalid:
+
+  def unless do
+  end
+
+  defmacro require(clause, expression) do
+  end
 
 
 ### TrailingBlankLines
