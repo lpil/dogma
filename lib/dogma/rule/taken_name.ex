@@ -25,8 +25,7 @@ defmodule Dogma.Rule.TakenName do
 
   reserved_words = ~w(case if unless use unquote cond import respawn require
           def)
-  @keywords  Enum.reduce(reserved_words, HashSet.new,
-        fn el, acc -> HashSet.put(acc, el) end)
+  @keywords  Enum.into(reserved_words, HashSet.new)
 
   def test(script, _config = [] \\ []) do
     script |> Script.walk( &check_node(&1, &2) )
