@@ -60,6 +60,36 @@ defmodule Dogma.ConfigTest do
     end
   end
 
+  test "rules: legacy format is supported" do
+    TemporaryEnv.set( :dogma, rule_set: @dummy_set ) do
+      TemporaryEnv.set(
+        :dogma,
+        override: %{ ModuleDoc => [enabled: false] }
+      ) do
+
+        stdout = ExUnit.CaptureIO.capture_io(fn->
+          rules = Config.build.rules
+          assert rules == [
+            %Rule.LineLength{},
+            # TODO
+            # %Rule.ModuleDoc{enabled: false},
+          ]
+        end)
+        assert stdout == """
+        The Dogma rule override format used for ModuleDoc has been deprecated.
+
+        Please update your config to use the new format like so:
+
+        config :dogma,
+          override: [
+            %Dogma.Rule.ModuleDoc{enabled: false},
+          ]
+
+        https://github.com/lpil/dogma/blob/master/docs/configuration.md
+        """
+      end
+    end
+  end
 
   test "exclude comes from the application env" do
     TemporaryEnv.set( :dogma, exclude: [1, 2, 3] ) do

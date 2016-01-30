@@ -39,4 +39,32 @@ defmodule Dogma.Config do
   defp insert_rule(rule, acc) when is_map(rule) do
     Dict.put(acc, rule.__struct__, rule)
   end
+
+  defp insert_rule({rule_name, config}, acc)
+  when is_atom(rule_name) and is_list(config) do
+    name =
+      rule_name
+      |> to_string
+      |> String.split(".")
+      |> tl
+      |> Enum.join(".")
+    conf =
+      config
+      |> inspect
+      |> String.replace("[", "{")
+      |> String.replace("]", "}")
+    IO.write """
+    The Dogma rule override format used for #{name} has been deprecated.
+
+    Please update your config to use the new format like so:
+
+    config :dogma,
+      override: [
+        %Dogma.Rule.#{name}#{conf},
+      ]
+
+    https://github.com/lpil/dogma/blob/master/docs/configuration.md
+    """
+    acc
+  end
 end
