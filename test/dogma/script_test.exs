@@ -115,12 +115,24 @@ defmodule Dogma.ScriptTest do
         refute context.script.valid?
       end
 
-      should "assign [] in place of AST", context do
-        assert [] == context.script.ast
+      should "assign nil in place of AST", context do
+        assert nil == context.script.ast
       end
 
-      should "assign [] in place of tokens", context do
-        assert [] == context.script.ast
+      should "assign nil in place of tokens", context do
+        assert nil == context.script.ast
+      end
+
+      should "assign nil in place of lines", context do
+        assert nil == context.script.lines
+      end
+
+      should "assign nil in place of processed_source", context do
+        assert nil == context.script.processed_source
+      end
+
+      should "assign nil in place of processed_lines", context do
+        assert nil == context.script.processed_lines
       end
 
       should "assign a syntax error", context do

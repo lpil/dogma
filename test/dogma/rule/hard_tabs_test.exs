@@ -6,12 +6,12 @@ defmodule Dogma.Rule.HardTabsTest do
   alias Dogma.Error
 
   defp lint(script) do
-    script |> Script.parse( "foo.ex" ) |> HardTabs.test
+    script |> Script.parse!( "foo.ex" ) |> HardTabs.test
   end
 
   should "allow spaces to be used for indenteding." do
     errors = """
-    def foo
+    def foo do
       :function_body
     end
     """ |> lint
@@ -20,7 +20,7 @@ defmodule Dogma.Rule.HardTabsTest do
 
   should "error when tab is used to indent function body." do
     errors = """
-    def foo
+    def foo do
     \t:function_body
     end
     """ |> lint
@@ -29,7 +29,7 @@ defmodule Dogma.Rule.HardTabsTest do
 
   should "allow tabs to be used for other reasons." do
     errors = """
-    def foo
+    def foo do
       ~s"have some tabs:\t\t\t"
     end
     """ |> lint
@@ -38,7 +38,7 @@ defmodule Dogma.Rule.HardTabsTest do
 
   should "error when tabs are mixed with spaces" do
     errors = """
-    def foo
+    def foo do
       \t:function_body
     end
     """ |> lint

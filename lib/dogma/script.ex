@@ -23,10 +23,10 @@ defmodule Dogma.Script do
 
   defstruct path:             nil,
             source:           nil,
-            lines:            [],
-            processed_source: [],
-            processed_lines:  [],
-            ast:              [],
+            lines:            nil,
+            processed_source: nil,
+            processed_lines:  nil,
+            ast:              nil,
             tokens:           [],
             valid?:           false,
             comments:         [],
@@ -38,14 +38,19 @@ defmodule Dogma.Script do
   Builds a Script struct from the given source code and path
   """
   def parse(source, path) do
-    processed_source = source |> ScriptSigils.strip |> ScriptStrings.strip
-    %Script{
+    script = %Script{
       path:             path,
       source:           source,
-      lines:            Lines.get( source ),
-      processed_source: processed_source,
-      processed_lines:  Lines.get( processed_source ),
-    } |> add_ast |> add_tokens |> Metadata.add
+    } |> add_ast
+    if script.valid? do
+      script
+      |> add_processed_source
+      |> add_tokens
+      |> add_lines
+      |> Metadata.add
+    else
+      script
+    end
   end
 
   @doc """
@@ -78,6 +83,17 @@ defmodule Dogma.Script do
     else
       script
     end
+  end
+
+  defp add_processed_source(script) when is_map(script) do
+    processed = script.source |> ScriptSigils.strip |> ScriptStrings.strip
+    %{ script | processed_source: processed }
+  end
+
+  defp add_lines(script) when is_map(script) do
+    lines = Lines.get( script.source )
+    pro   = Lines.get( script.processed_source )
+    %{ script | lines: lines, processed_lines: pro }
   end
 
   defp tokenize(source) do
