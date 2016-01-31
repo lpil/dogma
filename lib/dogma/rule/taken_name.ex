@@ -68,7 +68,8 @@ defmodule Dogma.Rule.TakenName do
   defp error(pos, name) do
     %Error{
       rule:     __MODULE__,
-      message:  "`#{name}` is already taken and overrides standart library",
+      message:
+          "`#{name}` is already taken and overrides standard library",
       line: Dogma.Script.line(pos),
     }
   end

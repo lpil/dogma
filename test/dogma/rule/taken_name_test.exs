@@ -9,7 +9,7 @@ defmodule Dogma.Rule.TakenNameTest do
     script |> Script.parse( "foo.ex" ) |> TakenName.test
   end
 
-  should "allow function names which not overrides standart lib namespace." do
+  should "allow function names which not overrides standard lib namespace." do
     errors = """
     def ok? do
       :function_body
@@ -18,7 +18,7 @@ defmodule Dogma.Rule.TakenNameTest do
     assert [] == errors
   end
 
-  should "error when function name overrides standart library." do
+  should "error when function name overrides standard library." do
     errors = """
     def unless do
       :function_body
@@ -27,7 +27,7 @@ defmodule Dogma.Rule.TakenNameTest do
     assert [error_on_line(1, :unless)] == errors
   end
 
-  should "error when private function overrides standart library." do
+  should "error when private function overrides standard library." do
     errors = """
     defp unless do
       :function_body
@@ -36,7 +36,7 @@ defmodule Dogma.Rule.TakenNameTest do
     assert [error_on_line(1, :unless)] == errors
   end
 
-  should "error when macro name overrides standart library." do
+  should "error when macro name overrides standard library." do
     errors = """
     defmacro require(clause, expression) do
       quote do
@@ -50,7 +50,7 @@ defmodule Dogma.Rule.TakenNameTest do
   defp error_on_line(line, name) do
     %Error{
       line: Dogma.Script.line(line),
-      message: "`#{name}` is already taken and overrides standart library",
+      message: "`#{name}` is already taken and overrides standard library",
       rule: TakenName
     }
   end
