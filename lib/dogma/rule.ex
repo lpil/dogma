@@ -1,21 +1,14 @@
-defmodule Dogma.Rule do
-  @moduledoc """
-  The Rule behaviour, used to assert the interface used by our Rule modules.
-  """
-
-  alias Dogma.Script
-
-  use Behaviour
-
+defprotocol Dogma.Rule do
   @doc """
-  A function that takes a Script struct, tests the script to see if it violates
-  the rule, and returns a list of errors.  The function takes a second argument
-  as a list of key value pairs to supply config for the test.
-  """
-  defcallback test(%Script{}, List) :: []
+  A function that tests a script to see if it violates
+  the rule, and returns a list of errors.
 
-  @doc """
-  Same as test/2 but assumes default configuration
+  The first argument is the struct that represents the rule and contains the
+  configuration for the rule.
+
+  The second argument is the script struct to be tested.
   """
-  defcallback test(%Script{}) :: []
+  def test(rule, script)
+
+  @callback test(%{}, %Dogma.Script{}) :: [%Dogma.Error{}]
 end

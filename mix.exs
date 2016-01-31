@@ -8,9 +8,11 @@ defmodule Dogma.Mixfile do
       app: :dogma,
       version: @version,
       elixir: "~> 1.0",
+      elixirc_paths: elixirc_paths(Mix.env),
       deps: deps,
       build_embedded: Mix.env == :prod,
       start_permanent: Mix.env == :prod,
+      consolidate_protocols: Mix.env != :test,
       test_coverage: [tool: ExCoveralls],
 
       name: "Dogma",
@@ -29,6 +31,9 @@ defmodule Dogma.Mixfile do
       applications: []
     ]
   end
+
+  defp elixirc_paths(:test), do: ["lib", "test/support"]
+  defp elixirc_paths(_),     do: ["lib"]
 
   defp deps do
     [

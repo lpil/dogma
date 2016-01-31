@@ -1,16 +1,8 @@
 defmodule Dogma.Rule.FunctionArityTest do
-  use ShouldI
-
-  alias Dogma.Rule.FunctionArity
-  alias Dogma.Script
-  alias Dogma.Error
-
-  defp lint(script) do
-    script |> Script.parse!( "foo.ex" ) |> FunctionArity.test
-  end
+  use RuleCase, for: FunctionArity
 
   should "not error with a low arity" do
-    errors = ~S"""
+    script = ~S"""
     def no_args_with_brackets() do
     end
 
@@ -25,26 +17,26 @@ defmodule Dogma.Rule.FunctionArityTest do
 
     defmacro macro(a,b,c) do
     end
-    """ |> lint
-    assert [] == errors
+    """ |> Script.parse!("")
+    assert [] == Rule.test( @rule, script )
   end
 
   should "not error with a low arity protocol definition" do
-    errors = """
+    script = """
     defprotocol Some.Protocol do
       def run(thing, context)
     end
-    """ |> lint
-    assert [] == errors
+    """ |> Script.parse!("")
+    assert [] == Rule.test( @rule, script )
   end
 
   should "error with a high arity" do
-    errors = """
+    script = """
     def point(a,b,c,d,e) do
     end
     defmacro volume(a,b,c,d,e) do
     end
-    """ |> lint
+    """ |> Script.parse!("")
     expected_errors = [
       %Error{
         rule:    FunctionArity,
@@ -57,18 +49,16 @@ defmodule Dogma.Rule.FunctionArityTest do
         line: 1,
       },
     ]
-    assert expected_errors == errors
+    assert expected_errors == Rule.test( @rule, script )
   end
 
   should "be able to customise max arity with" do
-    errors = """
+    script = """
     def point(a) do
     end
     def radius(a,b,c) do
     end
-    """
-    |> Script.parse!( "foo.ex" )
-    |> FunctionArity.test(max: 2)
+    """ |> Script.parse!("")
     expected_errors = [
       %Error{
         rule:     FunctionArity,
@@ -76,6 +66,7 @@ defmodule Dogma.Rule.FunctionArityTest do
         line: 3,
       }
     ]
-    assert expected_errors == errors
+    rule = %{ @rule | max: 2 }
+    assert expected_errors == Rule.test( rule, script )
   end
 end

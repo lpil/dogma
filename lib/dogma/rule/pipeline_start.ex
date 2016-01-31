@@ -1,4 +1,6 @@
-defmodule Dogma.Rule.PipelineStart do
+use Dogma.RuleBuilder
+
+defrule Dogma.Rule.PipelineStart do
   @moduledoc """
   A rule that enforces that function chains always begin with a bare value,
   rather than a function call with arguments.
@@ -17,15 +19,7 @@ defmodule Dogma.Rule.PipelineStart do
       |> Enum.join
   """
 
-  @behaviour Dogma.Rule
-
-  alias Dogma.Script
-  alias Dogma.Error
-
-  def test(script, _list),
-  do: test(script)
-
-  def test(script) do
+  def test(_rule, script) do
     script
     |> Script.walk(&check_node/2)
     |> Enum.reverse

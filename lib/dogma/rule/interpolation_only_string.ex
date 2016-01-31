@@ -1,23 +1,20 @@
-defmodule Dogma.Rule.InterpolationOnlyString do
+use Dogma.RuleBuilder
+
+defrule Dogma.Rule.InterpolationOnlyString do
   @moduledoc """
   A rule that disallows strings which are entirely the result of an
   interpolation.
 
   Good:
 
-        output = inspect(self)
+     output = inspect(self)
 
   Bad:
 
-        output = "#\{inspect self}"
+      output = "#\{inspect self}"
   """
 
-  @behaviour Dogma.Rule
-
-  alias Dogma.Script
-  alias Dogma.Error
-
-  def test(script, _config \\ []) do
+  def test(_rule, script) do
     script
     |> Script.walk(&check_node(&1, &2))
   end

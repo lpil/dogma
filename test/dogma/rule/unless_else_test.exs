@@ -1,32 +1,23 @@
 defmodule Dogma.Rule.UnlessElseTest do
-  use ShouldI
-
-  alias Dogma.Rule.UnlessElse
-  alias Dogma.Script
-  alias Dogma.Error
-
-  defp lint(source) do
-    source |> Script.parse!( "foo.ex" ) |> UnlessElse.test
-  end
-
+  use RuleCase, for: UnlessElse
 
   should "not error when an unless does not have an else block" do
-    errors = """
+    script = """
     unless feeling_sleepy? do
       a_little_dance
     end
-    """ |> lint
-    assert [] == errors
+    """ |> Script.parse!("")
+    assert [] == Rule.test( @rule, script )
   end
 
   should "error when an unless has an else block" do
-    errors = """
+    script = """
     unless feeling_sleepy? do
       a_little_dance
     else
       this_is_not_ok!
     end
-    """ |> lint
+    """ |> Script.parse!("")
     expected_errors = [
       %Error{
         message: "Favour if over unless with else",
@@ -34,17 +25,17 @@ defmodule Dogma.Rule.UnlessElseTest do
         rule: UnlessElse,
       }
     ]
-    assert expected_errors == errors
+    assert expected_errors == Rule.test( @rule, script )
   end
 
   should "not error when an if has an else block" do
-    errors = """
+    script = """
     if a_good_test? do
       jump_for_joy
     else
       be_very_sad( until: :fixed )
     end
-    """ |> lint
-    assert [] == errors
+    """ |> Script.parse!("")
+    assert [] == Rule.test( @rule, script )
   end
 end

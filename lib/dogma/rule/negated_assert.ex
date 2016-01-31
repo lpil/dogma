@@ -1,4 +1,6 @@
-defmodule Dogma.Rule.NegatedAssert do
+use Dogma.RuleBuilder
+
+defrule Dogma.Rule.NegatedAssert do
   @moduledoc """
   A rule that disallows the use of an assert or refute with a negated
   argument. If you do this, swap the `assert` for an `refute`, or vice versa.
@@ -16,12 +18,7 @@ defmodule Dogma.Rule.NegatedAssert do
       refute not bar
   """
 
-  @behaviour Dogma.Rule
-
-  alias Dogma.Script
-  alias Dogma.Error
-
-  def test(script, _config = [] \\ []) do
+  def test(_rule, script) do
     script |> Script.walk( &check_node(&1, &2) )
   end
 

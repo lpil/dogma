@@ -1,55 +1,47 @@
 defmodule Dogma.Rule.ModuleNameTest do
-  use ShouldI
-
-  alias Dogma.Rule.ModuleName
-  alias Dogma.Script
-  alias Dogma.Error
-
-  defp lint(script) do
-    script |> Script.parse!( "foo.ex" ) |> ModuleName.test
-  end
+  use RuleCase, for: ModuleName
 
   should "not error with a valid module name" do
-    errors = """
+    script = """
     defmodule HelloWorld do
     end
-    """ |> lint
-    assert [] == errors
+    """ |> Script.parse!("")
+    assert [] == Rule.test( @rule, script )
   end
 
   should "a valid module name as a symbol" do
-    errors = """
+    script = """
     defmodule :HelloWorld do
     end
-    """ |> lint
-    assert [] == errors
+    """ |> Script.parse!("")
+    assert [] == Rule.test( @rule, script )
   end
 
   should "a valid nested module name" do
-    errors = """
+    script = """
     defmodule Hello.World do
     end
-    """ |> lint
-    assert [] == errors
+    """ |> Script.parse!("")
+    assert [] == Rule.test( @rule, script )
   end
 
   should "nested modules with valid names" do
-    errors = """
+    script = """
     defmodule Hello do
       defmodule There do
         defmodule World do
         end
       end
     end
-    """ |> lint
-    assert [] == errors
+    """ |> Script.parse!("")
+    assert [] == Rule.test( @rule, script )
   end
 
   should "a snake_case module name" do
-    errors = """
+    script = """
     defmodule Snake_case do
     end
-    """ |> lint
+    """ |> Script.parse!("")
     expected_errors = [
       %Error{
         rule:     ModuleName,
@@ -57,14 +49,14 @@ defmodule Dogma.Rule.ModuleNameTest do
         line: 1,
       }
     ]
-    assert expected_errors == errors
+    assert expected_errors == Rule.test( @rule, script )
   end
 
   should "a snake_case symbol module name" do
-    errors = """
+    script = """
     defmodule :snake_case do
     end
-    """ |> lint
+    """ |> Script.parse!("")
     expected_errors = [
       %Error{
         rule:     ModuleName,
@@ -72,14 +64,14 @@ defmodule Dogma.Rule.ModuleNameTest do
         line: 1,
       }
     ]
-    assert expected_errors == errors
+    assert expected_errors == Rule.test( @rule, script )
   end
 
   should "a snake_case 2 part module name" do
-    errors = """
+    script = """
     defmodule Hello.There_world do
     end
-    """ |> lint
+    """ |> Script.parse!("")
     expected_errors = [
       %Error{
         rule:     ModuleName,
@@ -87,18 +79,18 @@ defmodule Dogma.Rule.ModuleNameTest do
         line: 1,
       }
     ]
-    assert expected_errors == errors
+    assert expected_errors == Rule.test( @rule, script )
   end
 
   should "a nested snake_case name" do
-    errors = """
+    script = """
     defmodule Hello do
       defmodule I_am_interrupting do
         defmodule World do
         end
       end
     end
-    """ |> lint
+    """ |> Script.parse!("")
     expected_errors = [
       %Error{
         rule:     ModuleName,
@@ -106,14 +98,14 @@ defmodule Dogma.Rule.ModuleNameTest do
         line: 2,
       }
     ]
-    assert expected_errors == errors
+    assert expected_errors == Rule.test( @rule, script )
   end
 
   should "a non-capitalised 2 part name" do
-    errors = """
+    script = """
     defmodule :"Hello.world" do
     end
-    """ |> lint
+    """ |> Script.parse!("")
     expected_errors = [
       %Error{
         rule:     ModuleName,
@@ -121,6 +113,6 @@ defmodule Dogma.Rule.ModuleNameTest do
         line: 1,
       }
     ]
-    assert expected_errors == errors
+    assert expected_errors == Rule.test( @rule, script )
   end
 end

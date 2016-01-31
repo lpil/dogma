@@ -1,48 +1,47 @@
 defmodule Dogma.Rule.HardTabsTest do
-  use ShouldI
+  use RuleCase, for: HardTabs
 
-  alias Dogma.Rule.HardTabs
-  alias Dogma.Script
-  alias Dogma.Error
-
-  defp lint(script) do
-    script |> Script.parse!( "foo.ex" ) |> HardTabs.test
-  end
-
-  should "allow spaces to be used for indenteding." do
-    errors = """
+  should "allow spaces to be used for indenting." do
+    script = """
     def foo do
       :function_body
     end
-    """ |> lint
-    assert [] == errors
+    """ |> Script.parse!("")
+    assert [] == Rule.test( @rule, script )
   end
 
   should "error when tab is used to indent function body." do
-    errors = """
+    script = """
     def foo do
     \t:function_body
     end
-    """ |> lint
-    assert [error_on_line(2)] == errors
+    """ |> Script.parse!("")
+    expected_errors = [
+      %Error{
+        line: 2,
+        message: "Hard tab indention. Use spaces instead.",
+        rule: HardTabs
+      }
+    ]
+    assert expected_errors == Rule.test( @rule, script )
   end
 
   should "allow tabs to be used for other reasons." do
-    errors = """
+    script = """
     def foo do
       ~s"have some tabs:\t\t\t"
     end
-    """ |> lint
-    assert [] == errors
+    """ |> Script.parse!("")
+    assert [] == Rule.test( @rule, script )
   end
 
   should "error when tabs are mixed with spaces" do
-    errors = """
+    script = """
     def foo do
       \t:function_body
     end
-    """ |> lint
-    assert [error_on_line(2)] == errors
+    """ |> Script.parse!("")
+    assert [error_on_line(2)] == Rule.test( @rule, script )
   end
 
   defp error_on_line(line) do
@@ -52,5 +51,4 @@ defmodule Dogma.Rule.HardTabsTest do
       rule: HardTabs
     }
   end
-
 end

@@ -111,32 +111,6 @@ defmodule Dogma.Script do
   def line({line, _, _}), do: line
   def line(line) when is_integer(line), do: line
 
-
-  @doc """
-  Runs each of the given on the given script
-  """
-  def run_tests(script, rules) do
-    rules
-    |> Enum.map( &namespace_rule/1 )
-    |> Enum.map( &run_test(&1, script) )
-    |> List.flatten
-  end
-
-  defp namespace_rule({rule, custom_config}) do
-    {Module.concat(Dogma.Rule, rule), custom_config}
-  end
-  defp namespace_rule({rule}) do
-    {Module.concat(Dogma.Rule, rule)}
-  end
-
-  defp run_test({rule, custom_config}, script) do
-    rule.test(script, custom_config)
-  end
-  defp run_test({rule}, script) do
-    rule.test(script)
-  end
-
-
   @doc """
   Postwalks the AST, calling the given `fun/2` on each.
 

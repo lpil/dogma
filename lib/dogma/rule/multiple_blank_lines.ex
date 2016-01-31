@@ -1,20 +1,12 @@
-defmodule Dogma.Rule.MultipleBlankLines do
+use Dogma.RuleBuilder
+
+defrule Dogma.Rule.MultipleBlankLines, [max_lines: 2] do
   @moduledoc """
   A rule that disallows multiple consecutive blank lines.
   """
 
-  @behaviour Dogma.Rule
-
-  alias Dogma.Error
-
-  def test(script), do: test(script, [])
-
-  def test(script, _config = []) do
-    test(script, max_lines: 1)
-  end
-
-  def test(script, max_lines: max) do
-    script.lines |> strip_lines |> check_blank_lines(max)
+  def test(rule, script) do
+    script.lines |> strip_lines |> check_blank_lines(rule.max_lines)
   end
 
   defp strip_lines(lines) do

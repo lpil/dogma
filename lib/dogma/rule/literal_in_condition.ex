@@ -1,4 +1,6 @@
-defmodule Dogma.Rule.LiteralInCondition do
+use Dogma.RuleBuilder
+
+defrule Dogma.Rule.LiteralInCondition do
   @moduledoc """
   A rule that disallows useless conditional statements that contain a literal
   in place of a variable or predicate function.
@@ -14,14 +16,9 @@ defmodule Dogma.Rule.LiteralInCondition do
       end
   """
 
-  @behaviour Dogma.Rule
-
-  alias Dogma.Script
-  alias Dogma.Error
-
   import Dogma.Util.AST, only: [literal?: 1]
 
-  def test(script, _config = [] \\ []) do
+  def test(_rule, script) do
     script |> Script.walk( &check_node(&1, &2) )
   end
 

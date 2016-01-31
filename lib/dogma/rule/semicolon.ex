@@ -1,4 +1,6 @@
-defmodule Dogma.Rule.Semicolon do
+use Dogma.RuleBuilder
+
+defrule Dogma.Rule.Semicolon do
   @moduledoc """
   A rule that disallows semicolons to terminate or separate statements.
 
@@ -11,11 +13,7 @@ defmodule Dogma.Rule.Semicolon do
   and breaking up multiple expressions on different lines improves readability.
   """
 
-  @behaviour Dogma.Rule
-
-  alias Dogma.Error
-
-  def test(script, _config \\ []) do
+  def test(_rule, script) do
     script.tokens
     |> get_semicolon_lines
     |> Enum.map(&to_error/1)

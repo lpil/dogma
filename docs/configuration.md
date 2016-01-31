@@ -9,6 +9,7 @@ Here's an example configuration.
 
 ```elixir
 # config/config.exs
+alias Dogma.Rule
 
 config :dogma,
 
@@ -21,10 +22,10 @@ config :dogma,
   ],
 
   # Override an existing rule configuration
-  override: %{
-    LineLength => [ max_length: 120 ],
-    HardTabs   => false,
-  }
+  override: [
+    %Rule.LineLength{ max_length: 120 },
+    %Rule.HardTabs{ enabled: false },
+  ]
 ```
 
 ## rule_set
@@ -46,6 +47,6 @@ would be ignored by Dogma.
 
 ## override
 
-The `override` key takes a map where the keys are module atoms. The values are
-either a keyword list of configuration options, or the boolean `false`, which
-will disable the rule.
+The `override` key takes a list of Rule structs. The struct keys are the
+rule's configuration options, as well as the `:enabled` key, which can be used
+to disable a rule entirely when set to the value `false`.

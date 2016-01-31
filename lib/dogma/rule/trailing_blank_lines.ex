@@ -1,15 +1,13 @@
-defmodule Dogma.Rule.TrailingBlankLines do
+use Dogma.RuleBuilder
+
+defrule Dogma.Rule.TrailingBlankLines do
   @moduledoc """
   A rule that disallows trailing blank lines as the end of a source file.
   """
 
-  @behaviour Dogma.Rule
-
-  alias Dogma.Error
-
   @violation_regex ~r/\n\n+\z/
 
-  def test(script, _config = [] \\ []) do
+  def test(_rule, script) do
     case script |> violation? do
       false -> []
       pos   -> [error( pos )]

@@ -1,25 +1,17 @@
 defmodule Dogma.Rule.LiteralInInterpolationTest do
-  use ShouldI
-
-  alias Dogma.Rule.LiteralInInterpolation
-  alias Dogma.Script
-  alias Dogma.Error
-
-  defp lint(script) do
-    script |> Script.parse!( "foo.ex" ) |> LiteralInInterpolation.test
-  end
+  use RuleCase, for: LiteralInInterpolation
 
   should "not error with a variable or function" do
-    errors = """
-    IO.puts( "Hi my name is #\{name}")
-    """ |> lint
-    assert [] == errors
+    script = ~S"""
+    IO.puts( "Hi my name is #{name}")
+    """ |> Script.parse!("")
+    assert [] == Rule.test( @rule, script )
   end
 
   should "error with a literal in the interpolation" do
-    errors = """
-    IO.puts("Hi my name is #\{'Jose'}")
-    """ |> lint
+    script = ~S"""
+    IO.puts("Hi my name is #{'Jose'}")
+    """ |> Script.parse!("")
     expected_errors = [
       %Error{
         rule:     LiteralInInterpolation,
@@ -28,6 +20,6 @@ defmodule Dogma.Rule.LiteralInInterpolationTest do
       }
     ]
 
-    assert expected_errors == errors
+    assert expected_errors == Rule.test( @rule, script )
   end
 end

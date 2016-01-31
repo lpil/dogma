@@ -1,4 +1,6 @@
-defmodule Dogma.Rule.PredicateName do
+use Dogma.RuleBuilder
+
+defrule Dogma.Rule.PredicateName do
   @moduledoc """
   A rule that disallows tautological predicate names, meaning those that start
   with the prefix `has_` or the prefix `is_`.
@@ -20,11 +22,7 @@ defmodule Dogma.Rule.PredicateName do
       end
   """
 
-  @behaviour Dogma.Rule
-  alias Dogma.Script
-  alias Dogma.Error
-
-  def test(script, _config = [] \\ []) do
+  def test(_rule, script) do
     script |> Script.walk( &check_node(&1, &2) )
   end
 

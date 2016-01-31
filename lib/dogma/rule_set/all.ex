@@ -4,41 +4,42 @@ defmodule Dogma.RuleSet.All do
 
   Rules to be run are returned by `list/0`
   """
+  alias Dogma.Rule
 
   @behaviour Dogma.RuleSet
 
   def rules do
-    %{
-      CommentFormat           => [],
-      ComparisonToBoolean     => [],
-      DebuggerStatement       => [],
-      ExceptionName           => [],
-      FinalCondition          => [],
-      FinalNewline            => [],
-      FunctionArity           => [max: 4],
-      FunctionName            => [],
-      FunctionParentheses     => [],
-      HardTabs                => [],
-      InterpolationOnlyString => [],
-      LineLength              => [max_length: 80],
-      LiteralInCondition      => [],
-      LiteralInInterpolation  => [],
-      MatchInCondition        => [],
-      ModuleAttributeName     => [],
-      ModuleDoc               => [],
-      ModuleName              => [],
-      MultipleBlankLines      => [max_lines: 2],
-      NegatedAssert           => [],
-      NegatedIfUnless         => [],
-      PipelineStart           => [],
-      PredicateName           => [],
-      QuotesInString          => [],
-      Semicolon               => [],
-      TrailingBlankLines      => [],
-      TrailingWhitespace      => [],
-      UnlessElse              => [],
-      VariableName            => [],
-      WindowsLineEndings      => [],
-    }
+    [
+      %Rule.CommentFormat{},
+      %Rule.ComparisonToBoolean{},
+      %Rule.DebuggerStatement{},
+      %Rule.ExceptionName{},
+      %Rule.FinalCondition{},
+      %Rule.FinalNewline{},
+      %Rule.FunctionArity{},
+      %Rule.FunctionName{},
+      %Rule.FunctionParentheses{},
+      %Rule.HardTabs{},
+      %Rule.InterpolationOnlyString{},
+      %Rule.LineLength{},
+      %Rule.LiteralInCondition{},
+      %Rule.LiteralInInterpolation{},
+      %Rule.MatchInCondition{},
+      %Rule.ModuleAttributeName{},
+      %Rule.ModuleDoc{},
+      %Rule.ModuleName{},
+      %Rule.MultipleBlankLines{},
+      %Rule.NegatedAssert{},
+      %Rule.NegatedIfUnless{},
+      %Rule.PipelineStart{},
+      %Rule.PredicateName{},
+      %Rule.QuotesInString{},
+      %Rule.Semicolon{},
+      %Rule.TrailingBlankLines{},
+      %Rule.TrailingWhitespace{},
+      %Rule.UnlessElse{},
+      %Rule.VariableName{},
+      %Rule.WindowsLineEndings{},
+    ]
   end
 end

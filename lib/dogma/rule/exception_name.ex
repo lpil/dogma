@@ -1,4 +1,6 @@
-defmodule Dogma.Rule.ExceptionName do
+use Dogma.RuleBuilder
+
+defrule Dogma.Rule.ExceptionName do
   @moduledoc """
   A Rule that checks that exception names end with a trailing Error.
 
@@ -19,13 +21,9 @@ defmodule Dogma.Rule.ExceptionName do
       end
   """
 
-  @behaviour Dogma.Rule
   @good_name_suffix "Error"
 
-  alias Dogma.Script
-  alias Dogma.Error
-
-  def test(script, _config = [] \\ []) do
+  def test(_rule, script) do
     script |> Script.walk( &check_node(&1, &2) )
   end
 

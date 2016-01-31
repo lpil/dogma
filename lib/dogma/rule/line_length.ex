@@ -1,4 +1,6 @@
-defmodule Dogma.Rule.LineLength do
+use Dogma.RuleBuilder
+
+defrule Dogma.Rule.LineLength, [max_length: 80] do
   @moduledoc """
   A rule that disallows lines longer than X characters in length (defaults to
   80).
@@ -7,20 +9,10 @@ defmodule Dogma.Rule.LineLength do
   specify your own line max character count.
   """
 
-  @behaviour Dogma.Rule
-
-  alias Dogma.Error
-
-  def test(script), do: test(script, [])
-
-  def test(script, _config = []) do
-    test(script, max_length: 80)
-  end
-
-  def test(script, max_length: max) do
+  def test(rule, script) do
     script.lines
-    |> Enum.filter(&longer_than(&1, max))
-    |> Enum.map(&error(&1, max))
+    |> Enum.filter(&longer_than(&1, rule.max_length))
+    |> Enum.map(&error(&1, rule.max_length))
   end
 
 

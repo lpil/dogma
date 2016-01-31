@@ -1,17 +1,13 @@
 defmodule Dogma.Rule.DebuggerStatementTest do
-  use ShouldI
-
-  alias Dogma.Rule.DebuggerStatement
-  alias Dogma.Script
-  alias Dogma.Error
+  use RuleCase, for: DebuggerStatement
 
   should "error with a call to IEx.pry" do
-    errors = """
+    script = """
     def identity(x) do
       IEx.pry
       x
     end
-    """ |> Script.parse!( "foo.ex" ) |> DebuggerStatement.test
+    """ |> Script.parse!("")
     expected_errors = [
       %Error{
         rule: DebuggerStatement,
@@ -19,6 +15,6 @@ defmodule Dogma.Rule.DebuggerStatementTest do
         line: 2,
       },
     ]
-    assert expected_errors == errors
+    assert expected_errors == Rule.test( @rule, script )
   end
 end

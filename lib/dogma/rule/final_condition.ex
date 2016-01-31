@@ -1,4 +1,6 @@
-defmodule Dogma.Rule.FinalCondition do
+use Dogma.RuleBuilder
+
+defrule Dogma.Rule.FinalCondition, [catch_all: true] do
   @moduledoc """
   A rule that checks that the last condition of a `cond` statement is `true`.
 
@@ -58,18 +60,9 @@ defmodule Dogma.Rule.FinalCondition do
       end
   """
 
-  @behaviour Dogma.Rule
-
-  alias Dogma.Script
-  alias Dogma.Error
-
-  def test(script, options \\ []) do
-    catch_all =
-      options
-      |> Keyword.get(:catch_all, true)
-
+  def test(rule, script) do
     script
-    |> Script.walk(&check_node(&1, &2, catch_all))
+    |> Script.walk(&check_node(&1, &2, rule.catch_all))
     |> Enum.reverse
   end
 

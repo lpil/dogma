@@ -1,4 +1,6 @@
-defmodule Dogma.Rule.ComparisonToBoolean do
+use Dogma.RuleBuilder
+
+defrule Dogma.Rule.ComparisonToBoolean do
   @moduledoc """
   A rule that disallows comparison to booleans.
 
@@ -17,12 +19,7 @@ defmodule Dogma.Rule.ComparisonToBoolean do
   `true` or `false`.
   """
 
-  @behaviour Dogma.Rule
-
-  alias Dogma.Script
-  alias Dogma.Error
-
-  def test(script, _config = [] \\ []) do
+  def test(_rule, script) do
     script |> Script.walk( &check_node(&1, &2) )
   end
 

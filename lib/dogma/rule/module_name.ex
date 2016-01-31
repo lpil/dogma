@@ -1,4 +1,6 @@
-defmodule Dogma.Rule.ModuleName do
+use Dogma.RuleBuilder
+
+defrule Dogma.Rule.ModuleName do
   @moduledoc """
   A rule that disallows module names not in PascalCase.
 
@@ -13,13 +15,11 @@ defmodule Dogma.Rule.ModuleName do
       end
   """
 
-  @behaviour Dogma.Rule
-
   alias Dogma.Script
   alias Dogma.Error
   alias Dogma.Util.Name
 
-  def test(script, _config = [] \\ []) do
+  def test(_rule, script) do
     script |> Script.walk( &check_node(&1, &2) )
   end
 
