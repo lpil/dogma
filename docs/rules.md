@@ -479,7 +479,7 @@ and breaking up multiple expressions on different lines improves readability.
 
 ### TakenName
 
-A rule that disallows function or macro names which overrides standart lib.
+A rule that disallows function or macro names which overrides standard lib.
 
 For example, this is considered valid:
 

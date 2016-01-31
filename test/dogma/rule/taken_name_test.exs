@@ -9,6 +9,16 @@ defmodule Dogma.Rule.TakenNameTest do
     script |> Script.parse( "foo.ex" ) |> TakenName.test
   end
 
+  defp verify fn_name do
+    errors = """
+    defp #{fn_name} do
+      :function_body
+    end
+    """ |> lint
+    assert [error_on_line(1, String.to_atom(fn_name))] == errors,
+          "Sytax error: Name #{fn_name} can not be used"
+  end
+
   should "allow function names which not overrides standard lib namespace." do
     errors = """
     def ok? do
@@ -45,6 +55,10 @@ defmodule Dogma.Rule.TakenNameTest do
     end
     """ |> lint
     assert [error_on_line(1, :require)] == errors
+  end
+
+  should "verify keywords for syntax errors" do
+    Enum.map(TakenName.all_keywords, fn(x) -> verify(x) end)
   end
 
   defp error_on_line(line, name) do

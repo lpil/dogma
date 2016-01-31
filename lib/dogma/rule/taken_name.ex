@@ -1,6 +1,6 @@
 defmodule Dogma.Rule.TakenName do
   @moduledoc """
-  A rule that disallows function or macro names which overrides standart lib.
+  A rule that disallows function or macro names which overrides standard lib.
 
   For example, this is considered valid:
 
@@ -23,9 +23,19 @@ defmodule Dogma.Rule.TakenName do
   alias Dogma.Script
   alias Dogma.Error
 
-  reserved_words = ~w(case if unless use unquote cond import respawn require
-          def)
+  reserved_words = ~w(alias bc case cond exit function if import inbits inlist
+               is_atom is_binary is_bitstring is_boolean is_exception is_float
+               is_function is_integer is_list is_number is_pid is_port
+               is_record is_reference is_tuple lc quote raise receive require
+               respawn super throw try unless unless unquote use
+               )
+
   @keywords  Enum.into(reserved_words, HashSet.new)
+
+  @spec all_keywords :: HashSet.t
+  def all_keywords do
+    @keywords
+  end
 
   def test(script, _config = [] \\ []) do
     script |> Script.walk( &check_node(&1, &2) )
