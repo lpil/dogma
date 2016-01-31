@@ -9,4 +9,6 @@ defprotocol Dogma.Rule do
   The second argument is the script struct to be tested.
   """
   def test(rule, script)
+
+  @callback test(%{}, %Dogma.Script{}) :: [%Dogma.Error{}]
 end

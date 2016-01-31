@@ -46,6 +46,8 @@ defmodule Dogma.RuleBuilder do
         alias Dogma.Error
         alias Dogma.Script
 
+        @behaviour Dogma.Rule
+
         defstruct unquote(opts)
         unquote(module_ast)
 
