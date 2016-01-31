@@ -42,17 +42,19 @@ defmodule Dogma.Config do
 
   defp insert_rule({rule_name, config}, acc)
   when is_atom(rule_name) and is_list(config) do
+    full_name = Module.concat(Dogma.Rule, rule_name)
+    rule = struct(full_name, config)
     name =
       rule_name
       |> to_string
       |> String.split(".")
       |> tl
       |> Enum.join(".")
-    conf =
+    pairs =
       config
       |> inspect
-      |> String.replace("[", "{")
-      |> String.replace("]", "}")
+      |> String.replace(~r/\A\[/, "{")
+      |> String.replace(~r/]\z/, "}")
     IO.write """
     The Dogma rule override format used for #{name} has been deprecated.
 
@@ -60,11 +62,11 @@ defmodule Dogma.Config do
 
     config :dogma,
       override: [
-        %Dogma.Rule.#{name}#{conf},
+        %Dogma.Rule.#{name}#{pairs},
       ]
 
     https://github.com/lpil/dogma/blob/master/docs/configuration.md
     """
-    acc
+    Dict.put(acc, rule.__struct__, rule)
   end
 end

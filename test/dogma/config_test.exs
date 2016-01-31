@@ -71,8 +71,7 @@ defmodule Dogma.ConfigTest do
           rules = Config.build.rules
           assert rules == [
             %Rule.LineLength{},
-            # TODO
-            # %Rule.ModuleDoc{enabled: false},
+            %Rule.ModuleDoc{enabled: false},
           ]
         end)
         assert stdout == """
