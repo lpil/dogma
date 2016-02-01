@@ -21,12 +21,20 @@ defrule Dogma.Rule.TakenName do
     end
   """
 
-  reserved_words = ~w(alias bc case cond exit function if import inbits inlist
-               is_atom is_binary is_bitstring is_boolean is_exception is_float
-               is_function is_integer is_list is_number is_pid is_port
-               is_record is_reference is_tuple lc quote raise receive require
-               respawn super throw try unless unless unquote use
-               )
+  reserved_words = ~w(__CALLER__ __DIR__ __ENV__ __MODULE__ abs alias apply
+          bc binary_part binding bit_size byte_size case cond def defdelegate
+          defexception defimpl defmacro defmacrop defmodule defoverridable defp
+          defprotocol defstruct destructure div elem exit for function
+          get_and_update_in get_in hd if import inbits inli inlist inspect
+          is_atom is_binary is_bitstring is_boolean is_exception is_float
+          is_function is_integer is_list is_map is_nil is_number is_pid is_port
+          is_record is_reference is_tuple lc length make_ref map_size max min
+          node put_elem put_in quote raise receive rem require reraise respawn
+          resque round self send sigil_C sigil_R sigil_S sigil_W sigil_c sigil_r
+          sigil_s sigil_w spawn spawn_link spawn_monitor struct sum super throw
+          tl to_char_list to_string trunc try tuple_size unless unquote
+          unquote_splicing update_in use
+          )
 
   @keywords  Enum.into(reserved_words, HashSet.new)
 
