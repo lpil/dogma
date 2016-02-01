@@ -1,12 +1,9 @@
 defmodule Dogma.Rule.TakenNameTest do
+  use RuleCase, for: TakenName
   use ShouldI
 
-  alias Dogma.Rule.TakenName
-  alias Dogma.Script
-  alias Dogma.Error
-
   defp lint(script) do
-    script |> Script.parse( "foo.ex" ) |> TakenName.test
+    script |> Script.parse!( "" ) |> fn s -> TakenName.test(@rule, s) end.()
   end
 
   defp verify fn_name do

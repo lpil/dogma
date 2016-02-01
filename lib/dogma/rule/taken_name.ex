@@ -1,4 +1,6 @@
-defmodule Dogma.Rule.TakenName do
+use Dogma.RuleBuilder
+
+defrule Dogma.Rule.TakenName do
   @moduledoc """
   A rule that disallows function or macro names which overrides standard lib.
 
@@ -19,10 +21,6 @@ defmodule Dogma.Rule.TakenName do
     end
   """
 
-  @behaviour Dogma.Rule
-  alias Dogma.Script
-  alias Dogma.Error
-
   reserved_words = ~w(alias bc case cond exit function if import inbits inlist
                is_atom is_binary is_bitstring is_boolean is_exception is_float
                is_function is_integer is_list is_number is_pid is_port
@@ -37,7 +35,7 @@ defmodule Dogma.Rule.TakenName do
     @keywords
   end
 
-  def test(script, _config = [] \\ []) do
+  def test(_rule, script) do
     script |> Script.walk( &check_node(&1, &2) )
   end
 
@@ -80,7 +78,7 @@ defmodule Dogma.Rule.TakenName do
       rule:     __MODULE__,
       message:
           "`#{name}` is already taken and overrides standard library",
-      line: Dogma.Script.line(pos),
+      line: pos,
     }
   end
 end
