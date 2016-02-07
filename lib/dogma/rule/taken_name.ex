@@ -48,19 +48,19 @@ defrule Dogma.Rule.TakenName do
   end
 
   defp check_node({:def, _, [{name, meta, _}|_]} = node, errors) do
-    test_predicate(name, meta, node, errors)
+    check_name(name, meta, node, errors)
   end
   defp check_node({:defmacro, _, [{name, meta, _}|_]} = node, errors) do
-    test_predicate(name, meta, node, errors)
+    check_name(name, meta, node, errors)
   end
   defp check_node({:defp, _, [{name, meta, _}|_]} = node, errors) do
-    test_predicate(name, meta, node, errors)
+    check_name(name, meta, node, errors)
   end
   defp check_node(node, errors) do
     {node, errors}
   end
 
-  defp test_predicate(name) do
+  defp check_name(name) do
     if HashSet.member?(@keywords, name) do
       name
     else
@@ -68,12 +68,8 @@ defrule Dogma.Rule.TakenName do
     end
   end
 
-  defp test_predicate({:unquote,_,_} , _meta, node, errors) do
-    {node, errors}
-  end
-
-  defp test_predicate(function_name, meta, node, errors) do
-    name = function_name |> to_string |> test_predicate
+  defp check_name(function_name, meta, node, errors) do
+    name = function_name |> to_string |> check_name
     if name do
       {node, [error( meta[:line], name ) | errors]}
     else

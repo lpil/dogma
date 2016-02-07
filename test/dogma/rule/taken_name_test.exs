@@ -3,7 +3,7 @@ defmodule Dogma.Rule.TakenNameTest do
   use ShouldI
 
   defp lint(script) do
-    script |> Script.parse!( "" ) |> fn s -> TakenName.test(@rule, s) end.()
+    script |> Script.parse!( "" ) |> fn s -> Rule.test(@rule, s) end.()
   end
 
   defp verify fn_name do
@@ -12,7 +12,7 @@ defmodule Dogma.Rule.TakenNameTest do
       :function_body
     end
     """ |> lint
-    assert [error_on_line(1, String.to_atom(fn_name))] == errors,
+    assert [error_on_line(1, fn_name)] == errors,
           "Sytax error: Name #{fn_name} can not be used"
   end
 
