@@ -5,6 +5,8 @@ Dogma
 
 [![Build Status](https://travis-ci.org/lpil/dogma.svg?branch=master)](https://travis-ci.org/lpil/dogma)
 [![Coverage](https://coveralls.io/repos/lpil/dogma/badge.svg)](https://coveralls.io/r/lpil/dogma)
+[![Hex version](https://img.shields.io/hexpm/v/dogma.svg "Hex version")](https://hex.pm/packages/dogma)
+[![Hex downloads](https://img.shields.io/hexpm/dt/dogma.svg "Hex downloads")](https://hex.pm/packages/dogma)
 [![Inline docs](https://inch-ci.org/github/lpil/dogma.svg?branch=master&style=flat)](http://inch-ci.org/github/lpil/dogma)
 
 
