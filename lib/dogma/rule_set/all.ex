@@ -35,6 +35,7 @@ defmodule Dogma.RuleSet.All do
       %Rule.PredicateName{},
       %Rule.QuotesInString{},
       %Rule.Semicolon{},
+      %Rule.SpaceAfterComma{},
       %Rule.TakenName{},
       %Rule.TrailingBlankLines{},
       %Rule.TrailingWhitespace{},
