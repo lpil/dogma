@@ -7,12 +7,23 @@ defrule Dogma.Rule.SpaceAfterComma, [spaces: 1] do
   This rule can be configured with the `spaces` option, which allows you to
   specify your own number of spaces after comma.
   """
+  @spaces_pattern ~r/\,(\s*).+/
 
   def test(rule, script) do
-    []
+    script.lines
+    |> Enum.filter(fn line -> check_line(rule, line) end)
+    |> Enum.map(fn line ->  error(rule, line) end)
   end
 
-  defp error(rule, {pos, line}) do
+  defp check_line(rule, {_, line}) do
+    @spaces_pattern
+    |> Regex.scan(line)
+    |> Enum.any?(fn [_, group] ->
+      String.length(group) != rule.spaces
+      end)
+  end
+
+  defp error(rule, {pos, _}) do
     %Error{
       rule:     __MODULE__,
       message:  "Should be #{rule.spaces} spaces after comma",
