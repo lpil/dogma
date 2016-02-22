@@ -11,6 +11,7 @@ defrule Dogma.Rule.SpaceAfterComma, [spaces: 1] do
 
   def test(rule, script) do
     script.lines
+    |> Enum.map(&drop_strings/1)
     |> Enum.filter(fn line -> check_line(rule, line) end)
     |> Enum.map(fn line ->  error(rule, line) end)
   end
@@ -20,14 +21,18 @@ defrule Dogma.Rule.SpaceAfterComma, [spaces: 1] do
     |> Regex.scan(line)
     |> Enum.any?(fn [_, group] ->
       String.length(group) != rule.spaces
-      end)
+    end)
+  end
+
+  defp drop_strings({pos, line}) do
+    {pos, Regex.replace(~r/\"(.*?)\"/, line, "\"\"")}
   end
 
   defp error(rule, {pos, _}) do
     %Error{
       rule:     __MODULE__,
       message:  "Should be #{rule.spaces} spaces after comma",
-      line: Dogma.Script.line(pos),
+      line:     Dogma.Script.line(pos),
     }
   end
 end

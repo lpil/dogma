@@ -52,6 +52,22 @@ defmodule Dogma.Rule.SpaceAfterCommaTest do
     assert [] == errors
   end
 
+  should "ignore comma in strings" do
+    errors = """
+    v = "should,be,tottaly ignored"
+    """ |> lint
+    assert [] == errors
+  end
+
+  should "not check strings" do
+    errors = """
+    def foo do
+      ["1,", "2", "3\",\""]
+    end
+    """ |> lint
+    assert [] == errors
+  end
+
   defp error_on_line(line, spaces) do
     %Error{
       line: Dogma.Script.line(line),
