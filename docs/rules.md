@@ -480,7 +480,7 @@ and breaking up multiple expressions on different lines improves readability.
 
 ### SpaceAfterComma
 
-A rule that enforces to use `spaces` after comma.
+A rule that enforces to use at least `spaces` after comma.
 
 This rule can be configured with the `spaces` option, which allows you to
 specify your own number of spaces after comma.
