@@ -7,8 +7,13 @@ defmodule Mix.Tasks.Dogma do
   alias Dogma.Config
   alias Dogma.Reporters
 
+  @config_file_path "config/dogma.exs"
+
   def run(argv) do
     {dir, reporter, noerror} = argv |> parse_args
+    if File.regular?(@config_file_path) do
+      Mix.Tasks.Loadconfig.run([ @config_file_path])
+    end
     config = Config.build
 
     {:ok, dispatcher} = GenEvent.start_link([])
