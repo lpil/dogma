@@ -5,10 +5,13 @@ Dogma can be configured to have different behaviours via your project's Mix
 config. You can select a rule set to use as your base configuration, and then
 apply additional configuration on top of the set.
 
+Dogma will load the config from `config/dogma.exs` if it exists.
+
 Here's an example configuration.
 
 ```elixir
-# config/config.exs
+# config/dogma.exs
+use Mix.Config
 alias Dogma.Rule
 
 config :dogma,
