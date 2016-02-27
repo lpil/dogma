@@ -7,7 +7,7 @@ defmodule Mix.Tasks.Dogma do
   alias Dogma.Config
   alias Dogma.Reporters
 
-  #loads a config file with fallback chain. First found will be loaded.
+  # loads a config file with fallback chain. First found will be loaded.
   @config_file_paths ["config/dogma.exs", "~/.dogma.exs"]
 
   def run(argv) do
