@@ -7,6 +7,7 @@ defmodule Dogma.Runner do
 
   def run_tests(script, rules) when is_map(script) and is_list(rules) do
     rules
+    |> Enum.filter(&(&1.enabled))
     |> Enum.map( &Rule.test(&1, script) )
     |> List.flatten
   end
