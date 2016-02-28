@@ -46,7 +46,7 @@ defrule Dogma.Rule.FunctionName do
   end
 
   # If the function is named by unquoting something then we can't check it
-  defp check_function({:unquote,_,_} , _meta, node, errors) do
+  defp check_function({:unquote, _, _} , _meta, node, errors) do
     {node, errors}
   end
 

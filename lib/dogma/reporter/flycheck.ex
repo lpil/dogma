@@ -15,7 +15,7 @@ defmodule Dogma.Reporter.Flycheck do
     {:ok, []}
   end
 
-  def handle_event(_,_), do: {:ok, []}
+  def handle_event(_, _), do: {:ok, []}
 
   alias Dogma.Script
 

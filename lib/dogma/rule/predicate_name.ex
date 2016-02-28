@@ -40,7 +40,7 @@ defrule Dogma.Rule.PredicateName do
     Regex.run(~r{\A(is|has)_(\w+)\?\Z}, line)
   end
 
-  defp test_predicate({:unquote,_,_} , _meta, node, errors) do
+  defp test_predicate({:unquote, _, _} , _meta, node, errors) do
     {node, errors}
   end
 
