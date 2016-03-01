@@ -16,7 +16,8 @@ defmodule Dogma.OptionParserTest do
 
     having "directories given" do
       should "return directory and default reporter" do
-        assert parse_args(["lib/foo"]) == {"lib/foo", @default_reporter, false, false}
+        assert parse_args(["lib/foo"]) ==
+          {"lib/foo", @default_reporter, false, false}
       end
 
       having "multiple directories given" do
