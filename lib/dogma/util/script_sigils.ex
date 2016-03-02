@@ -38,7 +38,7 @@ defmodule Dogma.Util.ScriptSigils do
     end
   end
   defp parse_code(<< h::utf8, t::binary >>, acc) do
-    parse_code(t, acc <> <<h>>)
+    parse_code(t, acc <> <<h::utf8>>)
   end
 
   for {_open, close} <- sigils do
