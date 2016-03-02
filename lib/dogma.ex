@@ -20,9 +20,9 @@ defmodule Dogma do
     |> notify_finish(dispatcher)
   end
 
-  def get_sources(dir_or_file, %{read_stdin: true} = _config) do
+  def get_sources(dir_or_file, %{read_stdin: true}) do
     if dir_or_file == nil, do: dir_or_file="stdin"
-    case read_from_stdin do
+    case read_from_stdin("") do
       {:ok, source} -> [source |> Script.parse(dir_or_file)]
       _ -> System.halt(666)
     end

@@ -18,9 +18,9 @@ defmodule Dogma.Config do
   """
   def build(settings \\ %{read_stdin: false}) do
     %__MODULE__{
-      rules:   get_rules,
-      exclude: get_exclude,
-      read_stdin:   settings[:read_stdin]
+      rules:      get_rules,
+      exclude:    get_exclude,
+      read_stdin: settings[:read_stdin]
     }
   end
 
