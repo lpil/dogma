@@ -1,7 +1,7 @@
 # Dogma Rules
 
 These are the rules included in Dogma by default. Currently there are
-31 of them.
+32 of them.
 
 ## Contents
 
@@ -30,6 +30,7 @@ These are the rules included in Dogma by default. Currently there are
 * [PredicateName](#predicatename)
 * [QuotesInString](#quotesinstring)
 * [Semicolon](#semicolon)
+* [SnakeCaseFilename](#snakecasefilename)
 * [TakenName](#takenname)
 * [TrailingBlankLines](#trailingblanklines)
 * [TrailingWhitespace](#trailingwhitespace)
@@ -475,6 +476,23 @@ For example, these are considered invalid:
 
 This is because Elixir does not require semicolons to terminate expressions,
 and breaking up multiple expressions on different lines improves readability.
+
+
+### SnakeCaseFilename
+
+Checks if files are using the snake_case_format.
+
+Favors this:
+
+a_valid_filename.ex
+
+over these:
+
+AValidFilename.ex
+aValidFilename.ex
+a valid filename.ex
+a.valid.filename.ex
+a-valid-filename.ex
 
 
 ### TakenName
