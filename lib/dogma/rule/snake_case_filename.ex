@@ -16,23 +16,14 @@ defrule Dogma.Rule.SnakeCaseFilename do
   a.valid.filename.ex
   a-valid-filename.ex
   """
+  alias Dogma.Util.Name
 
   def test(_, %{path: path}) do
     {dirname, filename, ext} = deconstruct_path(path)
-
-    desired_filename = filename
-      |> String.replace(~r/([A-Z])/, "_\\g{1}")
-      |> String.replace(~r/\W/, "_")
-      |> String.replace(~r/\A_/, "")
-      |> String.replace(~r/[_]+/, "_")
-      |> String.downcase
-
-    desired_path = reconstruct_path(dirname, desired_filename, ext)
-
-    if String.equivalent?(path, desired_path) do
+    if Name.snake_case?(filename) do
       []
     else
-      [error(path,  desired_path)]
+      [error(path, suggested_snake_case_path(dirname, filename, ext))]
     end
   end
 
@@ -42,6 +33,17 @@ defrule Dogma.Rule.SnakeCaseFilename do
       message:  "Rename #{path} to #{desired_path}",
       line: 0,
     }
+  end
+
+  defp suggested_snake_case_path(dirname, filename, ext) do
+    desired_filename = filename
+    |> String.replace(~r/([A-Z])/, "_\\g{1}")
+    |> String.replace(~r/\W/, "_")
+    |> String.replace(~r/\A_/, "")
+    |> String.replace(~r/[_]+/, "_")
+    |> String.downcase
+
+    reconstruct_path(dirname, desired_filename, ext)
   end
 
   defp deconstruct_path(path) do
