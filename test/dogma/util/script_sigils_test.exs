@@ -124,5 +124,16 @@ defmodule Dogma.Util.ScriptSigilsTest do
       """
       assert desired == script |> ScriptSigils.strip
     end
+
+    should "handle utf8 characters" do
+      desired = """
+      defmodule Foo do
+        def foo do
+          "Ó"
+        end
+      end
+      """
+      assert desired == desired |> ScriptSigils.strip
+    end
   end
 end
