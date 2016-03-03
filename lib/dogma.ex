@@ -39,9 +39,16 @@ defmodule Dogma do
   defp read_from_stdin(source \\ "") do
     case IO.read(:stdio, :line) do
       {:error, reason} -> {:error, reason}
-      :eof             -> {:ok, source}
+      :eof             -> source |> validate
       data             -> source = source <> data
         read_from_stdin(source)
+    end
+  end
+
+  defp validate(source) do
+    case Code.string_to_quoted(source, line: 1) do
+      {:ok, _}        -> {:ok, source}
+      {:error, error} -> {:error, error}
     end
   end
 
