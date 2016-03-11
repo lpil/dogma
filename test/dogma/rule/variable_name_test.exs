@@ -96,7 +96,7 @@ defmodule Dogma.Rule.VariableNameTest do
         rule:     VariableName,
         message:  "Variable names should be in snake_case",
         line: 1,
-      },]
+      }]
     assert expected_errors == Rule.test( @rule, script )
   end
 

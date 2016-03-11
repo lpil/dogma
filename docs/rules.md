@@ -1,7 +1,7 @@
 # Dogma Rules
 
 These are the rules included in Dogma by default. Currently there are
-31 of them.
+32 of them.
 
 ## Contents
 
@@ -30,6 +30,7 @@ These are the rules included in Dogma by default. Currently there are
 * [PredicateName](#predicatename)
 * [QuotesInString](#quotesinstring)
 * [Semicolon](#semicolon)
+* [SpaceAfterComma](#spaceaftercomma)
 * [TakenName](#takenname)
 * [TrailingBlankLines](#trailingblanklines)
 * [TrailingWhitespace](#trailingwhitespace)
@@ -475,6 +476,14 @@ For example, these are considered invalid:
 
 This is because Elixir does not require semicolons to terminate expressions,
 and breaking up multiple expressions on different lines improves readability.
+
+
+### SpaceAfterComma
+
+A rule that enforces to use at least `spaces` after comma.
+
+This rule can be configured with the `spaces` option, which allows you to
+specify your own number of spaces after comma.
 
 
 ### TakenName

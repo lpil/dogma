@@ -22,13 +22,13 @@ defmodule Dogma.Util.AST do
   def literal?(x) when is_boolean(x), do: true
   def literal?(x) when is_list(x), do: true
   def literal?(x) when is_number(x), do: true
-  def literal?({_,_}), do: true
+  def literal?({_, _}), do: true
   def literal?({:{}, _, _}), do: true
   def literal?({:%{}, _, _}), do: true
 
   for char <- sigil_chars do
     sigil_atom = String.to_atom("sigil_" <> char)
-    def literal?({unquote(sigil_atom),_,_}), do: true
+    def literal?({unquote(sigil_atom), _, _}), do: true
   end
   def literal?(_), do: false
 end

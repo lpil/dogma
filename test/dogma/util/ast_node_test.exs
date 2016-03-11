@@ -37,7 +37,7 @@ defmodule Dogma.Util.ASTTest do
     end
 
     should "be true for tuples with two elements" do
-      tuple = quote do: {4,5}
+      tuple = quote do: {4, 5}
       assert AST.literal?(tuple)
     end
 
