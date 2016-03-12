@@ -1,7 +1,7 @@
 defmodule Dogma.Mixfile do
   use Mix.Project
 
-  @version "0.1.1"
+  @version "0.1.3"
 
   def project do
     [
@@ -38,23 +38,23 @@ defmodule Dogma.Mixfile do
   defp deps do
     [
       # Test framework
-      {:shouldi, github: "batate/shouldi", only: :test},
+      {:shouldi, "~> 0.3", only: :test},
       # App config test helper
-      {:temporary_env, only: :test},
+      {:temporary_env, "~> 1.0", only: :test},
       # Test coverage checker
-      {:excoveralls, only: :test},
+      {:excoveralls, "~> 0.5", only: :test},
       # Automatic test runner
-      {:mix_test_watch, only: :dev},
+      {:mix_test_watch, "~> 0.2", only: :dev},
 
       # Benchmark framework
-      {:benchfella, only: :dev},
+      {:benchfella, "~> 0.3", only: :dev},
 
       # Documentation checker
-      {:inch_ex, only: ~w(dev test docs)a},
+      {:inch_ex, "~> 0.5", only: ~w(dev test docs)a},
       # Markdown processor
-      {:earmark, only: :dev},
+      {:earmark, "~> 0.2", only: :dev},
       # Documentation generator
-      {:ex_doc, only: :dev},
+      {:ex_doc, "~> 0.11", only: :dev},
 
       # JSON encoder
       {:poison, "~> 1.0"},
