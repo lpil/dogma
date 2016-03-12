@@ -48,7 +48,7 @@ Add Dogma to your Mix dependencies
 # mix.exs
 def deps do
   [
-    {:dogma, "~> 0.0", only: :dev},
+    {:dogma, "~> 0.1", only: :dev},
   ]
 end
 ```
