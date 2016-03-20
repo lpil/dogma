@@ -57,7 +57,7 @@ defmodule Dogma.Mixfile do
       {:ex_doc, "~> 0.11", only: :dev},
 
       # JSON encoder
-      {:poison, "~> 1.0"},
+      {:poison, ">= 1.0.0"},
     ]
   end
 end
