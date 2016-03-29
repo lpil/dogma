@@ -99,7 +99,7 @@ mix dogma      # Dogfooding- run the linter!
 
 Check them out on [hexdocs][hexdocs-dogma], or generate them yourself:
 
-[hexdocs-dogma]: http://hexdocs.pm/dogma/extra-api-reference.html
+[hexdocs-dogma]: https://hexdocs.pm/dogma/api-reference.html
 
 ```sh
 mix docs
