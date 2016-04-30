@@ -159,14 +159,19 @@ defmodule Dogma.ScriptTest do
       end
 
       should "assign a syntax error with the flattened message", context do
-        error = %Error{
-          rule: SyntaxError,
-          message:
+        [%Error{ message: message }] = context.script.errors
+
+        assert(
+          message ==
             ~s(unexpected token: "end". ) <>
-            ~s("<<" starting at line 2 is missing terminator ">>"),
-          line: 2,
-        }
-        assert [error] == context.script.errors
+            ~s("<<" starting at line 2 is missing terminator ">>")
+            or
+          # in Elixir 1.0 syntax errors weren't returned correctly
+          # https://github.com/elixir-lang/elixir/issues/2993
+          message ==
+            ~s("<<" starting at line 2 is missing terminator ">>". ) <>
+            ~s(Unexpected token: end)
+        )
       end
     end
 
