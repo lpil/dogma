@@ -129,8 +129,16 @@ defmodule Dogma.Script do
   defp error({:error, {pos, err, _}}) do
     %Error{
       rule:    SyntaxError,
-      message: err,
+      message: error_message(err),
       line:    line(pos) - 1,
     }
+  end
+
+  defp error_message(err) when is_binary(err) do
+    err
+  end
+
+  defp error_message(err) when is_tuple(err) do
+    err |> Tuple.to_list |> Enum.join
   end
 end

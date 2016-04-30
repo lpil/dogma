@@ -146,6 +146,31 @@ defmodule Dogma.ScriptTest do
     end
 
 
+    having "an invalid script with a tuple error message" do
+      setup context do
+        source = ~s"""
+        defmodule Module do
+          <>>>>>>><><>><><>>>>>>>>>>>>>><<><
+        end
+        """
+        %{
+          script: Script.parse( source, "" ),
+        }
+      end
+
+      should "assign a syntax error with the flattened message", context do
+        error = %Error{
+          rule: SyntaxError,
+          message:
+            ~s(unexpected token: "". ) <>
+            ~s("<<" starting at line 2 is missing terminator ">>"),
+          line: 2,
+        }
+        assert [error] == context.script.errors
+      end
+    end
+
+
     having "a script with trailing blank lines" do
       setup context do
         source = """
