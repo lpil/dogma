@@ -162,7 +162,7 @@ defmodule Dogma.ScriptTest do
         error = %Error{
           rule: SyntaxError,
           message:
-            ~s(unexpected token: "". ) <>
+            ~s(unexpected token: "end". ) <>
             ~s("<<" starting at line 2 is missing terminator ">>"),
           line: 2,
         }
