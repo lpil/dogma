@@ -23,15 +23,6 @@ defmodule Dogma.RunnerTest do
     """ |> Script.parse("")
     refute script.valid?
     results = Runner.run_tests( script, All.rules )
-    assert results == [
-      %Error{
-        line: 1,
-        message: {
-          ~s(unexpected token: "),
-          ~s(". "do" starting at line 1 is missing terminator "end")
-        },
-        rule: SyntaxError,
-      },
-    ]
+    assert [%Error{ line: 1, message: _, rule: SyntaxError }] = results
   end
 end
