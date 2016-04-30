@@ -41,6 +41,10 @@ defmodule Dogma.Reporter.Flycheck do
     |> List.flatten
   end
 
+  defp format_error(error = %{ rule: SyntaxError }, script) do
+    "#{script}:#{error.line}:1: E: #{error.message}"
+  end
+
   defp format_error(error, script) do
     "#{script}:#{error.line}:1: W: #{error.message}"
   end
