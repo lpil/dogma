@@ -126,11 +126,19 @@ defmodule Dogma.Script do
   end
 
 
-  defp error({:error, {pos, err, _}}) do
+  defp error({:error, {pos, err, token}}) do
     %Error{
       rule:    SyntaxError,
-      message: err,
+      message: error_message(err, token),
       line:    line(pos) - 1,
     }
+  end
+
+  defp error_message({prefix, suffix}, token) do
+    "#{prefix}#{token}#{suffix}"
+  end
+
+  defp error_message(err, token) do
+    "#{err}#{token}"
   end
 end

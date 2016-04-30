@@ -29,9 +29,14 @@ defmodule Dogma.Reporter.FlycheckTest do
         line: 14,
         message: "Comparison to a boolean is pointless"
       }
+      error3 = %Error{
+        line: 23,
+        message: "Unexpected token",
+        rule: SyntaxError
+      }
 
       script = [
-        %Script{ path: "foo.ex", errors: [error1] },
+        %Script{ path: "foo.ex", errors: [error1, error3] },
         %Script{ path: "bar.ex", errors: [error1, error2] },
         %Script{ path: "baz.ex", errors: [] }
       ]
@@ -42,6 +47,7 @@ defmodule Dogma.Reporter.FlycheckTest do
     should "print each error to console", context do
       expected = """
       foo.ex:1:1: W: Module without a @moduledoc detected
+      foo.ex:23:1: E: Unexpected token
       bar.ex:1:1: W: Module without a @moduledoc detected
       bar.ex:14:1: W: Comparison to a boolean is pointless
       """
