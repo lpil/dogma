@@ -77,5 +77,20 @@ defmodule Dogma.Util.ASTTest do
       module = quote do: TestModuleName
       refute AST.literal?(module)
     end
+
+    should "be false for lists with variables" do
+      list = quote do: ["foo", bar, "baz"]
+      refute AST.literal?(list)
+    end
+
+    should "be false for tuples with variables" do
+      tuple = quote do: {5, 6, foo}
+      refute AST.literal?(tuple)
+    end
+
+    should "be false for tuples with variables and two elements" do
+      tuple = quote do: {5, foo}
+      refute AST.literal?(tuple)
+    end
   end
 end
