@@ -29,6 +29,16 @@ defmodule Dogma.Rule.LiteralInConditionTest do
       """ |> Script.parse!("")
       assert [] == Rule.test( @rule, script )
     end
+
+    should "not error for case with variables in tuple" do
+      script = """
+      case {status, code} do
+        {:hyped, _} -> run_like_the_wind
+        _      -> dawdle
+      end
+      """ |> Script.parse!("")
+      assert [] == Rule.test( @rule, script )
+    end
   end
 
 

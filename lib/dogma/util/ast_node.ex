@@ -20,10 +20,10 @@ defmodule Dogma.Util.AST do
   def literal?(x) when is_atom(x), do: true
   def literal?(x) when is_binary(x), do: true
   def literal?(x) when is_boolean(x), do: true
-  def literal?(x) when is_list(x), do: true
   def literal?(x) when is_number(x), do: true
-  def literal?({_, _}), do: true
-  def literal?({:{}, _, _}), do: true
+  def literal?(x) when is_list(x), do: Enum.all?(x, &literal?/1)
+  def literal?({x, y}), do: literal?(x) && literal?(y)
+  def literal?({:{}, _, elements}), do: literal?(elements)
   def literal?({:%{}, _, _}), do: true
 
   for char <- sigil_chars do
