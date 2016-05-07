@@ -1,6 +1,6 @@
 use Dogma.RuleBuilder
 
-defrule Dogma.Rule.FunctionParentheses, [] do
+defrule Dogma.Rule.FunctionParentheses do
   @moduledoc """
   A rule that ensures function declarations use parentheses if and only if
   they have arguments.
@@ -27,7 +27,7 @@ defrule Dogma.Rule.FunctionParentheses, [] do
   """
 
   def test(_rule, script) do
-    script.tokens |> check_function_parens
+    check_function_parens(script.tokens)
   end
 
   defp check_function_parens(tokens, acc \\ [])
@@ -36,39 +36,26 @@ defrule Dogma.Rule.FunctionParentheses, [] do
     Enum.reverse(acc)
   end
 
-  defp check_function_parens([{:identifier, _, :def} | rest], acc) do
-    inside_function_def(rest, acc)
+  defp check_function_parens([
+    {:identifier, line, name},
+    {:identifier, _, _},
+    {:identifier, _, _}
+    | rest], acc)
+  when name == :def or name == :defp do
+    check_function_parens(rest, [error(line) | acc])
   end
 
-  defp check_function_parens([{:identifier, _, :defp} | rest], acc) do
-    inside_function_def(rest, acc)
+  defp check_function_parens([
+    {:identifier, line, name},
+    {:paren_identifier, _, _},
+    {:"(", _},
+    {:")", _}
+    | rest], acc)
+  when name == :def or name == :defp do
+    check_function_parens(rest, [error(line) | acc])
   end
 
   defp check_function_parens([_ | rest], acc) do
-    check_function_parens(rest, acc)
-  end
-
-  defp inside_function_def([{:paren_identifier, _, _} | rest], acc) do
-    inside_function_name(rest, acc)
-  end
-
-  defp inside_function_def([{:identifier, _, _} | rest], acc) do
-    inside_function_name(rest, acc)
-  end
-
-  defp inside_function_def([_ | rest], acc) do
-    check_function_parens(rest, acc)
-  end
-
-  defp inside_function_name([{:"(", line} | [{:")", _} | rest]], acc) do
-    check_function_parens(rest, [error(line) | acc])
-  end
-
-  defp inside_function_name([{:identifier, line, _} | rest], acc) do
-    check_function_parens(rest, [error(line) | acc])
-  end
-
-  defp inside_function_name([_ | rest], acc) do
     check_function_parens(rest, acc)
   end
 
