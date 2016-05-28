@@ -41,7 +41,7 @@ defmodule Dogma.Reporter.JSON do
     {:ok, []}
   end
 
-  def handle_events(_, _), do: {:ok, []}
+  def handle_event(_, _), do: {:ok, []}
 
   @doc """
   Runs at the end of the test suite, printing json.
