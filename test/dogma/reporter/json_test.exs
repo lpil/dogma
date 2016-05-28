@@ -14,7 +14,14 @@ defmodule Dogma.Reporter.JSONTest do
         %Script{ path: "bar.ex", errors: [] }
       ]
 
-      result = capture_io(fn-> JSON.handle_event({:finished,  scripts}, []) end)
+      for script <- scripts do
+        _ = capture_io(fn ->
+          {:ok, []} = JSON.handle_event({:script_tested,  script}, [])
+        end)
+      end
+      result = capture_io(fn ->
+        {:ok, []} = JSON.handle_event({:finished,  scripts}, [])
+      end)
       json = Poison.decode!(result)
 
       test_system_info(json)
