@@ -23,7 +23,10 @@ defmodule Dogma.Config do
   end
 
   defp get_rules do
-    rules     = Application.get_env( :dogma, :rule_set, @default_set ).rules
+    rules =
+      Application.get_env( :dogma, :rule_set, @default_set ).rules
+      |> Enum.filter(fn rule -> Version.match?(System.version, rule.elixir) end)
+
     overrides = Application.get_env( :dogma, :override, %{} )
     rules_map = Enum.reduce( rules, %{}, &insert_rule/2 )
     overrides
