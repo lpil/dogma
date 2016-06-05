@@ -41,6 +41,8 @@ defmodule Dogma.RuleBuilder do
 
   defmacro defrule(name, opts, [do: module_ast]) when is_list(opts) do
     opts = [{:enabled, true} | opts]
+    opts = Keyword.put_new(opts, :elixir, ">= 1.0.0")
+
     quote do
       defmodule unquote(name) do
         alias Dogma.Error

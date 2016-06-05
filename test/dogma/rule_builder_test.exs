@@ -18,7 +18,11 @@ defmodule Dogma.RuleBuilderTest do
   end
 
   test "it sets :enabled to true" do
-    assert true = %MagicTestRule{}.enabled
+    assert %MagicTestRule{}.enabled
+  end
+
+  test "it sets :elixir to 1.0.0" do
+    assert %MagicTestRule{}.elixir == ">= 1.0.0"
   end
 
   test "it includes the args in the struct" do
