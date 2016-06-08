@@ -25,7 +25,13 @@ defmodule Dogma.ConfigTest do
     TemporaryEnv.delete( :dogma, :rule_set ) do
       TemporaryEnv.delete( :dogma, :override ) do
 
-        assert Dogma.RuleSet.All.rules == Config.build.rules
+        all_rules =
+          Dogma.RuleSet.All.rules
+          |> Enum.filter(fn rule ->
+            Version.match?(System.version, rule.elixir)
+          end)
+
+        assert Enum.sort(all_rules) == Enum.sort(Config.build.rules)
 
       end
     end

@@ -20,6 +20,7 @@ defmodule Dogma.RuleSet.All do
       %Rule.FunctionName{},
       %Rule.FunctionParentheses{},
       %Rule.HardTabs{},
+      %Rule.InfixOperatorPadding{},
       %Rule.InterpolationOnlyString{},
       %Rule.LineLength{},
       %Rule.LiteralInCondition{},

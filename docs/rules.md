@@ -1,7 +1,7 @@
 # Dogma Rules
 
 These are the rules included in Dogma by default. Currently there are
-32 of them.
+33 of them.
 
 ## Contents
 
@@ -15,6 +15,7 @@ These are the rules included in Dogma by default. Currently there are
 * [FunctionName](#functionname)
 * [FunctionParentheses](#functionparentheses)
 * [HardTabs](#hardtabs)
+* [InfixOperatorPadding](#infixoperatorpadding)
 * [InterpolationOnlyString](#interpolationonlystring)
 * [LineLength](#linelength)
 * [LiteralInCondition](#literalincondition)
@@ -248,6 +249,40 @@ So the following would be invalid:
     def something do
     \t:body # this line starts with a tab, not spaces
     end
+
+
+### InfixOperatorPadding
+
+A rule that ensures that all infix operators, except the range operator `..`,
+are surrounded by spaces.
+
+This rule is only enabled for Elixir v1.1 or greater.
+
+Good:
+
+    foo = bar
+
+    foo - bar
+
+    foo || bar
+
+    foo |> bar
+
+    foo..bar
+
+Bad:
+
+    foo=bar
+
+    foo-bar
+
+    foo||bar
+
+    foo|>bar
+
+By default, no space is required between the `fn` and `->` of an anonymous
+function. A space can be required by setting the `fn_arrow_padding` option to
+`true`.
 
 
 ### InterpolationOnlyString

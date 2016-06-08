@@ -35,10 +35,10 @@ defrule Dogma.Rule.FunctionName do
   end
 
 
-  defp check_node({:def, _, [{name, meta, _}|_]} = node, errors) do
+  defp check_node({:def, _, [{name, meta, _} | _]} = node, errors) do
     check_function(name, meta, node, errors)
   end
-  defp check_node({:defp, _, [{name, meta, _}|_]} = node, errors) do
+  defp check_node({:defp, _, [{name, meta, _} | _]} = node, errors) do
     check_function(name, meta, node, errors)
   end
   defp check_node(node, errors) do

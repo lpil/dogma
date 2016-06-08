@@ -26,10 +26,10 @@ defrule Dogma.Rule.PredicateName do
     script |> Script.walk( &check_node(&1, &2) )
   end
 
-  defp check_node({:def, _, [{name, meta, _}|_]} = node, errors) do
+  defp check_node({:def, _, [{name, meta, _} | _]} = node, errors) do
     test_predicate(name, meta, node, errors)
   end
-  defp check_node({:defp, _, [{name, meta, _}|_]} = node, errors) do
+  defp check_node({:defp, _, [{name, meta, _} | _]} = node, errors) do
     test_predicate(name, meta, node, errors)
   end
   defp check_node(node, errors) do

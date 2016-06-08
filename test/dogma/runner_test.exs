@@ -5,12 +5,13 @@ defmodule Dogma.RunnerTest do
   alias Dogma.RuleSet.All
   alias Dogma.Runner
   alias Dogma.Script
+  alias Dogma.Config
 
   test "run_tests/2 run the given rules" do
     errors =
       "1 + 1\n"
       |> Script.parse!("foo.ex")
-      |> Runner.run_tests(All.rules)
+      |> Runner.run_tests(Config.build.rules)
     assert [] == errors
   end
 
