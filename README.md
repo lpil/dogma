@@ -84,6 +84,47 @@ Inspecting 27 files.
 How handy!
 
 
+## Options
+```--format``` can be one of ```flycheck```, ```json``` or ```simple``` (default)
+
+```--stdin``` makes dogma read the source from stdin
+
+## STDIN parsing
+It is possible to use dogma to parse source direcly piped into it.
+You can do this by cloning the repository, building and installing the archive like so :
+```bash
+git clone git@github.com:lpil/dogma.git
+cd dogma
+mix deps.get
+mix archive.build
+mix archive.install
+```
+
+You can now use dogma as a stand alone.  
+To let dogma parse stdin use the ```--stdin``` flag. If there is no filename given it will use "stdin" as filename.
+
+examples : 
+```elixir
+$> echo 'IO.puts( "hello world");' |  mix dogma --stdin                        
+#> Inspecting 1 file.
+#>
+#> X
+#>
+#> 1 files, 1 error!
+#>
+#> == stdin ==
+#> 1: ModuleDoc: Module BearCenter.Picture is missing a @moduledoc.
+```
+or 
+
+```elixir
+$> echo 'IO.puts( "hello world");' |  mix dogma --format=flycheck --stdin /my/path/example/hello_world.ex                        
+#> /my/path/example/hello_world.ex:1:1: W: Expressions should not be terminated by semicolons.
+```
+
+The previous example is mostly for linters like Flycheck ((spac)emacs) which will flush a buffer via stdin, but requires a file mapping of the results.
+
+
 ## Contributor Information
 
 ### Test it
