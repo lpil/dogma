@@ -83,6 +83,16 @@ Inspecting 27 files.
 
 How handy!
 
+### Install Dogma globally
+
+In order to run dogma from any directory build the escript:
+```
+mix escript.build
+```
+
+this will create an executable that you can place in your PATH
+and invoke from anywhere.
+
 
 ## Contributor Information
 

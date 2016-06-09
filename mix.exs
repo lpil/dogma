@@ -9,6 +9,7 @@ defmodule Dogma.Mixfile do
       version: @version,
       elixir: "~> 1.0",
       elixirc_paths: elixirc_paths(Mix.env),
+      escript: [ main_module: Mix.Tasks.Dogma ],
       deps: deps,
       build_embedded: Mix.env == :prod,
       start_permanent: Mix.env == :prod,

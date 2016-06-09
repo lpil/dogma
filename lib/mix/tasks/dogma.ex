@@ -9,7 +9,9 @@ defmodule Mix.Tasks.Dogma do
 
   @config_file_path "config/dogma.exs"
 
-  def run(argv) do
+  def run(argv), do: main(argv)
+
+  def main(argv) do
     {dir, reporter, noerror} = argv |> parse_args
     if File.regular?(@config_file_path) do
       Mix.Tasks.Loadconfig.run([ @config_file_path])
