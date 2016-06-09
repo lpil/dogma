@@ -69,4 +69,15 @@ defmodule Dogma.Rule.FunctionArityTest do
     rule = %{ @rule | max: 2 }
     assert expected_errors == Rule.test( rule, script )
   end
+
+  should "only report functions and not variables" do
+    script = """
+    def testing do
+      def = ""
+      defp = ""
+      defmacro = ""
+    end
+    """ |> Script.parse!("")
+    assert [] == Rule.test(@rule, script)
+  end
 end

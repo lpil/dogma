@@ -24,6 +24,9 @@ defrule Dogma.Rule.FunctionArity, max: 4 do
 
   @defs ~w(def defp defmacro)a
   for type <- @defs do
+    defp check_node({unquote(type), _, nil} = node, errors, _) do
+      {node, errors}
+    end
 
     defp check_node({unquote(type), _, _} = node, errors, max) do
       {name, line, args} = get_fun_details(node)
