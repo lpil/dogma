@@ -29,7 +29,7 @@ defmodule Dogma.Mixfile do
 
   def application do
     [
-      applications: []
+      applications: [:mix]
     ]
   end
 
