@@ -24,8 +24,10 @@ defrule Dogma.Rule.LiteralInCondition do
 
   for fun <- [:if, :unless, :case] do
     defp check_node({unquote(fun), meta, [pred, [do: _]]} = node, errors) do
-      if pred |> literal? do
-        errors = [error(meta[:line]) | errors]
+      errors = if pred |> literal? do
+        [error(meta[:line]) | errors]
+      else
+        errors
       end
       {node, errors}
     end

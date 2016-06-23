@@ -12,8 +12,10 @@ defrule Dogma.Rule.ModuleAttributeName do
   end
 
   defp check_node({:@, meta, [{name, _, _}]} = node, errors) do
-    if name |> to_string |> Name.not_snake_case? do
-      errors = [error( meta[:line] ) | errors]
+    errors = if name |> to_string |> Name.not_snake_case? do
+      [error( meta[:line] ) | errors]
+    else
+      errors
     end
     {node, errors}
   end

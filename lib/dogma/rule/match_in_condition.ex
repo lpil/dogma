@@ -20,8 +20,10 @@ defrule Dogma.Rule.MatchInCondition do
 
   for fun <- [:if, :unless] do
     defp check_node({unquote(fun), meta, [pred, [do: _]]} = node, errors) do
-      if pred |> invalid? do
-        errors = [error(meta[:line]) | errors]
+      errors = if pred |> invalid? do
+        [error(meta[:line]) | errors]
+      else
+        errors
       end
       {node, errors}
     end
