@@ -1,4 +1,4 @@
-ExUnit.start(formatters: [ShouldI.CLIFormatter])
+ExUnit.start()
 
 defmodule DogmaTest.Helper do
   def pending do
