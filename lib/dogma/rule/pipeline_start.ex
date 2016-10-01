@@ -82,6 +82,11 @@ defrule Dogma.Rule.PipelineStart do
   defp function_line({:unquote, _, _}),
   do: :ok
 
+  # exception for zero-arity function
+  defp function_line({atom, _, []})
+  when is_atom(atom),
+  do: :ok
+
   defp function_line({atom, meta, args})
   when is_atom(atom) and is_list(args) do
     if atom |> to_string |> String.starts_with?("sigil") do
