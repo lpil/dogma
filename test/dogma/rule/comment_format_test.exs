@@ -17,6 +17,16 @@ defmodule Dogma.Rule.CommentFormatTest do
     assert [] == Rule.test( @rule, script )
   end
 
+  should "not error with multiple #s" do
+    script = """
+    ####
+    ## This is cool.
+    ####
+    1 + 1
+    """ |> Script.parse!("")
+    assert [] == Rule.test( @rule, script )
+  end
+
   should "error with not space after the #" do
     script = """
     1 + 1 #Hello, world!

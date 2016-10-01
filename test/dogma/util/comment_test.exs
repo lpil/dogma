@@ -16,6 +16,7 @@ defmodule Dogma.Util.CommentsTest do
 
   should "extract comments" do
     comments = """
+    ### Comments for Foo
     # Very useful.
     defmodule Foo do
       #this is rad.
@@ -25,9 +26,10 @@ defmodule Dogma.Util.CommentsTest do
     end
     """ |> run
     expected = [
-      %Comment{ line: 1, content: " Very useful." },
-      %Comment{ line: 3, content: "this is rad." },
-      %Comment{ line: 6, content: "    # Thuper." },
+      %Comment{ line: 1, content: " Comments for Foo" },
+      %Comment{ line: 2, content: " Very useful." },
+      %Comment{ line: 4, content: "this is rad." },
+      %Comment{ line: 7, content: "    # Thuper." },
     ]
     assert comments == expected
   end
