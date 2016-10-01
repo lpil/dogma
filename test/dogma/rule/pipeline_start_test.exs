@@ -224,6 +224,13 @@ defmodule Dogma.Rule.PipelineStartTest do
     assert [] == Rule.test( @rule, script )
   end
 
+  should "not error with a zero-arity function start" do
+    script = """
+    self() |> send(:hello)
+    """ |> Script.parse!("")
+    assert [] == Rule.test( @rule, script )
+  end
+
   should "not error with an interpolated string start" do
     script = ~S"""
     "A #{baked_good}" |> String.upcase |> IO.puts
