@@ -4,7 +4,7 @@ defmodule RuleCase do
 
   It aliases `Dogma.Rule`, `Dogma.Script`, `Dogma.Error`, as well as the
   rule being tested (assuming it us in the `Dogma.Rule` namespace.
-  
+
       defmodule Dogma.Rule.LineLengthTest do
         use RuleCase, for: LineLength
       end
