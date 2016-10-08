@@ -7,7 +7,7 @@ defmodule Dogma.Mixfile do
     [
       app: :dogma,
       version: @version,
-      elixir: "~> 1.0",
+      elixir: "~> 1.3",
       elixirc_paths: elixirc_paths(Mix.env),
       escript: [ main_module: Mix.Tasks.Dogma ],
       deps: deps,
