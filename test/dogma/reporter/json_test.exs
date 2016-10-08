@@ -1,5 +1,5 @@
 defmodule Dogma.Reporter.JSONTest do
-  use ShouldI
+  use ExUnit.Case, async: true
 
   import ExUnit.CaptureIO
 
@@ -7,8 +7,8 @@ defmodule Dogma.Reporter.JSONTest do
   alias Dogma.Script
   alias Dogma.Error
 
-  having "no errors" do
-    should "return JSON of files with no errors" do
+  describe "no errors" do
+    test "return JSON of files with no errors" do
       scripts = [
         %Script{ path: "foo.ex", errors: [] },
         %Script{ path: "bar.ex", errors: [] }
@@ -38,8 +38,8 @@ defmodule Dogma.Reporter.JSONTest do
     end
   end
 
-  having "some errors" do
-    should "return JSON of files with some errors" do
+  describe "some errors" do
+    test "return JSON of files with some errors" do
       errors = [
         %Error{
           line: 1,

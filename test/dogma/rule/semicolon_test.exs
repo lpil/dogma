@@ -3,7 +3,7 @@ defmodule Dogma.Rule.SemicolonTest do
 
   @message "Expressions should not be terminated by semicolons."
 
-  should "error when expression is terminated with semicolon" do
+  test "error when expression is terminated with semicolon" do
     script = """
     x = 1;
     y = 1;
@@ -23,7 +23,7 @@ defmodule Dogma.Rule.SemicolonTest do
     assert expected_errors == Rule.test( @rule, script )
   end
 
-  should "error when expression is separated by semicolon" do
+  test "error when expression is separated by semicolon" do
     script = """
     x = 1; y = 1
     """ |> Script.parse!("")
@@ -38,7 +38,7 @@ defmodule Dogma.Rule.SemicolonTest do
     assert expected_errors == Rule.test( @rule, script )
   end
 
-  should "return multiple errors per line if there are multiple semicolons" do
+  test "return multiple errors per line if there are multiple semicolons" do
     script = """
     x = 1; y = 1;
     """ |> Script.parse!("")
@@ -58,14 +58,14 @@ defmodule Dogma.Rule.SemicolonTest do
     assert expected_errors == Rule.test( @rule, script )
   end
 
-  should "not return any errors when semicolons are in comments" do
+  test "not return any errors when semicolons are in comments" do
     script = """
     # Using a semicolon isn't hard; I once saw a party gorilla do it.
     """ |> Script.parse!("")
     assert [] == Rule.test( @rule, script )
   end
 
-  should "not return any errors when semicolons are in strings" do
+  test "not return any errors when semicolons are in strings" do
     script = """
     "Using a semicolon isn't hard; I once saw a party gorilla do it."
     'Using a semicolon isn\\'t hard; I once saw a party gorilla do it.'
@@ -75,7 +75,7 @@ defmodule Dogma.Rule.SemicolonTest do
     assert [] == Rule.test( @rule, script )
   end
 
-  should "return an error when semicolon is in string interpolation" do
+  test "return an error when semicolon is in string interpolation" do
     script = """
     "Foo bar, #\{x = 3; inspect(x)} more string stuff"
     """ |> Script.parse!("")
@@ -89,7 +89,7 @@ defmodule Dogma.Rule.SemicolonTest do
     assert expected_errors == Rule.test( @rule, script )
   end
 
-  should "return an error when a semicolon is in a nested context" do
+  test "return an error when a semicolon is in a nested context" do
     script = """
     if (x = 3; x == 3) do
       true

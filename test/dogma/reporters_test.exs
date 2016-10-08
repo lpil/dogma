@@ -1,10 +1,10 @@
 defmodule Dogma.ReportersTest do
-  use ShouldI
+  use ExUnit.Case, async: true
 
   alias Dogma.Reporters
 
-  having ".reporters" do
-    should "return a map containing each reporter" do
+  describe ".reporters" do
+    test "return a map containing each reporter" do
       actual =
         "lib/dogma/reporter/*.ex"
         |> Path.wildcard

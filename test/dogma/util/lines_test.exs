@@ -1,9 +1,9 @@
 defmodule Dogma.Util.LinesTest do
-  use ShouldI
+  use ExUnit.Case, async: true
 
   alias Dogma.Util.Lines
 
-  should "split a string into lines" do
+  test "split a string into lines" do
     result = """
     Hello,
     world!

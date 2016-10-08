@@ -1,7 +1,7 @@
 defmodule Dogma.Rule.FunctionParenthesesTest do
   use RuleCase, for: FunctionParentheses
 
-  should "not error without parentheses and without argument" do
+  test "not error without parentheses and without argument" do
     script = """
     def foo do
     end
@@ -14,7 +14,7 @@ defmodule Dogma.Rule.FunctionParenthesesTest do
     assert [] == Rule.test( @rule, script )
   end
 
-  should "not error with parentheses and arguments" do
+  test "not error with parentheses and arguments" do
     script = """
     def foo(a) do
     end
@@ -27,7 +27,7 @@ defmodule Dogma.Rule.FunctionParenthesesTest do
     assert [] == Rule.test( @rule, script )
   end
 
-  should "error with public function with parentheses and without arguments" do
+  test "error with public function with parentheses and without arguments" do
     script = """
     def foo() do
     end
@@ -43,7 +43,7 @@ defmodule Dogma.Rule.FunctionParenthesesTest do
     assert expected_errors == Rule.test( @rule, script )
   end
 
-  should "error with private function with parentheses and without arguments" do
+  test "error with private function with parentheses and without arguments" do
     script = """
     defp foo() do
     end
@@ -59,7 +59,7 @@ defmodule Dogma.Rule.FunctionParenthesesTest do
     assert expected_errors == Rule.test( @rule, script )
   end
 
-  should "error with single-line function parentheses and without arguments" do
+  test "error with single-line function parentheses and without arguments" do
     script = """
     def foo(), do: :bar
     """ |> Script.parse!("")
@@ -74,7 +74,7 @@ defmodule Dogma.Rule.FunctionParenthesesTest do
     assert expected_errors == Rule.test( @rule, script )
   end
 
-  should "error with public function without parentheses and with arguments" do
+  test "error with public function without parentheses and with arguments" do
     script = """
     def foo a, b do
     end
@@ -90,7 +90,7 @@ defmodule Dogma.Rule.FunctionParenthesesTest do
     assert expected_errors == Rule.test( @rule, script )
   end
 
-  should "error with private function without parentheses and with arguments" do
+  test "error with private function without parentheses and with arguments" do
     script = """
     defp foo a, b do
     end

@@ -1,5 +1,5 @@
 defmodule Dogma.Reporter.FlycheckTest do
-  use ShouldI
+  use ExUnit.Case, async: true
 
   import ExUnit.CaptureIO
 
@@ -7,19 +7,19 @@ defmodule Dogma.Reporter.FlycheckTest do
   alias Dogma.Script
   alias Dogma.Error
 
-  having "no errors" do
+  describe "no errors" do
     setup context do
       Dict.put(context, :script, [%Script{ errors: [] }])
     end
 
-    should "output newline to console", context do
+    test "output newline to console", context do
       assert capture_io(fn ->
         Flycheck.handle_event({:finished, context.script}, [])
       end) == "\n"
     end
   end
 
-  having "some errors" do
+  describe "some errors" do
     setup context do
       error1 = %Error{
         line: 1,
@@ -44,7 +44,7 @@ defmodule Dogma.Reporter.FlycheckTest do
       Dict.put(context, :script, script)
     end
 
-    should "print each error to console", context do
+    test "print each error to console", context do
       expected = """
       foo.ex:1:1: W: Module without a @moduledoc detected
       foo.ex:23:1: E: Unexpected token

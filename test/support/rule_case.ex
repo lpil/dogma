@@ -13,7 +13,7 @@ defmodule RuleCase do
   defmacro __using__(for: {:__aliases__, _, [name]}) do
     full_name = Module.concat( Dogma.Rule, name )
     quote do
-      use ShouldI
+      use ExUnit.Case, async: true
       alias Dogma.Rule
       alias Dogma.Script
       alias Dogma.Error

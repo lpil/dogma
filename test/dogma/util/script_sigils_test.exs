@@ -1,15 +1,15 @@
 defmodule Dogma.Util.ScriptSigilsTest do
-  use ShouldI
+  use ExUnit.Case, async: true
 
   alias Dogma.Util.ScriptSigils
 
-  having "strip/1" do
-    should "no-op with empty scripts" do
+  describe "strip/1" do
+    test "no-op with empty scripts" do
       processed = "" |> ScriptSigils.strip
       assert processed == ""
     end
 
-    should "no-op with sigil-less scripts" do
+    test "no-op with sigil-less scripts" do
       script = """
       defmodule Hello do
         def World do
@@ -21,7 +21,7 @@ defmodule Dogma.Util.ScriptSigilsTest do
       assert processed == script
     end
 
-    should ~S{no-op with =~} do
+    test ~S{no-op with =~} do
       script = """
       defmodule Hello do
         def World do
@@ -38,7 +38,7 @@ defmodule Dogma.Util.ScriptSigilsTest do
                   |> String.graphemes
 
     for char <- sigil_chars do
-      should "strip contents from #{char} sigils" do
+      test "strip contents from #{char} sigils" do
         script = """
         defmodule Sneaky do
           def String do
@@ -71,7 +71,7 @@ defmodule Dogma.Util.ScriptSigilsTest do
       end
     end
 
-    should "handle escaped closing delimiters" do
+    test "handle escaped closing delimiters" do
       script = ~S"""
       defmodule Sneaky do
         def String do
@@ -103,7 +103,7 @@ defmodule Dogma.Util.ScriptSigilsTest do
       assert desired == script |> ScriptSigils.strip
     end
 
-    should "preserve newlines" do
+    test "preserve newlines" do
       script = ~S"""
       defmodule Sneaky do
         def String do
@@ -125,7 +125,7 @@ defmodule Dogma.Util.ScriptSigilsTest do
       assert desired == script |> ScriptSigils.strip
     end
 
-    should "handle utf8 characters" do
+    test "handle utf8 characters" do
       desired = """
       defmodule Foo do
         def foo do

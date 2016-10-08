@@ -1,7 +1,7 @@
 defmodule Dogma.Rule.UnlessElseTest do
   use RuleCase, for: UnlessElse
 
-  should "not error when an unless does not have an else block" do
+  test "not error when an unless does not have an else block" do
     script = """
     unless feeling_sleepy? do
       a_little_dance
@@ -10,7 +10,7 @@ defmodule Dogma.Rule.UnlessElseTest do
     assert [] == Rule.test( @rule, script )
   end
 
-  should "error when an unless has an else block" do
+  test "error when an unless has an else block" do
     script = """
     unless feeling_sleepy? do
       a_little_dance
@@ -28,7 +28,7 @@ defmodule Dogma.Rule.UnlessElseTest do
     assert expected_errors == Rule.test( @rule, script )
   end
 
-  should "not error when an if has an else block" do
+  test "not error when an if has an else block" do
     script = """
     if a_good_test? do
       jump_for_joy

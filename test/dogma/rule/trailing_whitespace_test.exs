@@ -1,7 +1,7 @@
 defmodule Dogma.Rule.TrailingWhitespaceTest do
   use RuleCase, for: TrailingWhitespace
 
-  should "error when there is trailing whitespace" do
+  test "error when there is trailing whitespace" do
     source = "   'hello'\n"
           <> "'how'       \n"
           <> "  'are'\n"
@@ -22,7 +22,7 @@ defmodule Dogma.Rule.TrailingWhitespaceTest do
     assert expected_errors == Rule.test( @rule, script )
   end
 
-  should "not error on lines terminated windows style" do
+  test "not error on lines terminated windows style" do
     source = "   'hello'\r\n"
           <> "'how'\r\n"
           <> "  'are'\r\n"
@@ -31,7 +31,7 @@ defmodule Dogma.Rule.TrailingWhitespaceTest do
     assert [] == Rule.test( @rule, script )
   end
 
-  should "not error for trailing whitespace in triple quote strings" do
+  test "not error for trailing whitespace in triple quote strings" do
     source = ~s("""\n)
           <> ~s(1 + 1       \n)
           <> ~s("""\n)

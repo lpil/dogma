@@ -1,7 +1,7 @@
 defmodule Dogma.Rule.FunctionArityTest do
   use RuleCase, for: FunctionArity
 
-  should "not error with a low arity" do
+  test "not error with a low arity" do
     script = ~S"""
     def no_args_with_brackets() do
     end
@@ -21,7 +21,7 @@ defmodule Dogma.Rule.FunctionArityTest do
     assert [] == Rule.test( @rule, script )
   end
 
-  should "not error with a low arity protocol definition" do
+  test "not error with a low arity protocol definition" do
     script = """
     defprotocol Some.Protocol do
       def run(thing, context)
@@ -30,7 +30,7 @@ defmodule Dogma.Rule.FunctionArityTest do
     assert [] == Rule.test( @rule, script )
   end
 
-  should "error with a high arity" do
+  test "error with a high arity" do
     script = """
     def point(a,b,c,d,e) do
     end
@@ -52,7 +52,7 @@ defmodule Dogma.Rule.FunctionArityTest do
     assert expected_errors == Rule.test( @rule, script )
   end
 
-  should "be able to customise max arity with" do
+  test "be able to customise max arity with" do
     script = """
     def point(a) do
     end
@@ -70,7 +70,7 @@ defmodule Dogma.Rule.FunctionArityTest do
     assert expected_errors == Rule.test( rule, script )
   end
 
-  should "only report functions and not variables" do
+  test "only report functions and not variables" do
     script = """
     def testing do
       def = ""

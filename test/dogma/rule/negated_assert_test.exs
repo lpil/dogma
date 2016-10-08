@@ -1,8 +1,8 @@
 defmodule Dogma.Rule.NegatedAssertTest do
   use RuleCase, for: NegatedAssert
 
-  having "assert" do
-    should "not error without negation" do
+  describe "assert" do
+    test "not error without negation" do
       script = """
       assert foo
       assert foo, "ok"
@@ -10,7 +10,7 @@ defmodule Dogma.Rule.NegatedAssertTest do
       assert [] == Rule.test( @rule, script )
     end
 
-    should "error when negated with !" do
+    test "error when negated with !" do
       script = """
       assert ! foo
       assert ! foo, "not ok"
@@ -30,7 +30,7 @@ defmodule Dogma.Rule.NegatedAssertTest do
       assert expected_errors == Rule.test( @rule, script )
     end
 
-    should "error when negated with not" do
+    test "error when negated with not" do
       script = """
       assert not foo
       assert not foo, "not ok"
@@ -52,15 +52,15 @@ defmodule Dogma.Rule.NegatedAssertTest do
   end
 
 
-  having "refute" do
-    should "not error without negation" do
+  describe "refute" do
+    test "not error without negation" do
       script = """
       refute foo
       """ |> Script.parse!("")
       assert [] == Rule.test( @rule, script )
     end
 
-    should "error when negated with !" do
+    test "error when negated with !" do
       script = """
       refute ! foo
       refute ! foo, "not ok"
@@ -80,7 +80,7 @@ defmodule Dogma.Rule.NegatedAssertTest do
       assert expected_errors == Rule.test( @rule, script )
     end
 
-    should "error when negated with not" do
+    test "error when negated with not" do
       script = """
       refute not foo
       refute not foo, "not ok"

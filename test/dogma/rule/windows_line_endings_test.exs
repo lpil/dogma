@@ -1,7 +1,7 @@
 defmodule Dogma.Rule.WindowsLineEndingsTest do
   use RuleCase, for: WindowsLineEndings
 
-  should "error for windows line endings" do
+  test "error for windows line endings" do
     source = "# This line is good\n"
           <> "# This line is bad\r\n"
           <> "# back to good again"

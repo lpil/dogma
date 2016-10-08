@@ -1,7 +1,7 @@
 defmodule Dogma.Rule.ModuleAttributeNameTest do
   use RuleCase, for: ModuleAttributeName
 
-  should "not error with snake_case module attribute names" do
+  test "not error with snake_case module attribute names" do
     script = """
     defmodule HelloWorld do
       @hello_world 1
@@ -11,7 +11,7 @@ defmodule Dogma.Rule.ModuleAttributeNameTest do
     assert [] == Rule.test( @rule, script )
   end
 
-  should "error for a camelCase module attribute name" do
+  test "error for a camelCase module attribute name" do
     script = """
     defmodule SnakeCase do
       @helloWorld 1

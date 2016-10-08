@@ -1,7 +1,7 @@
 defmodule Dogma.Rule.FunctionNameTest do
   use RuleCase, for: FunctionName
 
-  should "not error with snake_case names" do
+  test "not error with snake_case names" do
     script = """
     def foo do
     end
@@ -13,7 +13,7 @@ defmodule Dogma.Rule.FunctionNameTest do
     assert [] == Rule.test( @rule, script )
     end
 
-  should "not error with an unquoted name" do
+  test "not error with an unquoted name" do
     script = """
     def unquote(function_name)(_state) do
       {:ok, "something"}
@@ -22,7 +22,7 @@ defmodule Dogma.Rule.FunctionNameTest do
     assert [] == Rule.test( @rule, script )
   end
 
-  should "error with invalid public function names" do
+  test "error with invalid public function names" do
     script = """
     def fooBar do
     end
@@ -37,7 +37,7 @@ defmodule Dogma.Rule.FunctionNameTest do
     assert expected_errors == Rule.test( @rule, script )
   end
 
-  should "error with invalid private function names" do
+  test "error with invalid private function names" do
     script = """
     defp fooBar do
     end

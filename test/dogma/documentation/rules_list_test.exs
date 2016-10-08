@@ -1,9 +1,9 @@
 defmodule Dogma.Documentation.RuleListTest do
-  use ShouldI
+  use ExUnit.Case, async: true
 
   alias Dogma.Documentation.RuleList
 
-  should "have an up to date docs/rules.md file" do
+  test "have an up to date docs/rules.md file" do
     expected = RuleList.rules_doc
     actual = File.read! "docs/rules.md"
     assert actual == expected, """

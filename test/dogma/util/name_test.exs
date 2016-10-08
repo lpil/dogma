@@ -1,5 +1,5 @@
 defmodule Dogma.Util.NameTest do
-  use ShouldI
+  use ExUnit.Case, async: true
 
   doctest Dogma.Util.Name
 end

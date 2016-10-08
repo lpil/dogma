@@ -1,7 +1,7 @@
 defmodule Dogma.Rule.VariableNameTest do
   use RuleCase, for: VariableName
 
-  should "not error for snake_case names" do
+  test "not error for snake_case names" do
     script = """
     x       = :ok
     foo     = :ok
@@ -10,7 +10,7 @@ defmodule Dogma.Rule.VariableNameTest do
     assert [] == Rule.test( @rule, script )
   end
 
-  should "error for non snake_case names" do
+  test "error for non snake_case names" do
     script = """
     fooBar  = :error
     foo_Bar = :error
@@ -30,7 +30,7 @@ defmodule Dogma.Rule.VariableNameTest do
     assert expected_errors == Rule.test( @rule, script )
   end
 
-  should "not error with destructuring assignment for snake_case" do
+  test "not error with destructuring assignment for snake_case" do
     script = """
     [foo, bar]       = foo_bar
     {foo_bar}        = foo_bar
@@ -41,7 +41,7 @@ defmodule Dogma.Rule.VariableNameTest do
     assert [] == Rule.test( @rule, script )
   end
 
-  should "error with destructuring assignment of structs for non snake_case" do
+  test "error with destructuring assignment of structs for non snake_case" do
     script = ~S"""
       [
         %Script{ source: sourcePascal },
@@ -63,7 +63,7 @@ defmodule Dogma.Rule.VariableNameTest do
     assert expected_errors == Rule.test( @rule, script )
   end
 
-  should "not error with destructuring assignment of structs for snake_case" do
+  test "not error with destructuring assignment of structs for snake_case" do
     script = """
       assert [
         %Script{ source: source_snake },
@@ -73,7 +73,7 @@ defmodule Dogma.Rule.VariableNameTest do
     assert [] == Rule.test( @rule, script )
   end
 
-  should "not error with assignment for snake_case 2" do
+  test "not error with assignment for snake_case 2" do
     script = """
     def formatters_doc do
       formatters =
@@ -87,7 +87,7 @@ defmodule Dogma.Rule.VariableNameTest do
     assert [] == Rule.test( @rule, script )
   end
 
-  should "error for pinned variables not in snake_case" do
+  test "error for pinned variables not in snake_case" do
     script = """
     ^fooBar = foo_bar
     """ |> Script.parse!("")
@@ -100,8 +100,8 @@ defmodule Dogma.Rule.VariableNameTest do
     assert expected_errors == Rule.test( @rule, script )
   end
 
-  having "non snake_case variable names in destructuring assignment" do
-    should "error for one member lists" do
+  describe "non snake_case variable names in destructuring assignment" do
+    test "error for one member lists" do
       script = """
       [fooBar] = foo_bar
       """ |> Script.parse!("")
@@ -115,7 +115,7 @@ defmodule Dogma.Rule.VariableNameTest do
       assert expected_errors == Rule.test( @rule, script )
     end
 
-    should "error for multi-member lists" do
+    test "error for multi-member lists" do
       script = """
       [foo, fooBar] = foo_bar
       """ |> Script.parse!("")
@@ -129,7 +129,7 @@ defmodule Dogma.Rule.VariableNameTest do
       assert expected_errors == Rule.test( @rule, script )
     end
 
-    should "error for multi-member lists that include literals" do
+    test "error for multi-member lists that include literals" do
       script = """
       [1, fooBar] = foo_bar
       """ |> Script.parse!("")
@@ -143,7 +143,7 @@ defmodule Dogma.Rule.VariableNameTest do
       assert expected_errors == Rule.test( @rule, script )
     end
 
-    should "error for tuples" do
+    test "error for tuples" do
       script = """
       {fooBar} = baz
       """ |> Script.parse!("")
@@ -157,7 +157,7 @@ defmodule Dogma.Rule.VariableNameTest do
       assert expected_errors == Rule.test( @rule, script )
     end
 
-    should "error for two-element tuples" do
+    test "error for two-element tuples" do
       script = """
       {foo, barBaz} = baz
       """ |> Script.parse!("")
@@ -171,7 +171,7 @@ defmodule Dogma.Rule.VariableNameTest do
       assert expected_errors == Rule.test( @rule, script )
     end
 
-    should "error for tuples inside lists and lists inside tuples" do
+    test "error for tuples inside lists and lists inside tuples" do
       script = """
       [foo, {barBaz}] = foo_bar
       {3, [fooBar]}  = foo_bar
@@ -191,7 +191,7 @@ defmodule Dogma.Rule.VariableNameTest do
       assert expected_errors == Rule.test( @rule, script )
     end
 
-    should "error for maps" do
+    test "error for maps" do
       script = """
       %{test: fooBar} = foo_bar
       """ |> Script.parse!("")
@@ -205,7 +205,7 @@ defmodule Dogma.Rule.VariableNameTest do
       assert expected_errors == Rule.test( @rule, script )
     end
 
-    should "error for head/tail pattern matching" do
+    test "error for head/tail pattern matching" do
       script = """
       [hEAD | tail] = foo_bar
       """ |> Script.parse!("")
@@ -219,7 +219,7 @@ defmodule Dogma.Rule.VariableNameTest do
       assert expected_errors == Rule.test( @rule, script )
     end
 
-    should "error for the end of a binary pattern" do
+    test "error for the end of a binary pattern" do
       script = """
       "test" <> fooBar = foo_bar
       """ |> Script.parse!("")
@@ -233,7 +233,7 @@ defmodule Dogma.Rule.VariableNameTest do
       assert expected_errors == Rule.test( @rule, script )
     end
 
-    should "find all script when there are several" do
+    test "find all script when there are several" do
       script = """
       %{some_value: someValue, other_value: otherValue} = load_something()
       """ |> Script.parse!("")
@@ -253,14 +253,14 @@ defmodule Dogma.Rule.VariableNameTest do
     end
   end
 
-  should "not error for module attribute assignments" do
+  test "not error for module attribute assignments" do
     script = """
     x = @hello
     """ |> Script.parse!("")
     assert [] == Rule.test( @rule, script )
   end
 
-  should "not error for operators" do
+  test "not error for operators" do
     script = """
     count = a + b * c - d / e
     """ |> Script.parse!("")

@@ -1,14 +1,14 @@
 defmodule Dogma.Rule.TrailingBlankLinesTest do
   use RuleCase, for: TrailingBlankLines
 
-  should "not error when there are no trailing blank lines" do
+  test "not error when there are no trailing blank lines" do
     script = """
     IO.puts 1
     """  |> Script.parse!("")
     assert [] == Rule.test( @rule, script )
   end
 
-  should "error when there are trailing blank lines" do
+  test "error when there are trailing blank lines" do
     script = """
     IO.puts 1
 

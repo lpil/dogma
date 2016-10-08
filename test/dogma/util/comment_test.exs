@@ -1,5 +1,5 @@
 defmodule Dogma.Util.CommentsTest do
-  use ShouldI
+  use ExUnit.Case, async: true
 
   alias Dogma.Util.Lines
   alias Dogma.Util.ScriptSigils
@@ -14,7 +14,7 @@ defmodule Dogma.Util.CommentsTest do
     |> Comment.get_all
   end
 
-  should "extract comments" do
+  test "extract comments" do
     comments = """
     # Very useful.
     defmodule Foo do
@@ -32,7 +32,7 @@ defmodule Dogma.Util.CommentsTest do
     assert comments == expected
   end
 
-  should "not mistake a # in a sigil for a comment" do
+  test "not mistake a # in a sigil for a comment" do
     comments = """
     ~r/#/
     ~S" # "

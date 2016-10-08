@@ -38,8 +38,6 @@ defmodule Dogma.Mixfile do
 
   defp deps do
     [
-      # Test framework
-      {:shouldi, "~> 0.3", only: :test},
       # App config test helper
       {:temporary_env, "~> 1.0", only: :test},
       # Test coverage checker
@@ -53,12 +51,12 @@ defmodule Dogma.Mixfile do
       # Documentation checker
       {:inch_ex, "~> 0.5", only: ~w(dev test docs)a},
       # Markdown processor
-      {:earmark, "~> 0.2", only: :dev},
+      {:earmark, "~> 1.0", only: :dev},
       # Documentation generator
-      {:ex_doc, "~> 0.11", only: :dev},
+      {:ex_doc, "~> 0.14", only: :dev},
 
       # JSON encoder
-      {:poison, ">= 1.0.0"},
+      {:poison, ">= 2.0.0"},
     ]
   end
 end

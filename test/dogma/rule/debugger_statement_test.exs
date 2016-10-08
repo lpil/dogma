@@ -1,7 +1,7 @@
 defmodule Dogma.Rule.DebuggerStatementTest do
   use RuleCase, for: DebuggerStatement
 
-  should "error with a call to IEx.pry" do
+  test "error with a call to IEx.pry" do
     script = """
     def identity(x) do
       IEx.pry

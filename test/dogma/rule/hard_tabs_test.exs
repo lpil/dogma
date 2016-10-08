@@ -1,7 +1,7 @@
 defmodule Dogma.Rule.HardTabsTest do
   use RuleCase, for: HardTabs
 
-  should "allow spaces to be used for indenting." do
+  test "allow spaces to be used for indenting." do
     script = """
     def foo do
       :function_body
@@ -10,7 +10,7 @@ defmodule Dogma.Rule.HardTabsTest do
     assert [] == Rule.test( @rule, script )
   end
 
-  should "error when tab is used to indent function body." do
+  test "error when tab is used to indent function body." do
     script = """
     def foo do
     \t:function_body
@@ -26,7 +26,7 @@ defmodule Dogma.Rule.HardTabsTest do
     assert expected_errors == Rule.test( @rule, script )
   end
 
-  should "allow tabs to be used for other reasons." do
+  test "allow tabs to be used for other reasons." do
     script = """
     def foo do
       ~s"have some tabs:\t\t\t"
@@ -35,7 +35,7 @@ defmodule Dogma.Rule.HardTabsTest do
     assert [] == Rule.test( @rule, script )
   end
 
-  should "error when tabs are mixed with spaces" do
+  test "error when tabs are mixed with spaces" do
     script = """
     def foo do
       \t:function_body

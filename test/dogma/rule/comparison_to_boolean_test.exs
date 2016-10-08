@@ -44,7 +44,7 @@ defmodule Dogma.Rule.ComparisonToBooleanTest do
     }
   ]
 
-  should "error with right hand booleans" do
+  test "error with right hand booleans" do
     script = """
     foo ==  false
     foo ==  true
@@ -58,7 +58,7 @@ defmodule Dogma.Rule.ComparisonToBooleanTest do
     assert @expected_errors == Rule.test( @rule, script )
   end
 
-  should "error with lefthand booleans" do
+  test "error with lefthand booleans" do
     script = """
     true  ==  foo
     true  === foo
@@ -72,7 +72,7 @@ defmodule Dogma.Rule.ComparisonToBooleanTest do
     assert @expected_errors == Rule.test( @rule, script )
   end
 
-  should "not error with vars on both sides" do
+  test "not error with vars on both sides" do
     script = """
     foo ==  bar
     foo === bar

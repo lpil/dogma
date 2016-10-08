@@ -1,7 +1,7 @@
 defmodule Dogma.Rule.PipelineStartTest do
   use RuleCase, for: PipelineStart
 
-  should "not error with a number start" do
+  test "not error with a number start" do
     script = """
     42 |> Integer.to_char_list(16) |> IO.puts
     42 |> IO.puts
@@ -9,7 +9,7 @@ defmodule Dogma.Rule.PipelineStartTest do
     assert [] == Rule.test( @rule, script )
   end
 
-  should "not error with a string start" do
+  test "not error with a string start" do
     script = """
     "A pie"
     |> String.upcase
@@ -18,14 +18,14 @@ defmodule Dogma.Rule.PipelineStartTest do
     assert [] == Rule.test( @rule, script )
   end
 
-  should "not error with a variable start" do
+  test "not error with a variable start" do
     script = """
     foo |> String.downcase |> IO.puts
     """ |> Script.parse!("")
     assert [] == Rule.test( @rule, script )
   end
 
-  should "not error with an atom start" do
+  test "not error with an atom start" do
     script = """
     :foo
     |> is_atom
@@ -34,14 +34,14 @@ defmodule Dogma.Rule.PipelineStartTest do
     assert [] == Rule.test( @rule, script )
   end
 
-  should "not error with a module atom start" do
+  test "not error with a module atom start" do
     script = """
     Foo |> to_string
     """ |> Script.parse!("")
     assert [] == Rule.test( @rule, script )
   end
 
-  should "not error with a keyword lookup start" do
+  test "not error with a keyword lookup start" do
     script = """
     map[:foo]
     |> is_atom
@@ -50,7 +50,7 @@ defmodule Dogma.Rule.PipelineStartTest do
     assert [] == Rule.test( @rule, script )
   end
 
-  should "not error with a range start" do
+  test "not error with a range start" do
     script = """
     1..4
     |> IO.inspect
@@ -61,7 +61,7 @@ defmodule Dogma.Rule.PipelineStartTest do
     assert [] == Rule.test( @rule, script )
   end
 
-  should "error for non-bare start namespaced functions" do
+  test "error for non-bare start namespaced functions" do
     script = """
     String.strip("nope") |> String.upcase |> String.downcase
     String.strip("nope") |> String.upcase
@@ -90,7 +90,7 @@ defmodule Dogma.Rule.PipelineStartTest do
     assert expected_errors == Rule.test( @rule, script )
   end
 
-  should "error for non-bare start functions" do
+  test "error for non-bare start functions" do
     script = """
     tl([1, 2, 3]) |> Enum.map(&(&1 + 1)) |> Enum.join
     tl([1, 2, 3]) |> Enum.join
@@ -119,7 +119,7 @@ defmodule Dogma.Rule.PipelineStartTest do
     assert expected_errors == Rule.test( @rule, script )
   end
 
-  should "error for non-bare start anonymous functions" do
+  test "error for non-bare start anonymous functions" do
     script = """
     add_one.([1, 2, 3]) |> IO.inspect
     add_one.([1, 2, 3]) |> Enum.join |> IO.puts
@@ -147,7 +147,7 @@ defmodule Dogma.Rule.PipelineStartTest do
     assert expected_errors == Rule.test( @rule, script )
   end
 
-  should "not error with a pattern match" do
+  test "not error with a pattern match" do
     script = """
     foo = [1, 2, 3] |> tl |> Enum.join
     bar = [3, 2, 1]
@@ -157,7 +157,7 @@ defmodule Dogma.Rule.PipelineStartTest do
     assert [] == Rule.test( @rule, script )
   end
 
-  should "not error with map values" do
+  test "not error with map values" do
     script = """
     map.key |> Enum.join
     map.key |> Enum.map(&String.upcase/1) |> Enum.join
@@ -168,7 +168,7 @@ defmodule Dogma.Rule.PipelineStartTest do
     assert [] == Rule.test( @rule, script )
   end
 
-  should "not error for structs" do
+  test "not error for structs" do
     script = """
     %Struct{} |> do_thing
     %Foo{} |> do_thing |> IO.puts
@@ -179,7 +179,7 @@ defmodule Dogma.Rule.PipelineStartTest do
     assert [] == Rule.test( @rule, script )
   end
 
-  should "not error for maps" do
+  test "not error for maps" do
     script = """
     %{} |> do_thing
     %{ "bar" => 2} |> do_thing |> IO.puts
@@ -190,7 +190,7 @@ defmodule Dogma.Rule.PipelineStartTest do
     assert [] == Rule.test( @rule, script )
   end
 
-  should "not error for tuples" do
+  test "not error for tuples" do
     script = """
     {} |> Module.do_thing
     {:ok} |> Module.do_thing |> do_other
@@ -202,7 +202,7 @@ defmodule Dogma.Rule.PipelineStartTest do
     assert [] == Rule.test( @rule, script )
   end
 
-  should "not error with a sigil start" do
+  test "not error with a sigil start" do
     script = """
     ~r/\n\n+\z/ |> Regex.run(string)
     ~w(foo bar baz)a |> Enum.map(&to_string/1) |> Enum.join
@@ -213,7 +213,7 @@ defmodule Dogma.Rule.PipelineStartTest do
     assert [] == Rule.test( @rule, script )
   end
 
-  should "not error with a module attribute start" do
+  test "not error with a module attribute start" do
     script = """
     @attribute |> Enum.join
     @attribute |> Enum.map(&String.upcase/1) |> Enum.join
@@ -224,28 +224,28 @@ defmodule Dogma.Rule.PipelineStartTest do
     assert [] == Rule.test( @rule, script )
   end
 
-  should "not error with a zero-arity function start" do
+  test "not error with a zero-arity function start" do
     script = """
     self() |> send(:hello)
     """ |> Script.parse!("")
     assert [] == Rule.test( @rule, script )
   end
 
-  should "not error with an interpolated string start" do
+  test "not error with an interpolated string start" do
     script = ~S"""
     "A #{baked_good}" |> String.upcase |> IO.puts
     """ |> Script.parse!("")
     assert [] == Rule.test( @rule, script )
   end
 
-  should "not error with binary start" do
+  test "not error with binary start" do
     script = ~S"""
     << thing::utf8 >> |> String.upcase |> IO.puts
     """ |> Script.parse!("")
     assert [] == Rule.test( @rule, script )
   end
 
-  should "not error with unquote start" do
+  test "not error with unquote start" do
     script = ~S"""
     quote do
       unquote(foo)

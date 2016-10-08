@@ -1,8 +1,8 @@
 defmodule Dogma.Rule.FinalConditionTest do
   use RuleCase, for: FinalCondition
 
-  having "no options are passed" do
-    should "not error when last condition is `true`" do
+  describe "no options are passed" do
+    test "not error when last condition is `true`" do
       script = """
       cond do
         1 + 2 == 5 ->
@@ -14,7 +14,7 @@ defmodule Dogma.Rule.FinalConditionTest do
       assert [] == Rule.test( @rule, script )
     end
 
-    should "error when last condition is not `true`" do
+    test "error when last condition is not `true`" do
       script = """
       cond do
         1 + 2 == 5 ->
@@ -34,8 +34,8 @@ defmodule Dogma.Rule.FinalConditionTest do
     end
   end
 
-  having "catch_all option passed" do
-    should "not error when last condition is catch_all" do
+  describe "catch_all option passed" do
+    test "not error when last condition is catch_all" do
       script = """
       cond do
         1 + 2 == 5 ->
@@ -48,7 +48,7 @@ defmodule Dogma.Rule.FinalConditionTest do
       assert [] == Rule.test( rule, script )
     end
 
-    should "error when last condition is not catch_all" do
+    test "error when last condition is not catch_all" do
       script = """
       cond do
         1 + 2 == 5 ->
@@ -91,46 +91,46 @@ defmodule Dogma.Rule.FinalConditionTest do
       rule = %{ @rule | catch_all: :else }
       assert expected_errors == Rule.test( rule, script )
     end
+  end
 
-    having ":_ sent as a catch-all" do
-      should "not error with _" do
-        script = """
-        cond do
-          1 + 2 == 5 ->
-            "Nope"
-          _ ->
-            "Otay!"
-        end
-        """ |> Script.parse!("")
-        rule = %{ @rule | catch_all: :_ }
-        assert [] == Rule.test( rule, script )
+  describe ":_ sent as a catch-all" do
+    test "not error with _" do
+      script = """
+      cond do
+        1 + 2 == 5 ->
+          "Nope"
+        _ ->
+          "Otay!"
       end
+      """ |> Script.parse!("")
+      rule = %{ @rule | catch_all: :_ }
+      assert [] == Rule.test( rule, script )
+    end
 
-      should "have a helpfull error message" do
-        script = """
-        cond do
-          1 + 2 == 5 ->
-            "Nope"
-          true ->
-            "Otay!"
-        end
-        """ |> Script.parse!("")
-
-        expected_errors = [
-          %Error{
-            rule: FinalCondition,
-            message: "Always use '_' as the last condition of a cond statement",
-            line: 4
-          }
-        ]
-        rule = %{ @rule | catch_all: :_ }
-        assert expected_errors == Rule.test( rule, script )
+    test "have a helpfull error message" do
+      script = """
+      cond do
+        1 + 2 == 5 ->
+          "Nope"
+        true ->
+          "Otay!"
       end
+      """ |> Script.parse!("")
+
+      expected_errors = [
+        %Error{
+          rule: FinalCondition,
+          message: "Always use '_' as the last condition of a cond statement",
+          line: 4
+        }
+      ]
+      rule = %{ @rule | catch_all: :_ }
+      assert expected_errors == Rule.test( rule, script )
     end
   end
 
-  having "no catchall condition" do
-    should "not error on expression" do
+  describe "no catchall condition" do
+    test "not error on expression" do
       script = """
       cond do
         1 + 2 == 5 ->
@@ -142,7 +142,7 @@ defmodule Dogma.Rule.FinalConditionTest do
       assert [] == Rule.test( @rule, script )
     end
 
-    should "not error on function call" do
+    test "not error on function call" do
       script = """
       cond do
         1 + 2 == 5 ->
@@ -155,8 +155,8 @@ defmodule Dogma.Rule.FinalConditionTest do
     end
   end
 
-  having "a different cond" do
-    should "not error when defining a macro called cond" do
+  describe "a different cond" do
+    test "not error when defining a macro called cond" do
       script = """
       defmacro cond
       defmacro cond do end
@@ -168,7 +168,7 @@ defmodule Dogma.Rule.FinalConditionTest do
       assert [] == Rule.test( @rule, script )
     end
 
-    should "not error when defining a function called cond" do
+    test "not error when defining a function called cond" do
       script = """
       def cond
       def cond do end
@@ -180,7 +180,7 @@ defmodule Dogma.Rule.FinalConditionTest do
       assert [] == Rule.test( @rule, script )
     end
 
-    should "not error when defining a private function called cond" do
+    test "not error when defining a private function called cond" do
       script = """
       defp cond
       defp cond do end
@@ -192,7 +192,7 @@ defmodule Dogma.Rule.FinalConditionTest do
       assert [] == Rule.test( @rule, script )
     end
 
-    should "not error when calling another cond" do
+    test "not error when calling another cond" do
       script = """
       cond 1, 2, 3
       cond foo

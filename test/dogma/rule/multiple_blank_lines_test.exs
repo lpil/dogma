@@ -3,7 +3,7 @@ defmodule Dogma.Rule.MultipleBlankLinesTest do
 
   @message "Multiple consecutive blank lines detected."
 
-  should "not error with 1 empty line" do
+  test "not error with 1 empty line" do
     script = """
     def foo do
     end
@@ -14,7 +14,7 @@ defmodule Dogma.Rule.MultipleBlankLinesTest do
     assert [] == Rule.test( @rule, script )
   end
 
-  should "not error with 2 empty line" do
+  test "not error with 2 empty line" do
     script = """
     def foo do
     end
@@ -26,7 +26,7 @@ defmodule Dogma.Rule.MultipleBlankLinesTest do
     assert [] == Rule.test( @rule, script )
   end
 
-  should "error with more empty lines" do
+  test "error with more empty lines" do
     script = """
     def foo do
     end
@@ -44,7 +44,7 @@ defmodule Dogma.Rule.MultipleBlankLinesTest do
     assert expected_errors == Rule.test( @rule, script )
   end
 
-  should "be configurable" do
+  test "be configurable" do
     rule = %{ @rule | max_lines: 1 }
     script = """
     def foo do

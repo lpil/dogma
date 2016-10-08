@@ -1,14 +1,14 @@
 defmodule Dogma.Rule.LiteralInInterpolationTest do
   use RuleCase, for: LiteralInInterpolation
 
-  should "not error with a variable or function" do
+  test "not error with a variable or function" do
     script = ~S"""
     IO.puts( "Hi my name is #{name}")
     """ |> Script.parse!("")
     assert [] == Rule.test( @rule, script )
   end
 
-  should "error with a literal in the interpolation" do
+  test "error with a literal in the interpolation" do
     script = ~S"""
     IO.puts("Hi my name is #{'Jose'}")
     """ |> Script.parse!("")

@@ -1,7 +1,7 @@
 defmodule Dogma.Rule.PredicateNameTest do
   use RuleCase, for: PredicateName
 
-  should "not error for predicates without the `is_` prefix" do
+  test "not error for predicates without the `is_` prefix" do
     script = """
     def nice?(arg) do
       true
@@ -13,7 +13,7 @@ defmodule Dogma.Rule.PredicateNameTest do
     assert [] == Rule.test( @rule, script )
   end
 
-  should "error for predicates with the `is_` prefix" do
+  test "error for predicates with the `is_` prefix" do
     script = """
     def is_naughty?(arg) do
       true

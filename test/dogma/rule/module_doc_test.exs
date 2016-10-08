@@ -2,8 +2,8 @@ defmodule Dogma.Rule.ModuleDocTest do
   use RuleCase, for: ModuleDoc
 
 
-  having "module docs" do
-    should "not error" do
+  describe "module docs" do
+    test "not error" do
       script = """
       defmodule VeryGood do
         @moduledoc "Lots of good info here"
@@ -12,7 +12,7 @@ defmodule Dogma.Rule.ModuleDocTest do
       assert [] == Rule.test( @rule, script )
     end
 
-    should "not error with nested modules" do
+    test "not error with nested modules" do
       script = """
       defmodule VeryGood do
         @moduledoc "Lots of good info here"
@@ -25,7 +25,7 @@ defmodule Dogma.Rule.ModuleDocTest do
     end
   end
 
-  should "error for a module missing a module doc" do
+  test "error for a module missing a module doc" do
     script = """
     defmodule NotGood do
     end
@@ -40,7 +40,7 @@ defmodule Dogma.Rule.ModuleDocTest do
     assert expected_errors == Rule.test( @rule, script )
   end
 
-  should "print the module name correctly when it is namespaced" do
+  test "print the module name correctly when it is namespaced" do
     script = """
     defmodule NameSpace.ModName do
     end
@@ -55,7 +55,7 @@ defmodule Dogma.Rule.ModuleDocTest do
     assert expected_errors == Rule.test( @rule, script )
   end
 
-  should "error for a nested module missing a module doc" do
+  test "error for a nested module missing a module doc" do
     script = """
     defmodule VeryGood do
       @moduledoc "Lots of good info here"
@@ -73,7 +73,7 @@ defmodule Dogma.Rule.ModuleDocTest do
     assert expected_errors == Rule.test( @rule, script )
   end
 
-  should "error for a parent module missing a module doc" do
+  test "error for a parent module missing a module doc" do
     script = """
     defmodule NotGood do
       defmodule VeryGood do
@@ -91,7 +91,7 @@ defmodule Dogma.Rule.ModuleDocTest do
     assert expected_errors == Rule.test( @rule, script )
   end
 
-  should "not error for an exs file (exs is skipped)" do
+  test "not error for an exs file (exs is skipped)" do
     script = """
     defmodule NotGood do
     end
@@ -99,7 +99,7 @@ defmodule Dogma.Rule.ModuleDocTest do
     assert [] == Rule.test( @rule, script )
   end
 
-  should "not crash for unquoted module names" do
+  test "not crash for unquoted module names" do
     script = """
     quote do
       defmodule unquote(name) do

@@ -1,7 +1,7 @@
 defmodule Dogma.Rule.ExceptionNameTest do
   use RuleCase, for: ExceptionName
 
-  should "not error with a trailing 'Error' in the module name" do
+  test "not error with a trailing 'Error' in the module name" do
     script = """
     defmodule BadHTTPCodeError do
       defexception [:message]
@@ -10,7 +10,7 @@ defmodule Dogma.Rule.ExceptionNameTest do
     assert [] == Rule.test( @rule, script )
   end
 
-  should "error with any other suffix than 'Error' in the module name" do
+  test "error with any other suffix than 'Error' in the module name" do
     script = """
     defmodule BadHTTPCode do
       defexception [:message]

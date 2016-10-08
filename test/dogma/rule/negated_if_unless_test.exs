@@ -1,8 +1,8 @@
 defmodule Dogma.Rule.NegatedIfUnlessTest do
   use RuleCase, for: NegatedIfUnless
 
-  having "a non negated predicate" do
-    should "not error with if" do
+  describe "a non negated predicate" do
+    test "not error with if" do
       script = """
       if it_was_really_good do
         boast_about_your_weekend
@@ -11,7 +11,7 @@ defmodule Dogma.Rule.NegatedIfUnlessTest do
       assert [] == Rule.test( @rule, script )
     end
 
-    should "not error with unless" do
+    test "not error with unless" do
       script = """
       unless youre_quite_full do
         have_another_slice_of_cake
@@ -22,8 +22,8 @@ defmodule Dogma.Rule.NegatedIfUnlessTest do
   end
 
 
-  having "a predicate negated with 'not'" do
-    should "error with if" do
+  describe "a predicate negated with 'not'" do
+    test "error with if" do
       script = """
       if not that_great do
         make_the_best_of_it
@@ -39,7 +39,7 @@ defmodule Dogma.Rule.NegatedIfUnlessTest do
       assert expected_errors == Rule.test( @rule, script )
     end
 
-    should "error with unless" do
+    test "error with unless" do
       script = """
       unless not acceptable do
         find_something_better
@@ -56,8 +56,8 @@ defmodule Dogma.Rule.NegatedIfUnlessTest do
     end
   end
 
-  having "a predicate negated with '!'" do
-    should "error with if" do
+  describe "a predicate negated with '!'" do
+    test "error with if" do
       script = """
       if ! that_great do
         make_the_best_of_it
@@ -73,7 +73,7 @@ defmodule Dogma.Rule.NegatedIfUnlessTest do
       assert expected_errors == Rule.test( @rule, script )
     end
 
-    should "error with unless" do
+    test "error with unless" do
       script = """
       IO.puts "Hello, world!"
       unless ! acceptable do

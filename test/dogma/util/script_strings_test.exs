@@ -1,15 +1,15 @@
 defmodule Dogma.Util.ScriptStringsTest do
-  use ShouldI
+  use ExUnit.Case, async: true
 
   alias Dogma.Util.ScriptStrings
 
-  having "strip/1" do
-    should "no-op with empty scripts" do
+  describe "strip/1" do
+    test "no-op with empty scripts" do
       processed = "" |> ScriptStrings.strip
       assert processed == ""
     end
 
-    should "no-op with stringless scripts" do
+    test "no-op with stringless scripts" do
       script = """
       defmodule Hello do
         def World do
@@ -21,7 +21,7 @@ defmodule Dogma.Util.ScriptStringsTest do
       assert processed == script
     end
 
-    should ~S{no-op with double quote character (?")} do
+    test ~S{no-op with double quote character (?")} do
       script = """
       defmodule Hello do
         def World do
@@ -33,7 +33,7 @@ defmodule Dogma.Util.ScriptStringsTest do
       assert processed == script
     end
 
-    should "not strip contents from s sigil" do
+    test "not strip contents from s sigil" do
       script = """
       defmodule Sneaky do
         def String do
@@ -51,7 +51,7 @@ defmodule Dogma.Util.ScriptStringsTest do
       assert desired == script |> ScriptStrings.strip
     end
 
-    should "not strip contents from S sigil" do
+    test "not strip contents from S sigil" do
       script = """
       defmodule Sneaky do
         def String do
@@ -69,7 +69,7 @@ defmodule Dogma.Util.ScriptStringsTest do
       assert desired == script |> ScriptStrings.strip
     end
 
-    should "strip contents from strings, preserving newlines" do
+    test "strip contents from strings, preserving newlines" do
       processed = """
       defmodule Newliney do
         def string(x) do
@@ -89,7 +89,7 @@ world!"
       assert processed == desired
     end
 
-    should "strip contents from docstrings, preserving newlines" do
+    test "strip contents from docstrings, preserving newlines" do
       processed = [
         ~s(defmodule Docky do),
         ~s[  def string(x) do],
@@ -113,7 +113,7 @@ world!"
       assert processed == desired
     end
 
-    should "strip an escaped backslash from docstrings" do
+    test "strip an escaped backslash from docstrings" do
       processed = [
         ~s(defmodule Slashes do),
         ~s[  def backslash() do],
@@ -135,7 +135,7 @@ world!"
       assert processed == desired
     end
 
-    should "strip an escaped doublequote from docstrings" do
+    test "strip an escaped doublequote from docstrings" do
       processed = [
         ~s(defmodule Quotes do),
         ~s[  def doublequote() do],
@@ -157,7 +157,7 @@ world!"
       assert processed == desired
     end
 
-    should "handle quotes in strings" do
+    test "handle quotes in strings" do
       processed = ~S"""
       defmodule Boardroom do
         def say(x) do
@@ -175,7 +175,7 @@ world!"
       assert processed == desired
     end
 
-    should "handle quotes preceeded by escaped slashes in strings" do
+    test "handle quotes preceeded by escaped slashes in strings" do
       processed = ~S"""
       defmodule Identifier do
         def say(x) do
@@ -193,7 +193,7 @@ world!"
       assert processed == desired
     end
 
-    should "handle quotes in doc strings" do
+    test "handle quotes in doc strings" do
       processed = [
         ~s(defmodule Doc do),
         ~s[  def string(x) do],

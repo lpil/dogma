@@ -1,8 +1,8 @@
 defmodule Dogma.Rule.MatchInConditionTest do
   use RuleCase, for: MatchInCondition
 
-  having "a variable/function argument" do
-    should "not error for if" do
+  describe "a variable/function argument" do
+    test "not error for if" do
       script = """
       if feeling_tired do
         have_an_early_night
@@ -11,7 +11,7 @@ defmodule Dogma.Rule.MatchInConditionTest do
       assert [] == Rule.test( @rule, script )
     end
 
-    should "not error for unless" do
+    test "not error for unless" do
       script = """
       unless feeling_sleepy do
         a_little_dance
@@ -21,8 +21,8 @@ defmodule Dogma.Rule.MatchInConditionTest do
     end
   end
 
-  having "a literal argument" do
-    should "not error for if" do
+  describe "a literal argument" do
+    test "not error for if" do
       script = """
       if false do
         i_will_never_run
@@ -31,7 +31,7 @@ defmodule Dogma.Rule.MatchInConditionTest do
       assert [] == Rule.test( @rule, script )
     end
 
-    should "not error for unless" do
+    test "not error for unless" do
       script = """
       unless [] do
         useless_unless
@@ -41,8 +41,8 @@ defmodule Dogma.Rule.MatchInConditionTest do
     end
   end
 
-  having "a piped in argument" do
-    should "not error for if" do
+  describe "a piped in argument" do
+    test "not error for if" do
       script = """
       something
       |> if do
@@ -52,7 +52,7 @@ defmodule Dogma.Rule.MatchInConditionTest do
       assert [] == Rule.test( @rule, script )
     end
 
-    should "not error for unless" do
+    test "not error for unless" do
       script = """
       something
       |> unless do
@@ -63,8 +63,8 @@ defmodule Dogma.Rule.MatchInConditionTest do
     end
   end
 
-  having "a comparison argument" do
-    should "not error for if" do
+  describe "a comparison argument" do
+    test "not error for if" do
       script = """
       if x ==  y do z end
       if x === y do z end
@@ -74,7 +74,7 @@ defmodule Dogma.Rule.MatchInConditionTest do
       assert [] == Rule.test( @rule, script )
     end
 
-    should "not error for unless" do
+    test "not error for unless" do
       script = """
       unless x ==  y do z end
       unless x === y do z end
@@ -85,8 +85,8 @@ defmodule Dogma.Rule.MatchInConditionTest do
     end
   end
 
-  having "match argument" do
-    should "error for if" do
+  describe "match argument" do
+    test "error for if" do
       script = """
       if x         = y do z end
       if {x1, x2}  = y do z end
@@ -118,7 +118,7 @@ defmodule Dogma.Rule.MatchInConditionTest do
       assert expected_errors == Rule.test( @rule, script )
     end
 
-    should "error for unless" do
+    test "error for unless" do
       script = """
       unless x         = y do z end
       unless {x1, x2}  = y do z end

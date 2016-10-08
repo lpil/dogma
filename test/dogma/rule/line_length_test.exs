@@ -1,7 +1,7 @@
 defmodule Dogma.Rule.LineLengthTest do
   use RuleCase, for: LineLength
 
-  should "error on long lines" do
+  test "error on long lines" do
     script = [
       String.duplicate( "x",  90 ),
       String.duplicate( "y",  30 ),
@@ -22,7 +22,7 @@ defmodule Dogma.Rule.LineLengthTest do
     assert expected_errors == Rule.test( @rule, script )
   end
 
-  should "allow the line length to be configured" do
+  test "allow the line length to be configured" do
     rule   = %LineLength{ max_length: 100 }
     script = [
       String.duplicate( "x",  90 ),

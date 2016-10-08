@@ -1,8 +1,8 @@
 defmodule Dogma.Rule.LiteralInConditionTest do
   use RuleCase, for: LiteralInCondition
 
-  having "a variable/function argument" do
-    should "not error for if" do
+  describe "a variable/function argument" do
+    test "not error for if" do
       script = """
       if feeling_tired do
         have_an_early_night
@@ -11,7 +11,7 @@ defmodule Dogma.Rule.LiteralInConditionTest do
       assert [] == Rule.test( @rule, script )
     end
 
-    should "not error for unless" do
+    test "not error for unless" do
       script = """
       unless feeling_sleepy do
         a_little_dance
@@ -20,7 +20,7 @@ defmodule Dogma.Rule.LiteralInConditionTest do
       assert [] == Rule.test( @rule, script )
     end
 
-    should "not error for case" do
+    test "not error for case" do
       script = """
       case status do
         :hyped -> run_like_the_wind
@@ -30,7 +30,7 @@ defmodule Dogma.Rule.LiteralInConditionTest do
       assert [] == Rule.test( @rule, script )
     end
 
-    should "not error for case with variables in tuple" do
+    test "not error for case with variables in tuple" do
       script = """
       case {status, code} do
         {:hyped, _} -> run_like_the_wind
@@ -42,8 +42,8 @@ defmodule Dogma.Rule.LiteralInConditionTest do
   end
 
 
-  having "a literal argument" do
-    should "error for if" do
+  describe "a literal argument" do
+    test "error for if" do
       script = """
       if false do
         i_will_never_run
@@ -59,7 +59,7 @@ defmodule Dogma.Rule.LiteralInConditionTest do
       assert expected_errors == Rule.test( @rule, script )
     end
 
-    should "error for unless" do
+    test "error for unless" do
       script = """
       unless [] do
         useless_unless
@@ -75,7 +75,7 @@ defmodule Dogma.Rule.LiteralInConditionTest do
       assert expected_errors == Rule.test( @rule, script )
     end
 
-    should "error for case" do
+    test "error for case" do
       script = """
       case 0 do
         1 -> the_loneliest_number
@@ -93,8 +93,8 @@ defmodule Dogma.Rule.LiteralInConditionTest do
     end
   end
 
-  having "a piped in argument" do
-    should "not error for if" do
+  describe "a piped in argument" do
+    test "not error for if" do
       script = """
       something
       |> if do
@@ -104,7 +104,7 @@ defmodule Dogma.Rule.LiteralInConditionTest do
       assert [] == Rule.test( @rule, script )
     end
 
-    should "not error for unless" do
+    test "not error for unless" do
       script = """
       something
       |> unless do
@@ -114,7 +114,7 @@ defmodule Dogma.Rule.LiteralInConditionTest do
       assert [] == Rule.test( @rule, script )
     end
 
-    should "not error for case" do
+    test "not error for case" do
       script = """
       something
       |> case do

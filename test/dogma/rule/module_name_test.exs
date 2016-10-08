@@ -1,7 +1,7 @@
 defmodule Dogma.Rule.ModuleNameTest do
   use RuleCase, for: ModuleName
 
-  should "not error with a valid module name" do
+  test "not error with a valid module name" do
     script = """
     defmodule HelloWorld do
     end
@@ -9,7 +9,7 @@ defmodule Dogma.Rule.ModuleNameTest do
     assert [] == Rule.test( @rule, script )
   end
 
-  should "a valid module name as a symbol" do
+  test "a valid module name as a symbol" do
     script = """
     defmodule :HelloWorld do
     end
@@ -17,7 +17,7 @@ defmodule Dogma.Rule.ModuleNameTest do
     assert [] == Rule.test( @rule, script )
   end
 
-  should "a valid nested module name" do
+  test "a valid nested module name" do
     script = """
     defmodule Hello.World do
     end
@@ -25,7 +25,7 @@ defmodule Dogma.Rule.ModuleNameTest do
     assert [] == Rule.test( @rule, script )
   end
 
-  should "nested modules with valid names" do
+  test "nested modules with valid names" do
     script = """
     defmodule Hello do
       defmodule There do
@@ -37,7 +37,7 @@ defmodule Dogma.Rule.ModuleNameTest do
     assert [] == Rule.test( @rule, script )
   end
 
-  should "a snake_case module name" do
+  test "a snake_case module name" do
     script = """
     defmodule Snake_case do
     end
@@ -52,7 +52,7 @@ defmodule Dogma.Rule.ModuleNameTest do
     assert expected_errors == Rule.test( @rule, script )
   end
 
-  should "a snake_case symbol module name" do
+  test "a snake_case symbol module name" do
     script = """
     defmodule :snake_case do
     end
@@ -67,7 +67,7 @@ defmodule Dogma.Rule.ModuleNameTest do
     assert expected_errors == Rule.test( @rule, script )
   end
 
-  should "a snake_case 2 part module name" do
+  test "a snake_case 2 part module name" do
     script = """
     defmodule Hello.There_world do
     end
@@ -82,7 +82,7 @@ defmodule Dogma.Rule.ModuleNameTest do
     assert expected_errors == Rule.test( @rule, script )
   end
 
-  should "a nested snake_case name" do
+  test "a nested snake_case name" do
     script = """
     defmodule Hello do
       defmodule I_am_interrupting do
@@ -101,7 +101,7 @@ defmodule Dogma.Rule.ModuleNameTest do
     assert expected_errors == Rule.test( @rule, script )
   end
 
-  should "a non-capitalised 2 part name" do
+  test "a non-capitalised 2 part name" do
     script = """
     defmodule :"Hello.world" do
     end
