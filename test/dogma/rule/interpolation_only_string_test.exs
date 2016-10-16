@@ -1,17 +1,19 @@
 defmodule Dogma.Rule.InterpolationOnlyStringTest do
   use RuleCase, for: InterpolationOnlyString
 
+  def error_on_line(n) do
+    %Error{
+      rule: InterpolationOnlyString,
+      message: "Useless string interpolation detected.",
+      line: n,
+    }
+  end
+
   test "errors for an interpolation-only string" do
     script = ~S"""
     "#{inspect app_servers_pids}"
     """ |> Script.parse!("")
-    expected_errors = [
-      %Error{
-        rule: InterpolationOnlyString,
-        message: "Useless string interpolation detected.",
-        line: 1,
-      }
-    ]
+    expected_errors = [error_on_line(1)]
     assert expected_errors == Rule.test( @rule, script )
   end
 
@@ -44,4 +46,11 @@ defmodule Dogma.Rule.InterpolationOnlyStringTest do
     assert [] == Rule.test( @rule, script )
   end
 
+  test "no error for ~r interpolation" do
+    script = ~S"""
+    ~r/#{bar}/
+    "#{bar}"
+    """ |> Script.parse!("")
+    assert [error_on_line(2)] == Rule.test( @rule, script )
+  end
 end

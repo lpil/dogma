@@ -19,15 +19,23 @@ defrule Dogma.Rule.InterpolationOnlyString do
     |> Script.walk(&check_node(&1, &2))
   end
 
+
+  defp check_node({:sigil_r, _, _}, errors) do
+    {[], errors}
+  end
+
   defp check_node(
-    {:<<>>, meta, [{:::, _, [{{:., _, call}, _, _}, _]} ]} = node, errors
+    {:<<>>, meta, [{:::, _, [{{:., _, call}, _, _}, _]} ]} = ast,
+    errors
   ) when call == [Kernel, :to_string]
   do
-    {node, [ error(meta[:line]) | errors ]}
+    {ast, [ error(meta[:line]) | errors ]}
   end
-  defp check_node(node, errors) do
-    {node, errors}
+
+  defp check_node(ast, errors) do
+    {ast, errors}
   end
+
 
   defp error(pos) do
     %Error{
