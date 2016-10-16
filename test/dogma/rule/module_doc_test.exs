@@ -1,31 +1,28 @@
 defmodule Dogma.Rule.ModuleDocTest do
   use RuleCase, for: ModuleDoc
 
-
-  describe "module docs" do
-    test "not error" do
-      script = """
-      defmodule VeryGood do
-        @moduledoc "Lots of good info here"
-      end
-      """ |> Script.parse!("")
-      assert [] == Rule.test( @rule, script )
+  test "no error with moduledoc" do
+    script = ~S"""
+    defmodule VeryGood do
+      @moduledoc "Lots of good info here"
     end
-
-    test "not error with nested modules" do
-      script = """
-      defmodule VeryGood do
-        @moduledoc "Lots of good info here"
-        defmodule AlsoGood do
-          @moduledoc "And even more here!"
-        end
-      end
-      """ |> Script.parse!("")
-      assert [] == Rule.test( @rule, script )
-    end
+    """ |> Script.parse!("")
+    assert [] == Rule.test( @rule, script )
   end
 
-  test "error for a module missing a module doc" do
+  test "no error with nested modules with docs" do
+    script = """
+    defmodule VeryGood do
+      @moduledoc "Lots of good info here"
+      defmodule AlsoGood do
+        @moduledoc "And even more here!"
+      end
+    end
+    """ |> Script.parse!("")
+    assert [] == Rule.test( @rule, script )
+  end
+
+  test "errors for a module missing a module doc" do
     script = """
     defmodule NotGood do
     end
@@ -40,7 +37,7 @@ defmodule Dogma.Rule.ModuleDocTest do
     assert expected_errors == Rule.test( @rule, script )
   end
 
-  test "print the module name correctly when it is namespaced" do
+  test "it determines the module name correctly when it is namespaced" do
     script = """
     defmodule NameSpace.ModName do
     end
@@ -55,7 +52,7 @@ defmodule Dogma.Rule.ModuleDocTest do
     assert expected_errors == Rule.test( @rule, script )
   end
 
-  test "error for a nested module missing a module doc" do
+  test "errors for a nested module missing a module doc" do
     script = """
     defmodule VeryGood do
       @moduledoc "Lots of good info here"
@@ -73,7 +70,7 @@ defmodule Dogma.Rule.ModuleDocTest do
     assert expected_errors == Rule.test( @rule, script )
   end
 
-  test "error for a parent module missing a module doc" do
+  test "errors for a parent module missing a module doc" do
     script = """
     defmodule NotGood do
       defmodule VeryGood do
@@ -91,7 +88,7 @@ defmodule Dogma.Rule.ModuleDocTest do
     assert expected_errors == Rule.test( @rule, script )
   end
 
-  test "not error for an exs file (exs is skipped)" do
+  test "no error for an exs file (exs is skipped)" do
     script = """
     defmodule NotGood do
     end
@@ -99,7 +96,7 @@ defmodule Dogma.Rule.ModuleDocTest do
     assert [] == Rule.test( @rule, script )
   end
 
-  test "not crash for unquoted module names" do
+  test "don't crash for unquoted module names" do
     script = """
     quote do
       defmodule unquote(name) do
@@ -111,6 +108,22 @@ defmodule Dogma.Rule.ModuleDocTest do
         rule: ModuleDoc,
         message: "Unknown module is missing a @moduledoc.",
         line: 2,
+      }
+    ]
+    assert expected_errors == Rule.test( @rule, script )
+  end
+
+
+  test "understand :atom module names" do
+    script = """
+    defmodule :some_mod do
+    end
+    """ |> Script.parse!("")
+    expected_errors = [
+      %Error{
+        rule: ModuleDoc,
+        message: "Module :some_mod is missing a @moduledoc.",
+        line: 1,
       }
     ]
     assert expected_errors == Rule.test( @rule, script )

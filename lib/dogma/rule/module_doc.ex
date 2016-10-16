@@ -41,24 +41,31 @@ defrule Dogma.Rule.ModuleDoc do
   end
 
   defp check_ast({:defmodule, m, [mod, [do: module_body]]} = ast, errors) do
-    {_, _, names} = mod
-    if module_body |> moduledoc? do
+    if moduledoc?(module_body) do
       {ast, errors}
     else
-      {ast, [error( m[:line], module_name(names) ) | errors]}
+      {ast, [error( m[:line], module_name(mod) ) | errors]}
     end
   end
   defp check_ast(ast, errors) do
     {ast, errors}
   end
 
-  defp module_name(names) do
+
+  defp module_name(name) when is_atom(name) do
+    inspect(name)
+  end
+  defp module_name({:__aliases__, _, names}) do
     if Enum.all?( names, &is_atom/1 ) do
       Enum.join(names, ".")
     else
       nil
     end
   end
+  defp module_name(_) do
+    nil
+  end
+
 
   defp moduledoc?(ast) do
     {_, pred} = Macro.prewalk( ast, false, &moduledoc?(&1, &2) )
