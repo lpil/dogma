@@ -16,15 +16,15 @@ defrule Dogma.Rule.InterpolationOnlyString do
 
   def test(_rule, script) do
     script
-    |> Script.walk(&check_node(&1, &2))
+    |> Script.walk(&check_ast(&1, &2))
   end
 
 
-  defp check_node({:sigil_r, _, _}, errors) do
+  defp check_ast({:sigil_r, _, _}, errors) do
     {[], errors}
   end
 
-  defp check_node(
+  defp check_ast(
     {:<<>>, meta, [{:::, _, [{{:., _, call}, _, _}, _]} ]} = ast,
     errors
   ) when call == [Kernel, :to_string]
@@ -32,7 +32,7 @@ defrule Dogma.Rule.InterpolationOnlyString do
     {ast, [ error(meta[:line]) | errors ]}
   end
 
-  defp check_node(ast, errors) do
+  defp check_ast(ast, errors) do
     {ast, errors}
   end
 

@@ -29,7 +29,7 @@ defrule Dogma.Rule.TakenName do
     import inbits inli inlist inspect is_atom is_binary is_bitstring is_boolean
     is_exception is_float is_function is_integer is_list is_map is_nil
     is_number is_pid is_port is_record is_reference is_tuple lc length make_ref
-    map_size max min node put_elem put_in quote raise receive rem require
+    map_size max min ast put_elem put_in quote raise receive rem require
     reraise respawn resque round self send sigil_C sigil_R sigil_S sigil_W
     sigil_c sigil_r sigil_s sigil_w spawn spawn_link spawn_monitor struct sum
     super throw tl to_char_list to_string trunc try tuple_size unless unquote
@@ -44,36 +44,36 @@ defrule Dogma.Rule.TakenName do
   end
 
   def test(_rule, script) do
-    script |> Script.walk( &check_node(&1, &2) )
+    script |> Script.walk( &check_ast(&1, &2) )
   end
 
-  defp check_node({:def, _, [{name, meta, _} | _]} = node, errors) do
-    check_name(name, meta, node, errors)
+  defp check_ast({:def, _, [{name, meta, _} | _]} = ast, errors) do
+    check_name(name, meta, ast, errors)
   end
-  defp check_node({:defmacro, _, [{name, meta, _} | _]} = node, errors) do
-    check_name(name, meta, node, errors)
+  defp check_ast({:defmacro, _, [{name, meta, _} | _]} = ast, errors) do
+    check_name(name, meta, ast, errors)
   end
-  defp check_node({:defp, _, [{name, meta, _} | _]} = node, errors) do
-    check_name(name, meta, node, errors)
+  defp check_ast({:defp, _, [{name, meta, _} | _]} = ast, errors) do
+    check_name(name, meta, ast, errors)
   end
-  defp check_node(node, errors) do
-    {node, errors}
+  defp check_ast(ast, errors) do
+    {ast, errors}
   end
 
   defp valid_name?(name) do
     ! HashSet.member?(@reserved_words, name)
   end
 
-  defp check_name(name, meta, node, errors) when is_atom(name) do
+  defp check_name(name, meta, ast, errors) when is_atom(name) do
     if valid_name?(name) do
-      {node, errors}
+      {ast, errors}
     else
-      {node, [error( meta[:line], name ) | errors]}
+      {ast, [error( meta[:line], name ) | errors]}
     end
   end
 
-  defp check_name(_, _, node, errors) do
-    {node, errors}
+  defp check_name(_, _, ast, errors) do
+    {ast, errors}
   end
 
   defp error(pos, name) do

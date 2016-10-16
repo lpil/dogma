@@ -117,8 +117,8 @@ defmodule Dogma.Script do
   script.errors is used as an accumulator for `fun/2`, the script with the new
   errors is returned.
 
-  `fun/2` should take a node and the errors accumulator as arguments, and
-  return {node, errors}
+  `fun/2` should take a ast and the errors accumulator as arguments, and
+  return {ast, errors}
   """
   def walk(script, fun) do
     {_, errors} = Macro.prewalk( script.ast, [], fun )

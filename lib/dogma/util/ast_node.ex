@@ -1,13 +1,13 @@
 defmodule Dogma.Util.AST do
   @moduledoc """
-  Utility functions for analyzing and categorizing AST nodes
+  Utility functions for analyzing and categorizing AST asts
   """
 
   sigil_chars =
     "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ" |> String.graphemes
 
   @doc """
-  Returns true if the node x is a literal
+  Returns true if the ast x is a literal
 
   ## Examples:
 

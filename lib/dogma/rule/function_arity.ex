@@ -19,33 +19,33 @@ defrule Dogma.Rule.FunctionArity, max: 4 do
   alias Dogma.Error
 
   def test(rule, script) do
-    Script.walk(script, &check_node(&1, &2, rule.max))
+    Script.walk(script, &check_ast(&1, &2, rule.max))
   end
 
   @defs ~w(def defp defmacro)a
   for type <- @defs do
-    defp check_node({unquote(type), _, nil} = node, errors, _) do
-      {node, errors}
+    defp check_ast({unquote(type), _, nil} = ast, errors, _) do
+      {ast, errors}
     end
 
-    defp check_node({unquote(type), _, _} = node, errors, max) do
-      {name, line, args} = get_fun_details(node)
+    defp check_ast({unquote(type), _, _} = ast, errors, max) do
+      {name, line, args} = get_fun_details(ast)
       arity = args |> length
       if arity > max do
-        {node, [error(line, name, max, arity) | errors]}
+        {ast, [error(line, name, max, arity) | errors]}
       else
-        {node, errors}
+        {ast, errors}
       end
     end
 
   end
 
-  defp check_node(node, errors, _) do
-    {node, errors}
+  defp check_ast(ast, errors, _) do
+    {ast, errors}
   end
 
-  defp get_fun_details(node) do
-    {_, [line: line], details} = node
+  defp get_fun_details(ast) do
+    {_, [line: line], details} = ast
     {name, _, args} = hd( details )
     args = args || []
     {name, line, args}

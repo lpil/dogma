@@ -62,27 +62,27 @@ defrule Dogma.Rule.FinalCondition, [catch_all: true] do
 
   def test(rule, script) do
     script
-    |> Script.walk(&check_node(&1, &2, rule.catch_all))
+    |> Script.walk(&check_ast(&1, &2, rule.catch_all))
     |> Enum.reverse
   end
 
-  defp check_node({:cond, _, [[do: children]]} = node, errors, check) do
+  defp check_ast({:cond, _, [[do: children]]} = ast, errors, check) do
     {:->, meta, [[con] | _]} = List.last( children )
 
     if error?(con, check) do
-      {node, [error(meta[:line], check) | errors]}
+      {ast, [error(meta[:line], check) | errors]}
     else
-      {node, errors}
+      {ast, errors}
     end
   end
 
   # Case for a custom cond function
-  defp check_node({:cond, _, _} = node, errors, _) do
-    {node, errors}
+  defp check_ast({:cond, _, _} = ast, errors, _) do
+    {ast, errors}
   end
 
-  defp check_node(node, errors, _) do
-    {node, errors}
+  defp check_ast(ast, errors, _) do
+    {ast, errors}
   end
 
   defp error?(con, con),      do: false

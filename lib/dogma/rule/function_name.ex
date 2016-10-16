@@ -31,30 +31,30 @@ defrule Dogma.Rule.FunctionName do
   alias Dogma.Util.Name
 
   def test(_rule, script) do
-    script |> Script.walk( &check_node(&1, &2) )
+    script |> Script.walk( &check_ast(&1, &2) )
   end
 
 
-  defp check_node({:def, _, [{name, meta, _} | _]} = node, errors) do
-    check_function(name, meta, node, errors)
+  defp check_ast({:def, _, [{name, meta, _} | _]} = ast, errors) do
+    check_function(name, meta, ast, errors)
   end
-  defp check_node({:defp, _, [{name, meta, _} | _]} = node, errors) do
-    check_function(name, meta, node, errors)
+  defp check_ast({:defp, _, [{name, meta, _} | _]} = ast, errors) do
+    check_function(name, meta, ast, errors)
   end
-  defp check_node(node, errors) do
-    {node, errors}
+  defp check_ast(ast, errors) do
+    {ast, errors}
   end
 
   # If the function is named by unquoting something then we can't check it
-  defp check_function({:unquote, _, _} , _meta, node, errors) do
-    {node, errors}
+  defp check_function({:unquote, _, _} , _meta, ast, errors) do
+    {ast, errors}
   end
 
-  defp check_function(name, meta, node, errors) do
+  defp check_function(name, meta, ast, errors) do
     if name |> to_string |> Name.snake_case? do
-      {node, errors}
+      {ast, errors}
     else
-      {node, [error( meta[:line] ) | errors]}
+      {ast, [error( meta[:line] ) | errors]}
     end
   end
 

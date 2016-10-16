@@ -36,20 +36,20 @@ defrule Dogma.Rule.ModuleDoc do
     if Regex.match?( @file_to_be_skipped, script.path ) do
       []
     else
-      script |> Script.walk( &check_node(&1, &2) )
+      script |> Script.walk( &check_ast(&1, &2) )
     end
   end
 
-  defp check_node({:defmodule, m, [mod, [do: module_body]]} = node, errors) do
+  defp check_ast({:defmodule, m, [mod, [do: module_body]]} = ast, errors) do
     {_, _, names} = mod
     if module_body |> moduledoc? do
-      {node, errors}
+      {ast, errors}
     else
-      {node, [error( m[:line], module_name(names) ) | errors]}
+      {ast, [error( m[:line], module_name(names) ) | errors]}
     end
   end
-  defp check_node(node, errors) do
-    {node, errors}
+  defp check_ast(ast, errors) do
+    {ast, errors}
   end
 
   defp module_name(names) do
@@ -60,8 +60,8 @@ defrule Dogma.Rule.ModuleDoc do
     end
   end
 
-  defp moduledoc?(node) do
-    {_, pred} = Macro.prewalk( node, false, &moduledoc?(&1, &2) )
+  defp moduledoc?(ast) do
+    {_, pred} = Macro.prewalk( ast, false, &moduledoc?(&1, &2) )
     pred
   end
 
@@ -81,8 +81,8 @@ defrule Dogma.Rule.ModuleDoc do
   end
 
   # Nothing here, keep looking
-  defp moduledoc?(node, false) do
-    {node, false}
+  defp moduledoc?(ast, false) do
+    {ast, false}
   end
 
   defp error(position, nil) do

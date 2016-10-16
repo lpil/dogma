@@ -21,26 +21,26 @@ defrule Dogma.Rule.PipelineStart do
 
   def test(_rule, script) do
     script
-    |> Script.walk(&check_node/2)
+    |> Script.walk(&check_ast/2)
     |> Enum.reverse
   end
 
-  defp check_node({:|>, _, [lhs, _]}, errors) do
+  defp check_ast({:|>, _, [lhs, rhs]} = ast, errors) do
     case function_line(lhs) do
       {:error, line} ->
-        {node, [error(line) | errors]}
+        {rhs, [error(line) | errors]}
 
       _ ->
-        {node, errors}
+        {ast, errors}
     end
   end
 
-  defp check_node(node, errors) do
-    {node, errors}
+  defp check_ast(ast, errors) do
+    {ast, errors}
   end
 
   defp function_line({:|>, _, [lhs, _]}),
-  do: function_line(lhs)
+    do: function_line(lhs)
 
   # exception for map.key
   defp function_line({{:., _, _}, _, []}),
@@ -48,44 +48,44 @@ defrule Dogma.Rule.PipelineStart do
 
   # exception for map[key]
   defp function_line({{:., _, [Access, :get]}, _, _}),
-  do: :ok
+    do: :ok
 
   # exception for bare maps
   defp function_line({:%, _, _}),
-  do: :ok
+    do: :ok
 
   # exception for structs
   defp function_line({:%{}, _, _}),
-  do: :ok
+    do: :ok
 
   # exception for large tuples (size > 2)
   defp function_line({:{}, _, _}),
-  do: :ok
+    do: :ok
 
   # exception for module attributes
   defp function_line({:@, _, _}),
-  do: :ok
+    do: :ok
 
   # exception for module atoms
   defp function_line({:__aliases__, _, _}),
-  do: :ok
+    do: :ok
 
   # exception for binaries
   defp function_line({:<<>>, _, _}),
-  do: :ok
+    do: :ok
 
   # exception for ranges
   defp function_line({:.., _, _}),
-  do: :ok
+    do: :ok
 
   # exception for unquote
   defp function_line({:unquote, _, _}),
-  do: :ok
+    do: :ok
 
   # exception for zero-arity function
   defp function_line({atom, _, []})
   when is_atom(atom),
-  do: :ok
+    do: :ok
 
   defp function_line({atom, meta, args})
   when is_atom(atom) and is_list(args) do
@@ -97,10 +97,10 @@ defrule Dogma.Rule.PipelineStart do
   end
 
   defp function_line({{:., meta, _}, _, _}),
-  do: {:error, meta[:line]}
+    do: {:error, meta[:line]}
 
   defp function_line(_),
-  do: :ok
+    do: :ok
 
   defp error(line) do
     %Error{

@@ -20,18 +20,18 @@ defrule Dogma.Rule.ComparisonToBoolean do
   """
 
   def test(_rule, script) do
-    script |> Script.walk( &check_node(&1, &2) )
+    script |> Script.walk( &check_ast(&1, &2) )
   end
 
   for fun <- [:==, :===, :!=, :!==] do
-    defp check_node({unquote(fun), meta, [lhs, rhs]}, errors)
+    defp check_ast({unquote(fun), meta, [lhs, rhs]} = ast, errors)
     when is_boolean(lhs) or is_boolean(rhs) do
-      {node, [error(meta[:line]) | errors]}
+      {ast, [error(meta[:line]) | errors]}
     end
   end
 
-  defp check_node(node, errors) do
-    {node, errors}
+  defp check_ast(ast, errors) do
+    {ast, errors}
   end
 
   defp error(pos) do

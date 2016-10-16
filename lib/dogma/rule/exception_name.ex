@@ -24,11 +24,11 @@ defrule Dogma.Rule.ExceptionName do
   @good_name_suffix "Error"
 
   def test(_rule, script) do
-    script |> Script.walk( &check_node(&1, &2) )
+    script |> Script.walk( &check_ast(&1, &2) )
   end
 
-  defp check_node(
-    {:defmodule, metadata, [{:__aliases__, _, name_arr}, children]} = node,
+  defp check_ast(
+    {:defmodule, metadata, [{:__aliases__, _, name_arr}, children]} = ast,
     errors
   ) do
     error_module? =
@@ -38,13 +38,13 @@ defrule Dogma.Rule.ExceptionName do
     name = Enum.join(name_arr, ".")
 
     if error_module? && bad_name?(name) do
-      {node, [error(metadata[:line], name) | errors]}
+      {ast, [error(metadata[:line], name) | errors]}
     else
-      {node, errors}
+      {ast, errors}
     end
   end
-  defp check_node(node, errors) do
-    {node, errors}
+  defp check_ast(ast, errors) do
+    {ast, errors}
   end
 
   defp bad_name?(name), do: !String.ends_with?(name, @good_name_suffix)

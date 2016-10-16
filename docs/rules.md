@@ -597,13 +597,13 @@ Good:
 
     my_mood = :happy
     [number_of_cats] = [3]
-    {function_name, _, other_stuff} = node
+    {function_name, _, other_stuff} = ast
 
 Bad:
 
     myMood = :sad
     [numberOfCats] = [3]
-    {functionName, meta, otherStuff} = node
+    {functionName, meta, otherStuff} = ast
 
 
 ### WindowsLineEndings

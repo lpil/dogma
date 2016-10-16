@@ -3,7 +3,7 @@ defmodule Dogma.Util.CyclomaticComplexity do
   A module for calculating the cyclomatic complexity for an AST.
   """
 
-  @branching_nodes ~w(if unless case cond && and || or)a
+  @branching_asts ~w(if unless case cond && and || or)a
 
   @doc """
   Returns the cyclomatic complexity of a given AST.
@@ -13,7 +13,7 @@ defmodule Dogma.Util.CyclomaticComplexity do
     size
   end
 
-  for name <- @branching_nodes do
+  for name <- @branching_asts do
     def count({unquote(name), _, _} = ast, size) do
       {ast, size + 1}
     end

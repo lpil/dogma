@@ -11,35 +11,35 @@ defrule Dogma.Rule.VariableName do
 
       my_mood = :happy
       [number_of_cats] = [3]
-      {function_name, _, other_stuff} = node
+      {function_name, _, other_stuff} = ast
 
   Bad:
 
       myMood = :sad
       [numberOfCats] = [3]
-      {functionName, meta, otherStuff} = node
+      {functionName, meta, otherStuff} = ast
   """
 
   alias Dogma.Util.Name
 
   def test(_rule, script) do
-    script |> Script.walk( &check_node(&1, &2) )
+    script |> Script.walk( &check_ast(&1, &2) )
   end
 
-  defp check_node({:=, _, nodes} = node, errors) do
+  defp check_ast({:=, _, asts} = ast, errors) do
     new_errors =
-      nodes
+      asts
       |> invalid_lines
       |> Enum.map( &error/1 )
-    {node, new_errors ++ errors}
+    {ast, new_errors ++ errors}
   end
-  defp check_node(node, errors) do
-    {node, errors}
+  defp check_ast(ast, errors) do
+    {ast, errors}
   end
 
 
-  defp invalid_lines(nodes) when is_list(nodes) do
-    nodes
+  defp invalid_lines(asts) when is_list(asts) do
+    asts
     |> Enum.map( &invalid_lines/1 )
     |> List.flatten
     |> Enum.filter(&(&1))

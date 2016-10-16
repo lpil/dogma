@@ -19,29 +19,29 @@ defrule Dogma.Rule.NegatedAssert do
   """
 
   def test(_rule, script) do
-    script |> Script.walk( &check_node(&1, &2) )
+    script |> Script.walk( &check_ast(&1, &2) )
   end
 
-  defp check_node({:assert, [line: i], [{:not, _, _} | _]} = node, errors) do
+  defp check_ast({:assert, [line: i], [{:not, _, _} | _]} = ast, errors) do
     err = error( :assert, i )
-    {node, [err | errors]}
+    {ast, [err | errors]}
   end
-  defp check_node({:assert, [line: i], [{:!, _, _} | _]} = node, errors) do
+  defp check_ast({:assert, [line: i], [{:!, _, _} | _]} = ast, errors) do
     err = error( :assert, i )
-    {node, [err | errors]}
+    {ast, [err | errors]}
   end
 
-  defp check_node({:refute, [line: i], [{:not, _, _} | _]} = node, errors) do
+  defp check_ast({:refute, [line: i], [{:not, _, _} | _]} = ast, errors) do
     err = error( :refute, i )
-    {node, [err | errors]}
+    {ast, [err | errors]}
   end
-  defp check_node({:refute, [line: i], [{:!, _, _} | _]} = node, errors) do
+  defp check_ast({:refute, [line: i], [{:!, _, _} | _]} = ast, errors) do
     err = error( :refute, i )
-    {node, [err | errors]}
+    {ast, [err | errors]}
   end
 
-  defp check_node(node, errors) do
-    {node, errors}
+  defp check_ast(ast, errors) do
+    {ast, errors}
   end
 
 

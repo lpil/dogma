@@ -25,29 +25,29 @@ defrule Dogma.Rule.NegatedIfUnless do
   """
 
   def test(_rule, script) do
-    script |> Script.walk( &check_node(&1, &2) )
+    script |> Script.walk( &check_ast(&1, &2) )
   end
 
-  defp check_node({:if, [line: i], [{:not, _, _}, _]} = node, errors) do
+  defp check_ast({:if, [line: i], [{:not, _, _}, _]} = ast, errors) do
     err = error( :if, i )
-    {node, [err | errors]}
+    {ast, [err | errors]}
   end
-  defp check_node({:if, [line: i], [{:!, _, _}, _]} = node, errors) do
+  defp check_ast({:if, [line: i], [{:!, _, _}, _]} = ast, errors) do
     err = error( :if, i )
-    {node, [err | errors]}
+    {ast, [err | errors]}
   end
 
-  defp check_node({:unless, [line: i], [{:not, _, _}, _]} = node, errors) do
+  defp check_ast({:unless, [line: i], [{:not, _, _}, _]} = ast, errors) do
     err = error( :unless, i )
-    {node, [err | errors]}
+    {ast, [err | errors]}
   end
-  defp check_node({:unless, [line: i], [{:!, _, _}, _]} = node, errors) do
+  defp check_ast({:unless, [line: i], [{:!, _, _}, _]} = ast, errors) do
     err = error( :unless, i )
-    {node, [err | errors]}
+    {ast, [err | errors]}
   end
 
-  defp check_node(node, errors) do
-    {node, errors}
+  defp check_ast(ast, errors) do
+    {ast, errors}
   end
 
 

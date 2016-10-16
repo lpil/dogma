@@ -23,33 +23,33 @@ defrule Dogma.Rule.PredicateName do
   """
 
   def test(_rule, script) do
-    script |> Script.walk( &check_node(&1, &2) )
+    script |> Script.walk( &check_ast(&1, &2) )
   end
 
-  defp check_node({:def, _, [{name, meta, _} | _]} = node, errors) do
-    test_predicate(name, meta, node, errors)
+  defp check_ast({:def, _, [{name, meta, _} | _]} = ast, errors) do
+    test_predicate(name, meta, ast, errors)
   end
-  defp check_node({:defp, _, [{name, meta, _} | _]} = node, errors) do
-    test_predicate(name, meta, node, errors)
+  defp check_ast({:defp, _, [{name, meta, _} | _]} = ast, errors) do
+    test_predicate(name, meta, ast, errors)
   end
-  defp check_node(node, errors) do
-    {node, errors}
+  defp check_ast(ast, errors) do
+    {ast, errors}
   end
 
   defp test_predicate(line) do
     Regex.run(~r{\A(is|has)_(\w+)\?\Z}, line)
   end
 
-  defp test_predicate({:unquote, _, _} , _meta, node, errors) do
-    {node, errors}
+  defp test_predicate({:unquote, _, _} , _meta, ast, errors) do
+    {ast, errors}
   end
 
-  defp test_predicate(function_name, meta, node, errors) do
+  defp test_predicate(function_name, meta, ast, errors) do
     name = function_name |> to_string |> test_predicate
     if name do
-      {node, [error( meta[:line], name ) | errors]}
+      {ast, [error( meta[:line], name ) | errors]}
     else
-      {node, errors}
+      {ast, errors}
     end
   end
 

@@ -20,19 +20,19 @@ defrule Dogma.Rule.ModuleName do
   alias Dogma.Util.Name
 
   def test(_rule, script) do
-    script |> Script.walk( &check_node(&1, &2) )
+    script |> Script.walk( &check_ast(&1, &2) )
   end
 
-  defp check_node({:defmodule, m, [x, _]} = node, errors) when is_atom x do
+  defp check_ast({:defmodule, m, [x, _]} = ast, errors) when is_atom x do
     errors = check_names( [x], errors, m[:line] )
-    {node, errors}
+    {ast, errors}
   end
-  defp check_node({:defmodule, m, [{:__aliases__, _, x}, _]} = node, errors) do
+  defp check_ast({:defmodule, m, [{:__aliases__, _, x}, _]} = ast, errors) do
     errors = check_names( x, errors, m[:line] )
-    {node, errors}
+    {ast, errors}
   end
-  defp check_node(node, errors) do
-    {node, errors}
+  defp check_ast(ast, errors) do
+    {ast, errors}
   end
 
 

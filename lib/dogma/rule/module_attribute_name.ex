@@ -8,19 +8,19 @@ defrule Dogma.Rule.ModuleAttributeName do
   alias Dogma.Util.Name
 
   def test(_rule, script) do
-    script |> Script.walk( &check_node(&1, &2) )
+    script |> Script.walk( &check_ast(&1, &2) )
   end
 
-  defp check_node({:@, meta, [{name, _, _}]} = node, errors) do
+  defp check_ast({:@, meta, [{name, _, _}]} = ast, errors) do
     errors = if name |> to_string |> Name.not_snake_case? do
       [error( meta[:line] ) | errors]
     else
       errors
     end
-    {node, errors}
+    {ast, errors}
   end
-  defp check_node(node, errors) do
-    {node, errors}
+  defp check_ast(ast, errors) do
+    {ast, errors}
   end
 
 

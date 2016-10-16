@@ -14,23 +14,23 @@ defrule Dogma.Rule.LiteralInInterpolation do
   import Dogma.Util.AST, only: [literal?: 1]
 
   def test(_rule, script) do
-    script |> Script.walk( &check_node(&1, &2) )
+    script |> Script.walk( &check_ast(&1, &2) )
   end
 
-  defp check_node({:::, meta, args} = node, errors) do
+  defp check_ast({:::, meta, args} = ast, errors) do
     case get_interpolated_token(args) do
       {:ok, token} ->
         if literal?(token) do
-          {node, [error(meta[:line]) | errors]}
+          {ast, [error(meta[:line]) | errors]}
         else
-          {node, errors}
+          {ast, errors}
         end
-       _ -> {node, errors}
+       _ -> {ast, errors}
     end
   end
 
-  defp check_node(node, errors) do
-    {node, errors}
+  defp check_ast(ast, errors) do
+    {ast, errors}
   end
 
   defp get_interpolated_token(args) do

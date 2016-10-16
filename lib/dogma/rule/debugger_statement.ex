@@ -9,15 +9,15 @@ defrule Dogma.Rule.DebuggerStatement do
   """
 
   def test(_rule, script) do
-    script |> Script.walk( &check_node(&1, &2) )
+    script |> Script.walk( &check_ast(&1, &2) )
   end
 
-  defp check_node({:., m, [{:__aliases__, _, [:IEx]}, :pry]} = node, errors) do
+  defp check_ast({:., m, [{:__aliases__, _, [:IEx]}, :pry]} = ast, errors) do
     error = error( m[:line] )
-    {node, [error | errors]}
+    {ast, [error | errors]}
   end
-  defp check_node(node, errors) do
-    {node, errors}
+  defp check_ast(ast, errors) do
+    {ast, errors}
   end
 
   defp error(pos) do

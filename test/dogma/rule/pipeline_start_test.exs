@@ -1,6 +1,14 @@
 defmodule Dogma.Rule.PipelineStartTest do
   use RuleCase, for: PipelineStart
 
+  def error_on_line(n) do
+    %Error{
+      rule: PipelineStart,
+      message: "Function Pipe Chains must start with a bare value",
+      line: n,
+    }
+  end
+
   test "not error with a number start" do
     script = """
     42 |> Integer.to_char_list(16) |> IO.puts
@@ -71,21 +79,9 @@ defmodule Dogma.Rule.PipelineStartTest do
     |> IO.puts
     """ |> Script.parse!("")
     expected_errors = [
-      %Error{
-        rule: PipelineStart,
-        message: "Function Pipe Chains must start with a bare value",
-        line: 1
-      },
-      %Error{
-        rule: PipelineStart,
-        message: "Function Pipe Chains must start with a bare value",
-        line: 2
-      },
-      %Error{
-        rule: PipelineStart,
-        message: "Function Pipe Chains must start with a bare value",
-        line: 3
-      }
+      error_on_line(1),
+      error_on_line(2),
+      error_on_line(3),
     ]
     assert expected_errors == Rule.test( @rule, script )
   end
@@ -100,21 +96,9 @@ defmodule Dogma.Rule.PipelineStartTest do
     |> IO.puts
     """ |> Script.parse!("")
     expected_errors = [
-      %Error{
-        rule: PipelineStart,
-        message: "Function Pipe Chains must start with a bare value",
-        line: 1
-      },
-      %Error{
-        rule: PipelineStart,
-        message: "Function Pipe Chains must start with a bare value",
-        line: 2
-      },
-      %Error{
-        rule: PipelineStart,
-        message: "Function Pipe Chains must start with a bare value",
-        line: 3
-      }
+      error_on_line(1),
+      error_on_line(2),
+      error_on_line(3),
     ]
     assert expected_errors == Rule.test( @rule, script )
   end
@@ -128,21 +112,9 @@ defmodule Dogma.Rule.PipelineStartTest do
     |> IO.puts
     """ |> Script.parse!("")
     expected_errors = [
-      %Error{
-        rule: PipelineStart,
-        message: "Function Pipe Chains must start with a bare value",
-        line: 1
-      },
-      %Error{
-        rule: PipelineStart,
-        message: "Function Pipe Chains must start with a bare value",
-        line: 2
-      },
-      %Error{
-        rule: PipelineStart,
-        message: "Function Pipe Chains must start with a bare value",
-        line: 3
-      }
+      error_on_line(1),
+      error_on_line(2),
+      error_on_line(3),
     ]
     assert expected_errors == Rule.test( @rule, script )
   end

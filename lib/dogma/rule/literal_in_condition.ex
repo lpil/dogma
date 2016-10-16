@@ -19,21 +19,21 @@ defrule Dogma.Rule.LiteralInCondition do
   import Dogma.Util.AST, only: [literal?: 1]
 
   def test(_rule, script) do
-    script |> Script.walk( &check_node(&1, &2) )
+    script |> Script.walk( &check_ast(&1, &2) )
   end
 
   for fun <- [:if, :unless, :case] do
-    defp check_node({unquote(fun), meta, [pred, [do: _]]} = node, errors) do
+    defp check_ast({unquote(fun), meta, [pred, [do: _]]} = ast, errors) do
       errors = if pred |> literal? do
         [error(meta[:line]) | errors]
       else
         errors
       end
-      {node, errors}
+      {ast, errors}
     end
   end
-  defp check_node(node, errors) do
-    {node, errors}
+  defp check_ast(ast, errors) do
+    {ast, errors}
   end
 
   defp error(pos) do
