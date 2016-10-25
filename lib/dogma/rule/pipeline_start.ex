@@ -22,10 +22,10 @@ defrule Dogma.Rule.PipelineStart do
   def test(_rule, script) do
     script
     |> Script.walk(&check_ast/2)
-    |> Enum.reverse
+    |> Enum.reverse()
   end
 
-  defp check_ast({:|>, _, [lhs, rhs]} = ast, errors) do
+  defp check_ast(ast = {:|>, _, [lhs, rhs]}, errors) do
     case function_line(lhs) do
       {:error, line} ->
         {rhs, [error(line) | errors]}
@@ -42,9 +42,13 @@ defrule Dogma.Rule.PipelineStart do
   defp function_line({:|>, _, [lhs, _]}),
     do: function_line(lhs)
 
+  # exception for list concat ++
+  defp function_line({:++, _, [lhs, _]}),
+    do: function_line(lhs)
+
   # exception for map.key
   defp function_line({{:., _, _}, _, []}),
-  do: :ok
+    do: :ok
 
   # exception for map[key]
   defp function_line({{:., _, [Access, :get]}, _, _}),
@@ -95,6 +99,7 @@ defrule Dogma.Rule.PipelineStart do
       {:error, meta[:line]}
     end
   end
+
 
   defp function_line({{:., meta, _}, _, _}),
     do: {:error, meta[:line]}

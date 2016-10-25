@@ -226,4 +226,32 @@ defmodule Dogma.Rule.PipelineStartTest do
     """ |> Script.parse!("")
     assert [] == Rule.test( @rule, script )
   end
+
+  test "not error with ++ start" do
+    script = ~S"""
+    list_a
+    ++ list_b
+    |> wrap()
+    """ |> Script.parse!("")
+    assert [] == Rule.test( @rule, script )
+  end
+
+  test "not error with ++ in middle" do
+    script = ~S"""
+    [1]
+    |> bobble()
+    ++ thingies
+    |> rebobble()
+    """ |> Script.parse!("")
+    assert [] == Rule.test( @rule, script )
+  end
+
+  test "errors with non-bare ++ start" do
+    script = ~S"""
+    bobble(:widget)
+    ++ thingies
+    |> rebobble()
+    """ |> Script.parse!("")
+    assert [error_on_line(1)] == Rule.test( @rule, script )
+  end
 end
