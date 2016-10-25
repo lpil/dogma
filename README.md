@@ -30,7 +30,7 @@ It's also a code style linter for Elixir, powered by shame.
 
 Dogma is a tool for enforcing a consistent Elixir code style within your
 project, the idea being that if your code is easier to read, it should also be
-easer to understand. It's highly configurable so you can adjust it to fit your
+easier to understand. It's highly configurable so you can adjust it to fit your
 style guide, but comes with a sane set of defaults so for most people it
 should just work out-of-the-box. I like to run Dogma on the CI server with
 the test suite, and consider the build broken if Dogma reports a problem.
