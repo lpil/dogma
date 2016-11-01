@@ -1,7 +1,7 @@
 defmodule Dogma.Mixfile do
   use Mix.Project
 
-  @version "0.1.12"
+  @version "0.1.13"
 
   def project do
     [
