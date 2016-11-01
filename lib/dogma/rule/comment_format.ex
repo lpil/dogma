@@ -26,6 +26,12 @@ defrule Dogma.Rule.CommentFormat do
       "" ->
         errors
 
+      # Allow the 'shebang' line, common in *nix scripts.
+      << "!"::utf8, _::binary >> ->
+        if comment.line == 1,
+          do: errors,
+          else: [error( comment.line ) | errors]
+
       << " "::utf8, _::binary >> ->
         errors
 
