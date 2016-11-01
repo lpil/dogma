@@ -38,4 +38,36 @@ defmodule Dogma.Rule.CommentFormatTest do
     """ |> Script.parse!("")
     assert [] == Rule.test( @rule, script )
   end
+
+  test "not error with shebang-style comment as first line" do
+    script = """
+    #!/usr/bin/env elixir
+    1 + 1 # Other stuff here
+    """ |> Script.parse!("")
+    assert [] == Rule.test( @rule, script )
+  end
+
+  test "not error with shebang-style comment as first line, with a space" do
+    script = """
+    #! /usr/bin/env elixir
+    1 + 1 # Other stuff here
+    """ |> Script.parse!("")
+    assert [] == Rule.test( @rule, script )
+  end
+
+  test "error with shebang-style comment not as as first line" do
+    script = """
+    2 + 3
+    #!/usr/bin/env elixir
+    1 + 1 # Other stuff here
+    """ |> Script.parse!("")
+    expected_errors = [
+      %Error{
+        line: 2,
+        message: "Comments should start with a single space",
+        rule: CommentFormat
+      }
+    ]
+    assert expected_errors == Rule.test( @rule, script )
+  end
 end
