@@ -3,7 +3,7 @@
 erl_crash.dump
 *.ez
 *.beam
-dogma
+/dogma
 /doc/
 /docs/all.json
 /bench/snapshots
