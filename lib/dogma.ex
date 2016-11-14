@@ -1,8 +1,14 @@
 defmodule Dogma do
   @moduledoc """
-  Welcome to Dogma.
+  Dogma is a tool for enforcing a consistent Elixir code style within your
+  project,the idea being that if your code is easier to read, it should also be
+  easier to understand.
 
-  This module is our entry point, and does nothing but deligate to various
+  It's highly configurable so you can adjust it to fit
+  your style guide, but comes with a sane set of defaults so for most people it
+  should just work out-of-the-box.
+
+  This module is our entry point, and does nothing but delegates to various
   other modules through the divine `run/3` function.
   """
 
