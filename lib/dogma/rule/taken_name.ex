@@ -36,9 +36,9 @@ defrule Dogma.Rule.TakenName do
     unquote_splicing update_in use
   )a
 
-  @reserved_words Enum.into(reserved_words, HashSet.new)
+  @reserved_words Enum.into(reserved_words, MapSet.new)
 
-  @spec reserved_words :: HashSet.t
+  @spec reserved_words :: MapSet.t
   def reserved_words do
     @reserved_words
   end
@@ -61,7 +61,7 @@ defrule Dogma.Rule.TakenName do
   end
 
   defp valid_name?(name) do
-    ! HashSet.member?(@reserved_words, name)
+    ! MapSet.member?(@reserved_words, name)
   end
 
   defp check_name(name, meta, ast, errors) when is_atom(name) do

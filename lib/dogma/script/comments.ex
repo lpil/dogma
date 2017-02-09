@@ -35,7 +35,7 @@ defmodule Dogma.Script.Metadata do
 
   defp add_rule_to_index(index, rule, n) do
     rule = "Elixir.#{rule}" |> String.to_atom
-    set  = index |> Dict.get( rule, HashSet.new ) |> Set.put( n )
+    set  = index |> Dict.get( rule, MapSet.new ) |> MapSet.put( n )
     Dict.put( index, rule, set )
   end
 end
