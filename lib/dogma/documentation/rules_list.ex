@@ -3,7 +3,7 @@ defmodule Dogma.Documentation.RuleList do
   @moduledoc "Generate documentation file detailing all rules"
 
   def write! do
-    File.write!( "docs/rules.md", rules_doc )
+    File.write!( "docs/rules.md", rules_doc() )
     IO.puts "Generated docs/rules.md"
   end
 
@@ -13,7 +13,7 @@ defmodule Dogma.Documentation.RuleList do
   Gets the information from the `@moduledoc`s of each Rule module.
   """
   def rules_doc do
-    modules  = all_rule_modules
+    modules  = all_rule_modules()
     contents = modules |> Enum.map(&contents_entry/1)
     docs     = modules |> Enum.map(&moduledoc/1) |> Enum.join("\n")
     """

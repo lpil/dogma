@@ -90,8 +90,8 @@ defmodule Dogma.Reporter.JSONTest do
     assert metadata == %{
       "dogma_version"       => Dogma.version,
       "elixir_version"      => System.version,
-      "erlang_version"      => erlang_version,
-      "system_architecture" => system_architecture
+      "erlang_version"      => erlang_version(),
+      "system_architecture" => system_architecture()
     }
   end
 

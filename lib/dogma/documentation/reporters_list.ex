@@ -9,7 +9,7 @@ defmodule Dogma.Documentation.ReportersList do
   Writes reporter documentation to `docs/reporters.md`.
   """
   def write! do
-    File.write!("docs/reporters.md", reporters_doc)
+    File.write!("docs/reporters.md", reporters_doc())
     IO.puts "Generated docs/reporters.md"
   end
 
