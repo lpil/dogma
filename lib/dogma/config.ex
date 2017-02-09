@@ -31,7 +31,7 @@ defmodule Dogma.Config do
     rules_map = Enum.reduce( rules, %{}, &insert_rule/2 )
     overrides
     |> Enum.reduce( rules_map, &insert_rule/2 )
-    |> Dict.values
+    |> Map.values
   end
 
   defp get_exclude do
@@ -40,7 +40,7 @@ defmodule Dogma.Config do
 
 
   defp insert_rule(rule, acc) when is_map(rule) do
-    Dict.put(acc, rule.__struct__, rule)
+    Map.put(acc, rule.__struct__, rule)
   end
 
   defp insert_rule({rule_name, config}, acc)
@@ -70,6 +70,6 @@ defmodule Dogma.Config do
 
     https://github.com/lpil/dogma/blob/master/docs/configuration.md
     """
-    Dict.put(acc, rule.__struct__, rule)
+    Map.put(acc, rule.__struct__, rule)
   end
 end
