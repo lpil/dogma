@@ -68,13 +68,13 @@ defmodule Dogma.Reporter.Simple do
   end
 
   defp summary(num, 0) do
-    "#{ num } files, #{ IO.ANSI.green }no errors!" <> reset
+    "#{ num } files, #{ IO.ANSI.green }no errors!" <> reset()
   end
   defp summary(num, 1) do
-    "#{ num } files, #{ IO.ANSI.red }1 error!" <> reset
+    "#{ num } files, #{ IO.ANSI.red }1 error!" <> reset()
   end
   defp summary(num, err_count) do
-    "#{ num } files, #{ IO.ANSI.red }#{ err_count } errors!" <> reset
+    "#{ num } files, #{ IO.ANSI.red }#{ err_count } errors!" <> reset()
   end
 
   defp format_errors(scripts) do

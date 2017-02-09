@@ -17,8 +17,8 @@ defmodule Dogma.Config do
   """
   def build do
     %__MODULE__{
-      rules:   get_rules,
-      exclude: get_exclude,
+      rules:   get_rules(),
+      exclude: get_exclude(),
     }
   end
 

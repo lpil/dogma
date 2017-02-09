@@ -48,7 +48,7 @@ defmodule Dogma.Reporter.JSON do
   """
   def finish(scripts) do
     %{
-      metadata: metadata,
+      metadata: metadata(),
       files: Enum.map(scripts, &format/1),
       summary: summary(scripts)
     } |> Poison.encode!
