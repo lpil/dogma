@@ -9,7 +9,7 @@ defmodule Dogma.Reporter.FlycheckTest do
 
   describe "no errors" do
     setup context do
-      Dict.put(context, :script, [%Script{ errors: [] }])
+      Map.put(context, :script, [%Script{ errors: [] }])
     end
 
     test "output newline to console", context do
@@ -41,7 +41,7 @@ defmodule Dogma.Reporter.FlycheckTest do
         %Script{ path: "baz.ex", errors: [] }
       ]
 
-      Dict.put(context, :script, script)
+      Map.put(context, :script, script)
     end
 
     test "print each error to console", context do
