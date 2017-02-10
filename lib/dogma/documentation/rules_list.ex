@@ -1,5 +1,4 @@
 defmodule Dogma.Documentation.RuleList do
-  @shortdoc  "Generate documentation file detailing all rules"
   @moduledoc "Generate documentation file detailing all rules"
 
   def write! do
