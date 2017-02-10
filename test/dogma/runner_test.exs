@@ -24,6 +24,6 @@ defmodule Dogma.RunnerTest do
     """ |> Script.parse("")
     refute script.valid?
     results = Runner.run_tests( script, All.rules )
-    assert [%Error{ line: 1, message: _, rule: SyntaxError }] = results
+    assert [%Error{ line: _, message: _, rule: SyntaxError }] = results
   end
 end

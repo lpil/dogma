@@ -163,6 +163,11 @@ defmodule Dogma.ScriptTest do
           ~s(unexpected token: "end". ) <>
           ~s("<<" starting at line 2 is missing terminator ">>")
           or
+        # Elixir 1.4.x has a different error message format
+        message ==
+          ~s("<<" is missing terminator ">>". ) <>
+          ~s(unexpected token: "end" at line 3)
+          or
         # in Elixir 1.0 syntax errors weren't returned correctly
         # https://github.com/elixir-lang/elixir/issues/2993
         message ==
