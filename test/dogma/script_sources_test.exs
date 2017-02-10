@@ -5,13 +5,6 @@ defmodule Dogma.ScriptSourcesTest do
   alias Dogma.ScriptSources
 
   @fixture_path "test/fixtures/app/"
-  @fixture_files ~w(
-    test/fixtures/app/config/config.exs
-    test/fixtures/app/lib/app.ex
-    test/fixtures/app/mix.exs
-    test/fixtures/app/test/app_test.exs
-    test/fixtures/app/test/test_helper.exs
-  )
 
   describe "find/2" do
     test "exclude the /deps/ directory" do

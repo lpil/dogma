@@ -7,8 +7,6 @@ defmodule Dogma.Rules do
   alias Dogma.Script
   alias Dogma.Runner
 
-  @default_rule_set Dogma.RuleSet.All
-
   @doc """
   Runs the rules in the current rule set on the given scripts.
   """
