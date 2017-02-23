@@ -292,7 +292,7 @@ interpolation.
 
 Good:
 
-    output = inspect(self)
+   output = inspect(self)
 
 Bad:
 
