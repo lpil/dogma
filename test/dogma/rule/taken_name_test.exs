@@ -52,6 +52,53 @@ defmodule Dogma.Rule.TakenNameTest do
     assert [] == errors
   end
 
+  test "allow implementations for protocols." do
+    errors = """
+    defimpl Inspect do
+      import Inspect.Algebra
+      def inspect(one, _opts) do
+        :function_body
+      end
+    end
+    """ |> lint
+    assert [] == errors
+  end
+
+  test "allow implementations for protocols with deep names." do
+    errors = """
+    defimpl String.Chars do
+      def to_string(_one) do
+        :function_body
+      end
+    end
+    """ |> lint
+    assert [] == errors
+  end
+
+  test """
+  error when function overrides standard library inside implementations.
+  """ do
+    errors = """
+    defimpl Inspect do
+      def unless do
+        :function_body
+      end
+    end
+    """ |> lint
+    assert [error_on_line(2, :unless)] == errors
+  end
+
+  test "error for functions from other protocols." do
+    errors = """
+    defimpl Inspect do
+      def to_string do
+        :function_body
+      end
+    end
+    """ |> lint
+    assert [error_on_line(2, :to_string)] == errors
+  end
+
   defp error_on_line(line, name) do
     %Error{
       line: Dogma.Script.line(line),
@@ -59,5 +106,4 @@ defmodule Dogma.Rule.TakenNameTest do
       rule: TakenName
     }
   end
-
 end
