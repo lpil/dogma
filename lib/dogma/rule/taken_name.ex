@@ -44,11 +44,13 @@ defrule Dogma.Rule.TakenName do
     [:String, :Chars] => :to_string
   }
 
-  @spec reserved_words :: MapSet.t
-  def reserved_words do
-    @protocol_with_reserved_words
+  @reserved_words @protocol_with_reserved_words
     |> Map.values()
     |> Enum.into(@other_reserved_words)
+
+  @spec reserved_words :: MapSet.t
+  def reserved_words do
+    @reserved_words
   end
 
   @spec protocol_with_reserved_words :: %{required([atom]) => atom}
@@ -57,9 +59,8 @@ defrule Dogma.Rule.TakenName do
   end
 
   def test(_rule, script) do
-
     {_, {_, errors}} =
-      Macro.traverse( script.ast, {reserved_words(), []},
+      Macro.traverse( script.ast, {@reserved_words, []},
         &check_ast(&1, &2),
         &end_of_impl(&1, &2))
     errors
@@ -77,7 +78,7 @@ defrule Dogma.Rule.TakenName do
   defp check_ast(
     {:defimpl, _, [{_, _, impl_name} | _]} = ast,
     {reserved, errors}) do
-    new_reserved = maybe_alter_words(reserved, impl_name, &MapSet.delete/2)
+    new_reserved = update_reserved_words(reserved, impl_name, &MapSet.delete/2)
     {ast, {new_reserved, errors}}
   end
   defp check_ast(ast, acc) do
@@ -87,7 +88,7 @@ defrule Dogma.Rule.TakenName do
   defp end_of_impl(
     {:defimpl, _, [{_, _, impl_name} | _]} = ast,
     {reserved, errors}) do
-    new_reserved = maybe_alter_words(reserved, impl_name, &MapSet.delete/2)
+    new_reserved = update_reserved_words(reserved, impl_name, &MapSet.delete/2)
     {ast, {new_reserved, errors}}
   end
   defp end_of_impl(ast, acc) do
@@ -110,12 +111,10 @@ defrule Dogma.Rule.TakenName do
     {ast, acc}
   end
 
-  defp maybe_alter_words(reserved, impl_name, fun) do
-    if Map.has_key?(protocol_with_reserved_words(), impl_name) do
-      changed_word = Map.get(protocol_with_reserved_words(), impl_name)
-      fun.(reserved, changed_word)
-    else
-      reserved
+  defp update_reserved_words(words, implementation_name, update_function) do
+    case Map.fetch protocol_with_reserved_words(), implementation_name do
+      {:ok, changeing_name} -> update_function.(words, changeing_name)
+      :error -> words
     end
   end
 
