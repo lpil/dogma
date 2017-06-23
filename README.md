@@ -83,6 +83,19 @@ Inspecting 27 files.
 
 How handy!
 
+### Ignoring a rule
+
+Sometimes, you may want to ignore a rule on a specific line.
+This can be accomplished like so:
+
+```elixir
+defmodule Foo do
+  def bar do
+    "baz"; # dogma:ignore Semicolon
+  end
+end
+```
+
 ### Install Dogma globally
 
 In order to run dogma from any directory build the escript:
