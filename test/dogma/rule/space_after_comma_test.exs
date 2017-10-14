@@ -52,6 +52,26 @@ defmodule Dogma.Rule.SpaceAfterCommaTest do
     assert [] == Rule.test( @rule, script )
   end
 
+  test "ignore comma in comments" do
+    script = """
+    # I,can,use,commas,any,way,I,like,because,this,is,just,a,comment
+
+    defmodule Foo.Bar do
+      def baz, do: :qux # same,here
+    end
+    """ |> Script.parse!("")
+    assert [] == Rule.test( @rule, script )
+  end
+
+  test "error when style violation even if the line has a comment" do
+    script = """
+    def foo do
+      [1,2, 3] # this comment should not invalidate the offense
+    end
+    """ |> Script.parse!("")
+    assert [error_on_line(2, 1)] == Rule.test( @rule, script )
+  end
+
   test "not check strings" do
     script = """
     def foo do
