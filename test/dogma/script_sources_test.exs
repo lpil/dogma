@@ -24,7 +24,7 @@ defmodule Dogma.ScriptSourcesTest do
     end
 
     test "not return files that match given exclude patterns" do
-      patterns = [~r(config/), ~r(app/test/), ~r(_build/)]
+      patterns = [~r(config/), ~r(app/test/), ~r(_build/), ~r(assets/node_modules/)]
       paths    = ScriptSources.find( @fixture_path, patterns )
       expected = ~w(
         test/fixtures/app/lib/app.ex

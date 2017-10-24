@@ -9,6 +9,7 @@ defmodule Dogma.ScriptSources do
   @ignored_dirs ~w(
     deps/
     _build/
+    assets/node_modules/
   )
 
   @doc """
