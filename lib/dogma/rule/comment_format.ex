@@ -33,7 +33,8 @@ defrule Dogma.Rule.CommentFormat, [allow_multiple_hashes: true] do
     case comment.content do
       "" -> false
 
-      << "#"::utf8, rest::binary >> -> hashes_error?(rest, allow_multiple_hashes)
+      << "#"::utf8, rest::binary >> ->
+        hashes_error?(rest, allow_multiple_hashes)
 
       # Allow the 'shebang' line, common in *nix scripts.
       << "!"::utf8, _::binary >> -> comment.line != 1
