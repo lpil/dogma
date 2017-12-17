@@ -16,8 +16,6 @@ defrule Dogma.Rule.CommentFormat, [allow_multiple_hashes: true] do
       #Hello, world!
   """
 
-  alias Dogma.Util.Comment
-
   def test(rule, script) do
     script.comments
     |> Enum.reduce([], fn comment, errors ->
@@ -47,7 +45,7 @@ defrule Dogma.Rule.CommentFormat, [allow_multiple_hashes: true] do
 
   defp hashes_error?(content, allow_multiple_hashes)
   defp hashes_error?("", _), do: false
-  defp hashes_error?(<< " "::utf8, rest::binary >>, true), do: false
+  defp hashes_error?(<< " "::utf8, _::binary >>, true), do: false
   defp hashes_error?(<< "#"::utf8, rest::binary >>, true) do
     hashes_error?(rest, true)
   end
