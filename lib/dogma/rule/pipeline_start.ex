@@ -46,6 +46,10 @@ defrule Dogma.Rule.PipelineStart do
   defp function_line({:++, _, [lhs, _]}),
     do: function_line(lhs)
 
+  # exception for value placeholders
+  defp function_line({:&, _, _}),
+       do: :ok
+
   # exception for map.key
   defp function_line({{:., _, _}, _, []}),
     do: :ok
