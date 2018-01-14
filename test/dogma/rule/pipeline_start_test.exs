@@ -254,4 +254,12 @@ defmodule Dogma.Rule.PipelineStartTest do
     """ |> Script.parse!("")
     assert [error_on_line(1)] == Rule.test( @rule, script )
   end
+
+  test "not error for value placeholders" do
+    script = ~S"""
+    &1
+    |> bobble()
+    """ |> Script.parse!("")
+    assert [] == Rule.test( @rule, script )
+  end
 end
