@@ -1,28 +1,27 @@
 defmodule Dogma.Mixfile do
   use Mix.Project
 
-  @version "0.1.15"
+  @version "0.1.16"
 
   def project do
     [
       app: :dogma,
       version: @version,
       elixir: "~> 1.3",
-      elixirc_paths: elixirc_paths(Mix.env),
-      escript: [ main_module: Mix.Tasks.Dogma ],
+      elixirc_paths: elixirc_paths(Mix.env()),
+      escript: [main_module: Mix.Tasks.Dogma],
       deps: deps(),
-      build_embedded: Mix.env == :prod,
-      start_permanent: Mix.env == :prod,
-      consolidate_protocols: Mix.env != :test,
+      build_embedded: Mix.env() == :prod,
+      start_permanent: Mix.env() == :prod,
+      consolidate_protocols: Mix.env() != :test,
       test_coverage: [tool: ExCoveralls],
-
       name: "Dogma",
       source_url: "https://github.com/lpil/dogma",
       description: "A code style linter for Elixir, powered by shame.",
       package: [
         maintainers: ["Louis Pilfold"],
         licenses: ["MIT"],
-        links: %{ "GitHub" => "https://github.com/lpil/dogma" },
+        links: %{"GitHub" => "https://github.com/lpil/dogma"}
       ]
     ]
   end
@@ -34,7 +33,7 @@ defmodule Dogma.Mixfile do
   end
 
   defp elixirc_paths(:test), do: ["lib", "test/support"]
-  defp elixirc_paths(_),     do: ["lib"]
+  defp elixirc_paths(_), do: ["lib"]
 
   defp deps do
     [
@@ -56,7 +55,7 @@ defmodule Dogma.Mixfile do
       {:ex_doc, "~> 0.14", only: :dev},
 
       # JSON encoder
-      {:poison, ">= 2.0.0"},
+      {:poison, ">= 2.0.0"}
     ]
   end
 end
