@@ -520,6 +520,8 @@ A rule that enforces to use at least `spaces` after comma.
 This rule can be configured with the `spaces` option, which allows you to
 specify your own number of spaces after comma.
 
+Commas in comments are not checked by this rule.
+
 
 ### TakenName
 
