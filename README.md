@@ -9,6 +9,14 @@ Dogma
 [![Hex downloads](https://img.shields.io/hexpm/dt/dogma.svg "Hex downloads")](https://hex.pm/packages/dogma)
 [![Inline docs](https://inch-ci.org/github/lpil/dogma.svg?branch=master&style=flat)](http://inch-ci.org/github/lpil/dogma)
 
+## This tool has been deprecated
+
+With the new [formatter](https://hexdocs.pm/mix/master/Mix.Tasks.Format.html)
+in Elixir v1.6 I don't think there is a use for Dogma any more. Thanks for
+using this linter, it's been fun :)
+
+## Intro
+
 
 Dogma is a principle or set of principles laid down by an authority as
 **incontrovertibly true**.
