@@ -7,15 +7,14 @@ defmodule Mix.Tasks.Dogma do
   alias Dogma.Config
   alias Dogma.Reporters
 
-  @config_file_path "config/dogma.exs"
+  # loads a config file with fallback chain. First found will be loaded.
+  @config_file_paths ["config/dogma.exs", "~/.dogma.exs"]
 
   def run(argv), do: main(argv)
 
   def main(argv) do
     {dir, reporter, noerror} = argv |> parse_args
-    if File.regular?(@config_file_path) do
-      Mix.Tasks.Loadconfig.run([ @config_file_path])
-    end
+    load_config_file(@config_file_paths)
     config = Config.build
 
     {:ok, dispatcher} = GenEvent.start_link([])
@@ -49,5 +48,14 @@ defmodule Mix.Tasks.Dogma do
   defp any_errors?(scripts) do
     scripts
     |> Enum.any?( &Enum.any?( &1.errors ) )
+  end
+
+
+  defp load_config_file([]), do: nil
+  defp load_config_file([path|paths]) do
+    case path |> Path.expand |> File.exists? do
+      true  -> Mix.Tasks.Loadconfig.run([path])
+      _     -> load_config_file(paths)
+    end
   end
 end
