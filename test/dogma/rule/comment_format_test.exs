@@ -31,6 +31,48 @@ defmodule Dogma.Rule.CommentFormatTest do
     assert expected_errors == Rule.test( @rule, script )
   end
 
+  test "not error with multiple #'s with allow_multiple_hashes" do
+    script = """
+    ####
+    ## This is cool.
+    ####
+    1 + 1
+    """ |> Script.parse!("")
+    assert [] == Rule.test( @rule, script )
+  end
+
+  test "error with multiple #'s followed by non-whitespace" do
+    script = """
+    ####
+    ##This is not cool.
+    """ |> Script.parse!("")
+    expected_errors = [
+      %Error{
+        line: 2,
+        message: "Comments should start with a single space",
+        rule: CommentFormat
+      }
+    ]
+    assert expected_errors == Rule.test( @rule, script )
+  end
+
+  test "error with multiple #'s without allow_multiple_hashes" do
+    rule = %CommentFormat{ allow_multiple_hashes: false }
+    script = """
+    ## This is not cool.
+    1 + 1
+    """ |> Script.parse!("")
+
+    expected_errors = [
+      %Error{
+        line: 1,
+        message: "Comments should start with a single space",
+        rule: CommentFormat
+      }
+    ]
+    assert expected_errors == Rule.test( rule, script )
+  end
+
   test "not error with not multiple spaces after the #" do
     script = """
     "Hi!"
