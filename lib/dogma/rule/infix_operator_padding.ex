@@ -75,6 +75,7 @@ defrule Dogma.Rule.InfixOperatorPadding,
   defp normalize_token({a, {b, c, d}, e}), do: {a, b, c, d, e}
   defp normalize_token({a, {b, c, d}, e, _}), do: {a, b, c, d, e}
   defp normalize_token({a, {b, c, d}, e, _, _}), do: {a, b, c, d, e}
+  defp normalize_token({a, {b, c, d}, e, _, _, _}), do: {a, b, c, d, e}
 
   defp check_operators(tokens, rule, acc \\ [])
 

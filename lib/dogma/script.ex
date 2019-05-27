@@ -105,6 +105,7 @@ defmodule Dogma.Script do
     case result do
       {:ok, _, tokens}    -> tokens # Elixir 1.0.x
       {:ok, _, _, tokens} -> tokens # Elixir 1.1.x
+      {:ok, tokens} -> tokens
     end
   end
 
