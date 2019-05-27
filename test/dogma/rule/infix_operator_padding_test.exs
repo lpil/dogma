@@ -146,6 +146,13 @@ defmodule Dogma.Rule.InfixOperatorPaddingTest do
       assert [infix_error(1)] == Rule.test(rule, script)
     end
 
+    test "sigil clause dont match with new elixir release" do
+      script = "\~S(test)"
+      result = {:sigil_S, [line: 1], [{:<<>>, [line: 1], ["test"]}, []]}
+      %{ ast: ast } = script |> Script.parse("")
+      assert(ast == result)
+    end
+    
   end
 
 end
